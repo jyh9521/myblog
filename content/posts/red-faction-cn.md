@@ -6,7 +6,6 @@ date: 2026-08-07
 description: |-
   >Red Faction (2001) Simplified Chinese Patch — based on Alpine Faction 1.3.0
   >《红色派系》简体中文汉化补丁 v1.0 —— 基于 Alpine Faction 1.3.0
-cover: /uploads/chinesetranslationpatch/redfaction/封面图-1.avif
 tags:
   - 游戏
   - 汉化补丁
@@ -14,11 +13,16 @@ tags:
 pinned: false
 gameSlug: red-faction
 patch:
-  enabled: false
-  version: v1.0
-  releaseDate: 2026-08-07
-  gameVersions: Steam版
   compatibility: 限定Alpine Faction为1.3.0
+  downloads:
+    - label: GitHub
+      url: https://github.com/jyh9521/Red-Faction-CN/releases
+    - label: Google Drive
+      url: https://drive.google.com/drive/folders/1JDfhMGhs5HTHCkhHoeR22HzveU327Glu
+    - label: 百度网盘
+      url: https://pan.baidu.com/s/1SzdjlZazSV4AnQyTkLxeFQ?pwd=1658
+  enabled: false
+  gameVersions: Steam版
   issues: |-
     1. Alpine Faction的选项里，「网格光照」的选项字不全
     引擎那处的字符串缓冲区只有 8 字节。「逐像素」的 UTF-8 编码要 9 字节，最后一个字被截断，落单的字节被当成别的字符渲染了出来。
@@ -28,13 +32,8 @@ patch:
     2. 文字太小
     打开游戏选项 - 高级 - 界面：大号 HUD
     上方游戏自带字幕框的文本，可以使用键盘的 M 键来打开日志查看。
-  downloads:
-    - label: GitHub
-      url: https://github.com/jyh9521/Red-Faction-CN/releases
-    - label: Google Drive
-      url: https://drive.google.com/drive/folders/1JDfhMGhs5HTHCkhHoeR22HzveU327Glu
-    - label: 百度网盘
-      url: https://pan.baidu.com/s/1SzdjlZazSV4AnQyTkLxeFQ?pwd=1658
+  releaseDate: 2026-08-07
+  version: v1.0
 ---
 
 ## **一、项目背景**

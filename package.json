@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/build-asset-index.cjs",
     "build": "next build",
     "check": "tsc --noEmit",
     "validate": "node scripts/validate-content.cjs",

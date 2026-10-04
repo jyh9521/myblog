@@ -2,6 +2,7 @@ node_modules/
 .next/
 out/
 reports/
+public/sveltia/assets.json
 .env*
 !.env.example
 workers/ns-counter/.dev.vars*

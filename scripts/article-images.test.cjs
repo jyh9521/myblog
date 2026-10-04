@@ -37,6 +37,7 @@ test('TOC and lightbox updates preserve Markdown image nodes, reserved geometry 
     '../site-enhancements': { ReadingProgress: () => null, ShareButton: () => null },
     './image-compare': { default: () => null, __esModule: true },
     '../games/game-frame-card': { default: () => null, __esModule: true },
+    './retryable-image': { default: load('app/posts/retryable-image.tsx').default, __esModule: true },
   }, {
     document: { getElementById: () => ({ id: 'end' }), body: { style: { overflow: '' } } },
     window: { addEventListener() {}, removeEventListener() {} },

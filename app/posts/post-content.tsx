@@ -10,6 +10,7 @@ import { remarkHeadingIds, type ArticleImage, type HeadingItem } from './markdow
 import { ReadingProgress, ShareButton } from '../site-enhancements';
 import ImageCompare from './image-compare';
 import GameFrameCard from '../games/game-frame-card';
+import RetryableImage from './retryable-image';
 import type { GameRecord } from '../../lib/game-types';
 
 type Props = { body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
@@ -66,9 +67,9 @@ export default function PostContent({ body, title, headings, images, games, cove
       const image = images[imageIndex];
       const imageSrc = src || image?.src || '';
       const caption = title || image?.caption || alt || image?.alt || '';
-      return <span className="article-figure"><button type="button" className="article-image-button" onClick={() => setActiveImage(index)} aria-label={`放大图片：${caption || `第 ${index + 1} 张`}`}>
-        <img src={imageSrc} alt={alt || image?.alt || ''} width={image?.width || 1600} height={image?.height || 900} style={{ aspectRatio: `${image?.width || 1600} / ${image?.height || 900}`, objectFit: 'contain' }} loading="lazy" />
-      </button>{caption && <span className="article-image-caption">{caption}</span>}</span>;
+      return <span className="article-figure"><span className="article-image-button">
+        <RetryableImage key={imageSrc} src={imageSrc} alt={alt || image?.alt || ''} width={image?.width} height={image?.height} onOpen={() => setActiveImage(index)} label={`放大图片：${caption || `第 ${index + 1} 张`}`} />
+      </span>{caption && <span className="article-image-caption">{caption}</span>}</span>;
     },
     h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...props}>{children}</h1>,
     a: ({ href = '', children }: { href?: string; children?: React.ReactNode }) => {
@@ -82,9 +83,9 @@ export default function PostContent({ body, title, headings, images, games, cove
 
   return <>
     <ReadingProgress />
-    {cover && <button type="button" className="article-cover-button" onClick={() => setActiveImage(0)} aria-label={`放大封面图片：${cover.caption}`}>
-      <span className="article-cover-viewport"><img ref={coverRef} className="cover cover-parallax" src={cover.src} alt={cover.alt} width={cover.width || 1600} height={cover.height || 900} style={{ aspectRatio: `${cover.width || 1600} / ${cover.height || 900}`, objectFit: 'contain' }} /></span><span className="article-image-caption">{cover.caption}</span>
-    </button>}
+    {cover && <span className="article-cover-button">
+      <span className="article-cover-viewport"><RetryableImage key={cover.src} src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} imageRef={coverRef} imageClass="cover cover-parallax" lazy={false} onOpen={() => setActiveImage(0)} label={`放大封面图片：${cover.caption}`} /></span><span className="article-image-caption">{cover.caption}</span>
+    </span>}
     <div className="article-content">
       <div className="article-actions"><span>阅读文章</span><ShareButton title={title} /></div>
       {headings.length > 0 && <nav className={`post-toc${tocOpen ? ' is-open' : ''}`} aria-label="文章目录">

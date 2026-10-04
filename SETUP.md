@@ -55,7 +55,7 @@ RAWG / ScreenScraper / 未来 IGDB 是资料来源；Steam、GOG、Nintendo eSho
 
 ## 本地预览
 
-## 发布检查、资料对比与补丁信息
+## 发布检查与资料对比
 
 - 发布前依次执行 `npm test`、`npm run check`、`npm run validate` 和构建。内容检查会阻止不存在的游戏关联、卡片引用、站内图片/附件/链接及 CMS 配置错误，并把具体文件和原因写入 GitHub Actions 日志与 `content-validation` 附件。
 - `npm run audit:links` 在线检查外链，404/410 会提示失效；超时、反爬和限流标记为“未确认”，不阻断正常发布。ScreenScraper 动态图片不在每次发布时批量抓取，以免消耗 API 配额。
@@ -84,3 +84,11 @@ RAWG / ScreenScraper / 未来 IGDB 是资料来源；Steam、GOG、Nintendo eSho
 网站构建和编辑已不使用 TinaCloud。确认 Sveltia 正常编辑和 Pages 部署后，可在 GitHub 仓库 Settings → Secrets and variables → Actions 删除旧的 `TINA_TOKEN` secret 和 `TINA_CLIENT_ID` variable，并在 GitHub Settings → Applications 中撤销 TinaCloud App 对本仓库的访问；TinaCloud 控制台中的旧项目也可以删除。
 
 文章图片在构建时读取本地尺寸并预留空间；远程或无有效尺寸的图片使用固定 16:9 容器完整显示，不会在加载后挤动正文。目录高亮变化不会重建正文图片。
+
+## 发布状态、图片资源与文章搜索
+
+后台右下角“发布状态 / 图片资源”打开只读维护工具。发布状态按 main 最新提交匹配 GitHub Pages 流程，区分已保存待部署、部署中、已上线和失败，并提供失败步骤与日志入口。
+
+图片资源清单在构建时生成，展示文件大小、内容相同的重复文件及文章/档案引用。可筛选未引用文件、选择后预览并导出清理 JSON；此操作不会删除文件。清理前应等待当前提交部署完成并再次核对引用。
+
+文章正文和封面图片加载失败时保留原有尺寸及图注，显示重试按钮。文章搜索展示匹配正文附近的摘要并高亮关键词。没有加入阅读位置记忆。

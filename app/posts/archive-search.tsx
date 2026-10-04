@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useLayoutEffect, useMemo, useState } from 'react';
 import type { Post } from '../../lib/posts';
+import { articleText, searchTerms, matchExcerpt, highlightMatches } from '../../lib/article-search';
 
 function searchable(value: string) {
-  return value.toLocaleLowerCase().replace(/```[\s\S]*?```/g, ' ').replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/<[^>]*>/g, ' ').replace(/[#>*_~`|]/g, ' ').replace(/\s+/g, ' ').trim();
+  return articleText(value).toLocaleLowerCase();
 }
 
 export default function ArchiveSearch({ posts }: { posts: Post[] }) {
@@ -20,7 +20,7 @@ export default function ArchiveSearch({ posts }: { posts: Post[] }) {
   }, [tags]);
 
   const filtered = useMemo(() => {
-    const terms = searchable(query).split(' ').filter(Boolean);
+    const terms = searchTerms(query);
     return posts.filter(post => {
       const text = searchable(`${post.title} ${post.description} ${post.body}`);
       return (!tag || post.tags.includes(tag)) && terms.every(term => text.includes(term));
@@ -54,10 +54,14 @@ export default function ArchiveSearch({ posts }: { posts: Post[] }) {
           <span className="visual-arrow" aria-hidden="true">↗</span>
         </Link>
         <div className="post-meta archive-card-meta">{post.pinned && <span className="pinned-badge">置顶</span>}<time>{post.date.slice(0, 10)}</time><span className="meta-line" />{post.tags.length ? post.tags.map(item => <button type="button" className="card-tag" key={item} onClick={() => selectTag(item)}>{item}</button>) : '博客'}</div>
-        <h3><Link href={`/posts/${post.slug}/`}>{post.title}</Link></h3>
-        {post.description && <p>{post.description}</p>}
+        <h3><Link href={`/posts/${post.slug}/`}><MatchedText text={post.title} query={query} /></Link></h3>
+        {query.trim() ? <p className="search-excerpt"><MatchedText text={matchExcerpt(post.body, post.description, query)} query={query} /></p> : post.description && <p>{post.description}</p>}
         <Link className="read-more" href={`/posts/${post.slug}/`}>阅读全文 <span aria-hidden="true">→</span></Link>
       </article>
     )}</div> : <div className="archive-empty"><span aria-hidden="true">⌕</span><strong>没有找到匹配的文章</strong><p>试试其他关键词或清除标签筛选。</p><button type="button" onClick={() => { setQuery(''); selectTag(''); }}>清除筛选</button></div>}
   </>;
+}
+
+function MatchedText({ text, query }: { text: string; query: string }) {
+  return <>{highlightMatches(text, query).map((part, index) => part.match ? <mark key={index}>{part.text}</mark> : part.text)}</>;
 }

@@ -104,7 +104,7 @@ STextureEntry::loadOptimized - Out of memory
 
 
 
-## 四、安装和运行
+## 五、安装和运行
 
 ### 1. 准备游戏
 
@@ -128,7 +128,7 @@ STextureEntry::loadOptimized - Out of memory
 
 
 
-## 五、小工具说明
+## 六、小工具说明
 
 为了汉化方便，依旧是做了个小工具，随着补丁一起放出。
 附带的工具叫：
@@ -220,7 +220,7 @@ STextureEntry::loadOptimized - Out of memory
 
 
 
-## 六、卸载方法
+## 七、卸载方法
 
 最简单的方法：
 在 Steam 里对游戏执行“验证游戏文件完整性”。
@@ -238,7 +238,7 @@ STextureEntry::loadOptimized - Out of memory
 
 
 
-## 七、下载地址
+## 八、下载地址
 
 [GitHub](https://github.com/jyh9521/BloodRayne-CN/releases)
 

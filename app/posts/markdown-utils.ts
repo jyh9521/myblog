@@ -1,7 +1,7 @@
 import type { Plugin } from 'unified';
 
 export type HeadingItem = { id: string; text: string; level: number };
-export type ArticleImage = { src: string; alt: string; caption: string; group?: string };
+export type ArticleImage = { src: string; alt: string; caption: string; group?: string; width?: number; height?: number };
 
 function plainHeading(value: string) {
   return value.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/`([^`]*)`/g, '$1')

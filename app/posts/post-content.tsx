@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -23,7 +23,6 @@ export default function PostContent({ body, title, headings, images, games, cove
   const galleryImages = cover ? [cover, ...images] : images;
   const galleryOffset = cover ? 1 : 0;
   const imageGroups = [...new Set(galleryImages.map(image => image.group || '未分类'))].map(group => ({ group, firstIndex: galleryImages.findIndex(image => (image.group || '未分类') === group) }));
-  let imageCursor = 0;
 
   useEffect(() => {
     if (activeImage === null) return;
@@ -58,15 +57,17 @@ export default function PostContent({ body, title, headings, images, games, cove
   }, [cover?.src]);
 
   const currentImage = activeImage === null ? null : galleryImages[activeImage];
-  const markdownComponents = {
+  // Keep component identities stable when TOC highlighting or the lightbox changes.
+  const markdownComponents = useMemo(() => ({
     pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => <CodeBlock {...props}>{children}</CodeBlock>,
     img: ({ src, alt, title }: { src?: string; alt?: string; title?: string }) => {
-      const index = imageCursor++ + galleryOffset;
-      const image = images[index];
+      const imageIndex = images.findIndex(image => image.src === src);
+      const index = Math.max(0, imageIndex) + galleryOffset;
+      const image = images[imageIndex];
       const imageSrc = src || image?.src || '';
       const caption = title || image?.caption || alt || image?.alt || '';
       return <span className="article-figure"><button type="button" className="article-image-button" onClick={() => setActiveImage(index)} aria-label={`放大图片：${caption || `第 ${index + 1} 张`}`}>
-        <img src={imageSrc} alt={alt || image?.alt || ''} loading="lazy" />
+        <img src={imageSrc} alt={alt || image?.alt || ''} width={image?.width || 1600} height={image?.height || 900} style={{ aspectRatio: `${image?.width || 1600} / ${image?.height || 900}`, objectFit: 'contain' }} loading="lazy" />
       </button>{caption && <span className="article-image-caption">{caption}</span>}</span>;
     },
     h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...props}>{children}</h1>,
@@ -77,12 +78,12 @@ export default function PostContent({ body, title, headings, images, games, cove
       if (compare) { const params = new URLSearchParams(compare[1]); return <ImageCompare before={params.get('before') || ''} after={params.get('after') || ''} beforeLabel={params.get('beforeLabel') || '之前'} afterLabel={params.get('afterLabel') || '之后'} />; }
       return <a href={href}>{children}</a>;
     },
-  };
+  }), [images, games, galleryOffset]);
 
   return <>
     <ReadingProgress />
     {cover && <button type="button" className="article-cover-button" onClick={() => setActiveImage(0)} aria-label={`放大封面图片：${cover.caption}`}>
-      <span className="article-cover-viewport"><img ref={coverRef} className="cover cover-parallax" src={cover.src} alt={cover.alt} /></span><span className="article-image-caption">{cover.caption}</span>
+      <span className="article-cover-viewport"><img ref={coverRef} className="cover cover-parallax" src={cover.src} alt={cover.alt} width={cover.width || 1600} height={cover.height || 900} style={{ aspectRatio: `${cover.width || 1600} / ${cover.height || 900}`, objectFit: 'contain' }} /></span><span className="article-image-caption">{cover.caption}</span>
     </button>}
     <div className="article-content">
       <div className="article-actions"><span>阅读文章</span><ShareButton title={title} /></div>

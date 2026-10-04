@@ -61,7 +61,6 @@ RAWG / ScreenScraper / 未来 IGDB 是资料来源；Steam、GOG、Nintendo eSho
 - `npm run audit:links` 在线检查外链，404/410 会提示失效；超时、反爬和限流标记为“未确认”，不阻断正常发布。ScreenScraper 动态图片不在每次发布时批量抓取，以免消耗 API 配额。
 - 「游戏档案 → 游戏资料 → 刷新游戏资料」现在先展示旧值/新值。勾选字段并确认后才填入表单，最后仍需保存。取消或不勾选任何字段不会修改资料，手动编辑字段不覆盖。直接搜索并导入新游戏的流程保留。
 - 游戏档案支持按资料更新时间、名称、发售年份排序；筛选与排序写入网址，可分享该网址。在同一浏览器标签页从详情返回时会恢复上一次筛选；“重置筛选与排序”清空记忆。
-- 文章编辑器新增「汉化补丁信息」。启用展示后填写版本、发布日期、支持的游戏版本、安装/兼容说明、已知问题、下载渠道和更新记录；前台在正文前展示统一信息区。下载可选填 SHA256。旧文章未启用时不显示空信息区，既有正文和下载内容保持不变。
 - 独立标签页及顶部/底部导航入口已移除；文章标签和文章列表中的标签筛选保留。没有新增历史网址跳转功能。
 
 ### 修改文章网址名
@@ -83,3 +82,5 @@ RAWG / ScreenScraper / 未来 IGDB 是资料来源；Steam、GOG、Nintendo eSho
 ## 原 TinaCloud 连接清理
 
 网站构建和编辑已不使用 TinaCloud。确认 Sveltia 正常编辑和 Pages 部署后，可在 GitHub 仓库 Settings → Secrets and variables → Actions 删除旧的 `TINA_TOKEN` secret 和 `TINA_CLIENT_ID` variable，并在 GitHub Settings → Applications 中撤销 TinaCloud App 对本仓库的访问；TinaCloud 控制台中的旧项目也可以删除。
+
+文章图片在构建时读取本地尺寸并预留空间；远程或无有效尺寸的图片使用固定 16:9 容器完整显示，不会在加载后挤动正文。目录高亮变化不会重建正文图片。

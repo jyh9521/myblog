@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { normalizePatchInfo, type PatchInfo } from './patch-info';
 
 const postsDir = path.join(process.cwd(), 'content/posts');
 const formatDate = (value: unknown) => value instanceof Date
@@ -31,7 +30,6 @@ export type Post = {
   audio: string;
   video: string;
   attachment: string;
-  patch: PatchInfo | null;
 };
 
 export function getPost(slug: string): Post | null {
@@ -56,7 +54,6 @@ export function getPost(slug: string): Post | null {
     audio: String(data.audio || ''),
     video: String(data.video || ''),
     attachment: String(data.attachment || ''),
-    patch: normalizePatchInfo(data.patch),
   };
 }
 

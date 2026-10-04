@@ -75,16 +75,6 @@ test('shelf URL roundtrip, defaults and deterministic ordering', () => {
   assert.equal(shelf.writeShelfState(shelf.shelfDefaults).toString(), '');
 });
 
-test('patch information is optional and rejects executable or malformed download URLs', () => {
-  const patch = loadTs('lib/patch-info.ts');
-  assert.equal(patch.normalizePatchInfo(undefined), null);
-  assert.equal(patch.normalizePatchInfo({ enabled: false }), null);
-  const data = patch.normalizePatchInfo({ enabled: true, version: 'v1.0', downloads: [{ label: 'Release', url: 'https://example.test/file.zip', sha256: 'a'.repeat(64) }, { url: 'javascript:alert(1)' }, { url: '//evil.test/x' }], changelog: [{ version: 'v1.0', note: 'Initial release' }] });
-  assert.equal(data.version, 'v1.0');
-  assert.equal(data.downloads.length, 1);
-  assert.equal(data.downloads[0].sha256.length, 64);
-  assert.equal(data.changelog.length, 1);
-});
 
 test('content gate catches missing game references, assets, URLs and CMS search-field regressions', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'blog-validation-'));
@@ -113,6 +103,5 @@ test('tags page/navigation removed, article tags retained and CI gates run befor
   assert.ok(fs.readFileSync('app/posts/[slug]/page.tsx', 'utf8').includes('post.tags.map'));
   const runs = yaml.load(fs.readFileSync('.github/workflows/pages.yml', 'utf8')).jobs.build.steps.map(step => step.run).filter(Boolean);
   for (const gate of ['npm ci', 'npm test', 'npm run check', 'npm run validate']) assert.ok(runs.indexOf(gate) < runs.indexOf('npm run build'));
-  const patchField = yaml.load(fs.readFileSync('public/sveltia/config.yml', 'utf8')).collections.find(x => x.name === 'post').fields.find(x => x.name === 'patch');
-  assert.ok(patchField.fields.some(x => x.name === 'downloads'));
+  assert.ok(!yaml.load(fs.readFileSync('public/sveltia/config.yml', 'utf8')).collections.find(x => x.name === 'post').fields.some(x => x.name === 'patch'));
 });

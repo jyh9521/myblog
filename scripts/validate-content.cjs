@@ -95,14 +95,6 @@ async function validateRepository(root = process.cwd()) {
     const metadata = data.gameMetadata || {};
     checkUrl(metadata.cover, filename, base, '游戏封面');
     for (const url of metadata.screenshots || []) checkUrl(url, filename, base, '游戏截图');
-    if (data.patch?.enabled) {
-      if (!String(data.patch.version || '').trim()) error(filename, '已启用补丁信息，但没有填写版本');
-      for (const download of data.patch.downloads || []) {
-        if (!download.label || !download.url) error(filename, '补丁下载渠道必须填写名称和网址');
-        checkUrl(download.url, filename, base, '补丁下载');
-        if (download.sha256 && !/^[a-f\d]{64}$/i.test(download.sha256)) error(filename, '补丁 SHA256 必须为 64 位十六进制');
-      }
-    }
   }
   return { errors, warnings, remote: [...remote], postCount: posts.length, gameCount: games.size };
 }

@@ -5,7 +5,7 @@ import { extractHeadings, extractImages } from '../markdown-utils';
 import { getAllPosts, getPost, hasLocalAsset } from '../../../lib/posts';
 import { getGames } from '../../../lib/games';
 import GiscusComments from '../../comments/giscus-comments';
-import PatchInformation from '../patch-info';
+import { withImageSize } from '../../../lib/article-image-size';
 
 export function generateStaticParams() {
   return getAllPosts().map(post => ({ slug: post.slug }));
@@ -23,7 +23,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     .sort((a, b) => b.tags.filter(tag => post.tags.includes(tag)).length - a.tags.filter(tag => post.tags.includes(tag)).length || b.date.localeCompare(a.date))
     .slice(0, 3);
   const headings = extractHeadings(post.body);
-  const images = extractImages(post.body);
+  const images = extractImages(post.body).map(image => withImageSize(image));
   const games = getGames();
   return <main className="article-shell">
     <div className="container article">
@@ -35,8 +35,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         {post.updateNote && <p className="update-note">更新说明：{post.updateNote}</p>}
         {post.gameSlug && <Link className="game-reference" href={`/games/${post.gameSlug}/`}>🎮 查看游戏档案与时间线 ↗</Link>}
       </header>
-      <PatchInformation patch={post.patch} />
-      <PostContent body={post.body} title={post.title} headings={headings} images={images} games={games} cover={hasLocalAsset(post.cover) ? { src: post.cover, alt: post.title, caption: post.title, group: '封面' } : undefined} audio={post.audio} video={post.video} attachment={post.attachment} />
+      <PostContent body={post.body} title={post.title} headings={headings} images={images} games={games} cover={hasLocalAsset(post.cover) ? withImageSize({ src: post.cover, alt: post.title, caption: post.title, group: '封面' }) : undefined} audio={post.audio} video={post.video} attachment={post.attachment} />
       {(previous || next) && <nav className="post-neighbor-nav" aria-label="上一篇和下一篇">
         {previous ? <Link href={`/posts/${previous.slug}/`} className="neighbor-card neighbor-previous"><span>← 上一篇 · 更早</span><strong>{previous.title}</strong></Link> : <span />}
         {next ? <Link href={`/posts/${next.slug}/`} className="neighbor-card neighbor-next"><span>下一篇 · 更新 →</span><strong>{next.title}</strong></Link> : <span />}

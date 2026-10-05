@@ -3,11 +3,6 @@ title: 吸血莱恩：终极剪辑版
 status:
   - 已通关
   - 已制作补丁
-projects:
-  - url: https://github.com/jyh9521/BloodRayne-CN
-    name: 吸血莱恩汉化项目
-    type: 汉化补丁
-    releaseUrl: https://github.com/jyh9521/BloodRayne-CN/releases
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/7bc/7bc71a03ca2351d7872ad37d29613718.jpg
@@ -68,4 +63,9 @@ events:
     note: 名气虽然大，但是玩起来挺一般的。手感稀烂，地图设计和流程设计也基本没有，一路就是砍砍砍。
   - date: 2026-07-30
     title: 发布汉化补丁
+projects:
+  - url: https://github.com/jyh9521/BloodRayne-CN
+    name: 《吸血莱恩：终极剪辑版》简体中文汉化补丁
+    type: 汉化补丁
+    releaseUrl: https://github.com/jyh9521/BloodRayne-CN/releases
 ---

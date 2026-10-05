@@ -3,11 +3,6 @@ title: 吸血莱恩2：终极剪辑版
 status:
   - 已通关
   - 已制作补丁
-projects:
-  - url: https://github.com/jyh9521/BloodRayne2-CN
-    name: 吸血莱恩2汉化项目
-    type: 汉化补丁
-    releaseUrl: https://github.com/jyh9521/BloodRayne2-CN/releases
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/61e/61e3d39225c5761eb51cf035a508a91b.jpg
@@ -71,4 +66,9 @@ events:
     note: |-
       相比初代来说，整体系统丰富了非常多，加了招式系统，枪械固定并且拥有很多设计模式，玩法上也可以看出开发商正在积极进行探索。
       但是抛开画面表现和剧情，整体质量反而不如初代，流程拖沓，莱恩的性能也下降非常多，流程中大量强制使用钩锁扔人进行的解密，以及最重要的，身为动作游戏，招式有大量需要轮圆一圈摇杆才能搓的招PC基本按不出来，打击感也极其烂。
+projects:
+  - url: https://github.com/jyh9521/BloodRayne2-CN
+    name: 《吸血莱恩2：终极剪辑版》简体中文汉化补丁
+    type: 汉化补丁
+    releaseUrl: https://github.com/jyh9521/BloodRayne2-CN/releases
 ---

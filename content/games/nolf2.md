@@ -2,11 +2,6 @@
 title: 无人永生2
 status:
   - 已制作补丁
-projects:
-  - url: https://github.com/jyh9521/NOLF2-CN
-    name: 无人永生2汉化项目
-    type: 汉化补丁
-    releaseUrl: https://github.com/jyh9521/NOLF2-CN/releases
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/24a/24a7490f304e74d503bd461bc23b37a2.jpg
@@ -60,4 +55,9 @@ manual:
 events:
   - date: 2026-07-14
     title: 发布汉化补丁
+projects:
+  - url: https://github.com/jyh9521/NOLF2-CN
+    name: 《无人永生2》简体中文汉化补丁
+    type: 汉化补丁
+    releaseUrl: https://github.com/jyh9521/NOLF2-CN/releases
 ---

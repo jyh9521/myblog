@@ -77,6 +77,22 @@ async function validateRepository(root = process.cwd()) {
     try { ({ data, content } = matter(fs.readFileSync(full, 'utf8'))); } catch (e) { error(filename, `frontmatter 错误：${e.message}`); continue; }
     const base = folder ? `/${folder}/${name.slice(0, -3)}/` : '/about/';
     if (data.gameSlug && !games.has(data.gameSlug)) error(filename, `关联的游戏档案不存在：${data.gameSlug}`);
+    if (data.projects !== undefined && !Array.isArray(data.projects)) error(filename, '关联 GitHub 项目必须为列表');
+    const projectRepos = new Set();
+    for (const project of Array.isArray(data.projects) ? data.projects : []) {
+      try {
+        const url = new URL(project.url);
+        if (url.protocol !== 'https:' || url.hostname !== 'github.com' || url.username || url.password || !/^\/[A-Za-z0-9-]+\/[A-Za-z0-9_.-]+\/?$/.test(url.pathname)) throw Error('填写完整 HTTPS GitHub 仓库地址');
+        const repo = url.pathname.replace(/\/$/, '').replace(/\.git$/, '');
+        if (projectRepos.has(repo.toLowerCase())) throw Error('仓库重复');
+        projectRepos.add(repo.toLowerCase());
+        if (project.releaseUrl) {
+          const release = new URL(project.releaseUrl);
+          if (release.origin !== url.origin || release.username || release.password || !(release.pathname === `${repo}/releases` || release.pathname.startsWith(`${repo}/releases/`))) throw Error('发布页必须属于该仓库的 Releases');
+        }
+        checkUrl(project.url, filename, base, '项目'); checkUrl(project.releaseUrl, filename, base, '项目发布页');
+      } catch (e) { error(filename, `GitHub 项目无效：${e.message}`); }
+    }
     for (const key of ['cover', 'audio', 'video', 'attachment']) checkUrl(data[key], filename, base, key);
     const tree = parser.parse(content);
     const definitions = new Map();

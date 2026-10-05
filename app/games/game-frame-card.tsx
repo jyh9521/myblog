@@ -32,5 +32,5 @@ export default function GameFrameCard({ frame, game, title = '', status = '' }: 
       return url ? [{ source, url }] : [];
     }),
   } satisfies GamePlatform;
-  return <GamePlatformCard gameTitle={game.title} status={status || game.status} platform={platform} manual={game.manual} />;
+  return <GamePlatformCard gameTitle={game.title} status={status || game.status} platform={platform} manual={game.manual} projectCount={game.projects?.length || 0} />;
 }

@@ -71,7 +71,7 @@ export default function GameShelf({ games }: { games: GameRecord[] }) {
         <div className="game-shelf-title"><Link href={`/games/${game.slug}/`}>{game.title} ↗</Link><span>{game.status}</span></div>
         {game.summary && <p>{game.summary}</p>}
         {platformNames.length > 0 && <div className="game-shelf-platforms">{platformNames.map(label => <span key={label}>{label}</span>)}</div>}
-        <Link className={`game-platform-link game-platform-link-${family}`} href={`/games/${game.slug}/`}>查看游戏档案 ↗</Link>
+        <div className="game-card-actions"><Link className={`game-platform-link game-platform-link-${family}`} href={`/games/${game.slug}/`}>查看游戏档案 ↗</Link>{!!game.projects?.length && <Link className="game-project-entry" href={`/games/${game.slug}/#projects`}>{game.projects.length === 1 ? 'GitHub 项目' : `相关项目 ${game.projects.length}`} ↗</Link>}</div>
       </div>
       <Link className="game-shelf-art" href={`/games/${game.slug}/`} aria-label={`查看${game.title}档案`}>
         {cover ? <img src={cover} alt={`${game.title} 封面`} loading="lazy" /> : <span aria-hidden="true">🎮</span>}

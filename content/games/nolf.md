@@ -2,6 +2,11 @@
 title: 无人永生
 status:
   - 已制作补丁
+projects:
+  - url: https://github.com/jyh9521/NOLF-CN
+    name: 无人永生汉化项目
+    type: 汉化补丁
+    releaseUrl: https://github.com/jyh9521/NOLF-CN/releases
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/a0c/a0c5990e25bae51c320403d155281d75.jpg

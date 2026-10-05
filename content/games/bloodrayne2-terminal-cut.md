@@ -3,6 +3,11 @@ title: 吸血莱恩2：终极剪辑版
 status:
   - 已通关
   - 已制作补丁
+projects:
+  - url: https://github.com/jyh9521/BloodRayne2-CN
+    name: 吸血莱恩2汉化项目
+    type: 汉化补丁
+    releaseUrl: https://github.com/jyh9521/BloodRayne2-CN/releases
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/61e/61e3d39225c5761eb51cf035a508a91b.jpg

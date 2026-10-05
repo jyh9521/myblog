@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { normalizeGameStatus } from './game-status';
+import { normalizeProjects } from './game-projects';
 import gamePlatforms from '../public/sveltia/game-platforms.js';
 import type { AvailabilityStatus, GameEvent, GameManual, GameMetadata, GamePlatform, GameRecord, GameStore, StoreLink } from './game-types';
 
@@ -105,7 +106,7 @@ export function getGames(): GameRecord[] {
     return [{
       id: slug, slug,
       title: asText(data.title || metadata.localizedName || metadata.title), status: normalizeGameStatus(data.status),
-      summary: asText(data.summary || metadata.description), metadata: hasMetadata ? metadata : null, manual, platforms, events,
+      summary: asText(data.summary || metadata.description), metadata: hasMetadata ? metadata : null, manual, platforms, events, projects: normalizeProjects(data.projects),
     }];
   }).sort((a, b) => a.title.localeCompare(b.title, 'zh-CN'));
 }

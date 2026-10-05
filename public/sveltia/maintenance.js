@@ -72,6 +72,28 @@
   $('select-unused').onclick = () => { filtered().filter(file => !file.references.length).forEach(file => selected.add(file.path)); invalidatePreview(); renderAssets(); };
   $('clear-selection').onclick = () => { selected.clear(); invalidatePreview(); renderAssets(); };
   $('preview-cleanup').onclick = () => { if (!index) return; preview = core.cleanupPreview(index, selected); $('cleanup').hidden = false; $('cleanup-summary').textContent = `选中 ${preview.files.length} 个未引用文件，共 ${size(preview.totalBytes)}。这是预览，尚未删除任何文件。`; $('cleanup-files').textContent = preview.files.map(file => file.path).join('\n') || '没有选中可清理文件。'; $('export-cleanup').disabled = !preview.files.length; };
-  $('export-cleanup').onclick = () => { if (!preview || !preview.files.length) return; const url = URL.createObjectURL(new Blob([JSON.stringify(preview, null, 2)], { type: 'application/json' })); const download = node('a'); download.href = url; download.download = 'blog-cleanup-preview.json'; download.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); };
+  $('export-cleanup').onclick = () => { if (!preview || !preview.files.length) return; const url = URL.createObjectURL(new Blob([JSON.stringify(preview, null, 2)], { type: 'application/json' })); const download = node('a'); download.href = url; download.download = 'blog-cleanup-preview.json'; document.body.append(download); download.click(); download.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); };
+  let deleting = false, deletePreview = null;
+  $('delete-selected').onclick = () => {
+    if (!preview?.files.length) { $('delete-status').textContent = '请先选择文件并生成清理预览。'; return; }
+    deletePreview = structuredClone(preview); $('delete-files').textContent = deletePreview.files.map(file => file.path).join('\n'); $('delete-error').textContent = ''; $('delete-token').value = ''; $('delete-dialog').showModal();
+  };
+  $('cancel-delete').onclick = () => $('delete-dialog').close();
+  $('delete-dialog').addEventListener('cancel', event => { if (deleting) event.preventDefault(); });
+  $('delete-dialog').addEventListener('close', () => { $('delete-token').value = ''; deletePreview = null; });
+  $('confirm-delete').onclick = async () => {
+    if (deleting || !deletePreview) return;
+    deleting = true; $('confirm-delete').disabled = true; $('cancel-delete').disabled = true;
+    $('delete-error').textContent = '正在核对最新引用和文件哈希，请稍候…';
+    const token = $('delete-token').value; $('delete-token').value = '';
+    try {
+      const result = await window.BlogAssetDelete.deleteAssets(deletePreview, token);
+      const deleted = new Set(result.files.map(path => '/' + path.slice('public/'.length)));
+      index.files = index.files.filter(file => !deleted.has(file.path)); index.files.forEach(file => { file.duplicates = file.duplicates.filter(path => !deleted.has(path)); });
+      selected.clear(); invalidatePreview(); renderAssets(); $('delete-dialog').close();
+      $('delete-status').replaceChildren(document.createTextNode(`已删除 ${result.files.length} 个文件并保存到 GitHub，部署后前台生效。`), link('查看删除提交 / 恢复依据', result.url)); refreshPublish();
+    } catch (error) { $('delete-error').textContent = `${error.message}。若网络中断，请先查看发布状态和 GitHub 提交记录，确认结果后再操作。`; }
+    finally { deleting = false; $('confirm-delete').disabled = false; $('cancel-delete').disabled = false; }
+  };
   refreshPublish(); refreshAssets(); setInterval(() => { if (!document.hidden && !$('publish').hidden) refreshPublish(); }, 180000);
 })();

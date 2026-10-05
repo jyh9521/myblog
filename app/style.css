@@ -154,3 +154,5 @@ button:not(.toc-toggle),.hero-button,.read-more,.site-header nav a{transition-pr
 .body .game-platform-card:not(.is-compact) .game-official-stores>strong{display:none}
 .body .game-platform-card:not(.is-compact) .game-official-stores a{padding:4px 8px;font-size:11px}
 .body .game-platform-card:not(.is-compact) .game-platform-link{padding:7px 12px;font-size:12px;line-height:1.4;margin-top:4px}
+
+.game-card-actions{flex-shrink:0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}.game-project-entry{font-size:13px;color:var(--muted);white-space:nowrap}.game-projects{margin:28px 0;scroll-margin-top:110px}.game-projects article{padding:18px;margin:12px 0;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.game-projects article>div{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.game-projects small{color:var(--muted)}.game-projects nav{display:flex;gap:18px;flex-wrap:wrap}.game-projects p{overflow-wrap:anywhere}

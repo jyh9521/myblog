@@ -2,12 +2,12 @@
 
 import { gameStoreLabels, type GameManual, type GamePlatform } from '../../lib/game-types';
 
-type Props = { gameTitle: string; status?: string; platform: GamePlatform; manual?: GameManual; compact?: boolean };
+type Props = { gameTitle: string; status?: string; platform: GamePlatform; manual?: GameManual; compact?: boolean; projectCount?: number };
 
 const availabilityLabels = { available: '可数字购买', delisted: '已下架', 'physical-only': '仅有实体版', free: '官方免费', unknown: '状态未知' } as const;
 const safeExternalUrl = (value: string) => { try { const url = new URL(value); return ['http:', 'https:'].includes(url.protocol) ? url.href : ''; } catch { return ''; } };
 
-export default function GamePlatformCard({ gameTitle, status = '', platform, manual, compact = false }: Props) {
+export default function GamePlatformCard({ gameTitle, status = '', platform, manual, compact = false, projectCount = 0 }: Props) {
   const family = platform.store;
   const platformName = platform.platform || gameStoreLabels[family];
   const catalogUrl = /^\/games\/[a-z0-9-]+\/$/.test(platform.catalogUrl) ? platform.catalogUrl : '/games/';
@@ -36,7 +36,7 @@ export default function GamePlatformCard({ gameTitle, status = '', platform, man
           })}</div>
         </section>}
       </>}
-      <a className={`game-platform-link game-platform-link-${family}`} href={catalogUrl}>查看游戏档案 ↗</a>
+      <div className="game-card-actions"><a className={`game-platform-link game-platform-link-${family}`} href={catalogUrl}>查看游戏档案 ↗</a>{projectCount > 0 && <a className="game-project-entry" href={`${catalogUrl}#projects`}>{projectCount === 1 ? 'GitHub 项目' : `相关项目 ${projectCount}`} ↗</a>}</div>
     </div>
   </article>;
 }

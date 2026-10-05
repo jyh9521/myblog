@@ -72,6 +72,18 @@ collections:
           - { name: date, label: 日期, widget: datetime, type: date, required: false }
           - { name: title, label: 事件, widget: string, required: true }
           - { name: note, label: 说明, widget: text, required: false }
+      - name: projects
+        label: 关联 GitHub 项目
+        widget: list
+        required: false
+        summary: '{{fields.name}} · {{fields.type}}'
+        hint: "可关联多个项目。文章卡片自动复用；不实时请求 GitHub。"
+        fields:
+          - { name: url, label: 仓库地址, widget: string, pattern: ['^https://github\.com/[A-Za-z0-9-]+/[A-Za-z0-9_.-]+/?$', '填写完整 GitHub 仓库地址'], required: true }
+          - { name: name, label: 展示名称, widget: string, required: false, hint: "留空时显示 owner/repo。" }
+          - { name: type, label: 项目类型, widget: select, options: [汉化补丁, 工具, 现代化补丁, 其他], default: 汉化补丁 }
+          - { name: description, label: 简短说明, widget: text, required: false }
+          - { name: releaseUrl, label: 发布页地址, widget: string, required: false, hint: "可选，填写该仓库 Releases 或指定版本地址；留空不显示下载按钮。" }
 
   - name: pages
     label: 页面

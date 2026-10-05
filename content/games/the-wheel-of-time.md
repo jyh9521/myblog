@@ -69,4 +69,8 @@ manual:
 events:
   - date: 2026-10-02
     title: 开始汉化工作
+projects:
+  - url: https://github.com/jyh9521/the-wheel-of-time-cn
+    name: 《时光之轮》简体中文汉化补丁
+    type: 汉化补丁
 ---

@@ -54,4 +54,8 @@ manual:
 events:
   - date: 2026-06-30
     title: 发布汉化补丁
+projects:
+  - url: https://github.com/jyh9521/Vivisector-Beast-Within-CN
+    name: 《活体解剖者：人面兽心》简体中文汉化补丁
+    type: 汉化补丁
 ---

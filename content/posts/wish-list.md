@@ -18,12 +18,6 @@ pinned: true
 
 [gframe]xiii-classic||[/gframe]
 
-[gframe]thief-gold||[/gframe]
-
-[gframe]thief-2-the-metal-age||[/gframe]
-
-[gframe]thief-deadly-shadows||[/gframe]
-
 [gframe]the-wheel-of-time||[/gframe]
 
 [gframe]rune-classic||[/gframe]
@@ -40,4 +34,6 @@ pinned: true
 
 [gframe]omikron-the-nomad-soul||[/gframe]
 
-[gframe]mercenaries-2-world-in-flames||[/gframe][gframe]anachronox||[/gframe]
+[gframe]mercenaries-2-world-in-flames||[/gframe]
+
+[gframe]anachronox||[/gframe]

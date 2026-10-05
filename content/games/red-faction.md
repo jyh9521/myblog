@@ -3,11 +3,6 @@ title: 红色派系
 status:
   - 已通关
   - 已制作补丁
-projects:
-  - url: https://github.com/jyh9521/Red-Faction-CN
-    name: 红色派系汉化项目
-    type: 汉化补丁
-    releaseUrl: https://github.com/jyh9521/Red-Faction-CN/releases
 gameMetadata:
   alternativeNames:
     - Red Faction :สงครามแดงเดือด
@@ -79,4 +74,9 @@ manual:
 events:
   - date: 2026-08-07
     title: 发布汉化补丁
+projects:
+  - url: https://github.com/jyh9521/Red-Faction-CN
+    name: 《红色派系》简体中文汉化补丁
+    type: 汉化补丁
+    releaseUrl: https://github.com/jyh9521/Red-Faction-CN/releases
 ---

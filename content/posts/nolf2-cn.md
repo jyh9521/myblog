@@ -1,7 +1,7 @@
 ---
 aliases:
   - /posts/nolf2/
-title: 《无人永生2》简体中文汉化版
+title: 《无人永生2》简体中文汉化补丁
 date: 2026-07-14
 tags:
   - 游戏

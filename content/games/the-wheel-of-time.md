@@ -2,6 +2,7 @@
 title: 时光之轮
 status:
   - 考虑制作补丁
+  - 正在玩
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/d04/d0455d429ba759e0923ace6c586fd5c8.jpg

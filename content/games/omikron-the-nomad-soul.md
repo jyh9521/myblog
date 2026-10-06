@@ -61,8 +61,8 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Steam
+    - name: GOG
       note: ''
       region: ''
-      url: https://www.gog.com/en/game/
+      url: https://www.gog.com/en/game/omikron_the_nomad_soul
 ---

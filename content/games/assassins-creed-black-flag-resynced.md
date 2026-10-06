@@ -60,7 +60,7 @@ gameMetadata:
       id: '1017360'
       slug: assassins-creed-back-flag-resynced
       url: https://rawg.io/games/1017360
-  title: 刺客信条：黑旗 记忆重置
+  title: Assassin's Creed Black Flag Resynced
   updatedAt: 2026-10-06T14:05:14.467Z
   website: ''
 manual:

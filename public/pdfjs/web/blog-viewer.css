@@ -1,0 +1,3 @@
+:root { --toolbar-bg-color: #fff4f5; --toolbar-border-color: #edbcc3; --body-bg-color: #f5f6f9; --toggled-btn-bg-color: #ffdee3; }
+#toolbarContainer { border-top: 3px solid #e60020; }
+#openFile, #secondaryOpenFile, #editorModeButtons, #editorModeSeparator { display: none !important; }

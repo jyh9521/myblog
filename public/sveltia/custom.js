@@ -264,6 +264,28 @@
         toPreview: ({ gameSlug = '', title = '', status = '' }) => `游戏档案（${String(title) || String(gameSlug) || '请选择游戏'}${status ? ` · ${status}` : ''}）`,
       });
     window.CMS.registerEditorComponent({
+      id: 'pdf', label: '插入 PDF', tooltip: '上传或选择 PDF', icon: 'picture_as_pdf', trigger: 'button',
+      fields: [
+        { name: 'file', label: 'PDF 文件', widget: 'file', required: true, accept: '.pdf,application/pdf', choose_url: false, pattern: ['\\.[pP][dD][fF]$', '请选择 PDF 文件'], hint: '与图片共用资源库。请选择或上传 .pdf 文件。' },
+        { name: 'title', label: '文件标题', widget: 'string', required: false, default: 'PDF 文档' },
+      ],
+      pattern: /^\[([^\]\n]*)\]\((\/uploads\/[^\s)]+\.pdf|blob:[^\s)]+) "pdf-embed"\)$/i,
+      fromBlock: match => ({ title: match[1], file: decodeURI(match[2]) }),
+      toBlock: ({ file = '', title = 'PDF 文档' }) => {
+        const value = String(file).trim();
+        const label = String(title || 'PDF 文档').replace(/[\[\]\\\r\n]/g, ' ');
+        // Sveltia stores a new upload as a blob URL until saving replaces it
+        // with its permanent /uploads/ path. Keep that draft reference intact.
+        if (/^blob:https?:\/\/[^\s)]+$/.test(value)) return '[' + label + '](' + value + ' "pdf-embed")';
+        if (!value.startsWith('/uploads/') || !/\.pdf$/i.test(value) || /[?#\\]/.test(value)) return '';
+        let parts; try { parts = value.split('/').map(part => decodeURIComponent(part)); } catch { return ''; }
+        if (parts.some(part => part === '.' || part === '..' || /[\x00-\x1f\\?#/]/.test(part))) return '';
+        const url = parts.map(part => encodeURIComponent(part).replace(/[!'()*]/g, char => '%' + char.charCodeAt(0).toString(16).toUpperCase())).join('/');
+        return '[' + label + '](' + url + ' "pdf-embed")';
+      },
+      toPreview: ({ title = 'PDF 文档' }) => 'PDF 内嵌阅读：' + String(title).replace(/[<>&"']/g, ''),
+    });
+    window.CMS.registerEditorComponent({
       id: 'horizontal-rule', label: '插入分隔线', tooltip: '插入分隔线', icon: 'horizontal_rule', trigger: 'button',
       fields: [], collapsed: true,
       pattern: /^---$/m,

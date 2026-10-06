@@ -33,7 +33,7 @@ async function buildAssetIndex(root = process.cwd()) {
   const files = walk(path.join(root, 'public/uploads')).filter(file => !path.basename(file).startsWith('.')).map(file => {
     const url = '/' + path.relative(path.join(root, 'public'), file).replaceAll('\\', '/');
     const bytes = fs.readFileSync(file);
-    return { path: url, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex'), image: /\.(avif|png|jpe?g|gif|webp|svg|bmp)$/i.test(file), references: [...(references.get(url)?.values() || [])] };
+    return { path: url, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex'), image: /\.(avif|png|jpe?g|gif|webp|svg|bmp)$/i.test(file), pdf: /\.pdf$/i.test(file), references: [...(references.get(url)?.values() || [])] };
   }).sort((a, b) => a.path.localeCompare(b.path));
   const groups = new Map(); files.forEach(file => { if (!groups.has(file.sha256)) groups.set(file.sha256, []); groups.get(file.sha256).push(file.path); });
   files.forEach(file => { file.duplicates = groups.get(file.sha256).filter(name => name !== file.path); });

@@ -40,7 +40,7 @@
   function filtered() {
     if (!index) return [];
     const query = $('asset-query').value.trim().toLowerCase(), mode = $('asset-filter').value;
-    return index.files.filter(file => (!query || [file.path, ...file.references.map(ref => ref.title)].join(' ').toLowerCase().includes(query)) && (mode === 'all' || mode === 'images' && file.image || mode === 'unused' && !file.references.length || mode === 'duplicates' && file.duplicates.length));
+    return index.files.filter(file => (!query || [file.path, ...file.references.map(ref => ref.title)].join(' ').toLowerCase().includes(query)) && (mode === 'all' || mode === 'images' && file.image || mode === 'pdf' && file.pdf || mode === 'unused' && !file.references.length || mode === 'duplicates' && file.duplicates.length));
   }
   function invalidatePreview() { preview = null; $('cleanup').hidden = true; }
   function renderAssets() {
@@ -50,7 +50,7 @@
     $('asset-summary').textContent = `当前显示 ${files.length} / ${index.files.length} 个资源；未引用 ${index.files.filter(file => !file.references.length).length} 个。清单版本 ${index.commit.slice(0, 7)}，生成于 ${new Date(index.generatedAt).toLocaleString('zh-CN', { timeZone: 'Asia/Tokyo' })}。${latestCommit && latestCommit !== index.commit ? '清单不是最新提交，请等待部署成功后刷新再核对。' : ''}`;
     for (const file of files) {
       const row = node('article', undefined, 'asset');
-      if (file.image) { const image = node('img'); image.src = file.path.split('/').map(encodeURIComponent).join('/'); image.alt = file.path.split('/').pop(); image.loading = 'lazy'; row.append(image); } else row.append(node('span', '附件'));
+      if (file.image) { const image = node('img'); image.src = file.path.split('/').map(encodeURIComponent).join('/'); image.alt = file.path.split('/').pop(); image.loading = 'lazy'; row.append(image); } else row.append(node('span', file.pdf ? 'PDF' : '附件'));
       const info = node('div'); info.append(node('strong', file.path, 'asset-title')); info.append(node('small', `${size(file.bytes)} · ${file.references.length ? '正在使用' : '未引用'}`));
       const label = node('label'); const checkbox = node('input'); checkbox.type = 'checkbox'; checkbox.checked = selected.has(file.path); checkbox.disabled = !!file.references.length;
       checkbox.setAttribute('aria-label', `选择清理 ${file.path}`); checkbox.onchange = () => { checkbox.checked ? selected.add(file.path) : selected.delete(file.path); invalidatePreview(); };

@@ -11,6 +11,7 @@ import { ReadingProgress, ShareButton } from '../site-enhancements';
 import ImageCompare from './image-compare';
 import GameFrameCard from '../games/game-frame-card';
 import RetryableImage from './retryable-image';
+import PdfEmbed from './pdf-embed';
 import type { GameRecord } from '../../lib/game-types';
 
 type Props = { body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
@@ -72,7 +73,8 @@ export default function PostContent({ body, title, headings, images, games, cove
       </span>{caption && <span className="article-image-caption">{caption}</span>}</span>;
     },
     h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...props}>{children}</h1>,
-    a: ({ href = '', children }: { href?: string; children?: React.ReactNode }) => {
+    a: ({ href = '', title, children }: { href?: string; title?: string; children?: React.ReactNode }) => {
+      if (title === 'pdf-embed') return <PdfEmbed src={href}>{children}</PdfEmbed>;
       const game = href.match(/game-frame\.invalid\/(g|p|n|x|s)\?([^#]*)/);
       if (game) { const params = new URLSearchParams(game[2]); const slug = params.get('slug') || ''; return <GameFrameCard frame={game[1]} game={games.find(item => item.slug === slug)} title={params.get('title') || ''} status={params.get('status') || ''} />; }
       const compare = href.match(/image-compare\.invalid\/compare\?([^#]*)/);

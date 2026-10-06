@@ -1,4 +1,5 @@
 ---
+title: 刺客信条：黑旗 记忆重置
 status:
   - 正在玩
 gameMetadata:

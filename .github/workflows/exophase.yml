@@ -1,0 +1,42 @@
+name: Update gaming profile
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: gaming-profile-update
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Refresh public Exophase data
+        run: node scripts/update-exophase.cjs
+      - name: Publish changed data and deploy Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- public/data/exophase.json; then
+            echo "Gaming profile unchanged; no commit."
+            exit 0
+          fi
+          git config user.name "Game Profile Maintenance"
+          git config user.email "jyh9521@users.noreply.github.com"
+          git add public/data/exophase.json
+          git commit -m "Update public gaming profile"
+          # Rebase over concurrent CMS edits; never force-push or discard content.
+          git pull --rebase origin main
+          git push origin HEAD:main
+          # GITHUB_TOKEN pushes do not trigger push workflows; dispatch explicitly.
+          gh workflow run pages.yml --ref main

@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "username": "jyh9521",
+  "displayName": "BLFY",
+  "updatedAt": "2026-10-07T02:26:56.466Z",
+  "stats": {
+    "hours": 25436,
+    "games": 4831,
+    "achievements": 10981,
+    "completion": 18.58
+  },
+  "platforms": [
+    {
+      "id": "psn",
+      "games": 220
+    },
+    {
+      "id": "xbox",
+      "games": 429
+    },
+    {
+      "id": "steam",
+      "games": 3505
+    },
+    {
+      "id": "nintendo",
+      "games": 132
+    },
+    {
+      "id": "epic",
+      "games": 2
+    },
+    {
+      "id": "gog",
+      "games": 436
+    },
+    {
+      "id": "uplay",
+      "games": 52
+    },
+    {
+      "id": "origin",
+      "games": 55
+    }
+  ],
+  "recent": [
+    {
+      "id": "uplay-991281",
+      "title": "Assassin's Creed Black Flag Resynced",
+      "platform": "Ubisoft",
+      "lastPlayed": "2026-10-06T14:39:28.000Z",
+      "cover": "https://m.exophase.com/uplay/games/m/g1e6187.png?2cb0085328e11d0041a0a87db029737b"
+    },
+    {
+      "id": "psn-994202",
+      "title": "Assassin's Creed Black Flag Resynced",
+      "platform": "PS5",
+      "lastPlayed": "2026-10-06T14:38:21.000Z",
+      "cover": "https://m.exophase.com/psn/featured/l/bg05e18.jpg?c19efb961a9b1d12f353ce99a025d671",
+      "url": "https://www.exophase.com/game/assassin-s-creed-black-flag-resynced-psn/",
+      "minutes": 0,
+      "earned": 0,
+      "total": 50,
+      "completion": 0
+    },
+    {
+      "id": "psn-7638",
+      "title": "Assassin's Creed Unity",
+      "platform": "PS4",
+      "lastPlayed": "2026-10-06T13:49:11.000Z",
+      "cover": "https://m.exophase.com/psn/featured/l/e163j.jpg?20511128e83a69e519f582baa7e63250",
+      "url": "https://www.exophase.com/game/assassins-creed-unity-ps4/",
+      "minutes": 9,
+      "earned": 0,
+      "total": 58,
+      "completion": 0
+    },
+    {
+      "id": "psn-11735",
+      "title": "Far Cry Primal",
+      "platform": "PS4",
+      "lastPlayed": "2026-10-06T13:26:26.000Z",
+      "cover": "https://m.exophase.com/psn/featured/l/5bgb8.jpg?b76db1892b1b2aba5085ca3fb772aac4",
+      "url": "https://www.exophase.com/game/far-cry-primal-ps4/",
+      "minutes": 19,
+      "earned": 1,
+      "total": 51,
+      "completion": 2
+    },
+    {
+      "id": "psn-811852",
+      "title": "Blades of Fire",
+      "platform": "PS5",
+      "lastPlayed": "2026-10-06T13:11:57.000Z",
+      "cover": "https://m.exophase.com/psn/featured/l/4ee64de.jpg?996635fc81ec3b5fd2d5447de9629479",
+      "url": "https://www.exophase.com/game/blades-of-fire-psn/",
+      "minutes": 18,
+      "earned": 1,
+      "total": 46,
+      "completion": 1
+    },
+    {
+      "id": "psn-769348",
+      "title": "Sniper Elite: Resistance",
+      "platform": "PS5",
+      "lastPlayed": "2026-10-06T12:52:58.000Z",
+      "cover": "https://m.exophase.com/psn/featured/l/57e07g4.jpg?804b9f56a42de1fb565a04ff14636db9",
+      "url": "https://www.exophase.com/game/sniper-elite-resistance-psn/",
+      "minutes": 4,
+      "earned": 0,
+      "total": 71,
+      "completion": 0
+    }
+  ]
+}

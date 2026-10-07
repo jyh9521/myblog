@@ -37,3 +37,19 @@ pinned: true
 [gframe]mercenaries-2-world-in-flames||[/gframe]
 
 [gframe]anachronox||[/gframe]
+
+[gframe]second-sight||[/gframe]
+
+[gframe]mystic-nights||[/gframe]
+
+[gframe]sudeki||[/gframe]
+
+[gframe]nosferatu-the-wrath-of-malachi||[/gframe]
+
+[gframe]project-eden||[/gframe]
+
+[gframe]realms-of-the-haunting||[/gframe]
+
+[gframe]magna-carta-tears-of-blood||[/gframe]
+
+[gframe]freedom-force||[/gframe]

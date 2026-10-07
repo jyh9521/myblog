@@ -4,7 +4,7 @@ const fs = require('node:fs'), fsp = require('node:fs/promises'), path = require
 const ts = require('typescript'), vm = require('node:vm');
 const React = require('react'), { renderToStaticMarkup } = require('react-dom/server');
 const profile = require('./gaming-profile-module.cjs');
-const { collect, save } = require('./update-exophase.cjs');
+const { collect, save, refresh } = require('./update-exophase.cjs');
 const summary = { displayname: 'Test Profile', playtime: 10, gamesplayed: 20, total_awards: 8, progress: '12.5',
   email: 'excluded', secret_key: 'excluded', services: [
     { env: 'psn', gamesplayed: 3, total_awards: 1200 }, { env: 'nintendo', gamesplayed: 2 },
@@ -18,6 +18,35 @@ const stamp = '2026-10-07T00:00:00.000Z';
 const fixture = () => profile.normalizeProfile(summary, { games: [game(1)] }, stamp);
 const escaped = value => JSON.stringify(JSON.stringify(value)).slice(1, -1).replace(/'/g, '\\u0027');
 const html = `<script>window.playerProfileId = '345';window.currentPlayerSummary = '${escaped(summary)}';window.playerGames = '${escaped({games:[game(1)]})}';</script>`;
+
+test('temporary upstream errors retain validated cache without changing bytes or timestamp', async () => {
+  const dir=await fsp.mkdtemp(path.join(os.tmpdir(),'profile-retain-')),file=path.join(dir,'exophase.json');
+  await save(fixture(),file); const before=await fsp.readFile(file,'utf8');
+  for(const status of [403,429,502,503,504]) {
+    const result=await refresh({file,fetcher:async()=>new Response('blocked',{status})});
+    assert.equal(result.status,'retained'); assert.equal(result.updatedAt,stamp);
+    assert.equal(await fsp.readFile(file,'utf8'),before);
+  }
+  const timeout=await refresh({file,fetcher:async()=>{throw new DOMException('deadline','TimeoutError');}});
+  assert.equal(timeout.status,'retained'); assert.equal(await fsp.readFile(file,'utf8'),before);
+});
+test('missing cache, invalid cache, unexpected HTTP/format and local errors still fail', async () => {
+  const dir=await fsp.mkdtemp(path.join(os.tmpdir(),'profile-invalid-')),file=path.join(dir,'exophase.json');
+  const blocked=async()=>new Response('blocked',{status:403});
+  await assert.rejects(refresh({file,fetcher:blocked}), /ENOENT/);
+  await fsp.writeFile(file,'{}'); await assert.rejects(refresh({file,fetcher:blocked}),/Invalid/);
+  await save(fixture(),file); const before=await fsp.readFile(file,'utf8');
+  await assert.rejects(refresh({file,fetcher:async()=>new Response('bad',{status:404})}), /404/);
+  await assert.rejects(refresh({file,fetcher:async()=>new Response('<html>bad shape</html>')}), /player ID/);
+  await assert.rejects(refresh({file,fetcher:async()=>{throw new Error('unexpected programming error');}}), /programming/);
+  assert.equal(await fsp.readFile(file,'utf8'),before);
+});
+test('successful refresh still updates data and avoids commits for unchanged data', async () => {
+  const dir=await fsp.mkdtemp(path.join(os.tmpdir(),'profile-success-')),file=path.join(dir,'exophase.json');
+  const fetcher=async url=>url===profile.EXOPHASE_URL?new Response(html):new Response(JSON.stringify({games:[game(1)]}));
+  assert.equal((await refresh({file,fetcher})).status,'updated'); const before=await fsp.readFile(file,'utf8');
+  assert.equal((await refresh({file,fetcher})).status,'unchanged'); assert.equal(await fsp.readFile(file,'utf8'),before);
+});
 
 test('public ID resolves dynamically and escaped payload parsing never evaluates JavaScript', () => {
   assert.equal(profile.resolvePlayerId(html), '345');

@@ -27,8 +27,13 @@ labels retain explicitly returned Switch/ Switch 2 information without inference
 
 Run `node scripts/update-exophase.cjs`, or dispatch **Update gaming profile** in
 GitHub Actions. It also runs at minute 17 every six hours (UTC). HTTP errors,
-Cloudflare challenges and unexpected payloads fail before writing anything; the
-previous cache remains intact. Unchanged semantic data does not change updatedAt
+Cloudflare challenges and unexpected payloads never overwrite the previous cache.
+Expected upstream unavailability (HTTP 403/429/502/503/504, timeout or temporary
+network failure) retains an existing **validated** cache, records a warning and
+`retained` outcome in the Actions summary, and finishes normally without a commit
+or deployment. This means no new data was fetched, not a successful refresh.
+Missing/invalid cache, unexpected payloads, other HTTP errors and local failures
+still fail the task. Unchanged semantic data does not change updatedAt
 or generate commits: updatedAt means the time this snapshot last changed, not a
 refresh heartbeat. Successful changed snapshots are written atomically.
 
@@ -37,8 +42,8 @@ single cache file and dispatch the existing Pages workflow, because commits made
 using GITHUB_TOKEN do not themselves trigger push workflows. Repository Actions
 must allow write permissions. No new Pages environment or secrets are required.
 Concurrent CMS edits are preserved through rebase; a conflict fails instead of
-force-pushing. A failed API refresh is visible as a failed workflow but does not
-remove the published profile.
+force-pushing. Genuine refresh errors remain visible as failed workflows without
+removing the published profile.
 
 During initial integration, ordinary HTTP requests to both profile/API returned
 Cloudflare 403 with no Access-Control-Allow-Origin for the blog origin. This

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { EXOPHASE_URL, EXOPHASE_USERNAME, loadGamingProfile, platformNames, type GamingProfileData, type RecentGame } from '../../lib/gaming-profile';
+import { EXOPHASE_URL, EXOPHASE_USERNAME, loadGamingProfile, platformNames, type GamingProfileData, type RecentGame, type PlatformId } from '../../lib/gaming-profile';
 import { gamingProfileMessages, type GamingProfileLocale } from '../../lib/gaming-profile-i18n';
 
 function ControllerIcon() {
@@ -16,6 +16,8 @@ function Cover({ game, fallback }: { game: RecentGame; fallback: string }) {
 }
 export function GamingProfileContent({ data, locale = 'zh-CN' }: { data: GamingProfileData; locale?: GamingProfileLocale }) {
   const t = gamingProfileMessages[locale], format = new Intl.NumberFormat(locale);
+  const platformOrder: PlatformId[] = ['nintendo', 'psn', 'xbox', 'steam', 'gog'];
+  const visiblePlatforms = platformOrder.flatMap(id => data.platforms.filter(platform => platform.id === id && platform.games > 0));
   const date = (value: string) => new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'Asia/Tokyo' }).format(new Date(value));
   const metrics = [
     { label: t.hours, value: data.stats.hours, suffix: t.hour },
@@ -27,8 +29,8 @@ export function GamingProfileContent({ data, locale = 'zh-CN' }: { data: GamingP
   return <>
     <div className="gaming-identity"><span className="gaming-identity-icon"><ControllerIcon /></span><div><h3>{data.displayName}</h3><span>{data.username}</span></div></div>
     <dl className="gaming-metrics">{metrics.filter(metric => metric.value !== undefined).map(metric => <div key={metric.label}><dt>{metric.label}</dt><dd>{format.format(metric.value!)}{metric.suffix && <small>{metric.suffix}</small>}</dd></div>)}</dl>
-    {data.platforms.length > 0 && <div className="gaming-platform-section"><h3>{t.platforms}</h3><ul className="gaming-platform-grid">{data.platforms.map(platform => <li key={platform.id}>
-      <span className="gaming-platform-name"><span className="gaming-platform-symbol" aria-hidden="true">{platform.id === 'psn' ? 'PS' : platform.id === 'xbox' ? 'X' : platform.id === 'nintendo' ? 'N' : platformNames[platform.id].slice(0, 2).toUpperCase()}</span>{platformNames[platform.id]}</span>
+    {visiblePlatforms.length > 0 && <div className="gaming-platform-section"><h3>{t.platforms}</h3><ul className="gaming-platform-grid">{visiblePlatforms.map(platform => <li key={platform.id}>
+      <span className="gaming-platform-name">{platform.id === 'xbox' ? 'XBOX' : platformNames[platform.id]}</span>
       <strong>{format.format(platform.games)}</strong><span className="gaming-platform-unit">{t.games}</span>
     </li>)}</ul></div>}
     <div className="gaming-recent-section"><h3>{t.recent}<small>Recently Played</small></h3>

@@ -80,7 +80,7 @@ function loadTs(file) {
   return exports;
 }
 test('UI renders Chinese/Japanese metrics, lazy covers, fixed slots, empty state and safe detail links', () => {
-  const {GamingProfileContent}=loadTs(path.resolve('app/about/gaming-profile.tsx'));
+  const {GamingProfileContent}=loadTs(path.resolve('app/games/gaming-profile.tsx'));
   const data=fixture();
   const rendered=renderToStaticMarkup(React.createElement(GamingProfileContent,{data}));
   assert.ok(rendered.includes('总游戏时间')); assert.ok(rendered.includes('loading="lazy"'));
@@ -89,9 +89,12 @@ test('UI renders Chinese/Japanese metrics, lazy covers, fixed slots, empty state
   const japanese=renderToStaticMarkup(React.createElement(GamingProfileContent,{data,locale:'ja'}));
   assert.ok(japanese.includes('公開ゲーム記録はありません')); assert.ok(!japanese.includes('総プレイ時間'));
 });
-test('About position, translations and maintenance workflow keep feature isolated and scheduled', () => {
+test('Gaming Profile is above the local shelf on Games and absent from About; refresh remains scheduled', () => {
   const about=fs.readFileSync('app/about/page.tsx','utf8');
-  assert.ok(about.indexOf('<GamingProfile />')<about.indexOf('<GitHubContributionCalendar />'));
+  assert.ok(!about.includes('GamingProfile'));
+  const games=fs.readFileSync('app/games/page.tsx','utf8');
+  assert.ok(games.includes('<GamingProfile />'));
+  assert.ok(games.indexOf('<GamingProfile />')<games.indexOf('<GameShelf '));
   const workflow=fs.readFileSync('.github/workflows/exophase.yml','utf8');
   assert.ok(workflow.includes('17 */6 * * *')); assert.ok(workflow.includes('workflow_dispatch:'));
   assert.ok(workflow.includes('gh workflow run pages.yml')); assert.ok(!workflow.includes('--force'));
@@ -111,7 +114,7 @@ test('browser cache access is same-origin and rejects failed or malformed respon
 });
 test('broken covers have a placeholder, stale data stays visible, and initial state is loading', () => {
   const renderer = require('react-test-renderer');
-  const { default: GamingProfile, GamingProfileContent } = loadTs(path.resolve('app/about/gaming-profile.tsx'));
+  const { default: GamingProfile, GamingProfileContent } = loadTs(path.resolve('app/games/gaming-profile.tsx'));
   const data=fixture(); data.updatedAt='2020-01-01T00:00:00Z';
   const view=renderer.create(React.createElement(GamingProfileContent,{data}));
   assert.ok(JSON.stringify(view.toJSON()).includes('当前展示最近一次成功获取的数据'));
@@ -121,4 +124,16 @@ test('broken covers have a placeholder, stale data stays visible, and initial st
   view.unmount();
   const loading=renderToStaticMarkup(React.createElement(GamingProfile));
   assert.ok(loading.includes('正在加载游戏档案')); assert.ok(loading.includes('aria-busy="true"'));
+});
+test('platform statistics show only five requested platforms in order, without letter badges', () => {
+  const {GamingProfileContent}=loadTs(path.resolve('app/games/gaming-profile.tsx'));
+  const data=fixture();
+  data.platforms=[{id:'uplay',games:2},{id:'gog',games:6},{id:'steam',games:5},{id:'xbox',games:4},{id:'epic',games:1},{id:'psn',games:3},{id:'nintendo',games:2},{id:'origin',games:1}];
+  const rendered=renderToStaticMarkup(React.createElement(GamingProfileContent,{data}));
+  const platforms=rendered.split('class="gaming-platform-grid"')[1].split('</ul>')[0];
+  const names=[...platforms.matchAll(/class="gaming-platform-name">([^<]+)</g)].map(m=>m[1]);
+  assert.deepEqual(names,['Nintendo','PlayStation','XBOX','Steam','GOG']);
+  assert.ok(!rendered.includes('gaming-platform-symbol'));
+  data.platforms=[];
+  assert.ok(!renderToStaticMarkup(React.createElement(GamingProfileContent,{data})).includes('gaming-platform-section'));
 });

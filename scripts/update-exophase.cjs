@@ -4,7 +4,7 @@ const { EXOPHASE_USERNAME, EXOPHASE_URL, embeddedJson, resolvePlayerId, normaliz
 const destination = path.join(__dirname, '../public/data/exophase.json');
 async function request(url, fetcher = fetch) {
   const response = await fetcher(url, { signal: AbortSignal.timeout(30000), headers: {
-    Accept: 'application/json, text/html;q=0.9', 'User-Agent': 'BLFY-Gaming-Profile/1.0 (+https://blog.blfy.cc/about/)',
+    Accept: 'application/json, text/html;q=0.9', 'User-Agent': 'BLFY-Gaming-Profile/1.0 (+https://blog.blfy.cc/games/)',
   } });
   if (!response.ok) throw new Error(`Exophase HTTP ${response.status}`);
   return response;

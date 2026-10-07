@@ -1,6 +1,6 @@
-# About: Exophase gaming profile
+# Games: Exophase gaming profile
 
-The About page reads `/data/exophase.json`, a compact public-data cache. No
+The Games page reads `/data/exophase.json`, a compact public-data cache. No
 Exophase credentials, cookies, proxy, or backend are involved. Only this section
 loads the JSON and its six lazy cover images.
 
@@ -48,6 +48,12 @@ snapshot. Unattended refreshing still depends on Exophase allowing requests from
 GitHub-hosted runners; challenges are not bypassed.
 
 ## UI and localization
+
+The module is on `/games/`, above the existing local game shelf, not on About.
+Platform statistics show Nintendo, PlayStation, XBOX, Steam and GOG in that
+order, only when nonempty, with names rather than letter badges. Other source
+platforms remain in the cache without appearing in this statistics grid; recent
+public activity and aggregate totals retain the upstream data unchanged.
 
 The section follows existing CSS variables/light-dark theme. Desktop uses
 platform and three-column recent-game grids; mobile uses two platform columns

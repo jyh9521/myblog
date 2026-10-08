@@ -17,50 +17,53 @@ hltb:
     completionist: 7.82
     updatedAt: 2026-10-08T10:36:18.982Z
 gameMetadata:
-  id: rawg:279586
-  sources:
-    rawg:
-      id: '279586'
-      slug: another-metroid-2-remake
-      url: https://rawg.io/games/279586
-  fieldSources:
-    title: rawg
-    originalName: rawg
-    alternativeNames: rawg
-    description: rawg
-    releaseDate: rawg
-    platforms: rawg
-    genres: rawg
-    cover: rawg
-    website: rawg
-  updatedAt: 2026-10-08T10:36:55.679Z
-  manualFields: []
-  title: Another Metroid 2 Remake
-  localizedName: ''
-  originalName: Another Metroid 2 Remake
   alternativeNames:
     - AM2R
     - Metroid 2 Remake
     - am2r
+  cover: https://media.rawg.io/media/screenshots/d3f/d3f761d5025fc4a0424d6489dfd5ca36.jpg
   description: 'AM2R (Another Metroid 2 Remake) is an action-adventure game developed by Argentinian programmer Milton Guasti and released in August 2016 for Windows. It is an unofficial remake of the 1991 Game Boy game Metroid II: Return of Samus in the style of Metroid: Zero Mission (2004). As in the original Metroid II, players control bounty hunter Samus Aran, who aims to eradicate the parasitic Metroids. AM2R adds several features, including new graphics and music, new areas and bosses, altered controls, and a map system.'
-  releaseDate: 2016-08-06
   developers: []
-  publishers: []
+  fieldSources:
+    alternativeNames: rawg
+    cover: rawg
+    description: rawg
+    genres: rawg
+    originalName: rawg
+    platforms: rawg
+    releaseDate: rawg
+    title: rawg
+    website: rawg
+    selectedPlatforms: manual
+  genres:
+    - Adventure
+    - Platformer
+  id: rawg:279586
+  localizedName: ''
+  manualFields:
+    - selectedPlatforms
+  originalName: Another Metroid 2 Remake
   platforms:
     - PS Vita
     - PC
     - Android
-  genres:
-    - Adventure
-    - Platformer
-  cover: https://media.rawg.io/media/screenshots/d3f/d3f761d5025fc4a0424d6489dfd5ca36.jpg
+  publishers: []
+  releaseDate: 2016-08-06
   screenshots:
     - https://media.rawg.io/media/screenshots/f53/f533479d3c41aec51a22166f16cdbec7.jpg
     - https://media.rawg.io/media/screenshots/558/558ba4cf15e1d3615cd3e732fa4590af.jpg
     - https://media.rawg.io/media/screenshots/d5c/d5c6f87bd9b337367e0552231f26cddf.jpg
     - https://media.rawg.io/media/screenshots/d3f/d3f761d5025fc4a0424d6489dfd5ca36.jpg
+  selectedPlatforms:
+    - PC
+  sources:
+    rawg:
+      id: '279586'
+      slug: another-metroid-2-remake
+      url: https://rawg.io/games/279586
+  title: Another Metroid 2 Remake
+  updatedAt: 2026-10-08T10:36:55.679Z
   website: http://metroid2remake.blogspot.com/
-  selectedPlatforms: []
 manual:
   availabilityStatus: free
   notes: ''

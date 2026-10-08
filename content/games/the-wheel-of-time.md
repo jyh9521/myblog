@@ -1,8 +1,19 @@
 ---
 title: 时光之轮
 status:
-  - 考虑制作补丁
-  - 正在玩
+  - 已通关
+  - 已制作补丁
+hltb:
+  id: 10262
+  url: https://howlongtobeat.com/game/10262
+  title: The Wheel of Time
+  auto: true
+  snapshot:
+    id: 10262
+    main: 8.02
+    extras: 13.1
+    completionist: 18.57
+    updatedAt: 2026-10-08T09:54:51.585Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/d04/d0455d429ba759e0923ace6c586fd5c8.jpg
@@ -74,8 +85,12 @@ events:
     title: 开始测试汉化
   - date: 2026-10-08
     title: 已通关
+  - date: 2026-10-08
+    title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/the-wheel-of-time-cn
     name: 《时光之轮》简体中文汉化补丁
     type: 汉化补丁
+    description: 适配 GOG 版（Build 333b）
+    releaseUrl: https://github.com/jyh9521/The-Wheel-of-Time-CN/releases
 ---

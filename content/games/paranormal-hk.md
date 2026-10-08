@@ -3,7 +3,7 @@ title: 港诡实录
 status:
   - 已通关
 playTime:
-  hours: 4
+  hours: 3.8
 personalRating: 6.5
 hltb:
   id: 75457
@@ -69,4 +69,10 @@ gameMetadata:
   title: 港詭實錄ParanormalHK
   updatedAt: 2026-10-08T10:19:21.335Z
   website: ''
+events:
+  - date: 2020-01-18
+    title: 开始游戏
+  - date: 2020-01-19
+    title: 通关游戏
+    note: 恐怖游戏，一般。
 ---

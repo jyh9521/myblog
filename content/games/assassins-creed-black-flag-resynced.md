@@ -2,6 +2,17 @@
 title: 刺客信条：黑旗 记忆重置
 status:
   - AFK
+hltb:
+  id: 185013
+  url: https://howlongtobeat.com/game/185013
+  title: Assassin's Creed Black Flag Resynced
+  auto: true
+  snapshot:
+    id: 185013
+    main: 23.88
+    extras: 42.83
+    completionist: 65.58
+    updatedAt: 2026-10-08T04:08:18.902Z
 gameMetadata:
   alternativeNames:
     - assassin's creed black flag resynced

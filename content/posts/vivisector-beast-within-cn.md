@@ -70,7 +70,7 @@ gameSlug: vivisector-beast-within
 
 ## **四、已知问题：**
 
-受原引擎位图字体限制，位图字库被固定为16x16，游戏没有现代字体排版，只是从NewFont.tga里按格子裁字，所以有些字会显得偏左、偏右或宽窄不一。 按钮图片依旧是英文，因为鼠标在按钮上方时会在屏幕底部显示描述，所以就没做汉化。 测试了几关，暂时没发现什么问题，发现有任何问题，请在帖子内留言，或者在[GitHub​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1219671309359775751&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fjyh9521%2Fvivisector_cn_patch&spm_id_from=333.1369.0.0)提issues。
+受原引擎位图字体限制，位图字库被固定为16x16，游戏没有现代字体排版，只是从NewFont.tga里按格子裁字，所以有些字会显得偏左、偏右或宽窄不一。 按钮图片依旧是英文，因为鼠标在按钮上方时会在屏幕底部显示描述，所以就没做汉化。 测试了几关，暂时没发现什么问题，发现有任何问题，请在帖子内留言，或者在[GitHub​](https://github.com/jyh9521/Vivisector-Beast-Within-CN)提issues。
 
 
 

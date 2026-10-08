@@ -4,8 +4,8 @@ aliases:
 title: 《活体解剖者：人面兽心》简体中文汉化补丁
 date: 2026-06-30
 tags:
-  - 游戏
   - 汉化补丁
+  - 游戏
 pinned: false
 gameSlug: vivisector-beast-within
 ---

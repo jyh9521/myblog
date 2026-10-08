@@ -5,6 +5,9 @@ const DAY = 86400000;
 export const DETAIL_TTL = 14 * DAY;
 export const SEARCH_TTL = 7 * DAY;
 const headers = { 'User-Agent': 'Mozilla/5.0', Referer: `${BASE}/`, Origin: BASE };
+class HltbUnavailable extends Error {
+  constructor(retryAt) { super('HLTB temporarily unavailable'); this.retryAt = retryAt; }
+}
 export function normalizeHltb(game) {
   const id = Number(game?.game_id);
   if (!Number.isSafeInteger(id) || id <= 0 || typeof game.game_name !== 'string' || !game.game_name.trim()) return null;
@@ -32,10 +35,17 @@ async function boundedText(response) {
 export class HltbProvider {
   constructor(fetcher = (...args) => fetch(...args)) { this.fetcher = fetcher; }
   async read(path, options = {}) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 12000);
-    try { return await boundedText(await this.fetcher(`${BASE}${path}`, { ...options, headers: { ...headers, ...options.headers }, redirect: 'manual', signal: controller.signal })); }
-    finally { clearTimeout(timer); }
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 12000);
+      try { return await boundedText(await this.fetcher(`${BASE}${path}`, { ...options, headers: { ...headers, ...options.headers }, redirect: 'manual', signal: controller.signal })); }
+      catch (error) {
+        error.stage = path.split('?')[0];
+        // Retry transient transport/server failures once, not invalid data or authorization errors.
+        if (attempt || !(error?.name === 'AbortError' || error?.name === 'TypeError' || /^HLTB HTTP (500|502|503|504)$/.test(error?.message || ''))) throw error;
+      } finally { clearTimeout(timer); }
+      await new Promise(resolve => setTimeout(resolve, 250));
+    }
   }
   async search(query) {
     const html = await this.read('/');
@@ -79,23 +89,24 @@ export async function cachedHltb(db, key, ttl, producer, now = Date.now()) {
   if (previous && now - Number(row.cached_at) < ttl) return result(previous, 'fresh', row.cached_at);
   if (Number(row?.retry_after) > now) {
     if (previous) return result(previous, 'stale', row.cached_at);
-    throw new Error('HLTB temporarily unavailable');
+    throw new HltbUnavailable(Number(row.retry_after));
   }
   // D1's atomic lease prevents concurrent refreshes across Worker isolates.
   const lease = await db.prepare('INSERT INTO hltb_cache (cache_key, retry_after) VALUES (?, ?) ON CONFLICT(cache_key) DO UPDATE SET retry_after = excluded.retry_after WHERE hltb_cache.retry_after <= ? RETURNING cache_key').bind(key, now + 120000, now).first();
   if (!lease) {
     if (previous) return result(previous, 'stale', row.cached_at);
-    throw new Error('HLTB refresh in progress');
+    throw new HltbUnavailable(now + 120000);
   }
   try {
     const value = await producer();
     await db.prepare('UPDATE hltb_cache SET payload = ?, cached_at = ?, retry_after = 0 WHERE cache_key = ?').bind(JSON.stringify(value), now, key).run();
     return result(value, 'miss', now);
   } catch (error) {
-    await db.prepare('UPDATE hltb_cache SET retry_after = ? WHERE cache_key = ?').bind(now + 3600000, key).run();
-    console.warn(JSON.stringify({ event: 'hltb_refresh_failed', key, error: /^HLTB (HTTP \d+|response too large|initialization invalid|search shape invalid|detail shape invalid|matching game missing)$/.test(error?.message || '') ? error.message : `source unavailable (${error?.name || 'Error'})` }));
+    const retryAt = now + (previous ? 3600000 : 60000);
+    await db.prepare('UPDATE hltb_cache SET retry_after = ? WHERE cache_key = ?').bind(retryAt, key).run();
+    console.warn(JSON.stringify({ event: 'hltb_refresh_failed', key, stage: /^\/[a-zA-Z0-9_./-]*$/.test(error?.stage || '') ? error.stage : undefined, error: /^HLTB (HTTP \d+|response too large|initialization invalid|search shape invalid|detail shape invalid|matching game missing)$/.test(error?.message || '') ? error.message : `source unavailable (${error?.name || 'Error'})` }));
     if (previous) return result(previous, 'stale', row.cached_at);
-    throw error;
+    throw new HltbUnavailable(retryAt);
   }
 }
 export async function hltbRoute(request, env, provider = new HltbProvider()) {
@@ -111,5 +122,8 @@ export async function hltbRoute(request, env, provider = new HltbProvider()) {
   try {
     const value = await cachedHltb(env.DB, search ? `search:${q.toLowerCase()}` : `game:${rawId}`, search ? SEARCH_TTL : DETAIL_TTL, () => search ? provider.search(q) : provider.detail(Number(rawId)));
     return json(value);
-  } catch { return json({ error: '暂时无法获取 HLTB 数据，请稍后重试。' }, 503); }
+  } catch (error) {
+    const retryAfter = error instanceof HltbUnavailable ? Math.max(1, Math.ceil((error.retryAt - Date.now()) / 1000)) : 60;
+    return Response.json({ error: '暂时无法获取 HLTB 数据。', retryAfter }, { status: 503, headers: { ...responseHeaders, 'Retry-After': String(retryAfter) } });
+  }
 }

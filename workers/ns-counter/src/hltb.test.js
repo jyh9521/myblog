@@ -28,6 +28,32 @@ test('no-cache source failure stays an error and respects retry cooldown', async
   await assert.rejects(cachedHltb(db, 'game:1', DETAIL_TTL, fail, 1000));
   await assert.rejects(cachedHltb(db, 'game:1', DETAIL_TTL, fail, 1001));
   assert.equal(calls, 1);
+  await assert.rejects(cachedHltb(db, 'game:1', DETAIL_TTL, fail, 60999));
+  assert.equal(calls, 1);
+  assert.equal((await cachedHltb(db, 'game:1', DETAIL_TTL, async () => ({ id: 1, main: 10 }), 61000)).cache, 'miss');
+});
+test('transient source error retries once; permanent errors do not retry', async () => {
+  let calls = 0;
+  const recovered = new HltbProvider(async () => ++calls === 1 ? new Response('', { status: 503 }) : new Response('Recovered'));
+  assert.equal(await recovered.read('/'), 'Recovered'); assert.equal(calls, 2);
+  calls = 0;
+  const denied = new HltbProvider(async () => { calls++; return new Response('', { status: 403 }); });
+  await assert.rejects(denied.read('/'), /HLTB HTTP 403/); assert.equal(calls, 1);
+  calls = 0;
+  const down = new HltbProvider(async () => { calls++; return new Response('', { status: 503 }); });
+  await assert.rejects(down.read('/'), /HLTB HTTP 503/); assert.equal(calls, 2);
+});
+test('no-cache route errors expose bounded retry time and preserve failure status', async () => {
+  const env = { DB: database() }; let calls = 0;
+  const provider = { search: async () => { calls++; throw new Error('HLTB HTTP 503'); } };
+  const request = new Request('https://blog.blfy.cc/ns/api/hltb/search?q=Assassin%27s%20Creed');
+  const first = await hltbRoute(request, env, provider);
+  assert.equal(first.status, 503);
+  const data = await first.json();
+  assert.ok(data.retryAfter > 0 && data.retryAfter <= 60);
+  assert.equal(first.headers.get('Retry-After'), String(data.retryAfter));
+  const second = await hltbRoute(request, env, provider);
+  assert.equal(second.status, 503); assert.equal(calls, 1);
 });
 test('ID detail extracts exact embedded record; malformed source and IDs do not display wrong game', async () => {
   const page = { props: { pageProps: { game: { data: { game: [{ game_id: 68151, game_name: 'Elden Ring', comp_main: 216432, comp_plus: 365040, comp_100: 490320 }] } } } } };

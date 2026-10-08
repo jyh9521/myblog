@@ -40,6 +40,6 @@ npx wrangler deploy
 
 ## HLTB 参考时间
 
-`GET /ns/api/hltb/search?q=原名` 返回候选；`GET /ns/api/hltb/detail?id=数字ID` 按明确关联读取详情。D1 详情缓存 14 天、搜索缓存 7 天，失败保留旧数据并冷却 1 小时。没有有效缓存时返回 503，不影响静态页面。适配器使用原生 Fetch，公开搜索协议的 MIT 授权保存在 `licenses/`；不是直接运行 Python 包。详见仓库 `docs/game-time.md`。
+`GET /ns/api/hltb/search?q=原名` 返回候选；`GET /ns/api/hltb/detail?id=数字ID` 按明确关联读取详情。D1 详情缓存 14 天、搜索缓存 7 天，失败保留旧数据并冷却 1 小时；首次请求无缓存时冷却 60 秒，返回 Retry-After 和界面重试提示。网络或 500/502/503/504 错误只自动重试一次。没有有效缓存时返回 503，不影响静态页面。适配器使用原生 Fetch，公开搜索协议的 MIT 授权保存在 `licenses/`；不是直接运行 Python 包。详见仓库 `docs/game-time.md`。
 
 部署使用 `npx wrangler@4.148.0` 或支持 `exports` 的新版，以保留原 `IgdbApi` 命名空间。旧版 4.98.0 会忽略声明导致部署失败。

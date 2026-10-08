@@ -27,3 +27,9 @@ test('CMS source failure reports status without modifying saved values', async (
   control.instance.state.query = 'Test'; await control.instance.search();
   assert.equal(control.instance.state.message, 'Unavailable'); assert.equal(control.instance.state.busy, false); assert.equal(control.value().main, 55);
 });
+test('CMS shows retry seconds on cooldown without overwriting saved reference fields', async () => {
+  const control = widget(async () => Response.json({ error: '暂时无法获取 HLTB 数据。', retryAfter: 60 }, { status: 503 }));
+  control.instance.state.query = "Assassin's Creed Black Flag Resynced"; await control.instance.search();
+  assert.equal(control.instance.state.message, '暂时无法获取 HLTB 数据。 请在 60 秒后重试。');
+  assert.equal(control.value().main, 55); assert.equal(control.instance.state.busy, false);
+});

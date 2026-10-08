@@ -9,6 +9,7 @@
       componentWillUnmount() { this.controller?.abort(); },
       change(patch) { this.props.onChange({ ...(this.props.value || {}), ...patch }); },
       async search() {
+        if (this.state.busy) return;
         const query = this.state.query.trim();
         if (query.length < 2 || query.length > 100) { this.setState({ message: '请输入 2–100 个字符，建议使用游戏原名。' }); return; }
         this.controller?.abort(); this.controller = new AbortController();
@@ -16,7 +17,7 @@
         try {
           const response = await fetch(`${api}/search?q=${encodeURIComponent(query)}`, { signal: this.controller.signal });
           const data = await response.json();
-          if (!response.ok || !Array.isArray(data.results)) throw new Error(data.error || '搜索失败');
+          if (!response.ok || !Array.isArray(data.results)) throw new Error((data.error || '搜索失败') + (Number.isFinite(data.retryAfter) && data.retryAfter > 0 ? ` 请在 ${Math.ceil(data.retryAfter)} 秒后重试。` : ''));
           this.setState({ results: data.results, message: data.results.length ? '请核对版本、平台后选择；不会自动关联第一个候选。' : '没有找到游戏，请尝试原名或手动填写链接。' });
         } catch (error) { if (error.name !== 'AbortError') this.setState({ message: error.message || '搜索暂不可用' }); }
         finally { this.setState({ busy: false }); }
@@ -28,7 +29,7 @@
         try {
           const response = await fetch(`${api}/detail?id=${game.id}`, { signal: this.controller.signal });
           const data = await response.json();
-          if (!response.ok || data.id !== game.id) throw new Error(data.error || '游戏资料不匹配');
+          if (!response.ok || data.id !== game.id) throw new Error((data.error || '游戏资料不匹配') + (Number.isFinite(data.retryAfter) && data.retryAfter > 0 ? ` 请在 ${Math.ceil(data.retryAfter)} 秒后重试。` : ''));
           // Manual reference fields remain overrides, independent of the snapshot.
           this.change({ id: game.id, url: game.url, title: game.title, auto: true, snapshot: { id: game.id, main: data.main, extras: data.extras, completionist: data.completionist, updatedAt: data.updatedAt } });
           this.setState({ results: [], message: data.cache === 'stale' ? '已关联，当前使用旧缓存。手动时间仍优先显示。' : '已关联并读取参考时间。手动时间仍优先显示。' });

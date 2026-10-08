@@ -4,6 +4,7 @@ status:
   - 已通关
 playTime:
   hours: 4
+personalRating: 6.5
 hltb:
   id: 75457
   url: https://howlongtobeat.com/game/75457

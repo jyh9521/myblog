@@ -5,6 +5,7 @@ title: 《无人永生2》简体中文汉化补丁
 date: 2026-07-14
 description: |-
   > No One Lives Forever 2: A Spy in H.A.R.M.'s Way Simplified Chinese Patch
+  > 《无人永生2：H.A.R.M. 之道》简体中文汉化补丁
   > 基于 Modernizer2 Beta 2C
 cover: /uploads/chinesetranslationpatch/nolf2/封面图.png
 tags:

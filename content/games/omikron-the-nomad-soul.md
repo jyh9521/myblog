@@ -2,6 +2,17 @@
 title: 恶灵都市
 status:
   - 考虑制作补丁
+hltb:
+  id: 6733
+  url: https://howlongtobeat.com/game/6733
+  title: 'Omikron: The Nomad Soul'
+  auto: true
+  snapshot:
+    id: 6733
+    main: 14.3
+    extras: 19.29
+    completionist: 19.96
+    updatedAt: 2026-10-08T04:24:30.205Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/f8e/f8ed683b124312b8e5ea1aecb86bb780.jpg

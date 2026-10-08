@@ -4,9 +4,9 @@ aliases:
 title: 《无人永生2》简体中文汉化补丁
 date: 2026-07-14
 tags:
-  - 游戏
   - 汉化补丁
-  - 无人永生
+  - 无人永生2
+  - 游戏
 pinned: false
 gameSlug: nolf2
 ---

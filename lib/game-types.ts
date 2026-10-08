@@ -1,3 +1,4 @@
+import type { PlayTime, CompletionTimes } from './game-time';
 export type GameStore = 'pc' | 'playstation' | 'xbox' | 'nintendo';
 export type GameSource = 'rawg' | 'screenscraper' | 'igdb';
 export type StoreLink = { name: string; url: string; region?: string; note?: string };
@@ -39,7 +40,7 @@ export type GameMetadata = {
 };
 export type GameEvent = { date: string; title: string; note: string };
 export type GameProject = { url: string; name: string; type: string; description: string; releaseUrl: string };
-export type GameRecord = { id: string; slug: string; title: string; status: string; summary: string; metadata: GameMetadata | null; manual: GameManual; platforms: GamePlatform[]; events: GameEvent[]; projects?: GameProject[] };
+export type GameRecord = { id: string; slug: string; title: string; status: string; summary: string; metadata: GameMetadata | null; manual: GameManual; platforms: GamePlatform[]; events: GameEvent[]; projects?: GameProject[]; playTime?: PlayTime | null; completionTimes?: CompletionTimes | null };
 
 export const gameStoreLabels: Record<GameStore, string> = {
   pc: 'PC', playstation: 'PlayStation', xbox: 'Xbox', nintendo: 'Nintendo',

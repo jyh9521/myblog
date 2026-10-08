@@ -62,6 +62,26 @@ collections:
         options: [想玩, 正在玩, 已通关, 暂时搁置, AFK, 考虑制作补丁, 已制作补丁]
         hint: "可多选，例如已通关 + 已制作补丁；至少选择一项。开始、通关、回坑及补丁发布等历史记录保留在时间线中。"
       - { name: summary, label: 简介, widget: text, required: false }
+      - name: playTime
+        label: 我的游玩时长
+        widget: object
+        required: false
+        collapsed: false
+        hint: "记录累计游玩时间；小时和分钟可只填一项。前台自动换算为一位小数的小时，例如 12 小时 30 分钟 → 12.5 小时。留空不展示。"
+        fields:
+          - { name: hours, label: 小时, widget: number, value_type: int, min: 0, required: false }
+          - { name: minutes, label: 分钟, widget: number, value_type: int, min: 0, max: 59, required: false }
+      - name: hltb
+        label: HowLongToBeat 关联与参考通关时间
+        widget: object
+        required: false
+        collapsed: true
+        hint: "关联对应游戏页面，并根据 HLTB 手动记录参考时间（单位：小时，支持小数）。不是你的实际游玩时长；不自动抓取或刷新，不填时间也可只关联链接。"
+        fields:
+          - { name: url, label: HLTB 游戏链接, widget: string, required: false, pattern: ['^https://(www\.)?howlongtobeat\.com/(game/[1-9][0-9]*/?|game\.php\?id=[1-9][0-9]*)$', '填写 HowLongToBeat 的游戏详情链接'] }
+          - { name: main, label: 主线（小时）, widget: number, value_type: float, min: 0, required: false }
+          - { name: extras, label: 主线＋支线（小时）, widget: number, value_type: float, min: 0, required: false }
+          - { name: completionist, label: 全收集（小时）, widget: number, value_type: float, min: 0, required: false }
       - { name: gameMetadata, label: 游戏资料（元数据来源）, widget: game-metadata, required: false, hint: "搜索候选后手动确认并导入；在资料组件中勾选要生成档案卡片的平台。资料保留完整平台清单，前台仅显示勾选的平台卡片。" }
       - { name: manual, label: 正版渠道与人工状态, widget: game-manual, required: false, hint: "正版售卖渠道、可获得状态和备注独立于资料数据源；刷新游戏资料不会覆盖。" }
       - name: events

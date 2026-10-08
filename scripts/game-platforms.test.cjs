@@ -33,7 +33,7 @@ test('saved legacy dossier platforms normalize and deduplicate without rewriting
   const fakeFs = { existsSync: () => true, readdirSync: () => Object.keys(files), readFileSync: file => files[path.basename(file)] };
   const code = ts.transpileModule(fs.readFileSync('lib/games.ts', 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS, esModuleInterop: true } }).outputText;
   const context = { exports: {}, process, URL, require: name => name === 'node:fs' ? fakeFs
-    : name === '../public/sveltia/game-platforms.js' ? platforms : name === './game-projects' ? { normalizeProjects: () => [] } : name === './game-status' ? { normalizeGameStatus: value => value || '' } : require(name) };
+    : name === '../public/sveltia/game-platforms.js' ? platforms : name === './game-time' ? { normalizePlayTime: () => null, normalizeCompletionTimes: () => null } : name === './game-projects' ? { normalizeProjects: () => [] } : name === './game-status' ? { normalizeGameStatus: value => value || '' } : require(name) };
   vm.runInNewContext(code, context);
   const games = context.exports.getGames();
   const options = [...new Set(games.flatMap(game => game.platforms.map(p => `${p.store}:${p.platform}`)))].sort();

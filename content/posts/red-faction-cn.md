@@ -4,8 +4,9 @@ aliases:
 title: 《红色派系》简体中文汉化补丁
 date: 2026-08-07
 description: |-
-  >Red Faction (2001) Simplified Chinese Patch — based on Alpine Faction 1.3.0
-  >《红色派系》简体中文汉化补丁 v1.0 —— 基于 Alpine Faction 1.3.0
+  > Red Faction Simplified Chinese Patch
+  > 《红色派系》简体中文汉化补丁
+  > 基于 Alpine Faction 1.3.0
 cover: /uploads/chinesetranslationpatch/redfaction/封面图.avif
 tags:
   - 汉化补丁

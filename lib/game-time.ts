@@ -23,9 +23,10 @@ export function normalizePlayTime(value: unknown): PlayTime | null {
   if (hours === undefined && minutes === undefined) return null;
   const supplied = (value: unknown) => value !== undefined && value !== null && !(typeof value === 'string' && !value.trim());
   if ((supplied(input.hours) && hours === undefined) || (supplied(input.minutes) && minutes === undefined)) return null;
-  if (!Number.isSafeInteger(hours ?? 0) || !Number.isSafeInteger(minutes ?? 0) || (minutes ?? 0) > 59) return null;
+  if (!Number.isSafeInteger(minutes ?? 0) || (minutes ?? 0) > 59) return null;
   const totalMinutes = (hours ?? 0) * 60 + (minutes ?? 0);
-  if (!Number.isSafeInteger(totalMinutes)) return null;
+  // Fractional hours may produce fractional minutes; preserve them until display formatting.
+  if (!Number.isFinite(totalMinutes) || totalMinutes > Number.MAX_SAFE_INTEGER) return null;
   return { hours: hours ?? 0, minutes: minutes ?? 0, totalMinutes };
 }
 export function formatPlayHours(totalMinutes: number): string {

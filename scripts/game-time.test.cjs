@@ -50,13 +50,30 @@ test('CMS uses optional independent fields with integer minute bounds', () => {
   const personal = fields.find(f => f.name === 'playTime');
   assert.equal(personal.required, false);
   assert.equal(personal.fields[1].max, 59);
-  assert.equal(personal.fields[0].value_type, 'int');
+  assert.equal(personal.fields[0].value_type, 'float');
+  assert.equal(personal.fields[1].value_type, 'int');
   const hltb = fields.find(f => f.name === 'hltb');
   assert.equal(hltb.widget, 'hltb-game');
   assert.equal(hltb.required, false);
   const rating = fields.find(f => f.name === 'personalRating');
   assert.equal(rating.widget, 'number'); assert.equal(rating.value_type, 'float');
   assert.equal(rating.min, 0); assert.equal(rating.max, 10); assert.equal(rating.step, 0.01); assert.equal(rating.required, false);
+});
+test('fractional hours are preserved and combine with optional integer minutes', () => {
+  for (const hours of [3.8, '3.8']) {
+    const result = time.normalizePlayTime({ hours });
+    assert.equal(result.hours, 3.8); assert.equal(result.minutes, 0);
+    assert.equal(time.formatPlayHours(result.totalMinutes), '3.8');
+  }
+  assert.equal(time.normalizePlayTime({ hours: 3.75 }).totalMinutes, 225);
+  assert.equal(time.formatPlayHours(time.normalizePlayTime({ hours: 3.8, minutes: 12 }).totalMinutes), '4.0');
+  assert.ok(time.normalizePlayTime({ hours: 0.001 }).totalMinutes > 0);
+  assert.equal(time.normalizePlayTime({ hours: Number.MAX_VALUE }), null);
+  assert.equal(time.normalizePlayTime({ hours: 3.8, minutes: 0.5 }), null);
+  const React = require('react');
+  const Component = load('app/games/game-time.tsx', { '../../lib/game-time': time }).default;
+  const html = require('react-dom/server').renderToStaticMarkup(React.createElement(Component, { game: { playTime: time.normalizePlayTime({ hours: 3.8 }) } }));
+  assert.match(html, /3\.8/); assert.match(html, /我的游玩时长/);
 });
 test('personal ratings round to hundredths and convert into exact tenths of a percent', () => {
   for (const [input, score, percent] of [[8, 8, 80], ['8.12', 8.12, 81.2], [7.99, 7.99, 79.9], [8.125, 8.13, 81.3], [0, 0, 0], [10, 10, 100]]) {

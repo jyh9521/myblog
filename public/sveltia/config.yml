@@ -67,9 +67,9 @@ collections:
         widget: object
         required: false
         collapsed: false
-        hint: "记录累计游玩时间；小时和分钟可只填一项。前台自动换算为一位小数的小时，例如 12 小时 30 分钟 → 12.5 小时。留空不展示。"
+        hint: "小时支持小数，例如直接填 3.8 → 3.8 小时，此时分钟留空即可。小时和分钟都填写时相加，例如 3.8 小时 + 12 分钟 → 4.0 小时。前台保留一位小数。留空不展示。"
         fields:
-          - { name: hours, label: 小时, widget: number, value_type: int, min: 0, required: false }
+          - { name: hours, label: 小时（支持小数）, widget: number, value_type: float, min: 0, required: false }
           - { name: minutes, label: 分钟, widget: number, value_type: int, min: 0, max: 59, required: false }
       - name: personalRating
         label: 我的评分（10 分制）

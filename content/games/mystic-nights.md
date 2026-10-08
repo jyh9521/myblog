@@ -2,6 +2,17 @@
 title: 诡秘之夜
 status:
   - 考虑制作补丁
+hltb:
+  url: https://howlongtobeat.com/game/56098
+  id: 56098
+  title: Mystic Nights
+  auto: true
+  snapshot:
+    id: 56098
+    main: 11
+    extras: null
+    completionist: null
+    updatedAt: 2026-10-08T04:25:15.024Z
 gameMetadata:
   alternativeNames:
     - 미스틱 나이츠

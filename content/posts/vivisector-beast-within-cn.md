@@ -3,6 +3,10 @@ aliases:
   - /posts/vivisector-beast-within/
 title: 《活体解剖者：人面兽心》简体中文汉化补丁
 date: 2026-06-30
+description: |-
+  > Vivisector: Beast Within Simplified Chinese Patch
+  > 《活体解剖者：人面兽心》简体中文汉化补丁
+cover: /uploads/chinesetranslationpatch/vivisectorbeastwithin/封面图.png
 tags:
   - 汉化补丁
   - 游戏

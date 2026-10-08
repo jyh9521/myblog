@@ -2,6 +2,17 @@
 title: 第二视界
 status:
   - 考虑制作补丁
+hltb:
+  id: 8206
+  url: https://howlongtobeat.com/game/8206
+  title: Second Sight
+  auto: true
+  snapshot:
+    id: 8206
+    main: 8.73
+    extras: 13.01
+    completionist: 14.01
+    updatedAt: 2026-10-08T04:22:32.588Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/b56/b56a2ff4e6479a3e484f4e686f6ee201.jpg

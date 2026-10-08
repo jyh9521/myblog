@@ -80,4 +80,8 @@ manual:
 events:
   - date: 2020-04-30
     title: 开始游戏
+  - title: AFK
+    note: |-
+      前期8bit很折磨人，变16bit之后豁然开朗，不喜欢8bit的千万不要玩。
+      但是不知道为什么就突然不想玩了……
 ---

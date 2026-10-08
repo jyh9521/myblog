@@ -5,6 +5,8 @@ status:
   - 已制作补丁
 playTime:
   hours: 4
+  minutes: 7
+personalRating: 7.5
 hltb:
   id: 10262
   url: https://howlongtobeat.com/game/10262

@@ -49,4 +49,7 @@ gameMetadata:
   website: ''
 manual:
   availabilityStatus: physical-only
+events:
+  - date: 2026-10-08
+    title: 开始汉化工作
 ---

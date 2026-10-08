@@ -1,7 +1,7 @@
 ---
 title: 刺客信条：黑旗 记忆重置
 status:
-  - 正在玩
+  - AFK
 gameMetadata:
   alternativeNames:
     - assassin's creed black flag resynced
@@ -73,4 +73,9 @@ manual:
 events:
   - date: 2026-10-06
     title: 开始游戏
+  - date: 2026-10-08
+    title: AFK
+    note: |-
+      画面效果着实惊人，尤其是水体效果和植被效果。
+      但是游戏的内核还是老一套，比较无聊，而且不知道为什么跑酷的动作不是很流畅。
 ---

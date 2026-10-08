@@ -29,3 +29,7 @@ Wrangler 旧版 4.98.0 会忽略现有 `exports` 声明，导致 Durable Object 
 这些字段独立于游戏资料来源和时间线，刷新 RAWG / ScreenScraper 资料不会覆盖。旧档案不需要迁移。填写后保存并等待 GitHub Pages 部署，在该游戏详情页标题下查看「游玩时长」。
 
 验证：`npm test`、`npm run check`、`npm run validate`、`npm run build`。
+
+## 个人评分
+
+游戏档案中的 personalRating 为独立可选字段，范围 0–10。前台将评分四舍五入至两位小数，个人好评度按该评分 ÷ 10 × 100% 换算，例如 8.00 → 80%，8.12 → 81.2%。留空不展示，明确填写 0 会展示 0.00 / 10 和 0%。个人评分卡片在游玩时长区内；没有时间记录也能单独显示。不代表玩家群体好评率；资料源刷新、HLTB 与 Exophase 不会修改个人评分。

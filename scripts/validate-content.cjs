@@ -76,6 +76,10 @@ async function validateRepository(root = process.cwd()) {
     let data, content;
     try { ({ data, content } = matter(fs.readFileSync(full, 'utf8'))); } catch (e) { error(filename, `frontmatter 错误：${e.message}`); continue; }
     const base = folder ? `/${folder}/${name.slice(0, -3)}/` : '/about/';
+    if (folder === 'games' && data.personalRating !== undefined && data.personalRating !== null && String(data.personalRating).trim() !== '') {
+      const score = Number(data.personalRating);
+      if (!['number', 'string'].includes(typeof data.personalRating) || !Number.isFinite(score) || score < 0 || score > 10) error(filename, '个人评分必须是 0–10 之间的数字');
+    }
     if (data.gameSlug && !games.has(data.gameSlug)) error(filename, `关联的游戏档案不存在：${data.gameSlug}`);
     if (data.projects !== undefined && !Array.isArray(data.projects)) error(filename, '关联 GitHub 项目必须为列表');
     const projectRepos = new Set();

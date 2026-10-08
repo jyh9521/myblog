@@ -71,6 +71,15 @@ collections:
         fields:
           - { name: hours, label: 小时, widget: number, value_type: int, min: 0, required: false }
           - { name: minutes, label: 分钟, widget: number, value_type: int, min: 0, max: 59, required: false }
+      - name: personalRating
+        label: 我的评分（10 分制）
+        widget: number
+        value_type: float
+        min: 0
+        max: 10
+        step: 0.01
+        required: false
+        hint: "留空不展示；0 分也会展示。前台保留两位小数，并自动换算个人好评度，例如 8.00 分 → 80%，8.12 分 → 81.2%。更多小数位按四舍五入展示。"
       - name: hltb
         label: HowLongToBeat 关联与参考通关时间
         widget: hltb-game

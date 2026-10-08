@@ -1,4 +1,5 @@
 export type PlayTime = { hours: number; minutes: number; totalMinutes: number };
+export type PersonalRating = { score: number; percent: number };
 export type TimeEstimates = { main?: number; extras?: number; completionist?: number };
 export type CompletionTimes = TimeEstimates & { url: string; id: number; auto: boolean; snapshot?: TimeEstimates & { updatedAt: string } };
 
@@ -9,6 +10,12 @@ function number(value: unknown): number | undefined {
   if ((typeof value === 'string' && !value.trim()) || value === null || value === undefined || typeof value === 'boolean') return undefined;
   const result = typeof value === 'number' ? value : typeof value === 'string' ? Number(value.trim()) : NaN;
   return Number.isFinite(result) && result >= 0 ? result : undefined;
+}
+export function normalizePersonalRating(value: unknown): PersonalRating | null {
+  const score = number(value);
+  if (score === undefined || score > 10) return null;
+  const hundredths = Math.round((score + Number.EPSILON) * 100);
+  return { score: hundredths / 100, percent: hundredths / 10 };
 }
 export function normalizePlayTime(value: unknown): PlayTime | null {
   const input = record(value);

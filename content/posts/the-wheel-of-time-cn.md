@@ -253,9 +253,7 @@ gameSlug: the-wheel-of-time
 - 过场动画字幕缺失、播放异常。
 - 安装、恢复及其他兼容性问题。
 
-问题反馈地址：
-
-[https://github.com/jyh9521/The-Wheel-of-Time-CN/issues](https://github.com/jyh9521/The-Wheel-of-Time-CN/issues)
+[问题反馈地址](https://github.com/jyh9521/The-Wheel-of-Time-CN/issues)
 
 提交反馈时，最好附上游戏版本、问题出现的关卡或场景、详细复现步骤及截图。
 

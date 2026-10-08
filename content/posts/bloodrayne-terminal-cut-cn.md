@@ -4,8 +4,8 @@ aliases:
 title: 《吸血莱恩：终极剪辑版》简体中文汉化补丁
 date: 2026-07-30
 description: |-
-  >BloodRayne: Terminal Cut Simplified Chinese Patch
-  >《吸血莱恩：终极剪辑版》简体中文汉化补丁
+  > BloodRayne: Terminal Cut Simplified Chinese Patch
+  > 《吸血莱恩：终极剪辑版》简体中文汉化补丁
 cover: /uploads/chinesetranslationpatch/bloodrayne/cover.avif
 tags:
   - 汉化补丁

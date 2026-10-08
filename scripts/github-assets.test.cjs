@@ -10,6 +10,29 @@ function load(file) {
   return context.exports;
 }
 const head = 'a'.repeat(40), created = 'b'.repeat(40);
+test('GitHub release links accept owner/repository case changes without accepting other repositories', async () => {
+  const { normalizeProjects } = load('lib/game-projects.ts');
+  const project = { url: 'https://github.com/jyh9521/the-wheel-of-time-cn', releaseUrl: 'https://github.com/JYH9521/The-Wheel-of-Time-CN/releases/tag/v1.0-RC' };
+  assert.equal(normalizeProjects([project])[0].releaseUrl, project.releaseUrl);
+  for (const releaseUrl of ['https://github.com/jyh9521/other/releases', 'https://github.com/jyh9521/the-wheel-of-time-cn/releases-fake', 'https://github.com.evil.test/jyh9521/the-wheel-of-time-cn/releases']) assert.equal(normalizeProjects([{ ...project, releaseUrl }])[0].releaseUrl, '');
+  const { validateRepository } = require('./validate-content.cjs');
+  const root = require('node:os').tmpdir();
+  const dir = fs.mkdtempSync(require('node:path').join(root, 'github-release-case-'));
+  try {
+    fs.mkdirSync(`${dir}/public/sveltia`, { recursive: true });
+    fs.writeFileSync(`${dir}/public/sveltia/config.yml`, 'backend: {name: github, repo: jyh9521/myblog, branch: main}\ncollections: []\n');
+    fs.mkdirSync(`${dir}/content/games`, { recursive: true });
+    const write = p => fs.writeFileSync(`${dir}/content/games/test.md`, '---\nprojects: ' + JSON.stringify([p]) + '\n---\n');
+    write(project); assert.equal((await validateRepository(dir)).errors.length, 0);
+    write({ ...project, releaseUrl: 'https://github.com/jyh9521/other/releases' });
+    assert.ok((await validateRepository(dir)).errors.some(error => error.includes('发布页必须属于该仓库')));
+  } finally {
+    const path = require('node:path');
+    const resolved = fs.realpathSync(dir);
+    assert.ok(resolved.startsWith(fs.realpathSync(root) + path.sep + 'github-release-case-'));
+    fs.rmSync(resolved, { recursive: true, force: true });
+  }
+});
 function fixture(options = {}) {
   const data = Buffer.from('fixture image'), path = 'public/uploads/unused.png', sha256 = createHash('sha256').update(data).digest('hex');
   const preview = { commit: head, files: [{ path, sha256, bytes: data.length }] }, calls = [];

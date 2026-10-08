@@ -88,7 +88,10 @@ async function validateRepository(root = process.cwd()) {
         projectRepos.add(repo.toLowerCase());
         if (project.releaseUrl) {
           const release = new URL(project.releaseUrl);
-          if (release.origin !== url.origin || release.username || release.password || !(release.pathname === `${repo}/releases` || release.pathname.startsWith(`${repo}/releases/`))) throw Error('发布页必须属于该仓库的 Releases');
+          // GitHub owner/repository identities are case-insensitive; release tags are not.
+          const releaseParts = release.pathname.split('/');
+          const releaseRepo = `/${releaseParts[1]}/${releaseParts[2]}`;
+          if (release.origin !== url.origin || release.username || release.password || releaseRepo.toLowerCase() !== repo.toLowerCase() || releaseParts[3] !== 'releases') throw Error('发布页必须属于该仓库的 Releases');
         }
         checkUrl(project.url, filename, base, '项目'); checkUrl(project.releaseUrl, filename, base, '项目发布页');
       } catch (e) { error(filename, `GitHub 项目无效：${e.message}`); }

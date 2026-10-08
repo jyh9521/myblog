@@ -16,7 +16,8 @@ export function normalizeProjects(value: unknown): GameProject[] {
       let releaseUrl = '';
       if (item.releaseUrl) {
         const release = new URL(String(item.releaseUrl));
-        if (release.origin === 'https://github.com' && !release.username && !release.password && (release.pathname === `/${repo}/releases` || release.pathname.startsWith(`/${repo}/releases/`))) releaseUrl = release.href;
+        const parts = release.pathname.split('/');
+        if (release.origin === 'https://github.com' && !release.username && !release.password && `${parts[1]}/${parts[2]}`.toLowerCase() === repo.toLowerCase() && parts[3] === 'releases') releaseUrl = release.href;
       }
       const types = ['汉化补丁', '工具', '现代化补丁', '其他'];
       return [{ url: repositoryUrl, name: String(item.name || '').trim() || repo, type: types.includes(item.type) ? item.type : '其他', description: String(item.description || '').trim(), releaseUrl }];

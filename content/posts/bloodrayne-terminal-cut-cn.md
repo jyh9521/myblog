@@ -8,9 +8,9 @@ description: |-
   >《吸血莱恩：终极剪辑版》简体中文汉化补丁
 cover: /uploads/chinesetranslationpatch/bloodrayne/cover.avif
 tags:
-  - 游戏
   - 汉化补丁
   - 吸血莱恩
+  - 游戏
 pinned: false
 gameSlug: bloodrayne-terminal-cut
 ---

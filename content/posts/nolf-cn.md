@@ -5,6 +5,7 @@ title: 《无人永生》简体中文汉化补丁
 date: 2026-07-27
 description: |-
   > The Operative: No One Lives Forever Simplified Chinese Patch
+  > 《秘密特工：无人永生》简体中文汉化补丁
   > 基于 NOLF Modernizer v1.006 Patch 4
 cover: /uploads/chinesetranslationpatch/nolf/封面.webp
 tags:

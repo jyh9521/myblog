@@ -4,6 +4,39 @@
     if (!window.h || !window.createClass || !window.CMS.getFieldType?.('select')?.control) return false;
     const h = window.h;
     const createClass = window.createClass;
+    // Keep the unconfirmed IME draft local. Publishing each composition update
+    // causes the CMS object field to replace its controlled value mid-candidate.
+    const ImeInput = createClass({
+      getInitialState: function () { return { draft: String(this.props.value ?? '') }; },
+      componentDidUpdate: function (previous) {
+        if (previous.value !== this.props.value && !this.composing && !this.focused) {
+          const draft = String(this.props.value ?? '');
+          this.lastCommitted = undefined;
+          if (draft !== this.state.draft) this.setState({ draft });
+        }
+      },
+      commit: function (value) {
+        if (this.lastCommitted === value) return;
+        this.lastCommitted = value;
+        this.props.onChange(value);
+      },
+      render: function () {
+        const { multiline, onChange, value, ...props } = this.props;
+        return h(multiline ? 'textarea' : 'input', {
+          ...props, value: this.state.draft,
+          onFocus: () => { this.focused = true; },
+          onBlur: event => { this.focused = false; if (!this.composing) this.commit(event.target.value); },
+          onCompositionStart: () => { this.composing = true; },
+          onCompositionEnd: event => { this.composing = false; this.setState({ draft: event.target.value }); this.commit(event.target.value); },
+          onChange: event => {
+            const draft = event.target.value;
+            this.setState({ draft });
+            if (!this.composing && !event.nativeEvent?.isComposing) this.commit(draft);
+          },
+          onKeyDown: event => { if (this.composing || event.nativeEvent?.isComposing || event.keyCode === 229) event.stopPropagation(); },
+        });
+      },
+    });
     const SelectControl = window.CMS.getFieldType('select').control;
     const normalizePlatforms = window.GamePlatforms?.normalizePlatformList || (values => [...new Set(values || [])]);
     const sourceLabels = { rawg: 'RAWG', screenscraper: 'ScreenScraper', igdb: 'IGDB' };
@@ -26,8 +59,8 @@
         const value = this.props.value || {};
         const stores = Array.isArray(value.officialStores) ? value.officialStores : [];
         const textInput = (index, key, placeholder, label, type = 'text') => h('label', { style: { display: 'grid', gap: '4px', minWidth: 0 } },
-          h('span', null, label), h('input', { type, value: stores[index]?.[key] || '', placeholder,
-            onChange: event => this.updateStore(index, key, event.target.value),
+          h('span', null, label), h(ImeInput, { type, value: stores[index]?.[key] || '', placeholder,
+            onChange: value => this.updateStore(index, key, value),
             style: { width: '100%', minHeight: '36px', padding: '6px 9px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }),
           key === 'url' && this.state.urlErrors[index] && h('small', { role: 'alert', style: { color: '#b7791f' } }, this.state.urlErrors[index]));
         return h('div', { style: { display: 'grid', gap: '12px' } },
@@ -44,7 +77,7 @@
             h('button', { type: 'button', onClick: () => this.change({ officialStores: stores.filter((_, itemIndex) => itemIndex !== index) }), style: { justifySelf: 'start', alignSelf: 'end', minHeight: '34px' } }, '删除渠道'),
           )),
           h('button', { type: 'button', onClick: () => this.change({ officialStores: [...stores, { name: '', url: '', region: '', note: '' }] }), style: { justifySelf: 'start', minHeight: '36px', padding: '6px 12px' } }, '＋ 添加正版渠道'),
-          h('label', { style: { display: 'grid', gap: '5px' } }, h('span', null, '人工备注'), h('textarea', { rows: 3, value: value.notes || '', onChange: event => this.change({ notes: event.target.value }), style: { width: '100%', padding: '8px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } })),
+          h('label', { style: { display: 'grid', gap: '5px' } }, h('span', null, '人工备注'), h(ImeInput, { multiline: true, rows: 3, value: value.notes || '', onChange: notes => this.change({ notes }), style: { width: '100%', padding: '8px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } })),
           h('small', null, '本区内容独立保存，刷新 RAWG / ScreenScraper 资料不会覆盖。'));
       },
     });
@@ -141,9 +174,9 @@
       },
       render: function () {
         const value = this.props.value || {};
-        const input = (key, label, type = 'text') => h('label', { key, style: { display: 'grid', gap: '5px' } }, h('span', null, label), h('input', { type, value: value[key] || '', onChange: event => this.update(key, event.target.value), style: { width: '100%', minHeight: '38px', padding: '7px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }));
-        const text = (key, label) => h('label', { key, style: { display: 'grid', gap: '5px' } }, h('span', null, label), h('textarea', { value: value[key] || '', onChange: event => this.update(key, event.target.value), rows: 3, style: { width: '100%', padding: '8px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }));
-        const stringList = (key, label) => h('label', { key, style: { display: 'grid', gap: '5px' } }, h('span', null, label), h('input', { type: 'text', value: Array.isArray(value[key]) ? value[key].join(', ') : '', onChange: event => this.update(key, event.target.value.split(/[,，]/).map(item => item.trim()).filter(Boolean)), style: { width: '100%', minHeight: '38px', padding: '7px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }));
+        const input = (key, label, type = 'text') => h('label', { key, style: { display: 'grid', gap: '5px' } }, h('span', null, label), h(ImeInput, { type, value: value[key] || '', onChange: value => this.update(key, value), style: { width: '100%', minHeight: '38px', padding: '7px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }));
+        const text = (key, label) => h('label', { key, style: { display: 'grid', gap: '5px' } }, h('span', null, label), h(ImeInput, { multiline: true, value: value[key] || '', onChange: value => this.update(key, value), rows: 3, style: { width: '100%', padding: '8px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }));
+        const stringList = (key, label) => h('label', { key, style: { display: 'grid', gap: '5px' } }, h('span', null, label), h(ImeInput, { type: 'text', value: Array.isArray(value[key]) ? value[key].join(', ') : '', onChange: value => this.update(key, value.split(/[,，]/).map(item => item.trim()).filter(Boolean)), style: { width: '100%', minHeight: '38px', padding: '7px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }));
         const pending = this.state.pendingRefresh;
         const showValue = value => Array.isArray(value) ? value.join('、') || '（空）' : String(value || '（空）');
         return h('div', { style: { display: 'grid', gap: '10px' } },
@@ -155,7 +188,7 @@
                 h('div', null, h('small', null, '当前值'), h('p', null, showValue(change.before))), h('div', null, h('small', null, '数据源新值'), h('p', null, showValue(change.after)))))),
             h('div', { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } }, h('button', { type: 'button', onClick: () => this.applyRefresh() }, '确认采用勾选变更'), h('button', { type: 'button', onClick: () => this.setState({ pendingRefresh: null, message: '已取消刷新，当前档案未修改。' }) }, '取消，保留原资料'))),
           h('div', { style: { display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: '8px', alignItems: 'end' } },
-            h('label', { style: { display: 'grid', gap: '5px' } }, h('span', null, '搜索游戏资料'), h('input', { type: 'search', value: this.state.query, placeholder: '支持中文、日文、英文等游戏名称', onChange: event => this.setState({ query: event.target.value }), onKeyDown: event => { if (event.key === 'Enter') { event.preventDefault(); this.searchGames(); } }, style: { width: '100%', minHeight: '38px', padding: '7px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } })),
+            h('label', { style: { display: 'grid', gap: '5px' } }, h('span', null, '搜索游戏资料'), h('input', { type: 'search', value: this.state.query, placeholder: '支持中文、日文、英文等游戏名称', onChange: event => this.setState({ query: event.target.value }), onKeyDown: event => { if (event.key === 'Enter' && !event.nativeEvent?.isComposing && !event.isComposing && event.keyCode !== 229) { event.preventDefault(); this.searchGames(); } }, style: { width: '100%', minHeight: '38px', padding: '7px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } })),
             h('button', { id: this.props.forID, type: 'button', disabled: this.state.loading || this.state.searching, onClick: () => this.searchGames(), style: { minHeight: '38px', padding: '7px 14px', cursor: this.state.searching ? 'wait' : 'pointer' } }, this.state.searching ? '搜索中…' : '搜索游戏'),
           ),
           h('label', { style: { display: 'flex', alignItems: 'center', gap: '8px' } }, h('span', null, '数据源'), h('select', { value: this.state.dataSource, onChange: event => this.setState({ dataSource: event.target.value }), style: { minHeight: '36px', padding: '5px 9px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }, [['auto', '自动'], ['rawg', 'RAWG'], ['screenscraper', 'ScreenScraper']].map(([key, label]) => h('option', { key, value: key }, label)))),
@@ -225,6 +258,7 @@
               'aria-activedescendant': options[active] ? `${listId}-${active}` : undefined, style,
               onChange: event => this.setState({ query: event.target.value, active: 0 }),
               onKeyDown: event => {
+                if (event.nativeEvent?.isComposing || event.isComposing || event.keyCode === 229) return;
                 if (event.key === 'Escape') { event.preventDefault(); this.setState({ open: false }); this.toggle?.focus(); }
                 else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); this.setState({ active: Math.max(0, Math.min(options.length - 1, active + (event.key === 'ArrowDown' ? 1 : -1))) }); }
                 else if (event.key === 'Enter') { event.preventDefault(); if (options[active]) this.choose(options[active]); }

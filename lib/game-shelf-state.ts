@@ -21,9 +21,10 @@ export function sortShelfGames(games: GameRecord[], sort: string) {
   const date = (game: GameRecord) => game.metadata?.releaseDate || game.platforms.find(p => p.releaseDate)?.releaseDate || '';
   return [...games].sort((a, b) => {
     if (sort === 'name') return a.title.localeCompare(b.title, 'zh-CN');
-    const av = sort === 'updated' ? a.metadata?.updatedAt || '' : date(a);
-    const bv = sort === 'updated' ? b.metadata?.updatedAt || '' : date(b);
+    const av = sort === 'updated' ? a.updatedAt || a.metadata?.updatedAt || '' : date(a);
+    const bv = sort === 'updated' ? b.updatedAt || b.metadata?.updatedAt || '' : date(b);
     if (!av || !bv) return av ? -1 : bv ? 1 : a.title.localeCompare(b.title, 'zh-CN');
-    return (sort === 'release-old' ? av.localeCompare(bv) : bv.localeCompare(av)) || a.title.localeCompare(b.title, 'zh-CN');
+    const difference = sort === 'updated' ? (Date.parse(bv) || 0) - (Date.parse(av) || 0) : sort === 'release-old' ? av.localeCompare(bv) : bv.localeCompare(av);
+    return difference || a.title.localeCompare(b.title, 'zh-CN');
   });
 }

@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { execFileSync } from 'node:child_process';
 import { normalizeGameStatus } from './game-status';
 import { normalizeProjects } from './game-projects';
 import { normalizePlayTime, normalizeCompletionTimes, normalizePersonalRating } from './game-time';
@@ -9,6 +10,20 @@ import type { AvailabilityStatus, GameEvent, GameManual, GameMetadata, GamePlatf
 
 const gamesDir = path.join(process.cwd(), 'content/games');
 const stores = new Set<GameStore>(['pc', 'playstation', 'xbox', 'nintendo']);
+let editDates: Map<string, string> | undefined;
+function dossierEditDates() {
+  if (editDates) return editDates;
+  editDates = new Map();
+  try {
+    const log = execFileSync('git', ['log', '--format=DATE:%cI', '--name-only', '--', 'content/games'], { encoding: 'utf8' });
+    let date = '';
+    for (const line of log.split(/\r?\n/)) {
+      if (line.startsWith('DATE:')) date = line.slice(5);
+      else if (line.startsWith('content/games/') && !editDates.has(line)) editDates.set(line, date);
+    }
+  } catch { /* Exported source without Git falls back to metadata's timestamp. */ }
+  return editDates;
+}
 const asText = (value: unknown) => String(value ?? '').trim();
 const asList = (value: unknown): string[] => Array.isArray(value) ? value.map(asText).filter(Boolean) : asText(value) ? [asText(value)] : [];
 const asDate = (value: unknown) => value instanceof Date
@@ -103,9 +118,10 @@ export function getGames(): GameRecord[] {
     }
     const events = Array.isArray(data.events) ? data.events.filter((event: any) => event?.title).map((event: any) => ({
       date: asDate(event.date), title: asText(event.title), note: asText(event.note),
-    })).sort((a: GameEvent, b: GameEvent) => b.date.localeCompare(a.date)) : [];
+    })) : [];
     return [{
       id: slug, slug,
+      updatedAt: dossierEditDates().get(`content/games/${file}`) || metadata.updatedAt,
       title: asText(data.title || metadata.localizedName || metadata.title), status: normalizeGameStatus(data.status),
       summary: asText(data.summary || metadata.description), metadata: hasMetadata ? metadata : null, manual, platforms, events, projects: normalizeProjects(data.projects),
       playTime: normalizePlayTime(data.playTime), completionTimes: normalizeCompletionTimes(data.hltb),

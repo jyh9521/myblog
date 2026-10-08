@@ -2,6 +2,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { EXOPHASE_USERNAME, EXOPHASE_URL, embeddedJson, resolvePlayerId, normalizeProfile, parseGamingProfile } = require('./gaming-profile-module.cjs');
 const destination = path.join(__dirname, '../public/data/exophase.json');
+const healthDestination = path.join(__dirname, '../public/data/exophase-status.json');
 class SourceUnavailableError extends Error {}
 async function request(url, fetcher = fetch) {
   let response;
@@ -62,6 +63,7 @@ async function refresh({ fetcher = fetch, file = destination } = {}) {
 }
 async function main() {
   const result = await refresh();
+  await fs.writeFile(healthDestination, `${JSON.stringify({ status: result.status, checkedAt: new Date().toISOString(), reason: result.reason || '' }, null, 2)}\n`);
   let message;
   if (result.status === 'retained') {
     message = `Existing snapshot retained (${result.reason}); no new data fetched. Snapshot: ${result.updatedAt}`;

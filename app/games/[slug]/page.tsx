@@ -18,7 +18,7 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
     <GameTime game={game} />
     <GamePlatformSelector title={game.title} status={game.status} platforms={game.platforms} manual={game.manual} />
     {!!game.projects?.length && <section id="projects" className="game-projects"><h2>相关 GitHub 项目</h2>{game.projects.map(project => <article key={project.url}><div><strong>{project.name}</strong><small>{project.type}</small></div>{project.description && <p>{project.description}</p>}<nav aria-label={`${project.name}链接`}><a href={project.url} target="_blank" rel="noopener noreferrer">查看源码 ↗</a>{project.releaseUrl && <a href={project.releaseUrl} target="_blank" rel="noopener noreferrer">下载发布版 ↗</a>}</nav></article>)}</section>}
-    {game.events.length > 0 && <section className="game-timeline"><h2>游玩与制作时间线</h2><ol>{[...game.events].reverse().map((event, index) => <li key={`${event.date}-${event.title}-${index}`}><time>{event.date || '日期未记录'}</time><strong>{event.title}</strong>{event.note && <p>{event.note}</p>}</li>)}</ol></section>}
+    {game.events.length > 0 && <section className="game-timeline"><h2>游玩与制作时间线</h2><ol>{game.events.map((event, index) => <li key={`${event.date}-${event.title}-${index}`}><time>{event.date || '日期未记录'}</time><strong>{event.title}</strong>{event.note && <p className="game-event-note">{event.note}</p>}</li>)}</ol></section>}
     {posts.length > 0 && <section className="game-related"><h2>相关博客文章</h2><div className="related-grid">{posts.map(post => <Link key={post.slug} className="related-card" href={`/posts/${post.slug}/`}><span>{post.tags.join(' · ')}</span><strong>{post.title}</strong><small>{post.date.slice(0, 10)} · 阅读文章 →</small></Link>)}</div></section>}
   </div></main>;
 }

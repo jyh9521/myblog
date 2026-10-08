@@ -43,6 +43,7 @@ export function GamingProfileContent({ data, locale = 'zh-CN' }: { data: GamingP
       })}</ul>}
     </div>
     <p className="gaming-updated">{t.updated} <time dateTime={data.updatedAt}>{new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Tokyo' }).format(new Date(data.updatedAt))}</time>{stale && <span> · {t.stale}</span>}</p>
+    {data.refresh && <p className="gaming-updated" role="status">{data.refresh.status === 'retained' && <span>{t.blocked} {data.refresh.reason} </span>}{t.checked} <time dateTime={data.refresh.checkedAt}>{new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Tokyo' }).format(new Date(data.refresh.checkedAt))}</time></p>}
   </>;
 }
 export default function GamingProfile({ locale = 'zh-CN' }: { locale?: GamingProfileLocale }) {

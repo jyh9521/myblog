@@ -188,3 +188,4 @@ button:not(.toc-toggle),.hero-button,.read-more,.site-header nav a{transition-pr
 .game-summary h2{font-size:23px}
 .game-summary h3{font-size:20px}
 @media(max-width:600px){.game-time-personal-grid,.game-time-reference-grid{grid-template-columns:1fr}.game-summary{font-size:16px}}
+.game-event-note{white-space:pre-wrap;overflow-wrap:anywhere}

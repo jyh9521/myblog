@@ -133,8 +133,9 @@ test('Gaming Profile is above the local shelf on Games and absent from About; re
 test('browser cache access is same-origin and rejects failed or malformed responses', async () => {
   const original = global.fetch, controller = new AbortController();
   try {
-    global.fetch = async (url, options) => { assert.equal(url, '/data/exophase.json'); assert.equal(options.signal, controller.signal); return new Response(JSON.stringify(fixture())); };
+    global.fetch = async (url, options) => { assert.ok(['/data/exophase.json', '/data/exophase-status.json'].includes(url)); assert.equal(options.cache, 'no-store'); assert.equal(options.signal, controller.signal); return url.endsWith('-status.json') ? new Response(JSON.stringify({ status: 'retained', checkedAt: stamp, reason: 'Exophase HTTP 403' })) : new Response(JSON.stringify(fixture())); };
     assert.equal((await profile.loadGamingProfile(controller.signal)).username, profile.EXOPHASE_USERNAME);
+    assert.equal((await profile.loadGamingProfile(controller.signal)).refresh.reason, 'Exophase HTTP 403');
     global.fetch = async () => new Response('missing', {status:404});
     await assert.rejects(profile.loadGamingProfile(controller.signal), /404/);
     global.fetch = async () => new Response('{}');

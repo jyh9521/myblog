@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { saveShelfPosition, restoreShelfPosition } from '../../lib/game-shelf-scroll';
 import type { GameRecord } from '../../lib/game-types';
 import { gameStoreLabels } from '../../lib/game-types';
 import { gameStatuses, matchesGameStatus } from '../../lib/game-status';
@@ -30,6 +31,9 @@ export default function GameShelf({ games }: { games: GameRecord[] }) {
     history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
     try { sessionStorage.setItem('game-shelf-filters', writeShelfState(filters).toString()); } catch { /* Storage is optional. */ }
   }, [filters, ready]);
+  useLayoutEffect(() => {
+    if (ready) return restoreShelfPosition();
+  }, [ready]);
   const platformOptions = useMemo(() => [...new Set(games.flatMap(game => game.platforms.map(platform => `${gameStoreLabels[platform.store]} · ${platform.platform}`)))].sort((a, b) => a.localeCompare(b, 'zh-CN')), [games]);
   const statusOptions = [...gameStatuses];
   const yearOf = (game: GameRecord) => (game.metadata?.releaseDate || game.platforms.find(platform => platform.releaseDate)?.releaseDate || '').slice(0, 4);
@@ -66,7 +70,7 @@ export default function GameShelf({ games }: { games: GameRecord[] }) {
     const cover = game.platforms.find(platform => platform.cover)?.cover || game.metadata?.cover || '';
     const platformNames = [...new Set(game.platforms.map(platform => `${gameStoreLabels[platform.store]} · ${platform.platform}`))];
     const family = game.platforms[0]?.store || 'pc';
-    return <article className="game-shelf-item" key={game.slug}>
+    return <article className="game-shelf-item" data-game-slug={game.slug} key={game.slug} onClickCapture={event => { if ((event.target as Element).closest('a')) saveShelfPosition(); }}>
       <div className="game-shelf-copy">
         <div className="game-shelf-title"><Link href={`/games/${game.slug}/`}>{game.title} ↗</Link><span>{game.status}</span></div>
         {game.summary && <p>{game.summary}</p>}

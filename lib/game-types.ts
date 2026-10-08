@@ -40,7 +40,7 @@ export type GameMetadata = {
 };
 export type GameEvent = { date: string; title: string; note: string };
 export type GameProject = { url: string; name: string; type: string; description: string; releaseUrl: string };
-export type GameRecord = { id: string; slug: string; title: string; status: string; summary: string; metadata: GameMetadata | null; manual: GameManual; platforms: GamePlatform[]; events: GameEvent[]; projects?: GameProject[]; playTime?: PlayTime | null; personalRating?: PersonalRating | null; completionTimes?: CompletionTimes | null };
+export type GameRecord = { updatedAt?: string; id: string; slug: string; title: string; status: string; summary: string; metadata: GameMetadata | null; manual: GameManual; platforms: GamePlatform[]; events: GameEvent[]; projects?: GameProject[]; playTime?: PlayTime | null; personalRating?: PersonalRating | null; completionTimes?: CompletionTimes | null };
 
 export const gameStoreLabels: Record<GameStore, string> = {
   pc: 'PC', playstation: 'PlayStation', xbox: 'Xbox', nintendo: 'Nintendo',

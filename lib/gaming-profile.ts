@@ -12,6 +12,7 @@ export interface RecentGame {
   earned?: number; total?: number; completion?: number;
 }
 export interface GamingProfileData {
+  refresh?: { status: 'updated' | 'unchanged' | 'retained'; checkedAt: string; reason: string };
   version: 1; username: string; displayName: string; updatedAt: string;
   stats: { hours?: number; games?: number; achievements?: number; completion?: number };
   platforms: { id: PlatformId; games: number }[];
@@ -120,8 +121,18 @@ export function parseGamingProfile(value: unknown): GamingProfileData {
       completion: completion !== undefined && completion <= 100 ? completion : undefined }, platforms, recent };
 }
 export async function loadGamingProfile(signal: AbortSignal): Promise<GamingProfileData> {
-  const response = await fetch('/data/exophase.json', { signal });
+  const response = await fetch('/data/exophase.json', { signal, cache: 'no-store' });
   if (!response.ok) throw new Error(`Gaming profile HTTP ${response.status}`);
   const value: unknown = await response.json();
-  return parseGamingProfile(value);
+  const profile = parseGamingProfile(value);
+  try {
+    const statusResponse = await fetch('/data/exophase-status.json', { signal, cache: 'no-store' });
+    if (statusResponse.ok) {
+      const status = record(await statusResponse.json());
+      if (['updated', 'unchanged', 'retained'].includes(text(status.status)) && Number.isFinite(Date.parse(text(status.checkedAt)))) {
+        profile.refresh = { status: status.status as 'updated' | 'unchanged' | 'retained', checkedAt: text(status.checkedAt), reason: text(status.reason) };
+      }
+    }
+  } catch { /* The validated snapshot stays useful if refresh diagnostics fail. */ }
+  return profile;
 }

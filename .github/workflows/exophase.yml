@@ -27,13 +27,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- public/data/exophase.json; then
+          if git diff --quiet -- public/data/exophase.json public/data/exophase-status.json && [ -f public/data/exophase-status.json ] && git ls-files --error-unmatch public/data/exophase-status.json >/dev/null 2>&1; then
             echo "Gaming profile unchanged; no commit."
             exit 0
           fi
           git config user.name "Game Profile Maintenance"
           git config user.email "jyh9521@users.noreply.github.com"
-          git add public/data/exophase.json
+          git add public/data/exophase.json public/data/exophase-status.json
           git commit -m "Update public gaming profile"
           # Rebase over concurrent CMS edits; never force-push or discard content.
           git pull --rebase origin main

@@ -69,3 +69,5 @@ remain displayed with a note after 48 hours.
 The site currently has Chinese text and no global i18n/language switcher. This
 feature's strings are centralized in `lib/gaming-profile-i18n.ts`, supporting
 `zh-CN` and `ja` through its locale prop without changing unrelated site UI.
+
+Refresh diagnostics are published separately as public/data/exophase-status.json. The frontend revalidates both JSON files without browser cache, displays the most recent attempt time, and explicitly reports retained snapshots (including HTTP 403). A retained snapshot is not a fresh source update. The source must accept unauthenticated requests before scheduled collection can resume; the diagnostics do not remove upstream access denial.

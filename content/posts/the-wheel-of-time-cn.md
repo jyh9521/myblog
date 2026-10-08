@@ -228,6 +228,10 @@ gameSlug: the-wheel-of-time
 
 [GitHub](https://github.com/jyh9521/The-Wheel-of-Time-CN/releases)
 
+[Google Drive](https://drive.google.com/drive/folders/1jiGUBqToySb5K03Nv9lHyHga9Ir1NXht?usp=sharing)
+
+[百度网盘](https://pan.baidu.com/s/1xveU3NtxMmUma_Ri8_6Ggg?pwd=blfy) 提取码: blfy
+
 本汉化补丁免费提供，不包含游戏本体。使用前请自行准备受支持的[正版游戏](https://www.gog.com/en/game/the_wheel_of_time)。
 
 

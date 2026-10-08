@@ -66,7 +66,7 @@ export default function GitHubContributionCalendar() {
   }, []);
 
   return <div className="github-calendar-card">
-    <div className="section-title"><div><span className="section-kicker">OPEN SOURCE</span><h2>GitHub 贡献</h2></div><a className="read-more" href="https://github.com/jyh9521" target="_blank" rel="noreferrer">查看 GitHub →</a></div>
+    <div className="section-title"><div><span className="section-kicker">OPEN SOURCE</span><h2>GitHub 贡献</h2></div><a className="read-more" href="https://github.com/jyh9521" target="_blank" rel="noopener noreferrer">查看 GitHub →</a></div>
     <div ref={calendarRef} className="github-calendar" aria-live="polite">正在加载 GitHub 贡献日历…</div>
   </div>;
 }

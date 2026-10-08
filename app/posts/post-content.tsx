@@ -12,6 +12,7 @@ import ImageCompare from './image-compare';
 import GameFrameCard from '../games/game-frame-card';
 import RetryableImage from './retryable-image';
 import PdfEmbed from './pdf-embed';
+import { externalLinkProps } from '../../lib/external-links';
 import type { GameRecord } from '../../lib/game-types';
 
 type Props = { body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
@@ -79,7 +80,7 @@ export default function PostContent({ body, title, headings, images, games, cove
       if (game) { const params = new URLSearchParams(game[2]); const slug = params.get('slug') || ''; return <GameFrameCard frame={game[1]} game={games.find(item => item.slug === slug)} title={params.get('title') || ''} status={params.get('status') || ''} />; }
       const compare = href.match(/image-compare\.invalid\/compare\?([^#]*)/);
       if (compare) { const params = new URLSearchParams(compare[1]); return <ImageCompare before={params.get('before') || ''} after={params.get('after') || ''} beforeLabel={params.get('beforeLabel') || '之前'} afterLabel={params.get('afterLabel') || '之后'} />; }
-      return <a href={href}>{children}</a>;
+      return <a href={href} title={title} {...externalLinkProps(href)}>{children}</a>;
     },
   }), [images, games, galleryOffset]);
 
@@ -101,7 +102,7 @@ export default function PostContent({ body, title, headings, images, games, cove
       <div className="body"><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, remarkHeadingIds, remarkGameFrames, remarkImageCompare]} components={markdownComponents}>{body}</ReactMarkdown></div>
       {audio && <section className="media"><h2>音频</h2><audio controls src={audio} /></section>}
       {video && <section className="media"><h2>视频</h2><video controls src={video} /></section>}
-      {attachment && <p className="media"><a href={attachment} download>下载附件 ↗</a></p>}
+      {attachment && <p className="media"><a href={attachment} download {...externalLinkProps(attachment)}>下载附件 ↗</a></p>}
     </div>
     {currentImage && <div className="image-lightbox" role="dialog" aria-modal="true" aria-label="文章图片浏览器" onClick={() => setActiveImage(null)} onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => {
       if (touchStart.current === null) return;

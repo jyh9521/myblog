@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import GitHubContributionCalendar from './github-calendar';
 import GiscusComments from '../comments/giscus-comments';
+import { externalLinkProps } from '../../lib/external-links';
 
 export const metadata = { title: '关于我' };
 
@@ -17,7 +18,7 @@ export default function About() {
         <img className="about-avatar" src="/avatar.jpg" alt="伯翎飞云的头像" />
         <div><span className="section-kicker">ABOUT ME</span><h1>{String(data.title || '关于我')}</h1><p>{String(data.intro || '')}</p></div>
       </div>
-      <div className="article-content"><div className="body"><ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown></div></div>
+      <div className="article-content"><div className="body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: ({ href, children, title }) => <a href={href} title={title} {...externalLinkProps(href)}>{children}</a> }}>{content}</ReactMarkdown></div></div>
       <GitHubContributionCalendar />
       <GiscusComments />
     </div>

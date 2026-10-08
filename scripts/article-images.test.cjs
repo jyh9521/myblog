@@ -39,17 +39,21 @@ test('TOC and lightbox updates preserve Markdown image nodes, reserved geometry 
     './image-compare': { default: () => null, __esModule: true },
     '../games/game-frame-card': { default: () => null, __esModule: true },
     './retryable-image': { default: load('app/posts/retryable-image.tsx').default, __esModule: true },
+    '../../lib/external-links': load('lib/external-links.ts', {}, { URL }),
   }, {
     document: { getElementById: () => ({ id: 'end' }), body: { style: { overflow: '' } } },
     window: { addEventListener() {}, removeEventListener() {} },
     IntersectionObserver: class { constructor(callback) { intersection = callback; } observe() {} disconnect() {} },
   });
   let tree;
-  const props = { title: 'Test', body: '![first](/one.avif)\n\n![second](https://example.test/two.png)',
+  const props = { title: 'Test', body: '![first](/one.avif)\n\n![second](https://example.test/two.png)\n\n[External](https://example.com) [Internal](/about/)',
     headings: [{ id: 'end', text: 'End', level: 2 }], games: [],
     images: [{ src: '/one.avif', alt: 'first', caption: 'First caption', width: 1920, height: 1080 }, { src: 'https://example.test/two.png', alt: 'second', caption: 'Second caption' }],
     cover: { src: '/cover.png', alt: 'cover', caption: 'Cover', width: 800, height: 600 } };
   renderer.act(() => { tree = renderer.create(React.createElement(PostContent, props)); });
+  const external = tree.root.findAllByType('a').find(link => link.props.href === 'https://example.com');
+  assert.equal(external.props.target, '_blank'); assert.equal(external.props.rel, 'noopener noreferrer');
+  assert.equal(tree.root.findAllByType('a').find(link => link.props.href === '/about/').props.target, undefined);
   const image = tree.root.findAllByType('img').find(x => x.props.src === '/one.avif');
   assert.equal(image.props.width, 1920);
   assert.equal(image.props.height, 1080);

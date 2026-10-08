@@ -2,6 +2,17 @@
 title: 夺命邮差：脑损伤
 status:
   - 考虑制作补丁
+hltb:
+  auto: true
+  id: 98503
+  snapshot:
+    completionist: 11.55
+    extras: 8.01
+    id: 98503
+    main: 7.23
+    updatedAt: 2026-10-08T04:24:14.469Z
+  title: 'Postal: Brain Damaged'
+  url: https://howlongtobeat.com/game/98503
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/8d8/8d89895e3c3926c4e3f1a9c58aecf9d7.jpg

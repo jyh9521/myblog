@@ -10,6 +10,42 @@ function load(file, imports = {}) {
   return context.exports;
 }
 const time = load('lib/game-time.ts');
+test('personal records and HLTB estimates render in separate named groups', () => {
+  const React = require('react');
+  const Component = load('app/games/game-time.tsx', { '../../lib/game-time': time }).default;
+  const render = game => require('react-dom/server').renderToStaticMarkup(React.createElement(Component, { game }));
+  const html = render({ playTime: time.normalizePlayTime({ hours: 4 }), personalRating: time.normalizePersonalRating(6.5), completionTimes: time.normalizeCompletionTimes({ url: 'https://howlongtobeat.com/game/1', main: 3.8, extras: 4.6, completionist: 4.9 }) });
+  const personal = html.slice(html.indexOf('game-time-personal-heading'), html.indexOf('class="game-time-group game-time-reference"'));
+  const reference = html.slice(html.indexOf('class="game-time-group game-time-reference"'));
+  assert.match(personal, /我的记录/); assert.match(personal, /4\.0/); assert.match(personal, /6\.50/);
+  assert.doesNotMatch(personal, /主线参考时间|全收集参考时间/);
+  for (const value of ['3.8', '4.6', '4.9']) assert.ok(reference.includes(value));
+  assert.doesNotMatch(reference, /我的评分|我的游玩时长/);
+  assert.doesNotMatch(render({ completionTimes: time.normalizeCompletionTimes({ url: 'https://howlongtobeat.com/game/1', main: 3.8 }) }), /我的记录/);
+  assert.doesNotMatch(render({ playTime: time.normalizePlayTime({ hours: 4 }) }), /参考通关时间/);
+  const css = fs.readFileSync('app/style.css', 'utf8');
+  assert.match(css, /\.game-time-personal-grid\{grid-template-columns:repeat\(2/);
+  assert.match(css, /\.game-time-reference-grid\{grid-template-columns:repeat\(3/);
+});
+test('dossier summary renders GFM and line breaks, with safe external links', async () => {
+  const React = require('react');
+  const markdown = await import('react-markdown');
+  const gfm = await import('remark-gfm');
+  const breaks = await import('remark-breaks');
+  const Component = load('app/games/game-summary.tsx', {
+    'react-markdown': markdown.default, 'remark-gfm': gfm.default, 'remark-breaks': breaks.default,
+    '../../lib/external-links': load('lib/external-links.ts'),
+  }).default;
+  const render = summary => require('react-dom/server').renderToStaticMarkup(React.createElement(Component, { summary }));
+  const html = render('## 简介\n\n**加粗**和*斜体*\n下一行\n\n- 列表\n\n~~删除~~\n\n[外链](https://example.com) [内链](/games/)\n\n| 项目 | 数值 |\n| --- | --- |\n| 时间 | 4 |\n\n<script>alert(1)</script>');
+  for (const tag of ['h2', 'strong', 'em', 'br', 'ul', 'del', 'table']) assert.match(html, new RegExp('<' + tag + '[ >/]'));
+  assert.match(html, /href="https:\/\/example.com" target="_blank" rel="noopener noreferrer"/);
+  assert.match(html, /href="\/games\/">内链/);
+  assert.doesNotMatch(html, /<script>/);
+  assert.equal(render('  '), '');
+  assert.match(render('Plain text'), /<p>Plain text<\/p>/);
+  assert.match(fs.readFileSync('app/games/[slug]/page.tsx', 'utf8'), /<GameSummary summary=\{game.summary\}/);
+});
 test('personal time preserves minutes and rounds only for display', () => {
   assert.equal(time.normalizePlayTime({ hours: 12, minutes: 30 }).totalMinutes, 750);
   assert.equal(time.formatPlayHours(750), '12.5');

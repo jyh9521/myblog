@@ -39,13 +39,21 @@ export default function GameTime({ game }: { game: GameRecord }) {
   ].filter(item => item.hours !== undefined) : [];
   return <section className="game-time-section" aria-labelledby="game-time-heading">
     <h2 id="game-time-heading">{personalRating ? (playTime || completionTimes ? '游玩时长与个人评分' : '个人评分') : '游玩时长'}</h2>
-    <div className="game-time-grid">
+    {(playTime || personalRating) && <div className="game-time-group game-time-personal" role="group" aria-labelledby="game-time-personal-heading">
+      <h3 id="game-time-personal-heading">我的记录</h3>
+      <div className="game-time-grid game-time-personal-grid">
       {playTime && <div className="game-time-stat"><span>我的游玩时长</span><strong>{formatPlayHours(playTime.totalMinutes)} <small>小时</small></strong></div>}
       {personalRating && <div className="game-time-stat personal-rating-stat"><span>我的评分</span><strong>{personalRating.score.toFixed(2)} <small>/ 10</small></strong><p>个人好评度 <b>{personalRating.percent}%</b></p><div className="personal-rating-bar" role="meter" aria-label="个人好评度" aria-valuemin={0} aria-valuemax={100} aria-valuenow={personalRating.percent} aria-valuetext={`${personalRating.percent}%`}><span style={{ width: `${personalRating.percent}%` }} /></div></div>}
-      {estimates.map(item => <div className="game-time-stat" key={item.label}><span>{item.label}参考时间</span><strong>{item.hours!.toFixed(1)} <small>小时</small></strong></div>)}
-    </div>
+      </div>
     {personalRating && <p className="game-time-source">个人好评度＝我的评分 ÷ 10 × 100%，仅代表我的评价，不是玩家群体好评率。</p>}
-    {completionTimes && <p className="game-time-source">{estimates.length > 0 && (estimates.some(item => item.manual) ? '参考时间来自 HowLongToBeat；手动记录优先，不代表个人实际游玩时长。' : '参考时间来自 HowLongToBeat，不代表个人实际游玩时长。')} {auto && cached?.updatedAt && <span>数据更新时间：{cached.updatedAt.slice(0, 10)}。 </span>}<a href={completionTimes.url} target="_blank" rel="noopener noreferrer">在 HowLongToBeat 查看 ↗</a></p>}
+    </div>}
+    {completionTimes && <div className="game-time-group game-time-reference" role="group" aria-labelledby="game-time-reference-heading">
+      <h3 id="game-time-reference-heading">参考通关时间 · HowLongToBeat</h3>
+      {estimates.length > 0 && <div className="game-time-grid game-time-reference-grid">
+        {estimates.map(item => <div className="game-time-stat" key={item.label}><span>{item.label}参考时间</span><strong>{item.hours!.toFixed(1)} <small>小时</small></strong></div>)}
+      </div>}
+      <p className="game-time-source">{estimates.length > 0 && (estimates.some(item => item.manual) ? '参考时间来自 HowLongToBeat；手动记录优先，不代表个人实际游玩时长。' : '参考时间来自 HowLongToBeat，不代表个人实际游玩时长。')} {auto && cached?.updatedAt && <span>数据更新时间：{cached.updatedAt.slice(0, 10)}。 </span>}<a href={completionTimes.url} target="_blank" rel="noopener noreferrer">在 HowLongToBeat 查看 ↗</a></p>
     {auto && <p className="game-time-source" role="status">{message}</p>}
+    </div>}
   </section>;
 }

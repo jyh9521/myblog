@@ -2,6 +2,17 @@
 title: 雇佣兵2：战火纷飞
 status:
   - 考虑制作补丁
+hltb:
+  id: 5889
+  url: https://howlongtobeat.com/game/5889
+  title: 'Mercenaries 2: World in Flames'
+  auto: true
+  snapshot:
+    id: 5889
+    main: 15.79
+    extras: 26.14
+    completionist: 44.08
+    updatedAt: 2026-10-08T04:24:58.280Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/b87/b87ca2bba819d4d44c38088ca3d8228d.jpg

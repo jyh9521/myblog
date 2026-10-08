@@ -50,8 +50,16 @@ test('CMS uses optional independent fields with integer minute bounds', () => {
   assert.equal(personal.fields[1].max, 59);
   assert.equal(personal.fields[0].value_type, 'int');
   const hltb = fields.find(f => f.name === 'hltb');
-  assert.equal(hltb.fields.length, 4);
+  assert.equal(hltb.widget, 'hltb-game');
   assert.equal(hltb.required, false);
+});
+test('automatic snapshot is ID-bound and never replaces manual override', () => {
+  const data = time.normalizeCompletionTimes({ url: 'https://howlongtobeat.com/game/68151', main: 55, snapshot: { id: 68151, main: 60.12, updatedAt: '2026-10-08T00:00:00Z' } });
+  assert.equal(data.id, 68151); assert.equal(data.main, 55); assert.equal(data.snapshot.main, 60.12); assert.equal(data.auto, true);
+  assert.equal(time.normalizeCompletionTimes({ url: data.url, snapshot: { id: 1, main: 60, updatedAt: '2026-10-08T00:00:00Z' } }).snapshot, undefined);
+  const React = require('react');
+  const html = require('react-dom/server').renderToStaticMarkup(React.createElement(load('app/games/game-time.tsx', { '../../lib/game-time': time }).default, { game: { completionTimes: data } }));
+  assert.match(html, /55\.0/); assert.doesNotMatch(html, /60\.1/);
 });
 test('detail UI hides absent values, renders decimal hours and safe source link', () => {
   const React = require('react');

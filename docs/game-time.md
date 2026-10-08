@@ -5,7 +5,26 @@
 - **我的游玩时长**：累计小时（非负整数）和分钟（0–59）。可只填一项，不填不展示；明确填写 0 会展示 0.0 小时。存储原始小时、分钟，前台才换算并四舍五入到一位小数。
 - **HowLongToBeat 关联与参考通关时间**：填写对应游戏的 `https://howlongtobeat.com/game/数字ID` 链接，也兼容旧版 `game.php?id=数字ID`。主线、主线＋支线、全收集使用小时数，支持小数。
 
-参考时间需要根据关联 HLTB 页面手动录入，并非自动同步。当前服务器访问该网站返回 HTTP 403，因此不引入不可靠的浏览器跨域抓取、代理或定时任务。可以只关联链接；未填写、零值或非法参考时间不显示。前台注明手动记录来源，并链接至 HLTB；没有合法链接时不显示参考时间，避免没有来源的数据。
+HLTB 区域支持名称搜索，显示候选的 ID、版本类型和平台。请核对后明确选择，系统保存 `id`、链接与自动数据快照；不会自动选择第一个结果。也可手动填写游戏详情链接，系统从链接解析 ID。
+
+自动模式：GitHub Pages 上的前台只按保存的 ID 请求 `GET /ns/api/hltb/detail?id=ID`，不按名称搜索。Cloudflare Worker 读取 D1，详情缓存 14 天，搜索结果缓存 7 天；访问过期记录才刷新。原数据保留，失败后冷却 1 小时，避免重复请求上游。D1 原子租约抑制并发刷新。前台有 CMS 保存的快照作为离线兜底，并显示数据日期。打开页面仍会请求 Worker，但缓存有效时不请求 HLTB。
+
+手动字段始终优先，留空使用自动数据。可以取消自动读取或取消关联；取消自动读取时不展示旧自动快照。未填写、零值或非法参考时间不显示。没有合法链接时不显示参考时间。刷新 RAWG / ScreenScraper 不会覆盖本区。
+
+## Worker 兼容性
+
+没有把 Python 包直接装入 JavaScript Worker。`howlongtobeatpy` 的 requests/aiohttp/BeautifulSoup 运行模型与现有 Worker 不同；TypeScript 库 1.1.1 在实测中使用已失效的初始化路径，返回 404。本项目使用原生 Fetch 的小型适配器：按 Python 项目的公开搜索协议发现路径、初始化并搜索（MIT 授权文本随附）；详情按 ID 从游戏页面公开嵌入 JSON 提取，不再额外按名称搜索。上游初始化凭据仅留在请求内，不落库、不返回客户端、不写日志。此适配器不依赖 Python 服务、公开 CORS Proxy 或个人登录信息。
+
+Worker：`workers/ns-counter/src/hltb.js`；D1：新增 `migrations/0003_hltb_cache.sql`，不改变计数器或游戏资料表。源网站可变动；无缓存时故障返回 503，有缓存时返回 `cache: stale`，不伪造时间。
+
+部署（复用已有 Worker 和 D1）：
+
+```sh
+npx wrangler@4.148.0 d1 migrations apply ns-counter --remote --config workers/ns-counter/wrangler.toml
+npx wrangler@4.148.0 deploy --config workers/ns-counter/wrangler.toml
+```
+
+Wrangler 旧版 4.98.0 会忽略现有 `exports` 声明，导致 Durable Object 协调失败；部署使用上述版本，保留原 `IgdbApi` 命名空间。运行时不额外引入该库或 Wrangler 依赖。
 
 这些字段独立于游戏资料来源和时间线，刷新 RAWG / ScreenScraper 资料不会覆盖。旧档案不需要迁移。填写后保存并等待 GitHub Pages 部署，在该游戏详情页标题下查看「游玩时长」。
 

@@ -1,5 +1,6 @@
 export type PlayTime = { hours: number; minutes: number; totalMinutes: number };
-export type CompletionTimes = { url: string; main?: number; extras?: number; completionist?: number };
+export type TimeEstimates = { main?: number; extras?: number; completionist?: number };
+export type CompletionTimes = TimeEstimates & { url: string; id: number; auto: boolean; snapshot?: TimeEstimates & { updatedAt: string } };
 
 function record(value: unknown): Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
@@ -30,10 +31,18 @@ export function normalizeCompletionTimes(value: unknown): CompletionTimes | null
     if (url.protocol !== 'https:' || !['howlongtobeat.com', 'www.howlongtobeat.com'].includes(url.hostname) || url.username || url.password || url.port) return null;
     const id = url.pathname.match(/^\/game\/(\d+)\/?$/)?.[1] || (url.pathname === '/game.php' ? url.searchParams.get('id') : null);
     if (!id || !/^[1-9]\d*$/.test(id)) return null;
-    const result: CompletionTimes = { url: `https://howlongtobeat.com/game/${id}` };
+    if (!Number.isSafeInteger(Number(id)) || Number(id) > 999999999) return null;
+    const result: CompletionTimes = { url: `https://howlongtobeat.com/game/${id}`, id: Number(id), auto: input.auto !== false };
     for (const key of ['main', 'extras', 'completionist'] as const) {
       const hours = number(input[key]);
       if (hours !== undefined && hours > 0) result[key] = hours;
+    }
+    const snapshot = record(input.snapshot);
+    if (Number(snapshot.id) === result.id && typeof snapshot.updatedAt === 'string' && Number.isFinite(Date.parse(snapshot.updatedAt))) {
+      result.snapshot = { updatedAt: snapshot.updatedAt };
+      for (const key of ['main', 'extras', 'completionist'] as const) {
+        const hours = number(snapshot[key]); if (hours !== undefined && hours > 0) result.snapshot[key] = hours;
+      }
     }
     return result;
   } catch { return null; }

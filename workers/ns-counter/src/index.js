@@ -1,5 +1,6 @@
 import { RAWGProvider, ScreenScraperProvider, screenScraperMedia, areSameGame, combineCandidates, mergeMetadata } from "./game-providers.js";
 import { DurableObject } from "cloudflare:workers";
+import { hltbRoute } from './hltb.js';
 
 // Keep the already-provisioned namespace export during the provider migration.
 // The old IGDB endpoints are retired; this stub prevents a destructive DO
@@ -43,6 +44,7 @@ const CACHE_DETAIL_MS = 7 * 24 * 60 * 60 * 1000;
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/ns/api/hltb/')) return hltbRoute(request, env);
     if (url.pathname === "/ns/api/games/media") return screenScraperMedia(request, env);
     if (url.pathname === "/ns/api/games/search") {
       if (request.method !== "GET") return jsonError("只支持 GET 请求。", 405);

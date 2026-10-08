@@ -8,6 +8,7 @@ cover: /uploads/chinesetranslationpatch/thewheeloftime/封面图.png
 tags:
   - 汉化补丁
   - 时光之轮
+  - 游戏
 pinned: false
 gameSlug: the-wheel-of-time
 ---

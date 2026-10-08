@@ -3,6 +3,7 @@ aliases:
   - /posts/nolf2/
 title: 《无人永生2》简体中文汉化补丁
 date: 2026-07-14
+cover: /uploads/chinesetranslationpatch/nolf2/封面图.png
 tags:
   - 汉化补丁
   - 无人永生

@@ -2,6 +2,17 @@
 title: 真名法典：真红的圣痕
 status:
   - 考虑制作补丁
+hltb:
+  id: 5556
+  url: https://howlongtobeat.com/game/5556
+  title: 'Magna Carta: Tears of Blood'
+  auto: true
+  snapshot:
+    id: 5556
+    main: 59.24
+    extras: 81.7
+    completionist: 101.57
+    updatedAt: 2026-10-09T01:19:52.372Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/b91/b918a0864ba2f1f5dbaf16fdc295ab59.jpg
@@ -17,14 +28,15 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
     selectedPlatforms: manual
+    title: manual
   genres:
     - RPG
   id: rawg:1016555
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: 'Magna Carta: Tears of Blood'
   platforms:
     - PlayStation 2

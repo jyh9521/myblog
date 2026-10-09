@@ -58,7 +58,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/eb9/eb98aa03f5131a0f6ba77c1b19aed063.jpg
     - https://media.rawg.io/media/screenshots/c99/c998545ac3d94df1481f5eb3592f0f69.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - PC
   sources:
     rawg:
       id: '440081'

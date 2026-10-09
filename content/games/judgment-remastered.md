@@ -68,12 +68,12 @@ gameMetadata:
   updatedAt: 2026-10-09T09:40:27.738Z
   website: https://yakuza.sega.com/judgment
 manual:
+  availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: TW
       url: https://www.xbox.com/zh-TW/games/store/remastered/9n1r83ckgzjp
-  availabilityStatus: available
 events:
   - date: 2022-08-04
     title: 开始游戏

@@ -80,10 +80,10 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
-      region: HK
-      url: https://www.xbox.com/zh-hk/games/store/a-plague-tale-innocence/bq2nnlqps8rs
+      region: TW
+      url: https://www.xbox.com/zh-tw/games/store/a-plague-tale-innocence/bq2nnlqps8rs
 events:
   - date: 2021-11-03
     title: 开始游戏

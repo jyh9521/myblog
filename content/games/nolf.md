@@ -2,6 +2,17 @@
 title: 无人永生
 status:
   - 已制作补丁
+hltb:
+  id: 10121
+  url: https://howlongtobeat.com/game/10121
+  title: 'The Operative: No One Lives Forever'
+  auto: true
+  snapshot:
+    id: 10121
+    main: 13.13
+    extras: 15.78
+    completionist: 23.46
+    updatedAt: 2026-10-09T01:30:29.009Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/a0c/a0c5990e25bae51c320403d155281d75.jpg
@@ -17,9 +28,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -27,6 +38,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: 'The Operative: No One Lives Forever'
   platforms:
     - PlayStation 2

@@ -81,10 +81,10 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
-      region: HK
-      url: https://www.xbox.com/zh-hk/games/store/superliminal/9nvr4zqknbsb
+      region: TW
+      url: https://www.xbox.com/zh-tw/games/store/superliminal/9nvr4zqknbsb
 events:
   - date: 2021-11-02
     title: 开始游戏

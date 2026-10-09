@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 4
 personalRating: 7.5
+hltb:
+  id: 26279
+  url: https://howlongtobeat.com/game/26279
+  title: Timespinner
+  auto: true
+  snapshot:
+    id: 26279
+    main: 5.88
+    extras: 8.59
+    completionist: 12.17
+    updatedAt: 2026-10-09T01:18:59.865Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/dcb/dcb20d80b922334d64623e566c91d878.jpg
@@ -22,9 +33,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Adventure
@@ -34,6 +45,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Timespinner
   platforms:
     - PC

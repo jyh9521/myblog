@@ -6,16 +6,16 @@ playTime:
   hours: 33.5
 personalRating: 8
 hltb:
-  id: 131548
-  url: https://howlongtobeat.com/game/131548
-  title: 'Super Danganronpa Another 2: The Moon of Hope and Sun of Despair'
   auto: true
+  id: 20855
   snapshot:
-    id: 131548
-    main: 33.92
-    extras: 34.49
-    completionist: 36.68
-    updatedAt: 2026-10-09T09:52:41.094Z
+    id: 20855
+    main: 33.63
+    extras: 41.71
+    completionist: 60.26
+    updatedAt: 2026-10-09T10:38:41.709Z
+  title: 'Danganronpa 2: Goodbye Despair'
+  url: https://howlongtobeat.com/game/20855
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/a6c/a6cd31267a20a615d35f618e766208fc.jpg
@@ -39,7 +39,8 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: manual
+    title: rawg
+    selectedPlatforms: manual
   genres:
     - Adventure
     - Casual
@@ -47,6 +48,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - title
+    - selectedPlatforms
   originalName: 'Danganronpa 2: Goodbye Despair'
   platforms:
     - PS Vita
@@ -67,22 +69,23 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/268/268de8a35ba328f1a7fb55d13089594b.jpg
     - https://media.rawg.io/media/screenshots/ba6/ba62ad698c330327bdef148cae47ff7c.jpg
     - https://media.rawg.io/media/screenshots/e0c/e0ca2f78efd9f5a8c82d9ad8f181e92a.jpg
-  selectedPlatforms: []
+  selectedPlatforms:
+    - PC
   sources:
     rawg:
       id: '3594'
       slug: danganronpa-2-goodbye-despair
       url: https://rawg.io/games/3594
   title: 'Danganronpa 2: Goodbye Despair'
-  updatedAt: 2026-10-09T09:53:14.431Z
+  updatedAt: 2026-10-09T10:40:00.100Z
   website: ''
 manual:
+  availabilityStatus: available
   officialStores:
     - name: Xbox
       note: ''
       region: TW
       url: https://www.xbox.com/zh-TW/games/store/anniversary-edition/9n27nm3bt3ml
-  availabilityStatus: available
 events:
   - date: 2022-08-23
     title: 开始游戏

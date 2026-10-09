@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 17
 personalRating: 9
+hltb:
+  id: 61442
+  url: https://howlongtobeat.com/game/61442
+  title: Psychonauts 2
+  auto: true
+  snapshot:
+    id: 61442
+    main: 15.09
+    extras: 19.49
+    completionist: 26.4
+    updatedAt: 2026-10-09T10:01:50.083Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/c3c/c3c536cc4d32623ba928020dfd39a648.jpg

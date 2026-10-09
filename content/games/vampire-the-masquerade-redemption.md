@@ -2,6 +2,17 @@
 title: 吸血鬼：避世血族 - 救赎
 status:
   - 考虑制作补丁
+hltb:
+  id: 10891
+  url: https://howlongtobeat.com/game/10891
+  title: 'Vampire: The Masquerade - Redemption'
+  auto: true
+  snapshot:
+    id: 10891
+    main: 17.7
+    extras: 23.24
+    completionist: 26.36
+    updatedAt: 2026-10-09T01:39:19.615Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/299/299bbd6e2c355789b5fe094a415f7e15.jpg
@@ -22,9 +33,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - RPG
@@ -32,6 +43,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: 'Vampire: The Masquerade - Redemption'
   platforms:
     - PC

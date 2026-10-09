@@ -82,7 +82,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: TW
       url: https://www.xbox.com/zh-tw/games/store/%E6%A7%8D%E5%BD%88%E8%BE%AF%E9%A7%81-%E5%B8%8C%E6%9C%9B%E5%AD%B8%E5%9C%92%E8%88%87%E7%B5%95%E6%9C%9B%E9%AB%98%E4%B8%AD%E7%94%9F-anniversary-edition/9n07t7tgp6jg

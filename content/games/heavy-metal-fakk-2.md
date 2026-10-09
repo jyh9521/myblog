@@ -2,6 +2,17 @@
 title: 重金属战士2
 status:
   - 考虑制作补丁
+hltb:
+  id: 4376
+  url: https://howlongtobeat.com/game/4376
+  title: 'Heavy Metal: F.A.K.K.2'
+  auto: true
+  snapshot:
+    id: 4376
+    main: 7.68
+    extras: 9.96
+    completionist: 11.82
+    updatedAt: 2026-10-09T01:32:08.925Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/eaa/eaa11128c677da4b8f0d717c1c289858.jpg
@@ -13,12 +24,12 @@ gameMetadata:
     description: rawg
     developers: rawg
     genres: rawg
-    originalName: rawg
+    originalName: manual
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
     selectedPlatforms: manual
+    title: rawg
   genres:
     - Action
     - Shooter
@@ -26,6 +37,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - originalName
   originalName: 'Heavy Metal: F.A.K.K.2'
   platforms:
     - macOS

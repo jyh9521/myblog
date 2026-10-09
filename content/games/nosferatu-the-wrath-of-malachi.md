@@ -2,6 +2,17 @@
 title: 诺斯费拉图：马拉奇之怒
 status:
   - 考虑制作补丁
+hltb:
+  id: 12439
+  url: https://howlongtobeat.com/game/12439
+  title: 'Nosferatu: The Wrath of Malachi'
+  auto: true
+  snapshot:
+    id: 12439
+    main: 4.03
+    extras: 4.49
+    completionist: 6.4
+    updatedAt: 2026-10-09T01:23:51.426Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/559/559fb67a9c379630bbb821595e102bee_2EQC8gc.jpg
@@ -24,9 +35,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -35,6 +46,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: 'Nosferatu: The Wrath of Malachi'
   platforms:
     - PC

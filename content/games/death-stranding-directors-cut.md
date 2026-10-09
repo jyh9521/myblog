@@ -6,16 +6,16 @@ playTime:
   hours: 39.3
 personalRating: 9
 hltb:
-  id: 93457
-  url: https://howlongtobeat.com/game/93457
-  title: "Death Stranding: Director's Cut"
   auto: true
+  id: 93457
   snapshot:
     id: 93457
     main: 38.22
     extras: 59.48
     completionist: 111.85
     updatedAt: 2026-10-08T23:53:38.610Z
+  title: "Death Stranding: Director's Cut"
+  url: https://howlongtobeat.com/game/93457
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/b6f/b6fa0cde8a1204c7d6edc2ec3c753df9.jpg
@@ -31,9 +31,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Adventure
@@ -41,6 +41,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Death Stranding Director's Cut
   platforms:
     - PC

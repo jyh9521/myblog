@@ -18,7 +18,7 @@
           const response = await fetch(`${api}/search?q=${encodeURIComponent(query)}`, { signal: this.controller.signal });
           const data = await response.json();
           if (!response.ok || !Array.isArray(data.results)) throw new Error((data.error || '搜索失败') + (Number.isFinite(data.retryAfter) && data.retryAfter > 0 ? ` 请在 ${Math.ceil(data.retryAfter)} 秒后重试。` : ''));
-          this.setState({ results: data.results, message: data.results.length ? '请核对版本、平台后选择；不会自动关联第一个候选。' : '没有找到游戏，请尝试原名或手动填写链接。' });
+          this.setState({ results: data.results, message: data.results.length ? `已按名称相似度排序${data.matchedQuery ? `，匹配关键词：${data.matchedQuery}` : ''}。请核对版本、平台后选择；不会自动关联第一个候选。` : '没有找到游戏，请尝试原名或手动填写链接。' });
         } catch (error) { if (error.name !== 'AbortError') this.setState({ message: error.message || '搜索暂不可用' }); }
         finally { this.setState({ busy: false }); }
       },
@@ -45,7 +45,7 @@
       render() {
         const value = this.props.value || {};
         return h('div', { style: { display: 'grid', gap: '12px' } },
-          h('label', null, '搜索 HLTB 游戏（建议原名）', h('input', { style: inputStyle, value: this.state.query, onChange: e => this.setState({ query: e.target.value }), onKeyDown: e => { if (e.key === 'Enter') { e.preventDefault(); this.search(); } } })),
+          h('label', null, '搜索 HLTB 游戏（支持名称片段、商店名称）', h('input', { style: inputStyle, value: this.state.query, onChange: e => this.setState({ query: e.target.value }), onKeyDown: e => { if (e.key === 'Enter' && !e.nativeEvent?.isComposing && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); this.search(); } } })),
           h('button', { type: 'button', disabled: this.state.busy, onClick: () => this.search() }, this.state.busy ? '正在查询…' : '搜索并选择 HLTB 游戏'),
           h('div', { style: { display: 'grid', gap: '6px' } }, ...this.state.results.map(game => h('button', { key: game.id, type: 'button', disabled: this.state.busy, onClick: () => this.select(game), style: { ...inputStyle, textAlign: 'left' } }, `${game.title} · ID ${game.id} · ${game.type} · ${game.platforms}`))),
           h('p', { role: 'status', 'aria-live': 'polite' }, this.state.message),

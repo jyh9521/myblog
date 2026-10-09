@@ -74,3 +74,60 @@ test('routes validate queries and methods and reuse persisted ID cache', async (
   assert.equal((await (await hltbRoute(req(68151), env, provider)).json()).cache, 'fresh');
   assert.equal(calls, 1);
 });
+
+test('store title normalization ignores case, typography, trademarks and separators', async () => {
+  const { normalizeSearchName, searchQueries, rankSearchResults } = await import('./hltb.js');
+  assert.equal(normalizeSearchName(' ＤＥＡＴＨ STRANDING™: DIRECTOR’S CUT '), "death stranding director's cut");
+  assert.equal(normalizeSearchName('Assassin’s Creed® – Black Flag'), "assassin's creed black flag");
+  assert.deepEqual(searchQueries('DEATH STRANDING DIRECTOR’S CUT'), ["death stranding director's cut", 'death stranding directors cut', 'death stranding']);
+  assert.deepEqual(searchQueries('DEATH STRANDING™'), ['death stranding']);
+  const games = [{ id: 1, title: 'Death Stranding' }, { id: 2, title: 'Death Stranding 2: On The Beach' }, { id: 3, title: "Death Stranding: Director's Cut" }];
+  assert.equal(rankSearchResults(games, 'DEATH STRANDING DIRECTOR’S CUT')[0].id, 3);
+  assert.equal(rankSearchResults(games, 'death stranding 2 on the beach')[0].id, 2);
+  assert.equal(rankSearchResults([...games, games[0]], 'death stranding').length, 3);
+  assert.ok(searchQueries('Death Stranding 2 On The Beach').every(query => query.includes('2')));
+});
+function searchProvider(responder) {
+  const queries = []; let initializations = 0;
+  const provider = new HltbProvider(async (url, options) => {
+    if (url.endsWith('/')) return new Response('<html></html>');
+    if (url.includes('/init?')) { initializations++; return Response.json({ token: 'fixture' }); }
+    const query = JSON.parse(options.body).searchTerms.join(' '); queries.push(query);
+    return responder(query);
+  });
+  return { provider, queries, get initializations() { return initializations; } };
+}
+test('HLTB reuses initialization and falls back to base title, ranking the requested edition first', async () => {
+  const setup = searchProvider(query => Response.json({ data: query === 'death stranding' ? [
+    { game_id: 1, game_name: 'Death Stranding' }, { game_id: 3, game_name: "Death Stranding: Director's Cut" },
+  ] : [] }));
+  const response = await setup.provider.search('DEATH STRANDING DIRECTOR’S CUT');
+  assert.equal(response.results[0].id, 3);
+  assert.equal(response.matchedQuery, 'death stranding');
+  assert.equal(setup.initializations, 1);
+  assert.equal(setup.queries.length, 3);
+});
+test('successful normalized HLTB search stops immediately; empty searches remain bounded', async () => {
+  const found = searchProvider(() => Response.json({ data: [{ game_id: 1, game_name: 'Death Stranding' }] }));
+  assert.equal((await found.provider.search('DEATH STRANDING™')).results.length, 1);
+  assert.deepEqual(found.queries, ['death stranding']);
+  const empty = searchProvider(() => Response.json({ data: [] }));
+  assert.equal((await empty.provider.search('A Very Long Game Name Deluxe Edition')).results.length, 0);
+  assert.ok(empty.queries.length <= 3);
+});
+test('upstream failures are not treated as empty matches and do not trigger fuzzy queries', async () => {
+  const setup = searchProvider(() => new Response('', { status: 403 }));
+  await assert.rejects(setup.provider.search('DEATH STRANDING DIRECTOR’S CUT'), /HLTB HTTP 403/);
+  assert.equal(setup.queries.length, 1);
+});
+test('new search cache avoids legacy empty results and shares normalized store title variants', async () => {
+  const db = database(); const env = { DB: db }; let calls = 0;
+  await cachedHltb(db, "search:death stranding director’s cut", SEARCH_TTL, async () => ({ results: [] }));
+  const provider = { async search(query) { calls++; assert.equal(query, "death stranding director's cut"); return { results: [{ id: 93457, title: "Death Stranding: Director's Cut" }] }; } };
+  const request = query => new Request(`https://blog.blfy.cc/ns/api/hltb/search?q=${encodeURIComponent(query)}`);
+  const first = await (await hltbRoute(request('DEATH STRANDING DIRECTOR’S CUT'), env, provider)).json();
+  assert.equal(first.cache, 'miss'); assert.equal(first.results[0].id, 93457);
+  const second = await (await hltbRoute(request("Death Stranding™: Director's Cut"), env, provider)).json();
+  assert.equal(second.cache, 'fresh'); assert.equal(calls, 1);
+  assert.equal((await hltbRoute(request('™®'), env, provider)).status, 400);
+});

@@ -5,6 +5,41 @@ const DAY = 86400000;
 export const DETAIL_TTL = 14 * DAY;
 export const SEARCH_TTL = 7 * DAY;
 const headers = { 'User-Agent': 'Mozilla/5.0', Referer: `${BASE}/`, Origin: BASE };
+// Store titles often carry typography and edition suffixes absent from HLTB.
+export function normalizeSearchName(value) {
+  return String(value).replace(/[™®©]/g, '').normalize('NFKC').toLowerCase()
+    .replace(/[’‘`´]/g, "'").replace(/[\u200b-\u200d\ufeff]/g, '')
+    .replace(/[^\p{L}\p{N}'\s]/gu, ' ').replace(/\s+/g, ' ').trim();
+}
+export function searchQueries(value) {
+  const normalized = normalizeSearchName(value);
+  const queries = [normalized, normalized.replace(/'/g, '')];
+  const base = normalized.replace(/\s+(?:director'?s cut|game of the year(?: edition)?|goty(?: edition)?|(?:digital )?(?:deluxe|definitive|ultimate|complete|standard|collector'?s|enhanced|special|anniversary) edition)$/, '').trim();
+  if (base !== normalized) queries.push(base);
+  else {
+    const words = normalized.split(' ');
+    // Keep sequel numbers even when broadening a long subtitle.
+    if (words.length >= 3) queries.push([...words.slice(0, 2), ...words.slice(2).filter(word => /\d/.test(word))].join(' '));
+  }
+  return [...new Set(queries)].filter(query => query.length >= 2).slice(0, 3);
+}
+function matchScore(query, title) {
+  const a = normalizeSearchName(query).replace(/'/g, '');
+  const b = normalizeSearchName(title).replace(/'/g, '');
+  if (a === b) return 1;
+  let row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 0; i < a.length; i++) {
+    const next = [i + 1];
+    for (let j = 0; j < b.length; j++) next.push(Math.min(next[j] + 1, row[j + 1] + 1, row[j] + (a[i] === b[j] ? 0 : 1)));
+    row = next;
+  }
+  return 1 - row[b.length] / Math.max(a.length, b.length, 1);
+}
+export function rankSearchResults(results, query) {
+  return [...new Map(results.map(game => [game.id, game])).values()]
+    .sort((a, b) => matchScore(query, b.title) - matchScore(query, a.title) || a.id - b.id);
+}
+
 class HltbUnavailable extends Error {
   constructor(retryAt) { super('HLTB temporarily unavailable'); this.retryAt = retryAt; }
 }
@@ -48,6 +83,8 @@ export class HltbProvider {
     }
   }
   async search(query) {
+    const queries = searchQueries(query);
+    if (!queries.length) return { results: [] };
     const html = await this.read('/');
     const scripts = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/g)].map(match => match[1]).filter(path => /^\/_next\/static\/chunks\/[\w.-]+\.js$/.test(path)).slice(0, 6);
     let endpoint = '/api/search/site';
@@ -66,9 +103,14 @@ export class HltbProvider {
     if (typeof key === 'string' && key && ['string', 'number'].includes(typeof value) && !['__proto__', 'constructor', 'prototype'].includes(key)) {
       body[key] = value; authHeaders['x-hp-key'] = key; authHeaders['x-hp-val'] = String(value);
     }
-    const data = JSON.parse(await this.read(endpoint, { method: 'POST', headers: authHeaders, body: JSON.stringify(body) }));
-    if (!Array.isArray(data.data)) throw new Error('HLTB search shape invalid');
-    return { results: data.data.slice(0, 20).map(normalizeHltb).filter(Boolean) };
+    for (const candidate of queries) {
+      body.searchTerms = candidate.split(/\s+/);
+      const data = JSON.parse(await this.read(endpoint, { method: 'POST', headers: authHeaders, body: JSON.stringify(body) }));
+      if (!Array.isArray(data.data)) throw new Error('HLTB search shape invalid');
+      const results = data.data.slice(0, 20).map(normalizeHltb).filter(Boolean);
+      if (results.length) return { results: rankSearchResults(results, query), matchedQuery: candidate };
+    }
+    return { results: [], matchedQuery: queries[queries.length - 1] };
   }
   async detail(id) {
     const html = await this.read(`/game/${id}`);
@@ -116,11 +158,12 @@ export async function hltbRoute(request, env, provider = new HltbProvider()) {
   const url = new URL(request.url);
   const search = url.pathname === '/ns/api/hltb/search';
   if (!search && url.pathname !== '/ns/api/hltb/detail') return json({ error: 'Not found' }, 404);
-  const q = (url.searchParams.get('q') || '').trim().replace(/\s+/g, ' ');
+  const rawQuery = (url.searchParams.get('q') || '').trim();
+  const q = normalizeSearchName(rawQuery);
   const rawId = url.searchParams.get('id') || '';
-  if (search ? q.length < 2 || q.length > 100 : !/^[1-9]\d{0,8}$/.test(rawId)) return json({ error: search ? '请输入 2–100 个字符。' : 'HLTB 游戏 ID 无效。' }, 400);
+  if (search ? q.length < 2 || rawQuery.length > 100 : !/^[1-9]\d{0,8}$/.test(rawId)) return json({ error: search ? '请输入 2–100 个字符。' : 'HLTB 游戏 ID 无效。' }, 400);
   try {
-    const value = await cachedHltb(env.DB, search ? `search:${q.toLowerCase()}` : `game:${rawId}`, search ? SEARCH_TTL : DETAIL_TTL, () => search ? provider.search(q) : provider.detail(Number(rawId)));
+    const value = await cachedHltb(env.DB, search ? `search:v2:${q}` : `game:${rawId}`, search ? SEARCH_TTL : DETAIL_TTL, () => search ? provider.search(q) : provider.detail(Number(rawId)));
     return json(value);
   } catch (error) {
     const retryAfter = error instanceof HltbUnavailable ? Math.max(1, Math.ceil((error.retryAt - Date.now()) / 1000)) : 60;

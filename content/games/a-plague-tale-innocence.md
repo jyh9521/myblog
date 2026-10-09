@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 9.4
 personalRating: 8
+hltb:
+  id: 65080
+  url: https://howlongtobeat.com/game/65080
+  title: 'A Plague Tale: Innocence'
+  auto: true
+  snapshot:
+    id: 65080
+    main: 10.95
+    extras: 12.6
+    completionist: 15.89
+    updatedAt: 2026-10-09T01:16:35.343Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/b4a/b4adf80c36e267b35acc3497ed2af19c.jpg
@@ -27,9 +38,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Adventure

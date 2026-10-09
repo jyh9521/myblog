@@ -2,6 +2,17 @@
 title: 源毒
 status:
   - 考虑制作补丁
+hltb:
+  id: 450
+  url: https://howlongtobeat.com/game/450
+  title: Anachronox
+  auto: true
+  snapshot:
+    id: 450
+    main: 28.21
+    extras: 31.58
+    completionist: 44.76
+    updatedAt: 2026-10-09T01:31:36.202Z
 gameMetadata:
   alternativeNames:
     - 星际之门、时空之门
@@ -14,6 +25,7 @@ gameMetadata:
   developers:
     - Ion Storm
   fieldSources:
+    alternativeNames: manual
     cover: screenscraper
     description: screenscraper
     developers: screenscraper
@@ -24,8 +36,7 @@ gameMetadata:
     releaseDate: screenscraper
     screenshots: screenscraper
     selectedPlatforms: manual
-    title: screenscraper
-    alternativeNames: manual
+    title: manual
   genres:
     - Role Playing Game
   id: screenscraper:273704
@@ -33,6 +44,7 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - alternativeNames
+    - title
   originalName: Anachronox
   platforms:
     - PC Windows

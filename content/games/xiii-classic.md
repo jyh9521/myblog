@@ -2,6 +2,17 @@
 title: 杀手XIII
 status:
   - 考虑制作补丁
+hltb:
+  id: 11413
+  url: https://howlongtobeat.com/game/11413
+  title: XIII
+  auto: true
+  snapshot:
+    id: 11413
+    main: 8.43
+    extras: 10.18
+    completionist: 11.28
+    updatedAt: 2026-10-09T01:38:01.486Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/33b/33b8837b3f396612d458414798524897.jpg
@@ -21,9 +32,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -31,6 +42,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: XIII
   platforms:
     - Classic Macintosh

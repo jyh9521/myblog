@@ -2,6 +2,17 @@
 title: 克莱夫·巴克的不死之灵
 status:
   - 考虑制作补丁
+hltb:
+  id: 1752
+  url: https://howlongtobeat.com/game/1752
+  title: Clive Barker's Undying
+  auto: true
+  snapshot:
+    id: 1752
+    main: 10.23
+    extras: 12.23
+    completionist: 12.53
+    updatedAt: 2026-10-09T01:39:38.115Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/707/7073efa8fba0f55ac9539f1e664b9181.jpg
@@ -25,8 +36,8 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
     selectedPlatforms: manual
+    title: manual
   genres:
     - Action
     - Shooter
@@ -34,6 +45,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Clive Barker's Undying
   platforms:
     - PC

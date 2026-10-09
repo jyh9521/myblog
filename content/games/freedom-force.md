@@ -2,6 +2,17 @@
 title: 自由力量
 status:
   - 考虑制作补丁
+hltb:
+  id: 3694
+  url: https://howlongtobeat.com/game/3694
+  title: Freedom Force
+  auto: true
+  snapshot:
+    id: 3694
+    main: 17.11
+    extras: 23.98
+    completionist: 29.87
+    updatedAt: 2026-10-09T01:31:55.582Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/e63/e63f02564e2bf7867ba40347d79a8f1f.jpg
@@ -20,8 +31,8 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
     selectedPlatforms: manual
+    title: manual
   genres:
     - Action
     - RPG
@@ -30,6 +41,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Freedom Force
   platforms:
     - PC

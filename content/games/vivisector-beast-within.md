@@ -2,6 +2,17 @@
 title: 活体解剖者：人面兽心
 status:
   - 已制作补丁
+hltb:
+  id: 10980
+  url: https://howlongtobeat.com/game/10980
+  title: 'Vivisector: Beast Within'
+  auto: true
+  snapshot:
+    id: 10980
+    main: 5.98
+    extras: 11.36
+    completionist: null
+    updatedAt: 2026-10-09T01:29:35.864Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/90d/90d23bb6dcb323e707ba0e7423f1d1c0.jpg
@@ -17,9 +28,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -28,6 +39,7 @@ gameMetadata:
   manualFields:
     - description
     - selectedPlatforms
+    - title
   originalName: 'Vivisector: Beast Within'
   platforms:
     - PC

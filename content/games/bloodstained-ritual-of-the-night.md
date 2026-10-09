@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 2.5
 personalRating: 6
+hltb:
+  id: 26266
+  url: https://howlongtobeat.com/game/26266
+  title: 'Bloodstained: Ritual of the Night'
+  auto: true
+  snapshot:
+    id: 26266
+    main: 14.05
+    extras: 20.65
+    completionist: 35.52
+    updatedAt: 2026-10-09T01:19:18.498Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/26c/26cacc55399ed6b2c14e20d2eca0620a.jpg
@@ -37,9 +48,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Adventure
@@ -47,6 +58,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: 'Bloodstained: Ritual of the Night'
   platforms:
     - Xbox One

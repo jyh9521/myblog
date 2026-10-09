@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 29.5
 personalRating: 7.5
+hltb:
+  id: 70939
+  url: https://howlongtobeat.com/game/70939
+  title: 'Ys IX: Monstrum Nox'
+  auto: true
+  snapshot:
+    id: 70939
+    main: 27.59
+    extras: 39.83
+    completionist: 53.29
+    updatedAt: 2026-10-09T01:06:24.385Z
 gameMetadata:
   alternativeNames:
     - Ys 9

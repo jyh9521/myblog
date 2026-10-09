@@ -38,6 +38,7 @@ gameMetadata:
     releaseDate: rawg
     title: manual
     website: rawg
+    selectedPlatforms: manual
   genres:
     - Action
     - Adventure
@@ -46,6 +47,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - title
+    - selectedPlatforms
   originalName: Last Stop
   platforms:
     - PC
@@ -63,7 +65,8 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/377/3777fc84b39065d476a075e7568f3c39.jpg
     - https://media.rawg.io/media/screenshots/bb8/bb8534225c92711d3d0bcc9074bdd319.jpg
     - https://media.rawg.io/media/screenshots/0d8/0d8f2dfdc975aa95b4c0e6d0df549a3f.jpg
-  selectedPlatforms: []
+  selectedPlatforms:
+    - Xbox Series S/X
   sources:
     rawg:
       id: '391401'
@@ -75,10 +78,10 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
-      region: HK
-      url: https://www.xbox.com/zh-hk/games/store/last-stop/9nc6bx5r7jkc
+      region: TW
+      url: https://www.xbox.com/zh-tw/games/store/last-stop/9nc6bx5r7jkc
 events:
   - date: 2021-11-07
     title: 开始游戏

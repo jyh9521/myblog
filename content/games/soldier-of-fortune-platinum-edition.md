@@ -2,6 +2,17 @@
 title: 命运战士：白金版
 status:
   - 考虑制作补丁
+hltb:
+  id: 8724
+  url: https://howlongtobeat.com/game/8724
+  title: Soldier of Fortune
+  auto: true
+  snapshot:
+    id: 8724
+    main: 7.09
+    extras: 8.21
+    completionist: 8.5
+    updatedAt: 2026-10-09T01:36:10.888Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/89f/89fd7840387a2bc445a12a1375a87b49.jpg
@@ -17,9 +28,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -27,6 +38,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Soldier of Fortune
   platforms:
     - PlayStation 2

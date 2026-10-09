@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 8.3
 personalRating: 7
+hltb:
+  id: 25107
+  url: https://howlongtobeat.com/game/25107
+  title: Salt & Sanctuary
+  auto: true
+  snapshot:
+    id: 25107
+    main: 16.42
+    extras: 21.52
+    completionist: 32.15
+    updatedAt: 2026-10-09T01:17:33.666Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/dd1/dd1cc63c37361fa5c8122daec9bae8bf.jpg
@@ -30,9 +41,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - RPG
@@ -42,6 +53,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Salt and Sanctuary
   platforms:
     - Nintendo Switch

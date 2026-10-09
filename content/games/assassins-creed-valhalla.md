@@ -38,6 +38,7 @@ gameMetadata:
     releaseDate: rawg
     title: manual
     website: rawg
+    selectedPlatforms: manual
   genres:
     - Action
     - Adventure
@@ -46,6 +47,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - title
+    - selectedPlatforms
   originalName: Assassin's Creed Valhalla
   platforms:
     - PC
@@ -63,7 +65,8 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/50e/50efcd7fdd2967ddd73c9911985339dc.jpg
     - https://media.rawg.io/media/screenshots/4c4/4c4e1c1079b11760d07847f83cc1a2a8.jpg
     - https://media.rawg.io/media/screenshots/a07/a07f4c2dab611d69357f20f32435b1a2.jpg
-  selectedPlatforms: []
+  selectedPlatforms:
+    - Xbox Series S/X
   sources:
     rawg:
       id: '437059'
@@ -75,7 +78,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: TW
       url: https://www.xbox.com/zh-tw/games/store/%E5%88%BA%E5%AE%A2%E6%95%99%E6%A2%9D-%E7%B6%AD%E4%BA%AC%E7%B4%80%E5%85%83/9p4njfh17mrt

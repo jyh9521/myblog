@@ -66,10 +66,10 @@ gameMetadata:
   updatedAt: 2026-10-06T23:55:25.479Z
   website: ''
 manual:
+  availabilityStatus: available
   officialStores:
-    - name: GOG
+    - name: GOG.com
       note: ''
       region: ''
       url: https://www.gog.com/en/game/second_sight
-  availabilityStatus: available
 ---

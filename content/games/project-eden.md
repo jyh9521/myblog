@@ -2,6 +2,17 @@
 title: 伊甸园计划
 status:
   - 考虑制作补丁
+hltb:
+  id: 7346
+  url: https://howlongtobeat.com/game/7346
+  title: Project Eden
+  auto: true
+  snapshot:
+    id: 7346
+    main: 17.81
+    extras: 20.47
+    completionist: 22.11
+    updatedAt: 2026-10-09T01:27:44.416Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/1fb/1fba7fca57f0a2ec613c32b5ad0c3335.jpg
@@ -22,14 +33,15 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
     selectedPlatforms: manual
+    title: manual
   genres:
     - Action
   id: rawg:22924
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Project Eden
   platforms:
     - PC

@@ -2,6 +2,17 @@
 title: 异教徒2
 status:
   - 考虑制作补丁
+hltb:
+  id: 4411
+  url: https://howlongtobeat.com/game/4411
+  title: Heretic II
+  auto: true
+  snapshot:
+    id: 4411
+    main: 9.91
+    extras: 28
+    completionist: 28.36
+    updatedAt: 2026-10-09T01:33:47.493Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/320/320beb1dc72fd3aa9a80d6032a903c39.jpg
@@ -17,12 +28,12 @@ gameMetadata:
     description: rawg
     developers: rawg
     genres: rawg
-    originalName: rawg
+    originalName: manual
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
     selectedPlatforms: manual
+    title: rawg
   genres:
     - Action
     - Shooter
@@ -30,6 +41,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - originalName
   originalName: Heretic 2
   platforms:
     - PC

@@ -2,6 +2,17 @@
 title: 修格：机动装甲师
 status:
   - 考虑制作补丁
+hltb:
+  id: 8481
+  url: https://howlongtobeat.com/game/8481
+  title: 'Shogo: Mobile Armor Division'
+  auto: true
+  snapshot:
+    id: 8481
+    main: 6.25
+    extras: 7.11
+    completionist: 11.76
+    updatedAt: 2026-10-09T01:36:29.684Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/952/95273e46087beeb1b52a4471b2b298d5.jpg
@@ -25,9 +36,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -37,6 +48,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: 'Shogo: Mobile Armor Division'
   platforms:
     - Classic Macintosh

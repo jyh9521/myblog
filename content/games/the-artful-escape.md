@@ -33,9 +33,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
+    selectedPlatforms: manual
     title: rawg
     website: rawg
-    selectedPlatforms: manual
   genres:
     - Action
     - Adventure
@@ -62,7 +62,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/582/582b8d041e3b23ed78552c186927bf1f.jpg
     - https://media.rawg.io/media/screenshots/f81/f812c8074166ea1738fdedf4824e8dac.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - PC
   sources:
     rawg:
       id: '275606'

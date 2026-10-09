@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 8
 personalRating: 6
+hltb:
+  id: 11473
+  url: https://howlongtobeat.com/game/11473
+  title: 'Ys VI: The Ark of Napishtim'
+  auto: true
+  snapshot:
+    id: 11473
+    main: 12.06
+    extras: 12.94
+    completionist: 20.3
+    updatedAt: 2026-10-09T01:07:53.734Z
 gameMetadata:
   alternativeNames:
     - 'Ys: The Ark of Napishtim'
@@ -36,9 +47,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Adventure
@@ -47,6 +58,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: 'Ys VI: The Ark of Napishtim'
   platforms:
     - PC

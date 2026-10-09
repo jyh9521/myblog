@@ -42,6 +42,7 @@ gameMetadata:
     publishers: rawg
     releaseDate: rawg
     title: manual
+    selectedPlatforms: manual
   genres:
     - Action
     - Adventure
@@ -50,6 +51,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - title
+    - selectedPlatforms
   originalName: Horizon Forbidden West
   platforms:
     - PC
@@ -66,7 +68,8 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/230/230471fafd4793bc569afe4a11643a31.jpg
     - https://media.rawg.io/media/screenshots/b9a/b9a2016023218c7cbea98caaed1894ab.jpg
     - https://media.rawg.io/media/screenshots/a47/a477c60ff2da42886f543e0833aefe86.jpg
-  selectedPlatforms: []
+  selectedPlatforms:
+    - PlayStation 5
   sources:
     rawg:
       id: '452642'

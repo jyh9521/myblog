@@ -78,7 +78,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: GOG
+    - name: GOG.com
       note: ''
       region: ''
       url: https://www.gog.com/en/game/the_wheel_of_time

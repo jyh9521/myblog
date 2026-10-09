@@ -2,6 +2,17 @@
 title: 幽魂之境
 status:
   - 考虑制作补丁
+hltb:
+  id: 7658
+  url: https://howlongtobeat.com/game/7658
+  title: Realms of the Haunting
+  auto: true
+  snapshot:
+    id: 7658
+    main: 11.43
+    extras: 11.85
+    completionist: 15.7
+    updatedAt: 2026-10-09T01:26:02.883Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/464/46461a239c32cd68d3dc07add1c8c7a9.jpg
@@ -26,9 +37,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Adventure
@@ -36,6 +47,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Realms of the Haunting
   platforms:
     - PC

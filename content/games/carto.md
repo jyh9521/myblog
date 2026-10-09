@@ -70,10 +70,10 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
-      region: HK
-      url: https://www.xbox.com/zh-HK/games/store/carto/9nj2xxpjvdrd
+      region: TW
+      url: https://www.xbox.com/zh-tw/games/store/carto/9nj2xxpjvdrd
 events:
   - date: 2021-10-30
     title: 开始游戏

@@ -68,12 +68,12 @@ gameMetadata:
   updatedAt: 2026-10-09T00:17:40.356Z
   website: https://themediumgame.com/
 manual:
+  availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: HK
       url: https://www.xbox.com/zh-hk/games/store/the-medium/9nfsr96g6k4n
-  availabilityStatus: available
 events:
   - date: 2020-11-09
     title: 开始游戏

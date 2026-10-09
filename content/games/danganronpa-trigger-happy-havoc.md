@@ -1,5 +1,5 @@
 ---
-title: 弹丸论破：希望学院和绝望高中生
+title: 弹丸论破：希望学院和绝望高中生 周年纪念版
 status:
   - 已通关
 playTime:
@@ -70,7 +70,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/7c8/7c83846e7b749d061654b15ccc9d4b4c.jpg
     - https://media.rawg.io/media/screenshots/96e/96e95ac000b3c783af619d5283291b53.jpg
   selectedPlatforms:
-    - Xbox One
+    - PC
   sources:
     rawg:
       id: '3775'

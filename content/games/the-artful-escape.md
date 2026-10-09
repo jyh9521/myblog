@@ -74,7 +74,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: HK
       url: https://www.xbox.com/zh-HK/games/store/the-artful-escape/9ngh2mtp0t44

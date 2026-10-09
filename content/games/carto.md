@@ -58,7 +58,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/6e6/6e62c7b9a810e154750f10125ec116a3.jpg
     - https://media.rawg.io/media/screenshots/567/56799ae7d9228d9105cdd026ef0d7c41.jpg
   selectedPlatforms:
-    - Xbox One
+    - PC
   sources:
     rawg:
       id: '270721'

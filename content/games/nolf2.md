@@ -2,6 +2,17 @@
 title: 无人永生2
 status:
   - 已制作补丁
+hltb:
+  id: 6657
+  url: https://howlongtobeat.com/game/6657
+  title: "No One Lives Forever 2: A Spy in H.A.R.M.'s Way"
+  auto: true
+  snapshot:
+    id: 6657
+    main: 11.76
+    extras: 14.23
+    completionist: 19.36
+    updatedAt: 2026-10-09T01:29:57.985Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/24a/24a7490f304e74d503bd461bc23b37a2.jpg
@@ -17,9 +28,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -27,6 +38,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: "No One Lives Forever 2: A Spy in H.A.R.M.'s Way"
   platforms:
     - PC

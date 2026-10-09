@@ -1,7 +1,7 @@
 ---
 title: Last Stop
 status:
-  - 想玩
+  - 已通关
 playTime:
   hours: 5.2
 personalRating: 6

@@ -79,7 +79,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: TW
       url: https://www.xbox.com/zh-TW/games/store/5ap5yik5lml6ycd77ya5rmu5ruf55qe6kiy5oa2/9ndjjqdf411c

@@ -3,6 +3,17 @@ title: 吸血莱恩2：终极剪辑版
 status:
   - 已通关
   - 已制作补丁
+hltb:
+  id: 1190
+  url: https://howlongtobeat.com/game/1190
+  title: BloodRayne 2
+  auto: true
+  snapshot:
+    id: 1190
+    main: 8.95
+    extras: 9.99
+    completionist: 10.72
+    updatedAt: 2026-10-09T01:31:21.026Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/61e/61e3d39225c5761eb51cf035a508a91b.jpg
@@ -18,9 +29,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
   id: rawg:514900
@@ -28,6 +39,7 @@ gameMetadata:
   manualFields:
     - description
     - selectedPlatforms
+    - title
   originalName: 'BloodRayne 2: Terminal Cut'
   platforms:
     - PC
@@ -42,14 +54,14 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/3fb/3fb8174789081004d77790fdf899cbf9.jpg
     - https://media.rawg.io/media/screenshots/a65/a6579e6e8f9a5caf7e4bb28edc278359.jpg
     - https://media.rawg.io/media/screenshots/6ed/6ed273798676ace9679613486b856714.jpg
+  selectedPlatforms:
+    - PC
   sources:
     rawg:
       id: '514900'
   title: 'BloodRayne 2: Terminal Cut'
   updatedAt: 2026-10-02T01:14:21.472Z
   website: https://www.ziggurat.games/
-  selectedPlatforms:
-    - PC
 manual:
   officialStores:
     - name: Steam

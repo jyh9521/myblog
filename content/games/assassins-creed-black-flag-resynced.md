@@ -2,6 +2,9 @@
 title: 刺客信条：黑旗 记忆重置
 status:
   - AFK
+playTime:
+  hours: 6.36
+personalRating: 7.3
 hltb:
   id: 185013
   url: https://howlongtobeat.com/game/185013

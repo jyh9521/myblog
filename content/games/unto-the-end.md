@@ -5,6 +5,17 @@ status:
 playTime:
   hours: 0.4
 personalRating: 5
+hltb:
+  id: 49816
+  url: https://howlongtobeat.com/game/49816
+  title: Unto The End
+  auto: true
+  snapshot:
+    id: 49816
+    main: 3.3
+    extras: 4.04
+    completionist: 4.79
+    updatedAt: 2026-10-09T01:16:13.014Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/977/977e315de9b728b662262e8cf34b18fd.jpg
@@ -20,9 +31,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Adventure
@@ -31,6 +42,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Unto The End
   platforms:
     - PC

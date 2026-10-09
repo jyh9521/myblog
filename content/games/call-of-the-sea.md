@@ -88,7 +88,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: HK
       url: https://www.xbox.com/zh-hk/games/store/call-of-the-sea/9p27zmz7fdpz

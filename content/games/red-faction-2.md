@@ -2,6 +2,17 @@
 title: 红色派系2
 status:
   - 考虑制作补丁
+hltb:
+  id: 7684
+  url: https://howlongtobeat.com/game/7684
+  title: Red Faction II
+  auto: true
+  snapshot:
+    id: 7684
+    main: 4.46
+    extras: 5.68
+    completionist: 6.33
+    updatedAt: 2026-10-09T01:40:49.491Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/8ae/8aeb9db0a0f6077b08a5bc9975904003.jpg
@@ -16,7 +27,7 @@ gameMetadata:
     description: manual
     developers: rawg
     genres: rawg
-    originalName: rawg
+    originalName: manual
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
@@ -32,6 +43,7 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - description
+    - originalName
   originalName: Red Faction II
   platforms:
     - PlayStation 2

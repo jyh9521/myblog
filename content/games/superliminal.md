@@ -39,9 +39,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
+    selectedPlatforms: manual
     title: rawg
     website: rawg
-    selectedPlatforms: manual
   genres:
     - Indie
     - Puzzle
@@ -69,7 +69,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/563/563d700eb9dd9711f3cffb66db208a11.jpg
     - https://media.rawg.io/media/screenshots/896/896ebdcb146dcb9df8c8cb1d617700a2.jpg
   selectedPlatforms:
-    - Xbox One
+    - PC
   sources:
     rawg:
       id: '327219'

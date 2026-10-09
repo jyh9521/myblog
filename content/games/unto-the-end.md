@@ -73,10 +73,10 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
-      region: HK
-      url: https://www.xbox.com/zh-hk/games/store/unto-the-end/9mvj0w5n2l2q
+      region: TW
+      url: https://www.xbox.com/zh-tw/games/store/unto-the-end/9mvj0w5n2l2q
 events:
   - date: 2021-11-02
     title: 开始游戏

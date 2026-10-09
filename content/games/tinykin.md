@@ -83,7 +83,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
       region: TW
       url: https://www.xbox.com/zh-tw/games/store/tinykin/9nllp82xvskh

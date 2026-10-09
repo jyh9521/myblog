@@ -3,6 +3,9 @@ title: 吸血莱恩2：终极剪辑版
 status:
   - 已通关
   - 已制作补丁
+playTime:
+  hours: 6.8
+personalRating: 6.5
 hltb:
   id: 1190
   url: https://howlongtobeat.com/game/1190

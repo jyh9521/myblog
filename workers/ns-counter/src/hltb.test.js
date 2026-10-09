@@ -131,3 +131,13 @@ test('new search cache avoids legacy empty results and shares normalized store t
   assert.equal(second.cache, 'fresh'); assert.equal(calls, 1);
   assert.equal((await hltbRoute(request('™®'), env, provider)).status, 400);
 });
+
+test('HLTB source failure and D1 cooldown return distinct machine-readable statuses', async () => {
+  const env = { DB: database() };
+  const request = new Request('https://blog.blfy.cc/ns/api/hltb/search?q=Danganronpa%3A%20Trigger%20Happy%20Havoc');
+  const provider = { search: async () => { throw new Error('HLTB HTTP 503'); } };
+  const first = await (await hltbRoute(request, env, provider)).json();
+  assert.equal(first.code, 'HLTB_UPSTREAM_FAILED'); assert.ok(first.error.includes('不是游戏名称匹配失败'));
+  const second = await (await hltbRoute(request, env, provider)).json();
+  assert.equal(second.code, 'HLTB_RETRY_COOLDOWN'); assert.ok(second.retryAfter > 0);
+});

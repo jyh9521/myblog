@@ -41,7 +41,7 @@ export function rankSearchResults(results, query) {
 }
 
 class HltbUnavailable extends Error {
-  constructor(retryAt) { super('HLTB temporarily unavailable'); this.retryAt = retryAt; }
+  constructor(retryAt, code = 'HLTB_UPSTREAM_FAILED') { super('HLTB temporarily unavailable'); this.retryAt = retryAt; this.code = code; }
 }
 export function normalizeHltb(game) {
   const id = Number(game?.game_id);
@@ -131,13 +131,13 @@ export async function cachedHltb(db, key, ttl, producer, now = Date.now()) {
   if (previous && now - Number(row.cached_at) < ttl) return result(previous, 'fresh', row.cached_at);
   if (Number(row?.retry_after) > now) {
     if (previous) return result(previous, 'stale', row.cached_at);
-    throw new HltbUnavailable(Number(row.retry_after));
+    throw new HltbUnavailable(Number(row.retry_after), 'HLTB_RETRY_COOLDOWN');
   }
   // D1's atomic lease prevents concurrent refreshes across Worker isolates.
   const lease = await db.prepare('INSERT INTO hltb_cache (cache_key, retry_after) VALUES (?, ?) ON CONFLICT(cache_key) DO UPDATE SET retry_after = excluded.retry_after WHERE hltb_cache.retry_after <= ? RETURNING cache_key').bind(key, now + 120000, now).first();
   if (!lease) {
     if (previous) return result(previous, 'stale', row.cached_at);
-    throw new HltbUnavailable(now + 120000);
+    throw new HltbUnavailable(now + 120000, 'HLTB_RETRY_COOLDOWN');
   }
   try {
     const value = await producer();
@@ -167,6 +167,8 @@ export async function hltbRoute(request, env, provider = new HltbProvider()) {
     return json(value);
   } catch (error) {
     const retryAfter = error instanceof HltbUnavailable ? Math.max(1, Math.ceil((error.retryAt - Date.now()) / 1000)) : 60;
-    return Response.json({ error: '暂时无法获取 HLTB 数据。', retryAfter }, { status: 503, headers: { ...responseHeaders, 'Retry-After': String(retryAfter) } });
+    const code = error instanceof HltbUnavailable ? error.code : 'HLTB_SERVICE_FAILED';
+    const message = code === 'HLTB_RETRY_COOLDOWN' ? 'HLTB 请求正在等待重试，不是游戏名称匹配失败。' : 'HLTB 数据请求本次失败，不是游戏名称匹配失败。';
+    return Response.json({ error: message, code, retryAfter }, { status: 503, headers: { ...responseHeaders, 'Retry-After': String(retryAfter) } });
   }
 }

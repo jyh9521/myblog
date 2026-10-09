@@ -2,6 +2,17 @@
 title: 符文：经典版
 status:
   - 考虑制作补丁
+hltb:
+  id: 8018
+  url: https://howlongtobeat.com/game/8018
+  title: Rune
+  auto: true
+  snapshot:
+    id: 8018
+    main: 10.07
+    extras: 10.25
+    completionist: 10.54
+    updatedAt: 2026-10-09T01:37:46.904Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/screenshots/f83/f8324f17a0b08015911d878d881a0b71.jpg
@@ -29,13 +40,13 @@ gameMetadata:
     description: rawg
     developers: rawg
     genres: rawg
-    originalName: rawg
+    originalName: manual
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
+    selectedPlatforms: manual
     title: rawg
     website: rawg
-    selectedPlatforms: manual
   genres:
     - Action
     - Adventure
@@ -44,6 +55,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - originalName
   originalName: Rune
   platforms:
     - PC

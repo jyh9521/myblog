@@ -2,6 +2,17 @@
 title: 魔幻战士
 status:
   - 考虑制作补丁
+hltb:
+  id: 9297
+  url: https://howlongtobeat.com/game/9297
+  title: Sudeki
+  auto: true
+  snapshot:
+    id: 9297
+    main: 11.59
+    extras: 18.43
+    completionist: 23.21
+    updatedAt: 2026-10-09T01:28:01.554Z
 gameMetadata:
   alternativeNames: []
   cover: https://media.rawg.io/media/games/5f3/5f3e3b02d402653dd1d54e3871e92c08.jpg
@@ -21,8 +32,8 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
     selectedPlatforms: manual
+    title: manual
   genres:
     - Action
     - Adventure
@@ -31,6 +42,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Sudeki
   platforms:
     - PC

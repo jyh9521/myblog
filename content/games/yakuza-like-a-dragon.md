@@ -117,10 +117,10 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: Xbox
+    - name: Xbox Store
       note: ''
-      region: HK
-      url: https://www.xbox.com/zh-hk/games/store/%E4%BA%BA%E4%B8%AD%E4%B9%8B%E9%BE%8D7-%E5%85%89%E8%88%87%E9%97%87%E7%9A%84%E5%8E%BB%E5%90%91-%E5%9C%8B%E9%9A%9B%E7%89%88/9nxcswcqtnfg
+      region: TW
+      url: https://www.xbox.com/zh-tw/games/store/%E4%BA%BA%E4%B8%AD%E4%B9%8B%E9%BE%8D7-%E5%85%89%E8%88%87%E9%97%87%E7%9A%84%E5%8E%BB%E5%90%91-%E5%9C%8B%E9%9A%9B%E7%89%88/9nxcswcqtnfg
 events:
   - date: 2021-12-20
     title: 开始游戏

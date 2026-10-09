@@ -72,7 +72,7 @@ gameMetadata:
 manual:
   availabilityStatus: available
   officialStores:
-    - name: PSN
+    - name: PlayStation Store
       note: ''
       region: HK
       url: https://www.playstation.com/zh-hans-hk/games/indiana-jones-and-the-great-circle/

@@ -3,6 +3,17 @@ title: 红色派系
 status:
   - 已通关
   - 已制作补丁
+hltb:
+  id: 7681
+  url: https://howlongtobeat.com/game/7681
+  title: Red Faction
+  auto: true
+  snapshot:
+    id: 7681
+    main: 6.02
+    extras: 7.21
+    completionist: 9.04
+    updatedAt: 2026-10-09T01:30:47.796Z
 gameMetadata:
   alternativeNames:
     - Red Faction :สงครามแดงเดือด
@@ -25,9 +36,9 @@ gameMetadata:
     platforms: rawg
     publishers: rawg
     releaseDate: rawg
-    title: rawg
-    website: rawg
     selectedPlatforms: manual
+    title: manual
+    website: rawg
   genres:
     - Action
     - Shooter
@@ -35,6 +46,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - selectedPlatforms
+    - title
   originalName: Red Faction
   platforms:
     - macOS

@@ -17,29 +17,8 @@ hltb:
     completionist: 9.31
     updatedAt: 2026-10-09T15:30:02.136Z
 gameMetadata:
-  id: rawg:462677
-  sources:
-    rawg:
-      id: '462677'
-      slug: shadow-warrior-3
-      url: https://rawg.io/games/462677
-  fieldSources:
-    title: rawg
-    originalName: rawg
-    description: rawg
-    releaseDate: rawg
-    developers: rawg
-    publishers: rawg
-    platforms: rawg
-    genres: rawg
-    cover: rawg
-    website: rawg
-  updatedAt: 2026-10-09T15:31:02.177Z
-  manualFields: []
-  title: Shadow Warrior 3
-  localizedName: ''
-  originalName: Shadow Warrior 3
   alternativeNames: []
+  cover: https://media.rawg.io/media/games/366/3660f7923d5b16bb8bb67ac5a93f5b76.jpg
   description: "Fallen corporate shogun Lo Wang and his former employer turned nemesis turned sidekick Orochi Zilla embark on an improbable mission to recapture an ancient dragon they unwillingly unleashed from its eternal prison. Armed with a punishing mix of blades and bullets, Lo Wang must traverse uncharted parts of the world to track down the dark beast and push the apocalypse back yet again. All it will take is the mask of a dead god, a dragon's egg, a touch of magic, and enough firepower to hold off the impending cataclysm.\r
 
     \r
@@ -77,30 +56,54 @@ gameMetadata:
     Funny Business\r
 
     Brace for expertly delivered one-liners from Lo Wang, pointed banter with Zilla, and an intense thrillride of absurd predicaments on the way to turning doomsday into a new day."
-  releaseDate: 2022-03-01
   developers:
     - Flying Wild Hog
-  publishers:
-    - Devolver Digital
+  fieldSources:
+    cover: rawg
+    description: rawg
+    developers: rawg
+    genres: rawg
+    originalName: rawg
+    platforms: rawg
+    publishers: rawg
+    releaseDate: rawg
+    title: rawg
+    website: rawg
+    selectedPlatforms: manual
+  genres:
+    - Action
+    - Shooter
+    - Adventure
+  id: rawg:462677
+  localizedName: ''
+  manualFields:
+    - selectedPlatforms
+  originalName: Shadow Warrior 3
   platforms:
     - Xbox Series S/X
     - PlayStation 4
     - Xbox One
     - PC
     - PlayStation 5
-  genres:
-    - Action
-    - Shooter
-    - Adventure
-  cover: https://media.rawg.io/media/games/366/3660f7923d5b16bb8bb67ac5a93f5b76.jpg
+  publishers:
+    - Devolver Digital
+  releaseDate: 2022-03-01
   screenshots:
     - https://media.rawg.io/media/screenshots/160/16096b4add119f2dbaec6ce2f9f06f48.jpg
     - https://media.rawg.io/media/screenshots/d4b/d4b72f3a9cfafd8e455f4691e60760e7.jpg
     - https://media.rawg.io/media/screenshots/dbb/dbb43b62a964cad8a7e9092ea28fb83a.jpg
     - https://media.rawg.io/media/screenshots/822/822091ccb076ce7ccd9c8ad1e00911ea.jpg
     - https://media.rawg.io/media/screenshots/0d5/0d51226966a6d3f43c41f12b50d5b355.jpg
+  selectedPlatforms:
+    - Xbox Series S/X
+  sources:
+    rawg:
+      id: '462677'
+      slug: shadow-warrior-3
+      url: https://rawg.io/games/462677
+  title: Shadow Warrior 3
+  updatedAt: 2026-10-09T15:31:02.177Z
   website: http://shadowwarrior.com
-  selectedPlatforms: []
 manual:
   availabilityStatus: available
   officialStores:

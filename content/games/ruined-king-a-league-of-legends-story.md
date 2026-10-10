@@ -17,31 +17,9 @@ hltb:
     completionist: 46.69
     updatedAt: 2026-10-09T15:39:35.134Z
 gameMetadata:
-  id: rawg:398406
-  sources:
-    rawg:
-      id: '398406'
-      slug: ruined-king
-      url: https://rawg.io/games/398406
-  fieldSources:
-    title: rawg
-    originalName: rawg
-    alternativeNames: rawg
-    description: rawg
-    releaseDate: rawg
-    developers: rawg
-    publishers: rawg
-    platforms: rawg
-    genres: rawg
-    cover: rawg
-    website: rawg
-  updatedAt: 2026-10-09T15:40:15.032Z
-  manualFields: []
-  title: 'Ruined King: A League of Legends Story'
-  localizedName: ''
-  originalName: 'Ruined King: A League of Legends Story'
   alternativeNames:
     - 'Ruined King: A League of Legends Story'
+  cover: https://media.rawg.io/media/games/ca9/ca914d13db738b6072d6eac2208c6470.jpg
   description: "Rise Against Ruin\r
 
     Unite a party of League of Legends Champions, explore Bilgewater and set sail for the Shadow Isles to uncover the secrets of the deadly Black Mist.\r
@@ -53,20 +31,37 @@ gameMetadata:
     Legal Disclaimer\r
 
     Ruined King: A League of Legends Story™ will have English, BrazilianPourtuguese, Latin Spanish, Castilian Spanish, Polish, French, German, Italian, Simplified Chinese (China), Traditional Chinese, Japanese, Korean, Russian and Turkish voice-over and subtitle as well as Thai and Vietnamese subtitle support."
-  releaseDate: 2021-11-15
   developers:
     - Airship Syndicate
-  publishers:
-    - Riot Games
-    - Riot Forge
+  fieldSources:
+    alternativeNames: rawg
+    cover: rawg
+    description: rawg
+    developers: rawg
+    genres: rawg
+    originalName: rawg
+    platforms: rawg
+    publishers: rawg
+    releaseDate: rawg
+    title: rawg
+    website: rawg
+    selectedPlatforms: manual
+  genres:
+    - RPG
+  id: rawg:398406
+  localizedName: ''
+  manualFields:
+    - selectedPlatforms
+  originalName: 'Ruined King: A League of Legends Story'
   platforms:
     - Xbox One
     - Nintendo Switch
     - PlayStation 4
     - PC
-  genres:
-    - RPG
-  cover: https://media.rawg.io/media/games/ca9/ca914d13db738b6072d6eac2208c6470.jpg
+  publishers:
+    - Riot Games
+    - Riot Forge
+  releaseDate: 2021-11-15
   screenshots:
     - https://media.rawg.io/media/screenshots/a7c/a7c03b8d50f91d7bacaa52cbe0cf144d.jpg
     - https://media.rawg.io/media/screenshots/fdb/fdbab066b394af168fcb728ba64d7d74.jpg
@@ -74,8 +69,16 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/a2f/a2f65ff9b0b0f2bac1a9ab2bb0ec81c4.jpg
     - https://media.rawg.io/media/screenshots/337/33734cb07f4eb9ad337c0e3c0c4cd85e.jpg
     - https://media.rawg.io/media/screenshots/027/027c35a16801d3a5cd671585b2eca89b.jpg
+  selectedPlatforms:
+    - Xbox One
+  sources:
+    rawg:
+      id: '398406'
+      slug: ruined-king
+      url: https://rawg.io/games/398406
+  title: 'Ruined King: A League of Legends Story'
+  updatedAt: 2026-10-09T15:40:15.032Z
   website: https://ruinedking.com/
-  selectedPlatforms: []
 manual:
   availabilityStatus: available
   officialStores:

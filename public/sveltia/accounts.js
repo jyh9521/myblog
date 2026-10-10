@@ -38,7 +38,7 @@
     try{const result=await api(`/bind/${a.platform}`,'POST');
       if(result.mode==='redirect'){location.assign(result.url);return;}
       pending={platform:a.platform,state:result.state};$('connect-message').textContent='';$('restart-connect').hidden=true;$('confirm-connect').disabled=false;$('nintendo-help').hidden=a.platform!=='nintendo';$('connect-title').textContent=`连接 ${a.name}`;$('official-login').hidden=false;$('official-login').href=result.url;$('helper-link').hidden=!result.helperUrl;if(result.helperUrl)$('helper-link').href=result.helperUrl;
-      const guides={nintendo:'先安装下方 Windows 返回助手，再打开任天堂官方页并选择账号；浏览器提示打开助手时允许。返回后台后确认连接。也可以手动粘贴 npf 开头的返回链接。',psn:'先在 PlayStation 官网登录，再打开下方凭证页面，复制返回的 npsso 值。无需输入 PS 密码到博客。',gog:'GOG 不会自动返回博客。登录后复制地址栏中 on_login_success 的完整链接，返回本弹窗粘贴，再点击完成连接并同步。',epic:'在 Epic 官方页面登录，复制返回的 authorizationCode 值或完整 JSON 到下方。'};
+      const guides={nintendo:'无需安装软件。打开任天堂官方页面登录，复制最终返回的 npf…://auth#… 完整链接，回到本弹窗粘贴并完成连接。密码只在任天堂官方页面输入。',psn:'先在 PlayStation 官网登录，再打开下方凭证页面，复制返回的 npsso 值。无需输入 PS 密码到博客。',gog:'GOG 不会自动返回博客。登录后复制地址栏中 on_login_success 的完整链接，返回本弹窗粘贴，再点击完成连接并同步。',epic:'在 Epic 官方页面登录，复制返回的 authorizationCode 值或完整 JSON 到下方。'};
       $('connect-guide').textContent=guides[a.platform];$('input-label').textContent=result.input==='npsso'?'NPSSO':result.input==='callback'?'完整返回链接':'Authorization Code';$('connect-input').value='';if(!$('connect-dialog').open)$('connect-dialog').showModal();
     }catch(e){message(e.message);}finally{busy=false;}
   }
@@ -51,7 +51,8 @@
   $('cancel-connect').onclick=()=>$('connect-dialog').close();
   $('connect-dialog').addEventListener('close',()=>{pending=null;$('connect-input').value='';});
   $('connect-dialog').addEventListener('cancel',e=>{if(busy)e.preventDefault();});
-  $('connect-form').onsubmit=async e=>{e.preventDefault();if(!pending||busy)return;busy=true;$('confirm-connect').disabled=true;$('cancel-connect').disabled=true;const input=$('connect-input').value.trim();message('正在交换授权并首次同步，请稍候…');try{await api(`/complete/${pending.platform}`,'POST',{state:pending.state,input});$('connect-dialog').close();message('账号连接并完成首次同步。');await refresh();}catch(e){message(e.message);$('connect-input').value='';pending=null;$('restart-connect').hidden=false;await refresh();}finally{busy=false;$('confirm-connect').disabled=!pending;$('cancel-connect').disabled=false;}};
+  function validNintendoResult(input,state){try{const u=new URL(input),p=new URLSearchParams(u.hash.slice(1));return input.length<=8192&&u.protocol==='npf5c38e31cd085304b:'&&u.hostname==='auth'&&!u.username&&!u.password&&!u.port&&(u.pathname===''||u.pathname==='/')&&p.get('state')===state&&!!p.get('session_token_code')&&!/\s/.test(p.get('session_token_code'));}catch{return false;}}
+  $('connect-form').onsubmit=async e=>{e.preventDefault();if(!pending||busy)return;const input=$('connect-input').value.trim();if(pending.platform==='nintendo'&&!validNintendoResult(input,pending.state)){message('请粘贴本次任天堂登录返回的完整 npf…://auth#… 链接（包含 state 和 session_token_code），不是官网地址。若已重新开始连接，请重新打开官方登录页获取链接。');return;}busy=true;$('confirm-connect').disabled=true;$('cancel-connect').disabled=true;message('正在交换授权并首次同步，请稍候…');try{await api(`/complete/${pending.platform}`,'POST',{state:pending.state,input});$('connect-dialog').close();message('账号连接并完成首次同步。');await refresh();}catch(e){message(e.message);$('connect-input').value='';pending=null;$('restart-connect').hidden=false;await refresh();}finally{busy=false;$('confirm-connect').disabled=!pending;$('cancel-connect').disabled=false;}};
   $('restart-connect').onclick=()=>connect(current);
   const params=new URLSearchParams(location.search),fragment=new URLSearchParams(location.hash.slice(1));
   const callback=fragment.get('nintendo-result');

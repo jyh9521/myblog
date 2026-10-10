@@ -30,7 +30,15 @@ export async function readJson(request, limit=16384) {
 export async function upstream(url, options={}, fetcher=fetch) {
   let response;
   try {response=await fetcher(url,{...options,signal:AbortSignal.timeout(15000)});}catch {throw new Error('UPSTREAM_NETWORK');}
-  if(!response.ok) {if(response.status===401) throw new Error('AUTH_EXPIRED'); throw new Error(`UPSTREAM_HTTP_${response.status}`);}
+  if(!response.ok) {
+    const error=new Error(response.status===401?'AUTH_EXPIRED':`UPSTREAM_HTTP_${response.status}`);
+    // Classify known parameter errors in memory. Never retain/log the response body.
+    if(new URL(url).hostname==='titlehub.xboxlive.com')try{
+      const body=await readJson(response,16384),description=String(body.message||body.description||body.error?.message||'');
+      error.reason=['maxItems','decoration','signature','contract','xuid'].find(name=>description.toLowerCase().includes(name.toLowerCase()))?.toUpperCase();
+    }catch{}
+    throw error;
+  }
   // Never include upstream response bodies or URLs in errors; either may contain credentials.
   return readJson(response, 16*1024*1024);
 }

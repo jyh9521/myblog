@@ -65,3 +65,33 @@ test('Steam key configuration is owner-only, encrypted and never returned to fro
  const listing=await(await route(req('','GET',undefined,auth),e,context)).json();assert.deepEqual(listing.accounts.find(a=>a.platform==='steam').missing,[]);
  assert.ok(!JSON.stringify(listing).includes(key));assert.ok(!JSON.stringify(await publicProfile(e)).includes(key));
 });
+
+
+test('Xbox fresh authorization does not immediately rotate its refresh token',async()=>{
+ const {renew}=await import('./providers.js');const c={access_token:'a',xsts:'x',expiresAt:Date.now()+3600000,xstsExpiresAt:Date.now()+3600000};let calls=0;assert.equal(await renew('xbox',c,env(),async()=>{calls++;}),c);assert.equal(calls,0);
+});
+test('Sony redirect with or without trailing slash extracts the authorization code',async()=>{
+ const {psnLogin}=await import('./psn.js');for(const slash of ['', '/']){let calls=0;const c=await psnLogin('fixture',async(url,options)=>{calls++;if(url.includes('authorize'))return new Response(null,{status:302,headers:{Location:'com.scee.psxandroid.scecompcall://redirect'+slash+'?code=valid'}});assert.equal(new URLSearchParams(options.body).get('code'),'valid');return json({access_token:'a',refresh_token:'r',expires_in:3600});});assert.equal(c.accessToken,'a');assert.equal(calls,2);}
+});
+test('Sony invalid authorization/token results have separate redacted errors',async()=>{
+ const {psnLogin}=await import('./psn.js');await assert.rejects(psnLogin('fixture',async()=>json({error:'secret'})),/PSN_AUTHORIZE_FAILED/);await assert.rejects(psnLogin('fixture',async url=>url.includes('authorize')?new Response(null,{status:302,headers:{Location:'com.scee.psxandroid.scecompcall://redirect?code=x'}}):json({error:'secret'})),/PSN_TOKEN_FAILED/);
+});
+test('Sony history uses bounded native requests and stable authenticated identity',async()=>{
+ const d=await collect('psn',{accessToken:'a',accountId:'123'},env(),async url=>json(url.includes('gamelist')?{titles:[{titleId:'g',name:'Game',playDuration:'PT1H',lastPlayedDateTime:'2026-10-01T00:00:00Z'}],totalItemCount:1}:{onlineId:'Member'}));assert.equal(d.accountId,'123');assert.equal(d.minutes,60);
+});
+test('Steam enriches only recent six achievements and optional failures preserve library',async()=>{
+ let requests=0;const games=Array.from({length:10},(_,i)=>({appid:i+1,name:'Game',playtime_forever:1,rtime_last_played:1791000000+i}));const d=await collect('steam',{steamid:'id'},env(),async url=>{if(url.includes('GetPlayerAchievements')){requests++;return json({playerstats:{success:true,achievements:[{achieved:1},{achieved:0}]}});}return json(url.includes('GetOwnedGames')?{response:{game_count:10,games}}:{response:{players:[{personaname:'M'}]}});});assert.equal(requests,6);assert.equal(d.games,10);assert.equal(d.recent[0].earned,1);assert.equal(d.recent[0].total,2);
+});
+test('Epic playtime uses artifact IDs and seconds, never acquisition dates',async()=>{
+ const {epicSnapshot}=await import('./providers.js');const d=epicSnapshot([{appName:'game',metadata:{title:'Game'},acquisitionDate:'2026-10-10'}],[{artifactId:'game',totalTime:3600,lastPlayed:'2026-10-01T00:00:00Z'}],{account_id:'1',displayName:'M'});assert.equal(d.minutes,60);assert.equal(d.recent.length,1);assert.equal(d.recent[0].title,'Game');assert.equal(epicSnapshot([{appName:'game'}],[],{account_id:'1'}).recent.length,0);
+});
+test('Xbox HTTP failures return to admin with stage, never echo authorization code',async()=>{
+ const e=env(),c=await cookie(e);const d=await(await route(req('/bind/xbox','POST',{},c),e,context)).json();const r=await route(new Request(SITE+'/api/auth/xbox/callback?state='+d.state+'&code=private-code',{headers:{Cookie:c}}),e,context,async()=>new Response('private secret response',{status:400}));assert.equal(r.status,303);assert.match(r.headers.get('Location'),/error=XBOX_TOKEN_UPSTREAM_HTTP_400/);assert.ok(!r.headers.get('Location').includes('private'));assert.equal((await e.DB.prepare('SELECT * FROM gaming_sync_runs').first()).error_code,'XBOX_TOKEN_UPSTREAM_HTTP_400');
+});
+test('assisted binding failure records history and keeps previous binding',async()=>{
+ const e=env(),c=await cookie(e);await saved(e);const d=await(await route(req('/bind/psn','POST',{},c),e,context)).json();await assert.rejects(route(req('/complete/psn','POST',{state:d.state,input:'a'.repeat(64)},c),e,context,async()=>json({})));assert.equal((await e.DB.prepare('SELECT * FROM gaming_sync_runs').first()).status,'failed');assert.equal((await e.DB.prepare('SELECT * FROM gaming_accounts').first()).platform,'steam');
+});
+
+test('Xbox title history includes required locale and correct service contract',async()=>{
+ const d=await collect('xbox',{xuid:'123',userHash:'hash',xsts:'ticket'},env(),async(url,options)=>{assert.equal(options.headers['Accept-Language'],'en-US');assert.equal(options.headers['x-xbl-contract-version'],'2');if(url.includes('titlehub'))return json({titles:[{titleId:'one',name:'Game',titleHistory:{lastTimePlayed:'2026-10-01T00:00:00Z'}}]});return json({profileUsers:[{settings:[{id:'Gamertag',value:'Member'}]}]});});assert.equal(d.games,1);assert.equal(d.displayName,'Member');
+});

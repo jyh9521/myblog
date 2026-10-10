@@ -1,5 +1,5 @@
 import { upstream, challenge, safeUrl } from './security.js';
-import { exchangeNpssoForAccessCode, exchangeAccessCodeForAuthTokens, exchangeRefreshTokenForAuthTokens, getUserPlayedGames, getProfileFromAccountId, getProfileFromUserName } from 'psn-api';
+import {psnLogin,psnToken,psnRequest} from './psn.js';
 
 export const platforms = ['nintendo','psn','xbox','steam','gog','epic'];
 export const names = {nintendo:'Nintendo',psn:'PlayStation',xbox:'Xbox',steam:'Steam',gog:'GOG',epic:'Epic Games'};
@@ -24,14 +24,15 @@ export async function begin(platform, state, verifier, env) {
   if(platform==='gog') return {mode:'assisted',input:'callback',url:'https://auth.gog.com/auth?'+new URLSearchParams({client_id:env.GOG_CLIENT_ID,redirect_uri:'https://embed.gog.com/on_login_success?origin=client',response_type:'code',layout:'client2',state})};
   return {mode:'assisted',input:'code',url:'https://www.epicgames.com/id/login?redirectUrl='+encodeURIComponent('https://www.epicgames.com/id/api/redirect?'+new URLSearchParams({clientId:env.EPIC_CLIENT_ID,responseType:'code'}))};
 }
+async function stage(name, operation) {try{return await operation();}catch(e){const code=/^(?:UPSTREAM_HTTP_\d{3}|AUTH_EXPIRED|UPSTREAM_NETWORK)$/.test(e.message)?e.message:'FAILED';throw new Error(name+'_'+code+(e.reason?'_'+e.reason:''));}}
 const tokenExpiry=t=>({...t,expiresAt:Date.now()+Math.max(0,Number(t.expires_in||t.expiresIn||0))*1000});
 function requireToken(t) {if(!t.access_token) throw new Error('INVALID_TOKEN_RESPONSE');return tokenExpiry(t);}
 async function xboxIdentity(t,fetcher) {
-  const user=await upstream('https://user.auth.xboxlive.com/user/authenticate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({Properties:{AuthMethod:'RPS',SiteName:'user.auth.xboxlive.com',RpsTicket:`d=${t.access_token}`},RelyingParty:'http://auth.xboxlive.com',TokenType:'JWT'})},fetcher);
-  const xsts=await upstream('https://xsts.auth.xboxlive.com/xsts/authorize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({Properties:{SandboxId:'RETAIL',UserTokens:[user.Token]},RelyingParty:'http://xboxlive.com',TokenType:'JWT'})},fetcher);
+  const user=await stage('XBOX_USER_AUTH',()=>upstream('https://user.auth.xboxlive.com/user/authenticate',{method:'POST',headers:{'Content-Type':'application/json','x-xbl-contract-version':'1'},body:JSON.stringify({Properties:{AuthMethod:'RPS',SiteName:'user.auth.xboxlive.com',RpsTicket:`d=${t.access_token}`},RelyingParty:'http://auth.xboxlive.com',TokenType:'JWT'})},fetcher));
+  const xsts=await stage('XBOX_XSTS',()=>upstream('https://xsts.auth.xboxlive.com/xsts/authorize',{method:'POST',headers:{'Content-Type':'application/json','x-xbl-contract-version':'1'},body:JSON.stringify({Properties:{SandboxId:'RETAIL',UserTokens:[user.Token]},RelyingParty:'http://xboxlive.com',TokenType:'JWT'})},fetcher));
   const claim=xsts.DisplayClaims?.xui?.[0];
   if(!claim?.xid || !claim?.uhs || !xsts.Token) throw new Error('INVALID_XBOX_IDENTITY');
-  return {...t,xuid:claim.xid,userHash:claim.uhs,xsts:xsts.Token};
+  return {...t,xuid:claim.xid,userHash:claim.uhs,xsts:xsts.Token,xstsExpiresAt:Date.parse(xsts.NotAfter||'')||Date.now()+3600000};
 }
 async function formToken(url,body,headers,fetcher) {return requireToken(await upstream(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded',...headers},body:new URLSearchParams(body).toString()},fetcher));}
 async function gogToken(body,env,fetcher) {
@@ -50,7 +51,7 @@ export async function complete(platform, input, state, env, fetcher=fetch) {
     return {steamid:claim.split('/').pop()};
   }
   if(platform==='xbox') {
-    const t=await formToken('https://login.microsoftonline.com/consumers/oauth2/v2.0/token',{client_id:env.MICROSOFT_CLIENT_ID,grant_type:'authorization_code',code:input,redirect_uri:callback(env,platform),code_verifier:state.verifier,scope:'XboxLive.signin offline_access',...(env.MICROSOFT_CLIENT_SECRET?{client_secret:env.MICROSOFT_CLIENT_SECRET}:{})},{},fetcher);
+    const t=await stage('XBOX_TOKEN',()=>formToken('https://login.microsoftonline.com/consumers/oauth2/v2.0/token',{client_id:env.MICROSOFT_CLIENT_ID,grant_type:'authorization_code',code:input,redirect_uri:callback(env,platform),code_verifier:state.verifier,scope:'XboxLive.signin offline_access',...(env.MICROSOFT_CLIENT_SECRET?{client_secret:env.MICROSOFT_CLIENT_SECRET}:{})},{},fetcher));
     return xboxIdentity(t,fetcher);
   }
   if(platform==='nintendo') {
@@ -62,7 +63,7 @@ export async function complete(platform, input, state, env, fetcher=fetch) {
   if(platform==='psn') {
     if(!/^[a-zA-Z0-9_-]{40,256}$/.test(input)) throw new Error('INVALID_INPUT');
     // Library errors may embed upstream credentials: never expose their messages.
-    try {return tokenExpiry(await exchangeAccessCodeForAuthTokens(await exchangeNpssoForAccessCode(input)));}catch {throw new Error('PSN_LOGIN_FAILED');}
+    return psnLogin(input,fetcher);
   }
   if(platform==='gog') {
     const u=new URL(input);
@@ -83,9 +84,9 @@ export async function renew(platform,credential,env,fetcher=fetch) {
   }
   if(platform==='psn') {
     if(credential.expiresAt>Date.now()+60000)return credential;
-    try{return tokenExpiry(await exchangeRefreshTokenForAuthTokens(credential.refreshToken));}catch {throw new Error('AUTH_EXPIRED');}
+    return psnToken({refresh_token:credential.refreshToken,grant_type:'refresh_token',scope:'psn:mobile.v2.core psn:clientapp'},fetcher);
   }
-  if(credential.expiresAt>Date.now()+60000 && platform!=='xbox')return credential;
+  if(credential.expiresAt>Date.now()+60000 && (platform!=='xbox'||credential.xstsExpiresAt>Date.now()+60000))return credential;
   if(platform==='xbox') {
     const t=await formToken('https://login.microsoftonline.com/consumers/oauth2/v2.0/token',{client_id:env.MICROSOFT_CLIENT_ID,grant_type:'refresh_token',refresh_token:credential.refresh_token,scope:'XboxLive.signin offline_access',...(env.MICROSOFT_CLIENT_SECRET?{client_secret:env.MICROSOFT_CLIENT_SECRET}:{})},{},fetcher);
     return xboxIdentity({...t,refresh_token:t.refresh_token||credential.refresh_token},fetcher);
@@ -121,7 +122,8 @@ export async function collect(platform,c,env,fetcher=fetch) {
     if(!Number.isInteger(library.response?.game_count) || (library.response.game_count>0 && !Array.isArray(library.response.games)))throw new Error('STEAM_LIBRARY_PRIVATE');
     const info=await upstream(base+'/ISteamUser/GetPlayerSummaries/v0002/?'+new URLSearchParams({key:env.STEAM_API_KEY,steamids:c.steamid}),{},fetcher);
     const games=(library.response.games||[]).map(g=>normalizedGame(g.appid,g.name,'steam',{minutes:g.playtime_forever,lastPlayed:g.rtime_last_played>0?new Date(g.rtime_last_played*1000).toISOString():undefined,cover:`https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${g.appid}/header.jpg`,url:`https://store.steampowered.com/app/${g.appid}/`}));
-    return snapshot(platform,c.steamid,info.response?.players?.[0]?.personaname,games,'owned');
+    const result=snapshot(platform,c.steamid,info.response?.players?.[0]?.personaname,games,'owned');
+    await Promise.all(result.recent.map(async g=>{try{const d=await upstream(base+'/ISteamUserStats/GetPlayerAchievements/v0001/?'+new URLSearchParams({key:env.STEAM_API_KEY,steamid:c.steamid,appid:g.id}),{},fetcher);if(d.playerstats?.success&&Array.isArray(d.playerstats.achievements)){g.total=d.playerstats.achievements.length;g.earned=d.playerstats.achievements.filter(a=>a.achieved===1).length;}}catch{result.warnings.push('SOME_ACHIEVEMENTS_MISSING');}}));return result;
   }
   if(platform==='nintendo') {
     const identity=await upstream('https://api.accounts.nintendo.com/2.0.0/users/me',{headers:{Authorization:`Bearer ${c.access_token}`,'User-Agent':NA_UA}},fetcher);
@@ -135,28 +137,30 @@ export async function collect(platform,c,env,fetcher=fetch) {
     try {
       const games=[];let offset=0,total;
       for(let page=0;page<20;page++) {
-        const d=await getUserPlayedGames(c,'me',{limit:100,offset});
+        const d=await stage('PSN_HISTORY',()=>psnRequest(`/gamelist/v2/users/me/titles?limit=100&offset=${offset}`,c,fetcher));
         if(!Array.isArray(d.titles))throw new Error('INVALID_HISTORY_RESPONSE');
         games.push(...d.titles);total=d.totalItemCount;offset+=d.titles.length;
         if(offset>=total||!d.titles.length)break;
       }
       if(total>offset)throw new Error('PAGINATION_LIMIT');
-      const p=await getProfileFromAccountId(c,'me');
-      const identity=await getProfileFromUserName(c,p.onlineId);
-      if(!identity.profile?.accountId)throw new Error('INVALID_IDENTITY');
-      return snapshot(platform,identity.profile.accountId,p.onlineId,games.map(g=>normalizedGame(g.titleId,g.localizedName||g.name,platform,{cover:g.localizedImageUrl||g.imageUrl,lastPlayed:g.lastPlayedDateTime,minutes:durationMinutes(g.playDuration)})));
-    }catch(e){if(e.message==='PAGINATION_LIMIT')throw e;throw new Error('PSN_SYNC_FAILED');}
+      const p=await stage('PSN_PROFILE',()=>psnRequest('/userProfile/v1/internal/users/me/profiles',c,fetcher));
+      let id=c.accountId;
+      if(!id){const identity=await stage('PSN_IDENTITY',()=>upstream('https://us-prof.np.community.playstation.net/userProfile/v1/users/'+encodeURIComponent(p.onlineId)+'/profile2?fields=accountId',{headers:{Authorization:`Bearer ${c.accessToken}`}},fetcher));id=identity.profile?.accountId;}
+      if(!id)throw new Error('PSN_IDENTITY_FAILED');
+      return snapshot(platform,id,p.onlineId,games.map(g=>normalizedGame(g.titleId,g.localizedName||g.name,platform,{cover:g.localizedImageUrl||g.imageUrl,lastPlayed:g.lastPlayedDateTime,minutes:durationMinutes(g.playDuration)})));
+    }catch(e){if(e.message==='PAGINATION_LIMIT'||e.message.startsWith('PSN_'))throw e;throw new Error('PSN_SYNC_FAILED');}
   }
   if(platform==='xbox') {
-    const headers={Authorization:`XBL3.0 x=${c.userHash};${c.xsts}`,'x-xbl-contract-version':'2'};
-    const d=await upstream(`https://titlehub.xboxlive.com/users/xuid(${c.xuid})/titles/titlehistory/decoration/achievement,image,scid?maxItems=10000`,{headers},fetcher);
+    const headers={Authorization:`XBL3.0 x=${c.userHash};${c.xsts}`,'x-xbl-contract-version':'2','Accept-Language':'en-US'};
+    const d=await stage('XBOX_HISTORY',()=>upstream(`https://titlehub.xboxlive.com/users/xuid(${c.xuid})/titles/titlehistory/decoration/achievement,image,scid?maxItems=1000`,{headers:{...headers,'x-xbl-client-name':'XboxApp','x-xbl-client-type':'UWA','x-xbl-client-version':'39.39.22001.0'}},fetcher));
+    if(d.pagingInfo?.continuationToken)throw new Error('PAGINATION_LIMIT');
     if(!Array.isArray(d.titles))throw new Error('INVALID_HISTORY_RESPONSE');
     const latest=[...d.titles].sort((a,b)=>Date.parse(b.titleHistory?.lastTimePlayed||0)-Date.parse(a.titleHistory?.lastTimePlayed||0)).slice(0,6);
     const minutes=new Map();const warnings=[];
     // Fetch only six detailed stats; library counts do not pretend to be ownership.
     for(const g of latest){if(!g.serviceConfigId)continue;try {
       const s=await upstream(`https://userstats.xboxlive.com/users/xuid(${c.xuid})/scids/${g.serviceConfigId}/stats/MinutesPlayed`,{headers},fetcher);
-      const n=Number(s.statlistscollection?.[0]?.stats?.find(s=>s.name==='MinutesPlayed')?.value);
+      const n=Number((s.statlistscollection?.flatMap(x=>x.stats||[])||s.stats||[]).find(s=>s.name==='MinutesPlayed')?.value);
       if(Number.isFinite(n)&&n>=0)minutes.set(String(g.titleId),n);
     }catch{warnings.push('SOME_PLAYTIME_MISSING');}}
     const p=await upstream(`https://profile.xboxlive.com/users/xuid(${c.xuid})/profile/settings?settings=Gamertag`,{headers},fetcher);
@@ -178,5 +182,13 @@ export async function collect(platform,c,env,fetcher=fetch) {
     if(!cursor)break;if(seen.has(cursor))throw new Error('INVALID_PAGINATION');seen.add(cursor);
   }
   if(cursor)throw new Error('PAGINATION_LIMIT');
-  return {platform,accountId:String(c.account_id),displayName:String(c.displayName||c.account_id),games:new Set(records.map(r=>r.appName).filter(Boolean)).size,countKind:'owned',timeComplete:false,recent:[],warnings:['PLAYTIME_NOT_AVAILABLE']};
+  let activity;try{activity=await upstream('https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/'+encodeURIComponent(c.account_id)+'/all',{headers},fetcher);}catch{return {platform,accountId:String(c.account_id),displayName:String(c.displayName||c.account_id),games:new Set(records.map(r=>r.appName).filter(Boolean)).size,countKind:'owned',timeComplete:false,recent:[],warnings:['PLAYTIME_NOT_AVAILABLE']};}
+  if(!Array.isArray(activity))return {platform,accountId:String(c.account_id),displayName:String(c.displayName||c.account_id),games:new Set(records.map(r=>r.appName).filter(Boolean)).size,countKind:'owned',timeComplete:false,recent:[],warnings:['PLAYTIME_NOT_AVAILABLE']};
+  const result=epicSnapshot(records,activity,c);if(!result.recent.length)result.warnings.push('LAST_PLAYED_NOT_AVAILABLE');return result;
+}
+
+export function epicSnapshot(records,activity,c) {
+  const times=new Map(activity.map(a=>[a.artifactId,a]));
+  const games=records.map(r=>{const a=times.get(r.appName),meta=r.metadata||{};return normalizedGame(r.appName,meta.title||r.title||r.appName,'epic',{minutes:typeof a?.totalTime==='number'?numeric(a.totalTime/60):undefined,lastPlayed:a?.lastPlayed,cover:meta.keyImages?.find(i=>i.type==='DieselGameBoxWide')?.url});});
+  return snapshot('epic',c.account_id,c.displayName,games,'owned');
 }

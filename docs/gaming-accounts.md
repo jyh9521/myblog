@@ -27,11 +27,11 @@ GitHub Pages 提供 `/sveltia/accounts.html` 管理页和 `/games/` 展示页。
 | Nintendo | 官方网页登录后，复制返回 APP 的 `npf…://auth` 链接 | 任天堂返回的游戏名、封面、时长、最近日期 | 官方 APP 私有接口，地区/版本可能影响字段；网页登录没有原生协议接收器 |
 | PS | 官网登录，凭证页面复制 NPSSO，服务器交换并保存 refresh token | 游玩历史、ISO 8601 时长、最近日期、封面 | 非公开开发者接口；账号实际权限和历史覆盖需实测 |
 | GOG | 官方登录，复制 `on_login_success` 返回地址 | 拥有游戏数量 | Galaxy 客户端兼容接口；未实现可靠的时长与最近记录 |
-| Epic | 官方登录，复制 authorizationCode 或返回 JSON | 游戏库数量 | Launcher 客户端兼容接口；未实现可靠的时长与最近记录 |
+| Epic | 官方登录，复制 authorizationCode 或返回 JSON | 游戏库数量、累计游玩时长 | Launcher 客户端兼容接口；实测时长接口只有 accountId/artifactId/totalTime，没有最后游玩日期，不使用购买日期冒充游玩日期 |
 
 Nintendo、PS、GOG、Epic 的辅助方式不是已注册的第三方网站 OAuth。
 它们的客户端兼容协议不能承诺长期稳定，不会标成“官方公开 API”。
-真实账号绑定只有通过身份解析和首次数据读取后才入库；失败不覆盖已有绑定。
+账号绑定验证平台身份；一般在首次数据读取成功后入库。Xbox 在 Microsoft/XSTS 身份验证成功后，即使游戏列表读取失败也保留加密授权，后台可重试同步；不覆盖已有其他绑定或旧缓存。
 不得在博客输入平台密码。NPSSO、返回链接、令牌都是敏感凭证，不要分享。
 
 Xbox 已登记的 Client ID 为 `e9040407-8937-442e-b89a-2f888e574c74`，回调为
@@ -83,7 +83,7 @@ Worker Cron 每 6 小时执行，后台也可以手动同步。记录绑定时�
 - [Microsoft Xbox 网站认证](https://learn.microsoft.com/en-us/gaming/gdk/docs/services/fundamentals/s2s-auth-calls/service-authentication/live-website-authentication)
 - [Steam OpenID](https://partner.steamgames.com/doc/features/auth)
 - [OpenXbox 时长统计](https://github.com/OpenXbox/xbox-webapi-python)
-- [PSN API，MIT，作为运行依赖](https://github.com/achievements-app/psn-api)
+- [PSN API，MIT，协议参考](https://github.com/achievements-app/psn-api)
 - [Nintendo 登录协议参考](https://github.com/raycast/extensions/tree/main/extensions/switch-game-play-history)
 - [GOG 客户端协议参考](https://github.com/Heroic-Games-Launcher/heroic-gogdl)
 - [Epic 客户端协议参考](https://github.com/legendary-gl/legendary)
@@ -92,3 +92,11 @@ Worker Cron 每 6 小时执行，后台也可以手动同步。记录绑定时�
 自动测试使用受控接口响应和真实 SQLite 表验证授权状态、加密、缓存保留和并发。
 它们不是六个平台真实账号验收。真实账号仍需管理员自行登录；自动测试从不绑定
 测试账号到生产数据库，也不把测试游戏写入生产展示数据。
+
+## 连接流程补充
+
+- Nintendo 的官方页面返回原生 `npf` 协议，不会直接回到网站。Windows 可下载后台提供的 `nintendo-callback.ps1`，执行 `-Install` 注册返回助手；点击官方账号选择按钮后允许打开助手，后台收到链接后点击完成连接。`-Uninstall` 移除该助手。已有其他协议处理器时安装不覆盖。回调只通过 URL fragment 交给后台，立即清除，不落盘保存凭证。其他设备可以手动粘贴返回链接。
+- GOG 登录停在 `on_login_success` 是客户端协议预期行为，复制完整地址回原后台弹窗再提交，不是网站自动 OAuth 回调。
+- Sony 使用有界请求解析授权 Location，兼容 redirect 和 redirect/ 两种返回形式，分别报告授权、令牌和资料读取阶段。
+- Xbox 新令牌不会立即重复刷新，授权请求携带 Xbox contract header，游戏记录接口带必需的 Accept-Language；失败回到后台显示阶段码，不再停在 JSON 页面。首次连接失败也记录同步历史，保留已有绑定。
+- Steam 仅请求最近六款游戏的成就数，避免逐次请求整个库；缺失或失败不填写虚假的零。

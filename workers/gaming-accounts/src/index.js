@@ -5,7 +5,7 @@ const COOKIE='__Host-gaming_admin';
 const now=()=>new Date().toISOString();
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'}});
 const errorCodes=new Set(['INVALID_CALLBACK','INVALID_INPUT','INPUT_TOO_LARGE','INVALID_TOKEN_RESPONSE','INVALID_XBOX_IDENTITY','AUTH_EXPIRED','PSN_LOGIN_FAILED','PSN_SYNC_FAILED','STEAM_LIBRARY_PRIVATE','PROVIDER_NOT_CONFIGURED','PAGINATION_LIMIT','INVALID_HISTORY_RESPONSE','INVALID_LIBRARY_RESPONSE','UPSTREAM_NETWORK','ENCRYPTION_NOT_CONFIGURED']);
-export function errorCode(error) {return errorCodes.has(error?.message)||/^UPSTREAM_HTTP_\d{3}$/.test(error?.message)?error.message:'SYNC_FAILED';}
+export function errorCode(error) {return errorCodes.has(error?.message)||/^(?:UPSTREAM_HTTP_\d{3}|(?:XBOX_(?:TOKEN|USER_AUTH|XSTS|HISTORY|PROFILE)|PSN_(?:AUTHORIZE|TOKEN|HISTORY|PROFILE|IDENTITY))_(?:UPSTREAM_HTTP_\d{3}|AUTH_EXPIRED|UPSTREAM_NETWORK|FAILED)(?:_(?:MAXITEMS|DECORATION|SIGNATURE|CONTRACT|XUID))?)$/.test(error?.message)?error.message:'SYNC_FAILED';}
 async function admin(request,env) {
   try {
     const value=request.headers.get('Cookie')?.split(';').map(v=>v.trim()).find(v=>v.startsWith(COOKIE+'='))?.slice(COOKIE.length+1);
@@ -32,7 +32,13 @@ async function finishBinding(platform,input,state,env,fetcher) {
   const credential=await complete(platform,input,{...state,verifier},env,fetcher);
   // Validate identity and data before replacing any existing binding.
   const fresh=await renew(platform,credential,env,fetcher);
-  const data=await collect(platform,fresh,env,fetcher);
+  let data;
+  try{data=await collect(platform,fresh,env,fetcher);}catch(e){
+    // A validated Xbox identity remains bound even if the game-history service fails.
+    // Do not replace an existing binding or its cache with an incomplete new one.
+    if(platform==='xbox'&&fresh.xuid){const timestamp=now();await env.DB.prepare("INSERT INTO gaming_accounts(platform,account_id,display_name,credential,bound_at,last_attempt_at,status,error_code) VALUES(?,?,?,?,?,?,'error',?) ON CONFLICT(platform) DO NOTHING").bind(platform,fresh.xuid,'Xbox',await seal(fresh,env.CREDENTIAL_KEY,'account:xbox'),timestamp,timestamp,errorCode(e)).run();}
+    throw e;
+  }
   if(!data.accountId || data.accountId==='undefined')throw new Error('INVALID_TOKEN_RESPONSE');
   const timestamp=now(),encrypted=await seal(fresh,env.CREDENTIAL_KEY,`account:${platform}`);
   await env.DB.prepare('INSERT INTO gaming_accounts(platform,account_id,display_name,credential,bound_at,last_attempt_at,last_success_at,status,public_json) VALUES(?,?,?,?,?,?,?,\'connected\',?) ON CONFLICT(platform) DO UPDATE SET account_id=excluded.account_id,display_name=excluded.display_name,credential=excluded.credential,bound_at=excluded.bound_at,last_attempt_at=excluded.last_attempt_at,last_success_at=excluded.last_success_at,status=\'connected\',error_code=NULL,public_json=excluded.public_json,sync_lock_until=0')
@@ -111,11 +117,12 @@ export async function route(request,env,ctx,fetcher=fetch) {
   const [,action,platform]=match;
   if(action==='callback'&&request.method==='GET') {
     const state=await stateRow(url.searchParams.get('state'),platform,session.login,env);
-    if(!state)return json({error:'INVALID_CALLBACK'},400);
+    const back=code=>new Response(null,{status:303,headers:{Location:`${env.SITE_ORIGIN}/sveltia/accounts.html?${code?'error='+encodeURIComponent(code)+'&platform='+platform:'connected='+platform}`,'Cache-Control':'no-store','Referrer-Policy':'no-referrer'}});
+    if(!state)return back('INVALID_CALLBACK');
     const input=platform==='steam'?url.href:url.searchParams.get('code');
-    if(!input)return json({error:'AUTH_CANCELLED'},400);
-    try {await finishBinding(platform,input,state,env,fetcher);}catch(e){return json({error:errorCode(e)},400);}
-    return new Response(null,{status:303,headers:{Location:`${env.SITE_ORIGIN}/sveltia/accounts.html?connected=${platform}`,'Cache-Control':'no-store','Referrer-Policy':'no-referrer'}});
+    if(!input)return back('AUTH_CANCELLED');
+    try {await finishBinding(platform,input,state,env,fetcher);}catch(e){const code=errorCode(e);await recordRun(env,platform,now(),'failed',code);return back(code);}
+    return back(null);
   }
   if(request.method!=='POST')return json({error:'METHOD_NOT_ALLOWED'},405);
   if(action==='bind') {
@@ -127,7 +134,7 @@ export async function route(request,env,ctx,fetcher=fetch) {
   if(action==='complete') {
     const body=await readJson(request),state=await stateRow(body.state,platform,session.login,env);
     if(!state||typeof body.input!=='string')return json({error:'INVALID_CALLBACK'},400);
-    await finishBinding(platform,body.input,state,env,fetcher);return json({status:'connected'});
+    try{await finishBinding(platform,body.input,state,env,fetcher);}catch(e){await recordRun(env,platform,now(),'failed',errorCode(e));throw e;}return json({status:'connected'});
   }
   if(action==='sync') {
     const row=await env.DB.prepare('SELECT last_attempt_at,sync_lock_until FROM gaming_accounts WHERE platform=?').bind(platform).first();

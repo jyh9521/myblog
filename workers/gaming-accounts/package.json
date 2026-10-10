@@ -1,0 +1,19 @@
+{
+  "name": "gaming-accounts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test src/*.test.js",
+    "check": "node --check src/index.js && node --check src/providers.js && node --check src/security.js",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types"
+  },
+  "dependencies": {
+    "psn-api": "^2.18.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261010.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.149.0"
+  }
+}

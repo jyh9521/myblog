@@ -42,3 +42,15 @@ test('back restoration tracks card offset across async layout shifts and stops o
   listeners.wheel(); assert.equal(disconnected, true); y = 100; nextFrame(); assert.equal(y, 100);
   stop(); timer(); assert.equal(Object.keys(listeners).length, 0);
 });
+
+test('pagination defaults to 15, clamps empty/end pages and persists page in URL',()=>{
+ const shelf=load('lib/game-shelf-state.ts');
+ assert.equal(shelf.shelfPageSize,15);
+ for(const [total,input,page,start,end] of [[107,'1',1,0,15],[107,'2',2,15,30],[107,'8',8,105,107],[107,'999',8,105,107],[0,'2',1,0,0],[16,'bad',1,0,15],[15,'2',1,0,15]]){
+  const result=shelf.shelfPagination(total,input);assert.equal(result.page,page);assert.equal(result.start,start);assert.equal(result.end,end);
+ }
+ const params=shelf.writeShelfState({...shelf.shelfDefaults,page:'3',q:'死亡搁浅'});
+ assert.equal(shelf.readShelfState(params).page,'3');assert.equal(shelf.readShelfState(params).q,'死亡搁浅');
+ for(const invalid of ['-1','0','1.5','Infinity','9007199254740992'])assert.equal(shelf.readShelfState(new URLSearchParams({page:invalid})).page,'1');
+ const ui=fs.readFileSync('app/games/game-shelf.tsx','utf8');assert.match(ui,/filteredGames\.slice\(pagination.start, pagination.end\)/);assert.match(ui,/page: key === 'page' \? value : '1'/);
+});

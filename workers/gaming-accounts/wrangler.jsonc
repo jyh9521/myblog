@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "blog-gaming-accounts",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "routes": [{"pattern":"blog.blfy.cc/ns/api/accounts*","zone_name":"blfy.cc"},{"pattern":"blog.blfy.cc/api/auth/*","zone_name":"blfy.cc"}],
+  "vars": {"SITE_ORIGIN":"https://blog.blfy.cc","ADMIN_GITHUB_LOGIN":"jyh9521","MICROSOFT_CLIENT_ID":"e9040407-8937-442e-b89a-2f888e574c74"},
+  "d1_databases": [{"binding":"DB","database_name":"gaming-accounts","database_id":"a7893bd2-c1d8-4b2f-9349-9907c4717080","migrations_dir":"migrations"}],
+  "triggers": {"crons":["0 */6 * * *"]},
+  "observability": {"enabled":true}
+}

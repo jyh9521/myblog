@@ -1,21 +1,5 @@
-// The site currently has no language switcher. Keep this section's strings in a
-// typed dictionary so a future site locale can be passed without rewriting UI.
 export const gamingProfileMessages = {
-  'zh-CN': {
-    title: '游戏档案', platforms: '游戏平台', recent: '最近游玩', hours: '总游戏时间', games: '游戏',
-    achievements: '成就 / 奖杯', completion: '完成度', lastPlayed: '最后游玩',
-    view: '在 Exophase 查看完整档案', error: '暂时无法获取游戏档案', updated: '数据更新时间',
-    loading: '正在加载游戏档案…', empty: '暂无公开游戏记录', cover: '暂无封面', hour: '小时', minute: '分钟',
-    stale: '当前展示最近一次成功获取的数据',
-    checked: '最近尝试更新', blocked: 'Exophase 暂未返回新数据，当前保留旧资料。',
-  },
-  ja: {
-    title: 'ゲームプロフィール', platforms: 'ゲームプラットフォーム', recent: '最近プレイしたゲーム', hours: '総プレイ時間', games: 'ゲーム',
-    achievements: '実績 / トロフィー', completion: '達成率', lastPlayed: '最終プレイ',
-    view: 'Exophaseでプロフィールを見る', error: 'ゲームプロフィールを取得できません', updated: 'データ更新日時',
-    loading: 'ゲームプロフィールを読み込み中…', empty: '公開ゲーム記録はありません', cover: 'カバーなし', hour: '時間', minute: '分',
-    stale: '最後に取得できたデータを表示しています',
-    checked: '最終更新確認', blocked: 'Exophaseから新しいデータを取得できず、保存済みデータを表示しています。',
-  },
+  'zh-CN': {title:'跨平台游戏资料',platforms:'游戏平台',recent:'最近游玩',hours:'已记录游戏时间',games:'游戏记录',owned:'拥有的游戏',played:'玩过的游戏',achievements:'成就 / 奖杯',lastPlayed:'最后游玩',error:'暂时无法获取游戏资料',updated:'最近成功同步',loading:'正在加载游戏资料…',empty:'尚未连接游戏平台账号',noRecent:'暂无可用的最近游玩记录',cover:'暂无封面',hour:'小时',minute:'分钟',stale:'当前展示上次成功同步的数据',partial:'仅包含有时长记录的游戏',sourceNote:'各平台分别统计；同一游戏跨平台会分别计数，拥有数量与玩过数量不是同一口径。'},
+  ja: {title:'クロスプラットフォームのゲームプロフィール',platforms:'ゲームプラットフォーム',recent:'最近プレイしたゲーム',hours:'記録されたプレイ時間',games:'ゲーム記録',owned:'所有ゲーム',played:'プレイしたゲーム',achievements:'実績 / トロフィー',lastPlayed:'最終プレイ',error:'ゲームプロフィールを取得できません',updated:'最終同期成功',loading:'ゲームプロフィールを読み込み中…',empty:'ゲームアカウントはまだ連携されていません',noRecent:'最近のプレイ記録はありません',cover:'カバーなし',hour:'時間',minute:'分',stale:'前回の同期データを表示しています',partial:'プレイ時間が取得できたゲームのみ',sourceNote:'各プラットフォームを個別に集計します。同じゲームも別々に数えます。所有数とプレイ済み数は異なります。'}
 } as const;
-export type GamingProfileLocale = keyof typeof gamingProfileMessages;
+export type GamingProfileLocale=keyof typeof gamingProfileMessages;

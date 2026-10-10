@@ -8,7 +8,7 @@
     "check": "tsc --noEmit",
     "validate": "node scripts/validate-content.cjs",
     "audit:links": "node scripts/audit-content-links.cjs",
-    "test": "node --test scripts/*.test.cjs && npm --prefix workers/ns-counter test"
+    "test": "node --test scripts/*.test.cjs && npm --prefix workers/ns-counter test && npm --prefix workers/gaming-accounts test"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

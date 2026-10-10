@@ -8,3 +8,8 @@ public/sveltia/assets.json
 workers/ns-counter/.dev.vars*
 !workers/ns-counter/.dev.vars.example
 *.tsbuildinfo
+workers/*/node_modules/
+workers/*/.wrangler/
+workers/*/.dev.vars*
+!workers/*/.dev.vars.example
+workers/gaming-accounts/worker-configuration.d.ts

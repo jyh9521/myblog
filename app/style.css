@@ -189,3 +189,13 @@ button:not(.toc-toggle),.hero-button,.read-more,.site-header nav a{transition-pr
 .game-summary h3{font-size:20px}
 @media(max-width:600px){.game-time-personal-grid,.game-time-reference-grid{grid-template-columns:1fr}.game-summary{font-size:16px}}
 .game-event-note{white-space:pre-wrap;overflow-wrap:anywhere}
+.gaming-account-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:24px}.gaming-account-name{display:block;color:var(--muted);font-size:14px;overflow-wrap:anywhere}.gaming-account-grid li>p{font-size:14px}.gaming-account-grid .gaming-updated{font-size:12px;margin-top:14px}@media(max-width:600px){.gaming-account-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.game-filters { scroll-margin-top: 100px; }
+.game-pagination { display:flex; align-items:center; justify-content:center; gap:1rem; margin:1.5rem 0; flex-wrap:wrap; }
+.game-pagination button,.game-pagination select { font:inherit; font-weight:700; border:1px solid var(--line); border-radius:999px; padding:.7rem 1.1rem; background:var(--surface); color:var(--ink); cursor:pointer; }
+.game-pagination button:not(:disabled):hover { background:var(--red); color:#fff; }
+.game-pagination button:disabled { opacity:.4; cursor:default; }
+.game-pagination label { display:flex; align-items:center; gap:.5rem; color:var(--muted); }
+.game-pagination select { padding:.55rem .75rem; }
+.game-pagination :focus-visible { outline:3px solid var(--red); outline-offset:3px; }
+@media(max-width:600px) { .game-pagination { gap:.5rem; } .game-pagination button { padding:.65rem .85rem; } }

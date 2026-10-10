@@ -34,6 +34,7 @@ gameMetadata:
     releaseDate: rawg
     title: manual
     website: rawg
+    selectedPlatforms: manual
   genres:
     - Action
     - Adventure
@@ -42,6 +43,7 @@ gameMetadata:
   localizedName: ''
   manualFields:
     - title
+    - selectedPlatforms
   originalName: Psychonauts 2
   platforms:
     - PlayStation 4
@@ -61,7 +63,8 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/22f/22f8223f6adb979e5b54830118b5f2d8.jpg
     - https://media.rawg.io/media/screenshots/6fc/6fcdc92a1b21ba550b2cc6c79bc3f1b3.jpg
     - https://media.rawg.io/media/screenshots/1a8/1a8a37817ebd4a180cb56af6dbe433b2.jpg
-  selectedPlatforms: []
+  selectedPlatforms:
+    - Xbox Series S/X
   sources:
     rawg:
       id: '257192'

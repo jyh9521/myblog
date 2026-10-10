@@ -20,6 +20,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </div></header>
     {children}
     <BackToTop />
-    <footer className="site-footer"><div className="footer-inner"><div><a className="footer-brand" href="/">伯翎飞云<span>.</span></a><p>关于游戏、技术和生活的个人记录。</p></div><div className="footer-links"><a href="/">首页</a><a href="/posts/">文章</a><a href="/games/">游戏档案</a><a href="/feed.xml">RSS 订阅</a><a href="/about/">关于我</a><a href="/ns/">NS群群号发布页</a><a href="/sveltia/">管理</a></div></div><div className="footer-bottom">© 伯翎飞云 · <FooterEasterEgg /> · <VisitorCounter /></div></footer>
+    <footer className="site-footer"><div className="footer-inner"><div><a className="footer-brand" href="/">伯翎飞云<span>.</span></a><p>关于游戏、技术和生活的个人记录。</p></div></div><div className="footer-bottom">© 伯翎飞云 · <FooterEasterEgg /> · <VisitorCounter /></div></footer>
   </body></html>;
 }

@@ -95,3 +95,18 @@ test('assisted binding failure records history and keeps previous binding',async
 test('Xbox title history includes required locale and correct service contract',async()=>{
  const d=await collect('xbox',{xuid:'123',userHash:'hash',xsts:'ticket'},env(),async(url,options)=>{assert.equal(options.headers['Accept-Language'],'en-US');assert.equal(options.headers['x-xbl-contract-version'],'2');if(url.includes('titlehub'))return json({titles:[{titleId:'one',name:'Game',titleHistory:{lastTimePlayed:'2026-10-01T00:00:00Z'}}]});return json({profileUsers:[{settings:[{id:'Gamertag',value:'Member'}]}]});});assert.equal(d.games,1);assert.equal(d.displayName,'Member');
 });
+
+test('PS profile uses numeric token identity and unwraps profile response',async()=>{
+ const calls=[];const data=await collect('psn',{accessToken:'a',accountId:'123'},env(),async url=>{calls.push(url);if(url.includes('gamelist'))return json({titles:[],totalItemCount:0});if(url.includes('/users/me/profiles'))return new Response('{}',{status:400});assert.ok(url.endsWith('/users/123/profiles'));return json({profile:{onlineId:'Member'}});});assert.equal(data.displayName,'Member');assert.equal(data.accountId,'123');assert.equal(calls.length,2);
+});
+test('PS missing identity fails before calling a guessed profile',async()=>{
+ let calls=0;await assert.rejects(collect('psn',{accessToken:'a'},env(),async()=>{calls++;return json({});}),/PSN_IDENTITY_FAILED/);assert.equal(calls,0);
+});
+test('PS first data failure retains encrypted verified authorization for retry',async()=>{
+ const e=env(),c=await cookie(e);const binding=await(await route(req('/bind/psn','POST',{},c),e,context)).json();
+ const jwt='header.'+b64(new TextEncoder().encode(JSON.stringify({sub:'123'})))+'.signature';
+ const fetcher=async url=>{if(url.includes('/authorize?'))return new Response(null,{status:302,headers:{Location:'com.scee.psxandroid.scecompcall://redirect?code=test'}});if(url.endsWith('/token'))return json({access_token:jwt,refresh_token:'fixture-refresh',expires_in:3600});if(url.includes('gamelist'))return json({titles:[],totalItemCount:0});return new Response('{}',{status:400});};
+ await assert.rejects(route(req('/complete/psn','POST',{state:binding.state,input:'a'.repeat(64)},c),e,context,fetcher),/PSN_PROFILE_UPSTREAM_HTTP_400/);
+ const row=await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('psn').first();assert.equal(row.account_id,'123');assert.equal(row.status,'error');assert.equal(row.public_json,null);assert.ok(!row.credential.includes('fixture-refresh'));assert.equal((await open(row.credential,KEY,'account:psn')).refreshToken,'fixture-refresh');
+ const result=await syncAccount('psn',e,async url=>json(url.includes('gamelist')?{titles:[],totalItemCount:0}:{profile:{onlineId:'Member'}}));assert.equal(result.status,'success');assert.equal((await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('psn').first()).status,'connected');
+});

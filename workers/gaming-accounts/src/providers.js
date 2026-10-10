@@ -135,6 +135,9 @@ export async function collect(platform,c,env,fetcher=fetch) {
   }
   if(platform==='psn') {
     try {
+      // Unlike the game-list endpoint, profile lookup requires a numeric account ID.
+      const id=c.accountId;
+      if(typeof id!=='string'||!/^\d+$/.test(id))throw new Error('PSN_IDENTITY_FAILED');
       const games=[];let offset=0,total;
       for(let page=0;page<20;page++) {
         const d=await stage('PSN_HISTORY',()=>psnRequest(`/gamelist/v2/users/me/titles?limit=100&offset=${offset}`,c,fetcher));
@@ -143,11 +146,10 @@ export async function collect(platform,c,env,fetcher=fetch) {
         if(offset>=total||!d.titles.length)break;
       }
       if(total>offset)throw new Error('PAGINATION_LIMIT');
-      const p=await stage('PSN_PROFILE',()=>psnRequest('/userProfile/v1/internal/users/me/profiles',c,fetcher));
-      let id=c.accountId;
-      if(!id){const identity=await stage('PSN_IDENTITY',()=>upstream('https://us-prof.np.community.playstation.net/userProfile/v1/users/'+encodeURIComponent(p.onlineId)+'/profile2?fields=accountId',{headers:{Authorization:`Bearer ${c.accessToken}`}},fetcher));id=identity.profile?.accountId;}
-      if(!id)throw new Error('PSN_IDENTITY_FAILED');
-      return snapshot(platform,id,p.onlineId,games.map(g=>normalizedGame(g.titleId,g.localizedName||g.name,platform,{cover:g.localizedImageUrl||g.imageUrl,lastPlayed:g.lastPlayedDateTime,minutes:durationMinutes(g.playDuration)})));
+      const p=await stage('PSN_PROFILE',()=>psnRequest(`/userProfile/v1/internal/users/${id}/profiles`,c,fetcher));
+      const profile=p.profile||p;
+      if(typeof profile.onlineId!=='string'||!profile.onlineId.trim())throw new Error('PSN_PROFILE_FAILED');
+      return snapshot(platform,id,profile.onlineId,games.map(g=>normalizedGame(g.titleId,g.localizedName||g.name,platform,{cover:g.localizedImageUrl||g.imageUrl,lastPlayed:g.lastPlayedDateTime,minutes:durationMinutes(g.playDuration)})));
     }catch(e){if(e.message==='PAGINATION_LIMIT'||e.message.startsWith('PSN_'))throw e;throw new Error('PSN_SYNC_FAILED');}
   }
   if(platform==='xbox') {

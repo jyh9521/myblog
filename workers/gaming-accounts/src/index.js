@@ -34,9 +34,10 @@ async function finishBinding(platform,input,state,env,fetcher) {
   const fresh=await renew(platform,credential,env,fetcher);
   let data;
   try{data=await collect(platform,fresh,env,fetcher);}catch(e){
-    // A validated Xbox identity remains bound even if the game-history service fails.
+    // A validated identity remains bound even if a subsequent data request fails.
     // Do not replace an existing binding or its cache with an incomplete new one.
-    if(platform==='xbox'&&fresh.xuid){const timestamp=now();await env.DB.prepare("INSERT INTO gaming_accounts(platform,account_id,display_name,credential,bound_at,last_attempt_at,status,error_code) VALUES(?,?,?,?,?,?,'error',?) ON CONFLICT(platform) DO NOTHING").bind(platform,fresh.xuid,'Xbox',await seal(fresh,env.CREDENTIAL_KEY,'account:xbox'),timestamp,timestamp,errorCode(e)).run();}
+    const verifiedId=platform==='xbox'?fresh.xuid:platform==='psn'&&/^\d+$/.test(fresh.accountId||'')?fresh.accountId:null;
+    if(verifiedId){const timestamp=now();await env.DB.prepare("INSERT INTO gaming_accounts(platform,account_id,display_name,credential,bound_at,last_attempt_at,status,error_code) VALUES(?,?,?,?,?,?,'error',?) ON CONFLICT(platform) DO NOTHING").bind(platform,verifiedId,names[platform],await seal(fresh,env.CREDENTIAL_KEY,`account:${platform}`),timestamp,timestamp,errorCode(e)).run();}
     throw e;
   }
   if(!data.accountId || data.accountId==='undefined')throw new Error('INVALID_TOKEN_RESPONSE');

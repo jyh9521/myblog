@@ -65,5 +65,5 @@ events:
   - date: 2026-10-08
     title: 开始汉化工作
   - date: 2026-10-11
-    title: 开始汉化测试
+    title: 开始测试汉化
 ---

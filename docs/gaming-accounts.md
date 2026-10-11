@@ -100,3 +100,22 @@ Worker Cron 每 6 小时执行，后台也可以手动同步。记录绑定时�
 - Sony 使用有界请求解析授权 Location，兼容 redirect 和 redirect/ 两种返回形式，分别报告授权、令牌和资料读取阶段。
 - Xbox 新令牌不会立即重复刷新，授权请求携带 Xbox contract header，游戏记录接口带必需的 Accept-Language；失败回到后台显示阶段码，不再停在 JSON 页面。首次连接失败也记录同步历史，保留已有绑定。
 - Steam 仅请求最近六款游戏的成就数，避免逐次请求整个库；缺失或失败不填写虚假的零。
+
+## 区域商店商品链接
+
+最近游玩卡片在同步时由 Worker 自动匹配商品页，公开读取只使用缓存，不进行商店搜索。
+
+- Xbox：台湾目录按 XboxTitleId 查询 Microsoft ProductId；缺少 ID 映射时，只接受唯一、名称完全匹配的商店游戏，不匹配豪华版或 DLC。
+- PlayStation：港服 title-container 按 CUSA/PPSA 查询；空结果使用港服目录检索，仍同时核对原始 title ID 与完整名称，并验证港服商品详情页。
+- Nintendo：官方 `/apps/{titleId}/JP` 解析日服商品 ID；区域差异、Switch 2 升级版使用日本元数据索引进行确定性匹配。共用 title ID 的不同版本不会默认取第一条。
+
+D1 `gaming_store_links` 保存商品 URL、来源及有效期。成功缓存 30 天，明确未找到缓存 1 天，临时失败 1 小时后重试；已有有效链接不会因请求失败而删除。每次最多处理最近 6 款。
+
+日本索引由 `scripts/update-nintendo-store-catalogue.mjs` 生成，数据源为
+[TitleDB 日本区元数据](https://github.com/blawar/titledb)，只保留标题、title ID 和日服商品 ID，不复制图片、简介或游戏文件。
+`public/data/nintendo-store-catalogue.json` 仅由 Worker 在需要时读取，浏览器不下载该目录。
+`nintendo-store-catalogue.yml` 每 6 小时更新并支持手动触发；生成失败保留旧文件，内容不变不提交。发生变化后显式触发 Pages 部署。
+
+后台对应平台卡片的“商店链接”按钮可以修改最近游玩的商品 URL，也可恢复自动匹配。手动修正保存在 D1，换电脑保留且不被同步覆盖；仅接受日服 eShop、台湾 Xbox Store、港服 PS Store 的 HTTPS 商品页。链接修正不改变游玩数据的最近成功同步时间。
+
+旧缓存可用管理员接口 `POST /ns/api/accounts/store-links/refresh`（`{"platform":"xbox"}` 等）补全链接；该接口不接触账号授权，不伪造游玩数据刷新时间。

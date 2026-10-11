@@ -16,6 +16,15 @@ test('all recent cards share hover and reduced-motion styles; regional links ope
  const css=fs.readFileSync('app/style.css','utf8'),ui=fs.readFileSync('app/games/gaming-profile.tsx','utf8');assert.match(css,/\.gaming-game-card:hover\{/);assert.match(css,/prefers-reduced-motion:reduce/);assert.match(ui,/gameStoreLink\(g\)/);assert.match(ui,/href=\{store.url\} target="_blank" rel="noopener noreferrer"/);
 });
 
+test('resolved Japanese eShop product link is used directly, not searched',()=>{
+ const url='https://ec.nintendo.com/JP/ja/titles/70010000113036';assert.deepEqual(profile.gameStoreLink({id:'one',title:'Brotato Nintendo Switch 2 Edition',platform:'nintendo',url}),{url,search:false});
+ assert.equal(profile.gameStoreLink({id:'one',title:'Game',platform:'nintendo',url:'https://ec.nintendo.com/US/en/titles/70010000000026'}).search,true);
+});
+
+test('account admin provides persistent manual store-link correction',()=>{
+ const js=fs.readFileSync('public/sveltia/accounts.js','utf8'),html=fs.readFileSync('public/sveltia/accounts.html','utf8');assert.ok(js.includes('/store-links/'));assert.ok(js.includes('恢复自动匹配'));assert.ok(html.includes('id="store-dialog"'));assert.ok(!js.includes('localStorage'));
+});
+
 test('rendered recent cards include regional external links and recorded account playtime',()=>{
  const ts=require('typescript'),React=require('react'),server=require('react-dom/server');
  function compile(file,resolve=require){const m={exports:{}};const source=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2020}}).outputText;new Function('require','module','exports',source)(resolve,m,m.exports);return m.exports;}

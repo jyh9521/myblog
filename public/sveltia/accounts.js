@@ -2,6 +2,7 @@
   const $=id=>document.getElementById(id),ROOT='/ns/api/accounts';let pending=null,busy=false,poll=null,current=null;
   const status={disconnected:'未连接',connected:'已连接',syncing:'正在同步',expired:'登录已过期',error:'同步失败，保留旧数据'};
   const errors={PLAYTIME_SYNC_FAILED:'时长接口更新失败，已保留上次成功资料，请稍后同步。',ADMIN_LOGIN_REQUIRED:'请先验证管理员身份。',ADMIN_LOGIN_FAILED:'GitHub 身份验证失败，请检查 Token。',ADMIN_ONLY:'仅博客管理员可以操作。',PROVIDER_NOT_CONFIGURED:'该平台尚缺服务器配置。',INVALID_CALLBACK:'登录结果无效或已过期，请重新连接。',AUTH_EXPIRED:'平台授权已过期，请重新连接。',STEAM_LIBRARY_PRIVATE:'Steam 游戏详情未公开，请调整隐私设置后重试。',SYNC_COOLDOWN:'同步中或刚刚尝试过，请稍后刷新。',PSN_LOGIN_FAILED:'PS 登录凭证交换失败，请重新获取。',PSN_SYNC_FAILED:'PS 游戏记录请求失败，请稍后重试或重新连接。',UPSTREAM_NETWORK:'平台网络请求超时，请稍后重试。',PLAYTIME_NOT_AVAILABLE:'接口暂未返回游玩时长。',SYNC_FAILED:'同步失败，已保留上次成功数据。'};
+  errors.INVALID_STORE_URL='请输入对应地区的商品详情页链接，不接受搜索页。';
   const node=(tag,text)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;return e;};
   const stages={NINTENDO_SESSION:'Nintendo 会话交换',NINTENDO_TOKEN:'Nintendo 令牌交换',NINTENDO_PROFILE:'Nintendo 资料',NINTENDO_HISTORY:'Nintendo 游玩记录',XBOX_TOKEN:'Microsoft 令牌交换',XBOX_USER_AUTH:'Xbox 用户授权',XBOX_XSTS:'Xbox XSTS 授权',XBOX_HISTORY:'Xbox 游戏记录',XBOX_PROFILE:'Xbox 资料',PSN_AUTHORIZE:'PS NPSSO 授权',PSN_TOKEN:'PS 令牌交换',PSN_HISTORY:'PS 游戏记录',PSN_PROFILE:'PS 资料',PSN_IDENTITY:'PS 身份'};
   const explain=code=>errors[code]||Object.entries(stages).filter(([key])=>String(code).startsWith(key+'_')).map(([key,label])=>label+'失败（'+String(code).slice(key.length+1)+'）。'+(/^(PSN|XBOX|NINTENDO)_(HISTORY|PROFILE)$/.test(key)?'若账号已显示绑定时间，可关闭弹窗后点击“立即同步”，无需重复登录。':'请重新开始连接。'))[0]||(/^UPSTREAM_HTTP_\d+$/.test(code)?`平台接口返回 HTTP ${code.split('_').pop()}。`:code||'');
@@ -27,12 +28,25 @@
         if(a.platform==='steam'){const config=node('button','设置 Steam API Key');config.onclick=()=>{$('steam-key').value='';$('steam-dialog').showModal();};controls.append(config);}
         const bind=node('button',a.status==='disconnected'?'连接账号':'重新连接');bind.disabled=!!a.missing.length;bind.onclick=()=>connect(a);controls.append(bind);
         if(a.status!=='disconnected'){const sync=node('button','立即同步');sync.disabled=a.status==='syncing'||!!a.missing.length;sync.onclick=async()=>{sync.disabled=true;try{await api(`/sync/${a.platform}`,'POST');message(`${a.name} 已提交同步。`);poll=setTimeout(refresh,1500);}catch(e){message(e.message);sync.disabled=false;}};const remove=node('button','解除绑定');remove.onclick=async()=>{if(!confirm(`解除 ${a.name} 绑定并删除服务器上的凭证与缓存？`))return;try{await api(`/disconnect/${a.platform}`,'POST');message('已解除绑定。');await refresh();}catch(e){message(e.message);}};controls.append(sync,remove);}
+        if(a.status!=='disconnected'&&['xbox','psn','nintendo'].includes(a.platform)){const links=node('button','商店链接');links.onclick=()=>storeLinks(a.platform);controls.append(links);}
         card.append(controls);$('accounts').append(card);
       }
       $('history-panel').hidden=false;$('history').replaceChildren(...d.history.map(h=>node('p',`${h.platform} · ${date(h.started_at)} · ${h.status==='success'?'同步成功':explain(h.error_code)||h.status}${h.games!==null?` · ${h.games} 款`:''}`)));
       if(d.accounts.some(a=>a.status==='syncing'))poll=setTimeout(refresh,3000);
     }catch(e){message(e.message);if(e.message===errors.ADMIN_LOGIN_REQUIRED){$('login').hidden=false;overview();$('history-panel').hidden=true;}}
   }
+  async function storeLinks(platform){
+    const dialog=$('store-dialog');$('store-message').textContent='加载中…';$('store-games').replaceChildren();
+    if(!dialog.open)dialog.showModal();
+    try{const data=await api('/store-links/'+platform);$('store-message').textContent='自动匹配对应地区的商品页；可手动修正。手动链接不会被同步覆盖。';
+      for(const game of data.games){const form=node('form');form.className='account';const label=node('label',game.title+'（'+(game.manual?'手动指定':'自动匹配')+'）'),input=node('input');input.type='url';input.maxLength=2048;input.value=game.url;input.placeholder='商品详情页完整 https:// 链接';label.append(input);form.append(label);
+        const controls=node('div');controls.className='toolbar';const save=node('button','保存链接');save.type='submit';const reset=node('button','恢复自动匹配');reset.type='button';controls.append(save,reset);form.append(controls);
+        const submit=async url=>{save.disabled=reset.disabled=true;try{await api('/store-links/'+platform,'POST',{gameId:game.id,url});await storeLinks(platform);}catch(e){$('store-message').textContent=e.message;}finally{save.disabled=reset.disabled=false;}};
+        form.onsubmit=e=>{e.preventDefault();if(input.value.trim())submit(input.value.trim());else $('store-message').textContent='请填写商品链接，或点击“恢复自动匹配”。';};reset.onclick=()=>submit('');$('store-games').append(form);
+      }
+    }catch(e){$('store-message').textContent=e.message;}
+  }
+  $('close-store').onclick=()=>$('store-dialog').close();
   async function connect(a){
     if(busy)return;current=a;busy=true;message(`准备连接 ${a.name}…`);
     try{const result=await api(`/bind/${a.platform}`,'POST');

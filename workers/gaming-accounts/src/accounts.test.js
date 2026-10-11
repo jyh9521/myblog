@@ -9,6 +9,7 @@ const KEY=b64(new Uint8Array(32).fill(7)),SITE='https://blog.blfy.cc',BASE=SITE+
 function env(){
   const db=new DatabaseSync(':memory:');db.exec(readFileSync(new URL('../migrations/0001_accounts.sql',import.meta.url),'utf8'));
   db.exec(readFileSync(new URL('../migrations/0002_configuration.sql',import.meta.url),'utf8'));
+  db.exec(readFileSync(new URL('../migrations/0003_store_links.sql',import.meta.url),'utf8'));
   const prepare=sql=>{let values=[];const s=db.prepare(sql);return {bind(...args){values=args;return this;},async first(){return s.get(...values)||null;},async all(){return {results:s.all(...values)};},async run(){return {meta:s.run(...values)};}};};
   return {DB:{prepare,async batch(statements){db.exec('BEGIN');try{const v=await Promise.all(statements.map(s=>s.run()));db.exec('COMMIT');return v;}catch(e){db.exec('ROLLBACK');throw e;}}},CREDENTIAL_KEY:KEY,SITE_ORIGIN:SITE,ADMIN_GITHUB_LOGIN:'owner',MICROSOFT_CLIENT_ID:'client',MICROSOFT_CLIENT_SECRET:'test-client-secret',STEAM_API_KEY:'test-key'};
 }
@@ -175,4 +176,16 @@ test('GOG resolves legacy profile IDs without reading another user stats',async(
 test('GOG failed time refresh retains previously recorded playtime and recent games',async()=>{
  const e=env();await saved(e,'gog');const credential=await seal({access_token:'a',refresh_token:'r',expiresAt:Date.now()+3600000},KEY,'account:gog');await e.DB.prepare('UPDATE gaming_accounts SET credential=? WHERE platform=?').bind(credential,'gog').run();
  const d=await syncAccount('gog',e,async url=>url.includes('userData')?json({userId:'76561198000000000',username:'Member'}):url.includes('/user/data')?json({owned:[1]}):new Response('{}',{status:403}));assert.equal(d.status,'failed');const row=await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('gog').first();assert.equal(row.error_code,'PLAYTIME_SYNC_FAILED');assert.equal(JSON.parse(row.public_json).minutes,10);assert.equal(row.last_success_at,'2026-10-01T00:00:00Z');
+});
+
+test('store-link endpoints require owner session and validate regional URLs',async()=>{
+ const e=env();await saved(e,'xbox');const old=await e.DB.prepare('SELECT public_json FROM gaming_accounts WHERE platform=?').bind('xbox').first();const d=JSON.parse(old.public_json);d.recent=[{id:'1792227428',title:'Game',platform:'xbox'}];await e.DB.prepare('UPDATE gaming_accounts SET public_json=? WHERE platform=?').bind(JSON.stringify(d),'xbox').run();
+ assert.equal((await route(req('/store-links/xbox'),e,context)).status,401);
+ const c=await cookie(e);assert.equal((await route(req('/store-links/xbox','POST',{gameId:'1792227428',url:'https://evil.invalid/'},c),e,context)).status,400);
+ const url='https://www.xbox.com/zh-TW/games/store/game/9N8FQ28Z6QX3';const r=await route(req('/store-links/xbox','POST',{gameId:'1792227428',url},c),e,context);assert.equal(r.status,200);assert.equal((await r.json()).games[0].manual,true);assert.equal((await publicProfile(e)).accounts[0].recent[0].url,url);
+ const last=await e.DB.prepare('SELECT last_success_at FROM gaming_accounts WHERE platform=?').bind('xbox').first();assert.equal(last.last_success_at,'2026-10-01T00:00:00Z');
+ const reset=await route(req('/store-links/xbox','POST',{gameId:'1792227428',url:''},c),e,context,async u=>json(u.includes('/lookup')?{Products:[]}:{Results:[]}));assert.equal(reset.status,200);assert.equal((await reset.json()).games[0].manual,false);assert.equal((await publicProfile(e)).accounts[0].recent[0].url,undefined);
+});
+test('link-only refresh keeps account timestamps and rejects cross-origin mutation',async()=>{
+ const e=env();await saved(e,'psn');assert.equal((await route(req('/store-links/refresh','POST',{platform:'psn'},await cookie(e),'https://evil.invalid'),e,context)).status,403);const r=await route(req('/store-links/refresh','POST',{platform:'psn'},await cookie(e)),e,context);assert.equal(r.status,200);assert.deepEqual(await r.json(),{status:'refreshed',linked:0,total:0});assert.equal((await e.DB.prepare('SELECT last_success_at FROM gaming_accounts WHERE platform=?').bind('psn').first()).last_success_at,'2026-10-01T00:00:00Z');
 });

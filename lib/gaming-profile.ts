@@ -37,6 +37,7 @@ export function gameStoreLink(game:RecentGame):{url:string;search:boolean}|undef
   const query=encodeURIComponent(game.title.trim());
   const url=httpsUrl(game.url);const u=url?new URL(url):undefined;
   if(game.platform==='nintendo') {
+    if(u?.hostname==='ec.nintendo.com'&&/^\/JP\/ja\/titles\/\d{14}$/.test(u.pathname)&&!u.search&&!u.hash)return {url:u.href,search:false};
     if(u?.hostname==='store-jp.nintendo.com')return {url:u.href,search:false};
     return {url:`https://store-jp.nintendo.com/search?q=${query}`,search:true};
   }

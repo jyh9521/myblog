@@ -110,3 +110,36 @@ test('PS first data failure retains encrypted verified authorization for retry',
  const row=await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('psn').first();assert.equal(row.account_id,'123');assert.equal(row.status,'error');assert.equal(row.public_json,null);assert.ok(!row.credential.includes('fixture-refresh'));assert.equal((await open(row.credential,KEY,'account:psn')).refreshToken,'fixture-refresh');
  const result=await syncAccount('psn',e,async url=>json(url.includes('gamelist')?{titles:[],totalItemCount:0}:{profile:{onlineId:'Member'}}));assert.equal(result.status,'success');assert.equal((await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('psn').first()).status,'connected');
 });
+
+ test('Nintendo history sends locale and never requests the retired origin',async()=>{
+  const calls=[];const d=await collect('nintendo',{access_token:'access',id_token:'identity'},env(),async(url,o)=>{
+    calls.push(url);if(url.includes('api.accounts'))return json({id:'n-account',nickname:'Player'});
+    assert.equal(new Headers(o.headers).get('Gentry-Locale'),'ja-JP');assert.equal(new Headers(o.headers).get('Accept'),'application/json');
+    assert.equal(url,'https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories');
+    return json({playHistories:[{titleId:'1',titleName:'Game',totalPlayedMinutes:120,lastPlayedAt:'2026-10-10T00:00:00Z'}]});
+  });assert.equal(d.minutes,120);assert.equal(d.games,1);assert.equal(calls.length,2);
+ });
+ test('Nintendo retries rejected access token once with ID token',async()=>{
+  const tokens=[];const d=await collect('nintendo',{access_token:'access',id_token:'identity'},env(),async(url,o)=>{
+    if(url.includes('api.accounts'))return json({id:'account'});
+    const token=new Headers(o.headers).get('Authorization');tokens.push(token);
+    return token==='Bearer access'?new Response('{}',{status:401}):json({playHistories:[]});
+  });assert.deepEqual(tokens,['Bearer access','Bearer identity']);assert.equal(d.games,0);
+ });
+ test('Nintendo history outages retain verified identity and a redacted stage error without retry',async()=>{
+  let calls=0;await assert.rejects(collect('nintendo',{access_token:'a',id_token:'b'},env(),async url=>{
+    calls++;return url.includes('api.accounts')?json({id:'verified',nickname:'Member'}):new Response('private',{status:530});
+  }),e=>e.message==='NINTENDO_HISTORY_UPSTREAM_HTTP_530'&&e.verifiedNintendoIdentity.id==='verified');assert.equal(calls,2);
+  assert.equal(errorCode(Error('NINTENDO_HISTORY_UPSTREAM_HTTP_530')),'NINTENDO_HISTORY_UPSTREAM_HTTP_530');
+ });
+ test('Nintendo verified binding survives history failure and later sync succeeds',async()=>{
+  const e=env(),c=await cookie(e);const d=await(await route(req('/bind/nintendo','POST',{},c),e,context)).json();
+  const input=`npf5c38e31cd085304b://auth#state=${d.state}&session_token_code=fixture`;
+  const fetcher=async url=>url.includes('/session_token')?json({session_token:'private-session'}):url.includes('/api/token')?json({access_token:'access',id_token:'identity',expires_in:3600}):url.includes('api.accounts')?json({id:'verified-account',nickname:'Member'}):new Response('{}',{status:503});
+  await assert.rejects(route(req('/complete/nintendo','POST',{state:d.state,input},c),e,context,fetcher),/NINTENDO_HISTORY_UPSTREAM_HTTP_503/);
+  const row=await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('nintendo').first();
+  assert.equal(row.account_id,'verified-account');assert.equal(row.display_name,'Member');assert.ok(!row.credential.includes('private-session'));assert.equal(row.public_json,null);
+  assert.equal((await open(row.credential,KEY,'account:nintendo')).session_token,'private-session');
+  const result=await syncAccount('nintendo',e,async(url,o)=>url.includes('play_histories')?json({playHistories:[{titleId:'1',titleName:'Game',totalPlayedMinutes:30,lastPlayedAt:'2026-10-10T00:00:00Z'}]}):fetcher(url,o));
+  assert.equal(result.status,'success');const updated=await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('nintendo').first();assert.equal(JSON.parse(updated.public_json).minutes,30);assert.ok(updated.last_success_at);
+ });

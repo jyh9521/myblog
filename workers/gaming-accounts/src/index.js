@@ -5,7 +5,7 @@ const COOKIE='__Host-gaming_admin';
 const now=()=>new Date().toISOString();
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'}});
 const errorCodes=new Set(['INVALID_CALLBACK','INVALID_INPUT','INPUT_TOO_LARGE','INVALID_TOKEN_RESPONSE','INVALID_XBOX_IDENTITY','AUTH_EXPIRED','PSN_LOGIN_FAILED','PSN_SYNC_FAILED','STEAM_LIBRARY_PRIVATE','PROVIDER_NOT_CONFIGURED','PAGINATION_LIMIT','INVALID_HISTORY_RESPONSE','INVALID_LIBRARY_RESPONSE','UPSTREAM_NETWORK','ENCRYPTION_NOT_CONFIGURED']);
-export function errorCode(error) {return errorCodes.has(error?.message)||/^(?:UPSTREAM_HTTP_\d{3}|(?:XBOX_(?:TOKEN|USER_AUTH|XSTS|HISTORY|PROFILE)|PSN_(?:AUTHORIZE|TOKEN|HISTORY|PROFILE|IDENTITY))_(?:UPSTREAM_HTTP_\d{3}|AUTH_EXPIRED|UPSTREAM_NETWORK|FAILED)(?:_(?:MAXITEMS|DECORATION|SIGNATURE|CONTRACT|XUID))?)$/.test(error?.message)?error.message:'SYNC_FAILED';}
+export function errorCode(error) {return errorCodes.has(error?.message)||/^(?:UPSTREAM_HTTP_\d{3}|(?:XBOX_(?:TOKEN|USER_AUTH|XSTS|HISTORY|PROFILE)|PSN_(?:AUTHORIZE|TOKEN|HISTORY|PROFILE|IDENTITY)|NINTENDO_(?:SESSION|TOKEN|PROFILE|HISTORY))_(?:UPSTREAM_HTTP_\d{3}|AUTH_EXPIRED|UPSTREAM_NETWORK|FAILED)(?:_(?:MAXITEMS|DECORATION|SIGNATURE|CONTRACT|XUID))?)$/.test(error?.message)?error.message:'SYNC_FAILED';}
 async function admin(request,env) {
   try {
     const value=request.headers.get('Cookie')?.split(';').map(v=>v.trim()).find(v=>v.startsWith(COOKIE+'='))?.slice(COOKIE.length+1);
@@ -36,8 +36,8 @@ async function finishBinding(platform,input,state,env,fetcher) {
   try{data=await collect(platform,fresh,env,fetcher);}catch(e){
     // A validated identity remains bound even if a subsequent data request fails.
     // Do not replace an existing binding or its cache with an incomplete new one.
-    const verifiedId=platform==='xbox'?fresh.xuid:platform==='psn'&&/^\d+$/.test(fresh.accountId||'')?fresh.accountId:null;
-    if(verifiedId){const timestamp=now();await env.DB.prepare("INSERT INTO gaming_accounts(platform,account_id,display_name,credential,bound_at,last_attempt_at,status,error_code) VALUES(?,?,?,?,?,?,'error',?) ON CONFLICT(platform) DO NOTHING").bind(platform,verifiedId,names[platform],await seal(fresh,env.CREDENTIAL_KEY,`account:${platform}`),timestamp,timestamp,errorCode(e)).run();}
+    const verifiedId=platform==='xbox'?fresh.xuid:platform==='psn'&&/^\d+$/.test(fresh.accountId||'')?fresh.accountId:platform==='nintendo'?e.verifiedNintendoIdentity?.id:null;
+    if(verifiedId){const timestamp=now();await env.DB.prepare("INSERT INTO gaming_accounts(platform,account_id,display_name,credential,bound_at,last_attempt_at,status,error_code) VALUES(?,?,?,?,?,?,'error',?) ON CONFLICT(platform) DO NOTHING").bind(platform,verifiedId,platform==='nintendo'?(e.verifiedNintendoIdentity.name||names[platform]):names[platform],await seal(fresh,env.CREDENTIAL_KEY,`account:${platform}`),timestamp,timestamp,errorCode(e)).run();}
     throw e;
   }
   if(!data.accountId || data.accountId==='undefined')throw new Error('INVALID_TOKEN_RESPONSE');

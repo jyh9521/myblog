@@ -57,7 +57,7 @@ export async function complete(platform, input, state, env, fetcher=fetch) {
   if(platform==='nintendo') {
     const u=new URL(input),p=new URLSearchParams(u.hash.slice(1));
     if(u.protocol!==`npf${NA_CLIENT}:` || u.hostname!=='auth' || p.get('state')!==state.id || !p.get('session_token_code')) throw new Error('INVALID_CALLBACK');
-    const t=await upstream('https://accounts.nintendo.com/connect/1.0.0/api/session_token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','User-Agent':NA_UA},body:new URLSearchParams({client_id:NA_CLIENT,session_token_code:p.get('session_token_code'),session_token_code_verifier:state.verifier}).toString()},fetcher);
+    const t=await stage('NINTENDO_SESSION',()=>upstream('https://accounts.nintendo.com/connect/1.0.0/api/session_token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','User-Agent':NA_UA},body:new URLSearchParams({client_id:NA_CLIENT,session_token_code:p.get('session_token_code'),session_token_code_verifier:state.verifier}).toString()},fetcher));
     if(!t.session_token) throw new Error('INVALID_TOKEN_RESPONSE');return {session_token:t.session_token};
   }
   if(platform==='psn') {
@@ -79,7 +79,7 @@ export async function complete(platform, input, state, env, fetcher=fetch) {
 export async function renew(platform,credential,env,fetcher=fetch) {
   if(platform==='steam') return credential;
   if(platform==='nintendo') {
-    const t=requireToken(await upstream('https://accounts.nintendo.com/connect/1.0.0/api/token',{method:'POST',headers:{'Content-Type':'application/json','User-Agent':NA_UA},body:JSON.stringify({client_id:NA_CLIENT,session_token:credential.session_token,grant_type:'urn:ietf:params:oauth:grant-type:jwt-bearer-session-token'})},fetcher));
+    const t=requireToken(await stage('NINTENDO_TOKEN',()=>upstream('https://accounts.nintendo.com/connect/1.0.0/api/token',{method:'POST',headers:{'Content-Type':'application/json','User-Agent':NA_UA},body:JSON.stringify({client_id:NA_CLIENT,session_token:credential.session_token,grant_type:'urn:ietf:params:oauth:grant-type:jwt-bearer-session-token'})},fetcher)));
     return {...t,session_token:credential.session_token};
   }
   if(platform==='psn') {
@@ -126,12 +126,24 @@ export async function collect(platform,c,env,fetcher=fetch) {
     await Promise.all(result.recent.map(async g=>{try{const d=await upstream(base+'/ISteamUserStats/GetPlayerAchievements/v0001/?'+new URLSearchParams({key:env.STEAM_API_KEY,steamid:c.steamid,appid:g.id}),{},fetcher);if(d.playerstats?.success&&Array.isArray(d.playerstats.achievements)){g.total=d.playerstats.achievements.length;g.earned=d.playerstats.achievements.filter(a=>a.achieved===1).length;}}catch{result.warnings.push('SOME_ACHIEVEMENTS_MISSING');}}));return result;
   }
   if(platform==='nintendo') {
-    const identity=await upstream('https://api.accounts.nintendo.com/2.0.0/users/me',{headers:{Authorization:`Bearer ${c.access_token}`,'User-Agent':NA_UA}},fetcher);
-    let data;
-    try {data=await upstream('https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories',{headers:{Authorization:`Bearer ${c.access_token}`,'User-Agent':NA_UA}},fetcher);}
-    catch(e){if(e.message==='AUTH_EXPIRED')throw e;data=await upstream('https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories',{headers:{Authorization:`Bearer ${c.access_token}`,'User-Agent':NA_UA}},fetcher);}
-    if(!identity.id)throw new Error('INVALID_IDENTITY');
-    return nintendoSnapshot(data,identity);
+    const identity=await stage('NINTENDO_PROFILE',()=>upstream('https://api.accounts.nintendo.com/2.0.0/users/me',{headers:{Authorization:`Bearer ${c.access_token}`,'User-Agent':NA_UA,Accept:'application/json'}},fetcher));
+    if(typeof identity.id!=='string'||!identity.id)throw new Error('NINTENDO_PROFILE_FAILED');
+    const history=token=>upstream('https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories',{headers:{Authorization:`Bearer ${token}`,'User-Agent':NA_UA,Accept:'application/json','Gentry-Locale':'ja-JP'}},fetcher);
+    try {
+      const data=await stage('NINTENDO_HISTORY',async()=>{
+        try{return await history(c.access_token);}catch(e){
+          // Current app releases may require the ID token. Retry once only for
+          // authorization/request rejection, never against the retired API host.
+          if(c.id_token && c.id_token!==c.access_token && ['AUTH_EXPIRED','UPSTREAM_HTTP_400'].includes(e.message))return history(c.id_token);
+          throw e;
+        }
+      });
+      return nintendoSnapshot(data,identity);
+    }catch(e){
+      // Identity was verified by Nintendo, not inferred from the pasted callback.
+      e.verifiedNintendoIdentity={id:identity.id,name:identity.nickname||identity.name};
+      throw e;
+    }
   }
   if(platform==='psn') {
     try {

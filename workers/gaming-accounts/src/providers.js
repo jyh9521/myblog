@@ -169,25 +169,73 @@ export async function collect(platform,c,env,fetcher=fetch) {
     const d=await stage('XBOX_HISTORY',()=>upstream(`https://titlehub.xboxlive.com/users/xuid(${c.xuid})/titles/titlehistory/decoration/achievement,image,scid?maxItems=1000`,{headers:{...headers,'x-xbl-client-name':'XboxApp','x-xbl-client-type':'UWA','x-xbl-client-version':'39.39.22001.0'}},fetcher));
     if(d.pagingInfo?.continuationToken)throw new Error('PAGINATION_LIMIT');
     if(!Array.isArray(d.titles))throw new Error('INVALID_HISTORY_RESPONSE');
+    const minutes=new Map(),warnings=[];
+    const scids=[...new Set(d.titles.map(g=>g.serviceConfigId).filter(Boolean))];
+    // Batch all available title statistics, not just the six recent games.
+    for(let offset=0;offset<scids.length;offset+=50){
+      const batch=scids.slice(offset,offset+50);
+      try {
+        const stats=await upstream('https://userstats.xboxlive.com/batch',{method:'POST',headers:{...headers,'x-xbl-contract-version':'2','Content-Type':'application/json'},body:JSON.stringify({arrangebyfield:'xuid',xuids:[c.xuid],groups:[],stats:batch.map(scid=>({scid,name:'MinutesPlayed'}))})},fetcher);
+        if(!Array.isArray(stats.statlistscollection))throw new Error('INVALID_STATS_RESPONSE');
+        for(const list of stats.statlistscollection){
+          for(const stat of list.stats||[]){
+            if(String(stat.xuid)!==String(c.xuid)||stat.name!=='MinutesPlayed'||!batch.includes(stat.scid))continue;
+            const v=stat.value,n=typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v):undefined;
+            if(numeric(n)!==undefined)minutes.set(stat.scid,n);
+          }
+        }
+      }catch(e){warnings.push('SOME_PLAYTIME_MISSING', 'XBOX_PLAYTIME_'+(/^(UPSTREAM_HTTP_\d{3}|AUTH_EXPIRED|UPSTREAM_NETWORK|INVALID_STATS_RESPONSE)$/.test(e.message)?e.message:'FAILED')+(e.reason?'_'+e.reason:''));}
+    }
+    // Keep useful recent-game time if a batch is rejected; at most six requests.
     const latest=[...d.titles].sort((a,b)=>Date.parse(b.titleHistory?.lastTimePlayed||0)-Date.parse(a.titleHistory?.lastTimePlayed||0)).slice(0,6);
-    const minutes=new Map();const warnings=[];
-    // Fetch only six detailed stats; library counts do not pretend to be ownership.
-    for(const g of latest){if(!g.serviceConfigId)continue;try {
-      const s=await upstream(`https://userstats.xboxlive.com/users/xuid(${c.xuid})/scids/${g.serviceConfigId}/stats/MinutesPlayed`,{headers},fetcher);
-      const n=Number((s.statlistscollection?.flatMap(x=>x.stats||[])||s.stats||[]).find(s=>s.name==='MinutesPlayed')?.value);
-      if(Number.isFinite(n)&&n>=0)minutes.set(String(g.titleId),n);
+    for(const g of latest){if(!g.serviceConfigId||minutes.has(g.serviceConfigId))continue;try{
+      const stats=await upstream(`https://userstats.xboxlive.com/users/xuid(${c.xuid})/scids/${g.serviceConfigId}/stats/MinutesPlayed`,{headers},fetcher);
+      const v=(stats.statlistscollection?.flatMap(x=>x.stats||[])||stats.stats||[]).find(stat=>stat.name==='MinutesPlayed')?.value;
+      const n=typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v):undefined;
+      if(numeric(n)!==undefined)minutes.set(g.serviceConfigId,n);
     }catch{warnings.push('SOME_PLAYTIME_MISSING');}}
     const p=await upstream(`https://profile.xboxlive.com/users/xuid(${c.xuid})/profile/settings?settings=Gamertag`,{headers},fetcher);
-    const result=snapshot(platform,c.xuid,p.profileUsers?.[0]?.settings?.find(s=>s.id==='Gamertag')?.value,d.titles.map(g=>normalizedGame(g.titleId,g.name,platform,{cover:g.displayImage,lastPlayed:g.titleHistory?.lastTimePlayed,minutes:minutes.get(String(g.titleId)),earned:numeric(g.achievement?.currentAchievements)})));
-    // Six-game stats are not the account's total playtime.
-    delete result.minutes;result.timeComplete=false;result.warnings=warnings;return result;
+    const result=snapshot(platform,c.xuid,p.profileUsers?.[0]?.settings?.find(s=>s.id==='Gamertag')?.value,d.titles.map(g=>normalizedGame(g.titleId,g.name,platform,{cover:g.displayImage,lastPlayed:g.titleHistory?.lastTimePlayed,minutes:minutes.get(g.serviceConfigId),earned:numeric(g.achievement?.currentAchievements)})));
+    // Shared SCIDs describe one statistic: count it only once in the total.
+    result.minutes=minutes.size?[...minutes.values()].reduce((sum,n)=>sum+n,0):undefined;
+    result.warnings=[...new Set(warnings)];return result;
   }
   if(platform==='gog') {
     const headers={Authorization:`Bearer ${c.access_token}`};
     const [identity,library]=await Promise.all([upstream('https://embed.gog.com/userData.json',{headers},fetcher),upstream('https://embed.gog.com/user/data/games',{headers},fetcher)]);
     if(!Array.isArray(library.owned)||!identity.userId)throw new Error('INVALID_LIBRARY_RESPONSE');
-    // Ownership has no reliable last-played timestamp: do not invent recent activity.
-    return {platform,accountId:String(identity.userId),displayName:String(identity.username||identity.userId),games:new Set(library.owned).size,countKind:'owned',timeComplete:false,recent:[],warnings:['PLAYTIME_NOT_AVAILABLE']};
+    const base={platform,accountId:String(identity.userId),displayName:String(identity.username||identity.userId),games:new Set(library.owned).size,countKind:'owned',timeComplete:false,recent:[],warnings:[]};
+    // GOG's profile statistics contain minutes and lastSession, unlike ownership.
+    const items=[];let pages=1,statsUserId=String(identity.userId);
+    try{
+      if(typeof identity.username!=='string'||!identity.username)throw new Error('INVALID_IDENTITY');
+      for(let page=1;page<=pages;page++){
+        const data=await upstream(`https://embed.gog.com/u/${encodeURIComponent(identity.username)}/games/stats?sort=recent_playtime&order=desc&page=${page}`,{headers},fetcher);
+        if(!Array.isArray(data._embedded?.items)||!Number.isInteger(data.pages)||data.pages<0||data.pages>40)throw new Error('INVALID_HISTORY_RESPONSE');
+        if(page===1)pages=Math.max(1,data.pages);else if(data.pages!==pages)throw new Error('INVALID_HISTORY_RESPONSE');
+        items.push(...data._embedded.items);
+      }
+    }catch(e){return {...base,warnings:['PLAYTIME_NOT_AVAILABLE','GOG_STATS_'+(/^(UPSTREAM_HTTP_\d{3}|AUTH_EXPIRED|UPSTREAM_NETWORK|INVALID_HISTORY_RESPONSE)$/.test(e.message)?e.message:'FAILED')]};}
+    // Legacy userData IDs can differ from the profile's canonical string ID.
+    // Resolve it from GOG's own profile JSON and verify the exact login username.
+    if(items.some(item=>Object.keys(item.stats||{}).length)&&!items.some(item=>item.stats?.[statsUserId])){
+      try{
+        const response=await fetcher(`https://embed.gog.com/u/${encodeURIComponent(identity.username)}/games`,{headers,signal:AbortSignal.timeout(15000)});
+        if(!response.ok)throw new Error('INVALID_IDENTITY');
+        const bytes=await response.arrayBuffer();if(bytes.byteLength>1024*1024)throw new Error('INPUT_TOO_LARGE');
+        const match=new TextDecoder().decode(bytes).match(/window\.profilesData\.profileUser\s*=\s*(\{[^\r\n]+?\});/);
+        const profile=match?JSON.parse(match[1]):null;
+        if(profile?.username!==identity.username||!/^\d+$/.test(profile.userId||''))throw new Error('INVALID_IDENTITY');
+        statsUserId=profile.userId;
+      }catch{return {...base,warnings:['PLAYTIME_NOT_AVAILABLE','GOG_PROFILE_ID_UNAVAILABLE']};}
+    }
+    const games=items.map(item=>{
+      const stat=item.stats?.[statsUserId],game=item.game||{};
+      const url=typeof game.url==='string'&&/^\/(?:[a-z]{2}\/)?game\//.test(game.url)?'https://www.gog.com'+game.url:undefined;
+      return normalizedGame(game.id,game.title,platform,{minutes:numeric(stat?.playtime),lastPlayed:stat?.lastSession,cover:game.image,url});
+    });
+    const stats=snapshot(platform,identity.userId,base.displayName,games,'owned');
+    return {...base,minutes:stats.minutes,recent:stats.recent,timeComplete:stats.timeComplete&&stats.games===base.games,warnings:stats.minutes===undefined?['PLAYTIME_NOT_AVAILABLE']:[]};
   }
   const headers={Authorization:`Bearer ${c.access_token}`};let records=[],cursor='';const seen=new Set();
   for(let page=0;page<20;page++) {

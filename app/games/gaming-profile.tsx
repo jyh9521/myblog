@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useState} from 'react';
-import {loadGamingProfile,platformNames,platformOrder,type GamingProfileData,type RecentGame} from '../../lib/gaming-profile';
+import {loadGamingProfile,gameStoreLink,platformNames,platformOrder,type GamingProfileData,type RecentGame} from '../../lib/gaming-profile';
 import {gamingProfileMessages,type GamingProfileLocale} from '../../lib/gaming-profile-i18n';
 function Cover({game,fallback}:{game:RecentGame;fallback:string}) {
   const [failed,setFailed]=useState(false);
@@ -20,8 +20,9 @@ export function GamingProfileContent({data,locale='zh-CN'}:{data:GamingProfileDa
       <p className="gaming-updated">{t.updated}<br/><time dateTime={a.updatedAt}>{date(a.updatedAt)}</time>{Date.now()-Date.parse(a.updatedAt)>48*3600000&&<span> · {t.stale}</span>}</p>
     </li>)}</ul><p className="gaming-updated">{t.sourceNote}</p>
     <div className="gaming-recent-section"><h3>{t.recent}</h3>{recent.length?<ul className="gaming-recent-grid">{recent.map(g=>{
-      const content=<><Cover game={g} fallback={t.cover}/><div className="gaming-game-copy"><span className="gaming-game-platform">{platformNames[g.platform]}</span><h4>{g.title}</h4><p>{t.lastPlayed} <time dateTime={g.lastPlayed}>{date(g.lastPlayed!)}</time></p>{g.minutes!==undefined&&<p>{format.format(g.minutes/60)} {t.hour}</p>}{g.earned!==undefined&&<p>{t.achievements} {g.earned}{g.total!==undefined?` / ${g.total}`:''}</p>}</div></>;
-      return <li key={`${g.platform}:${g.id}`}>{g.url?<a className="gaming-game-card" href={g.url} target="_blank" rel="noopener noreferrer">{content}</a>:<div className="gaming-game-card">{content}</div>}</li>;
+      const store=gameStoreLink(g);
+      const content=<><Cover game={g} fallback={t.cover}/><div className="gaming-game-copy"><span className="gaming-game-platform">{platformNames[g.platform]}</span><h4>{g.title}</h4><p>{t.lastPlayed} <time dateTime={g.lastPlayed}>{date(g.lastPlayed!)}</time></p>{g.minutes!==undefined&&<p>{format.format(g.minutes/60)} {t.hour}</p>}{g.earned!==undefined&&<p>{t.achievements} {g.earned}{g.total!==undefined?` / ${g.total}`:''}</p>}{store&&<span className="gaming-store-link">{store.search?t.storeSearch:t.storeView} {t.stores[g.platform]} ↗</span>}</div></>;
+      return <li key={`${g.platform}:${g.id}`}>{store?<a className="gaming-game-card" href={store.url} target="_blank" rel="noopener noreferrer">{content}</a>:<div className="gaming-game-card">{content}</div>}</li>;
     })}</ul>:<p className="gaming-status">{t.noRecent}</p>}</div>
   </>;
 }

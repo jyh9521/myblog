@@ -200,3 +200,6 @@ button:not(.toc-toggle),.hero-button,.read-more,.site-header nav a{transition-pr
 .game-pagination select { padding:.55rem .75rem; }
 .game-pagination :focus-visible { outline:3px solid var(--red); outline-offset:3px; }
 @media(max-width:600px) { .game-pagination { gap:.5rem; } .game-pagination button { padding:.65rem .85rem; } }
+
+.gaming-game-card{transition:transform .2s,box-shadow .2s}.gaming-game-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px #13212d18}.gaming-cover img{transition:transform .25s}.gaming-game-card:hover .gaming-cover img{transform:scale(1.025)}.gaming-store-link{display:block;margin-top:12px;color:var(--red);font-size:12px;font-weight:700}
+@media(prefers-reduced-motion:reduce){.gaming-game-card,.gaming-cover img{transition:none}.gaming-game-card:hover,.gaming-game-card:hover .gaming-cover img{transform:none}}

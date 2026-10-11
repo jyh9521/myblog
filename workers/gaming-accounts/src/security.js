@@ -37,6 +37,10 @@ export async function upstream(url, options={}, fetcher=fetch) {
       const body=await readJson(response,16384),description=String(body.message||body.description||body.error?.message||'');
       error.reason=['maxItems','decoration','signature','contract','xuid'].find(name=>description.toLowerCase().includes(name.toLowerCase()))?.toUpperCase();
     }catch{}
+    if(new URL(url).hostname==='userstats.xboxlive.com')try{
+      const body=await readJson(response,16384),description=JSON.stringify(body).toLowerCase();
+      error.reason=['group','scid','stat','xuid','contract','limit','request'].find(name=>description.includes(name))?.toUpperCase();
+    }catch{}
     throw error;
   }
   // Never include upstream response bodies or URLs in errors; either may contain credentials.

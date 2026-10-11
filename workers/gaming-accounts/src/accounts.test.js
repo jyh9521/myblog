@@ -143,3 +143,36 @@ test('PS first data failure retains encrypted verified authorization for retry',
   const result=await syncAccount('nintendo',e,async(url,o)=>url.includes('play_histories')?json({playHistories:[{titleId:'1',titleName:'Game',totalPlayedMinutes:30,lastPlayedAt:'2026-10-10T00:00:00Z'}]}):fetcher(url,o));
   assert.equal(result.status,'success');const updated=await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('nintendo').first();assert.equal(JSON.parse(updated.public_json).minutes,30);assert.ok(updated.last_success_at);
  });
+
+test('Xbox batches library playtime beyond the six recent games and sums each SCID once',async()=>{
+ const titles=Array.from({length:8},(_,i)=>({titleId:String(i),name:'Game '+i,serviceConfigId:'scid'+i,titleHistory:{lastTimePlayed:`2026-10-${String(i+1).padStart(2,'0')}T00:00:00Z`}}));let batches=0;
+ const d=await collect('xbox',{xuid:'owner',userHash:'h',xsts:'t'},env(),async(url,o)=>{
+  if(url.includes('titlehub'))return json({titles:[...titles,{...titles[0],titleId:'shared'}]});
+  if(url.endsWith('/batch')){batches++;const body=JSON.parse(o.body);assert.equal(body.stats.length,8);assert.deepEqual(body.groups,[]);assert.deepEqual(body.xuids,['owner']);return json({statlistscollection:[{stats:[{xuid:'other',scid:'scid0',name:'MinutesPlayed',value:999},...body.stats.map(x=>({...x,xuid:'owner',value:'60'}))]}]});}
+  return json({profileUsers:[{settings:[{id:'Gamertag',value:'Member'}]}]});
+ });assert.equal(batches,1);assert.equal(d.minutes,480);assert.equal(d.recent.length,6);assert.equal(d.timeComplete,true);
+});
+test('GOG paginated owner stats preserve ownership count, minutes and genuine recent dates',async()=>{
+ let pages=0;const d=await collect('gog',{access_token:'t'},env(),async url=>{
+  if(url.includes('userData'))return json({userId:'owner',username:'Member'});
+  if(url.includes('/user/data'))return json({owned:['1','2','dlc']});
+  pages++;const page=new URL(url).searchParams.get('page');return json({pages:2,_embedded:{items:[{game:{id:page,title:'Game '+page,url:'/en/game/game_'+page,image:'https://example.com/cover.png'},stats:{owner:{playtime:Number(page)*60,lastSession:`2026-10-0${page}T00:00:00Z`},other:{playtime:999}}}]}});
+ });assert.equal(pages,2);assert.equal(d.games,3);assert.equal(d.minutes,180);assert.equal(d.timeComplete,false);assert.equal(d.recent[0].id,'2');assert.equal(d.recent[0].url,'https://www.gog.com/en/game/game_2');
+});
+test('GOG stats failure never fabricates zero playtime or erases ownership',async()=>{
+ const d=await collect('gog',{access_token:'t'},env(),async url=>url.includes('userData')?json({userId:'owner',username:'M'}):url.includes('/user/data')?json({owned:[1,2]}):new Response('{}',{status:403}));assert.equal(d.games,2);assert.equal(d.minutes,undefined);assert.deepEqual(d.recent,[]);
+});
+
+test('GOG resolves legacy profile IDs without reading another user stats',async()=>{
+ const d=await collect('gog',{access_token:'t'},env(),async url=>{
+  if(url.includes('userData'))return json({userId:'legacy',username:'Member'});
+  if(url.includes('/user/data'))return json({owned:['1']});
+  if(url.includes('/games/stats'))return json({pages:1,_embedded:{items:[{game:{id:'1',title:'Game'},stats:{'12345678901234567':{playtime:248,lastSession:'2026-10-08T00:00:00Z'},other:{playtime:999}}}]}});
+  return new Response('window.profilesData.profileUser = {"username":"Member","userId":"12345678901234567"};');
+ });assert.equal(d.minutes,248);assert.equal(d.recent.length,1);
+});
+
+test('GOG failed time refresh retains previously recorded playtime and recent games',async()=>{
+ const e=env();await saved(e,'gog');const credential=await seal({access_token:'a',refresh_token:'r',expiresAt:Date.now()+3600000},KEY,'account:gog');await e.DB.prepare('UPDATE gaming_accounts SET credential=? WHERE platform=?').bind(credential,'gog').run();
+ const d=await syncAccount('gog',e,async url=>url.includes('userData')?json({userId:'76561198000000000',username:'Member'}):url.includes('/user/data')?json({owned:[1]}):new Response('{}',{status:403}));assert.equal(d.status,'failed');const row=await e.DB.prepare('SELECT * FROM gaming_accounts WHERE platform=?').bind('gog').first();assert.equal(row.error_code,'PLAYTIME_SYNC_FAILED');assert.equal(JSON.parse(row.public_json).minutes,10);assert.equal(row.last_success_at,'2026-10-01T00:00:00Z');
+});

@@ -4,7 +4,7 @@ const ROOT='/ns/api/accounts';
 const COOKIE='__Host-gaming_admin';
 const now=()=>new Date().toISOString();
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer'}});
-const errorCodes=new Set(['INVALID_CALLBACK','INVALID_INPUT','INPUT_TOO_LARGE','INVALID_TOKEN_RESPONSE','INVALID_XBOX_IDENTITY','AUTH_EXPIRED','PSN_LOGIN_FAILED','PSN_SYNC_FAILED','STEAM_LIBRARY_PRIVATE','PROVIDER_NOT_CONFIGURED','PAGINATION_LIMIT','INVALID_HISTORY_RESPONSE','INVALID_LIBRARY_RESPONSE','UPSTREAM_NETWORK','ENCRYPTION_NOT_CONFIGURED']);
+const errorCodes=new Set(['PLAYTIME_SYNC_FAILED','INVALID_CALLBACK','INVALID_INPUT','INPUT_TOO_LARGE','INVALID_TOKEN_RESPONSE','INVALID_XBOX_IDENTITY','AUTH_EXPIRED','PSN_LOGIN_FAILED','PSN_SYNC_FAILED','STEAM_LIBRARY_PRIVATE','PROVIDER_NOT_CONFIGURED','PAGINATION_LIMIT','INVALID_HISTORY_RESPONSE','INVALID_LIBRARY_RESPONSE','UPSTREAM_NETWORK','ENCRYPTION_NOT_CONFIGURED']);
 export function errorCode(error) {return errorCodes.has(error?.message)||/^(?:UPSTREAM_HTTP_\d{3}|(?:XBOX_(?:TOKEN|USER_AUTH|XSTS|HISTORY|PROFILE)|PSN_(?:AUTHORIZE|TOKEN|HISTORY|PROFILE|IDENTITY)|NINTENDO_(?:SESSION|TOKEN|PROFILE|HISTORY))_(?:UPSTREAM_HTTP_\d{3}|AUTH_EXPIRED|UPSTREAM_NETWORK|FAILED)(?:_(?:MAXITEMS|DECORATION|SIGNATURE|CONTRACT|XUID))?)$/.test(error?.message)?error.message:'SYNC_FAILED';}
 async function admin(request,env) {
   try {
@@ -62,6 +62,10 @@ export async function syncAccount(platform,env,fetcher=fetch) {
     await env.DB.prepare('UPDATE gaming_accounts SET credential=? WHERE platform=? AND sync_lock_until=? AND credential=?').bind(encrypted,platform,lock,row.credential).run();
     const data=await collect(platform,fresh,env,fetcher);
     if(data.accountId!==row.account_id)throw new Error('INVALID_TOKEN_RESPONSE');
+    if(['xbox','gog'].includes(platform)&&row.public_json){
+      const previous=JSON.parse(row.public_json);
+      if(previous.minutes!==undefined&&data.warnings?.some(code=>['PLAYTIME_NOT_AVAILABLE','SOME_PLAYTIME_MISSING'].includes(code)))throw new Error('PLAYTIME_SYNC_FAILED');
+    }
     await env.DB.prepare('UPDATE gaming_accounts SET public_json=?,display_name=?,last_success_at=?,status=\'connected\',error_code=NULL,sync_lock_until=0 WHERE platform=? AND sync_lock_until=? AND credential=?').bind(JSON.stringify(data),data.displayName,now(),platform,lock,encrypted).run();
     await recordRun(env,platform,started,'success',null,data.games);return {status:'success'};
   }catch(error) {

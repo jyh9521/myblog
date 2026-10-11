@@ -30,3 +30,27 @@ export async function loadGamingProfile(signal?:AbortSignal):Promise<GamingProfi
   if(!response.ok)throw Error(`Gaming profile HTTP ${response.status}`);
   return parseGamingProfile(await response.json());
 }
+
+// Regional storefronts take priority. Unknown catalog IDs use the store's own
+// search rather than constructing a product URL that may point at another game.
+export function gameStoreLink(game:RecentGame):{url:string;search:boolean}|undefined {
+  const query=encodeURIComponent(game.title.trim());
+  const url=httpsUrl(game.url);const u=url?new URL(url):undefined;
+  if(game.platform==='nintendo') {
+    if(u?.hostname==='store-jp.nintendo.com')return {url:u.href,search:false};
+    return {url:`https://store-jp.nintendo.com/search?q=${query}`,search:true};
+  }
+  if(game.platform==='xbox') {
+    if(u?.hostname==='www.xbox.com' && /^\/[a-z]{2}-[a-z]{2}\/games\/store\//i.test(u.pathname)) {
+      u.pathname=u.pathname.replace(/^\/[a-z]{2}-[a-z]{2}\//i,'/zh-TW/');return {url:u.href,search:false};
+    }
+    return {url:`https://www.xbox.com/zh-TW/search/results?q=${query}`,search:true};
+  }
+  if(game.platform==='psn') {
+    if(u?.hostname==='store.playstation.com' && /^\/[^/]+\/(product|concept)\//.test(u.pathname)) {
+      u.pathname=u.pathname.replace(/^\/[^/]+\//,'/zh-hant-hk/');return {url:u.href,search:false};
+    }
+    return {url:`https://store.playstation.com/zh-hant-hk/search/${query}`,search:true};
+  }
+  return url?{url,search:false}:undefined;
+}

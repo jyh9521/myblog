@@ -1,4 +1,9 @@
-export const b64 = bytes => btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+export const b64 = bytes => {
+  const data=new Uint8Array(bytes),chunks=[];
+  // A long article exceeds JavaScript's function argument limit; encode in bounded chunks.
+  for(let at=0;at<data.length;at+=32768)chunks.push(String.fromCharCode(...data.subarray(at,at+32768)));
+  return btoa(chunks.join('')).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+};
 export const unb64 = text => Uint8Array.from(atob(text.replace(/-/g,'+').replace(/_/g,'/')), c=>c.charCodeAt(0));
 export const random = () => b64(crypto.getRandomValues(new Uint8Array(32)));
 export async function challenge(value) { return b64(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value))); }

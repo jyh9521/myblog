@@ -9,9 +9,9 @@ description: |-
   > 基于 NOLF Modernizer v1.006 Patch 4
 cover: /uploads/chinesetranslationpatch/nolf/封面.webp
 tags:
-  - 汉化补丁
-  - 无人永生
+  - 汉化
   - 游戏
+  - 无人永生
 pinned: false
 gameSlug: nolf
 ---

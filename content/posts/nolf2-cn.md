@@ -9,9 +9,9 @@ description: |-
   > 基于 Modernizer2 Beta 2C
 cover: /uploads/chinesetranslationpatch/nolf2/封面图.png
 tags:
-  - 汉化补丁
-  - 无人永生
+  - 汉化
   - 游戏
+  - 无人永生
 pinned: false
 gameSlug: nolf2
 ---

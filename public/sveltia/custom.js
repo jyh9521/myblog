@@ -41,8 +41,11 @@
     const normalizePlatforms = window.GamePlatforms?.normalizePlatformList || (values => [...new Set(values || [])]);
     const sourceLabels = { rawg: 'RAWG', screenscraper: 'ScreenScraper', igdb: 'IGDB' };
     const labelSources = sources => Object.keys(sources || {}).map(source => sourceLabels[source] || source).join(' + ');
+    const storeNames = ['Steam', 'GOG.com', 'Epic Store', 'Nintendo eShop', 'PlayStation Store', 'Xbox Store'];
+    const storeAliases = { GOG: 'GOG.com', 'Epic Games': 'Epic Store', 'PS Store': 'PlayStation Store' };
+    const presetStoreName = name => storeNames.includes(name) ? name : storeAliases[name] || '';
     const GameManual = createClass({
-      getInitialState: function () { return { urlErrors: {} }; },
+      getInitialState: function () { return { urlErrors: {}, customStores: {} }; },
       change: function (next) { this.props.onChange({ ...(this.props.value || {}), ...next }); },
       updateStore: function (index, key, value) {
         const current = this.props.value || {};
@@ -70,11 +73,32 @@
           }, [['available', '当前可数字购买'], ['delisted', '已从数字商店下架'], ['physical-only', '仅有实体版'], ['free', '官方免费'], ['unknown', '状态未知']].map(([key, label]) => h('option', { key, value: key }, label)))),
           h('strong', null, '正版购买渠道'),
           ...stores.map((store, index) => h('fieldset', { key: index, style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: '8px', padding: '10px', border: '1px solid #68707a', borderRadius: '6px' } },
-            textInput(index, 'name', 'Steam / GOG / 官方网站', '渠道名称'),
+            h('div', { style: { display: 'grid', gap: '6px', minWidth: 0 } },
+              h('label', { style: { display: 'grid', gap: '4px' } }, h('span', null, '渠道名称'), h('select', {
+                value: this.state.customStores[index] || !presetStoreName(store.name) && store.name ? 'custom' : presetStoreName(store.name),
+                onChange: event => {
+                  const custom = event.target.value === 'custom';
+                  this.setState({ customStores: { ...this.state.customStores, [index]: custom } });
+                  this.updateStore(index, 'name', custom ? '' : event.target.value);
+                },
+                style: { width: '100%', minHeight: '36px', padding: '6px 9px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' },
+              }, h('option', { value: '', disabled: true }, '请选择渠道'),
+              ...storeNames.map(name => h('option', { key: name, value: name }, name)),
+              h('option', { value: 'custom' }, '自定义'))),
+              (this.state.customStores[index] || !presetStoreName(store.name) && store.name) && textInput(index, 'name', '输入渠道名称', '自定义渠道名称')),
+
             textInput(index, 'url', 'https://…', '商店 URL', 'url'),
             textInput(index, 'region', 'Global / JP / US / CN', '地区（可选）'),
             textInput(index, 'note', '仅日服 / 已下架…', '备注（可选）'),
-            h('button', { type: 'button', onClick: () => this.change({ officialStores: stores.filter((_, itemIndex) => itemIndex !== index) }), style: { justifySelf: 'start', alignSelf: 'end', minHeight: '34px' } }, '删除渠道'),
+            h('button', { type: 'button', onClick: () => {
+              const customStores = {};
+              for (const [key, custom] of Object.entries(this.state.customStores)) {
+                const itemIndex = Number(key);
+                if (itemIndex !== index) customStores[itemIndex > index ? itemIndex - 1 : itemIndex] = custom;
+              }
+              this.setState({ customStores });
+              this.change({ officialStores: stores.filter((_, itemIndex) => itemIndex !== index) });
+            }, style: { justifySelf: 'start', alignSelf: 'end', minHeight: '34px' } }, '删除渠道'),
           )),
           h('button', { type: 'button', onClick: () => this.change({ officialStores: [...stores, { name: '', url: '', region: '', note: '' }] }), style: { justifySelf: 'start', minHeight: '36px', padding: '6px 12px' } }, '＋ 添加正版渠道'),
           h('label', { style: { display: 'grid', gap: '5px' } }, h('span', null, '人工备注'), h(ImeInput, { multiline: true, rows: 3, value: value.notes || '', onChange: notes => this.change({ notes }), style: { width: '100%', padding: '8px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } })),

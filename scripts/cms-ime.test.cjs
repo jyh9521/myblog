@@ -23,7 +23,7 @@ function setup(name, value = {}) {
     instance.state = instance.getInitialState();
     return instance;
   }
-  return { field, changes, input };
+  return { field, changes, input, walk };
 }
 const event = (value, composing = false) => ({ target: { value }, nativeEvent: { isComposing: composing } });
 function compose(input, value) {
@@ -45,8 +45,8 @@ test('metadata keeps Chinese IME drafts local and publishes confirmed text exact
   assert.ok(changes[0].manualFields.includes('localizedName'));
 });
 test('manual notes and store fields preserve Chinese composition and line breaks', () => {
-  for (const label of ['人工备注', '渠道名称', '地区（可选）', '备注（可选）']) {
-    const { input, changes } = setup('game-manual', { officialStores: [{ name: 'Steam', url: '' }] });
+  for (const label of ['人工备注', '自定义渠道名称', '地区（可选）', '备注（可选）']) {
+    const { input, changes } = setup('game-manual', { officialStores: [{ name: '自定义店铺', url: '' }] });
     const control = input(label);
     compose(control, '中文\n第二行');
     assert.equal(changes.length, 0);
@@ -122,4 +122,23 @@ test('real React rerenders preserve the IME draft and commit across CMS prop upd
   act(() => { host().props.onBlur(event('中文')); });
   assert.equal(changes.length, 1);
   act(() => renderer.unmount());
+});
+
+test('store selector has six presets and custom input without rewriting legacy names', () => {
+  const {field, changes, walk, input} = setup('game-manual', {officialStores:[{name:'GOG',url:'https://gog.com',region:'TW',note:'保留'}]});
+  const select = () => walk(field.render(), n => n.type === 'select' && n.children.some(x => x?.props?.value === 'custom'));
+  assert.equal(select().props.value, 'GOG.com');
+  assert.equal(changes.length, 0);
+  const options = select().children.flat().filter(x => x?.type === 'option').map(x => x.props.value);
+  assert.equal(JSON.stringify(options), JSON.stringify(['','Steam','GOG.com','Epic Store','Nintendo eShop','PlayStation Store','Xbox Store','custom']));
+  select().props.onChange(event('custom'));
+  const control=input('自定义渠道名称');
+  compose(control,'中文商店');
+  control.render().props.onCompositionEnd(event('中文商店'));
+  assert.equal(field.props.value.officialStores[0].name,'中文商店');
+  assert.equal(field.props.value.officialStores[0].region,'TW');
+  assert.equal(field.props.value.officialStores[0].note,'保留');
+  select().props.onChange(event('Xbox Store'));
+  assert.equal(field.props.value.officialStores[0].name,'Xbox Store');
+  assert.equal(select().props.value,'Xbox Store');
 });

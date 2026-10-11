@@ -37,7 +37,7 @@ export default function Home() {
             {hasLocalAsset(post.cover) ? <img src={post.cover} alt="" /> : <span className="visual-mark" aria-hidden="true">{index % 2 ? '✦' : '●'}</span>}
             <span className="visual-arrow" aria-hidden="true">↗</span>
           </Link>
-          <div className="post-meta">{post.pinned && <span className="pinned-badge">置顶</span>}<time>{post.date.slice(0, 10)}</time><span className="meta-line" />{post.tags?.[0] ? <Link className="tag-link" href={`/posts/?tag=${encodeURIComponent(post.tags[0])}`}>{post.tags[0]}</Link> : '博客'}</div>
+          <div className="post-meta">{post.pinned && <span className="pinned-badge">置顶</span>}{post.visibility === 'password' && <span className="locked-post-badge">🔒 密码访问</span>}<time>{post.date.slice(0, 10)}</time><span className="meta-line" />{post.tags?.[0] ? <Link className="tag-link" href={`/posts/?tag=${encodeURIComponent(post.tags[0])}`}>{post.tags[0]}</Link> : '博客'}</div>
           <h3><Link href={`/posts/${post.slug}/`}>{post.title}</Link></h3>
           {post.description && <p>{post.description}</p>}
           <Link className="read-more" href={`/posts/${post.slug}/`}>阅读全文 <span aria-hidden="true">→</span></Link>

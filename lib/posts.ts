@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { parsePostAccess, type PostVisibility } from './post-access';
 
 const postsDir = path.join(process.cwd(), 'content/posts');
 const formatDate = (value: unknown) => value instanceof Date
@@ -17,6 +18,8 @@ export function hasLocalAsset(url: string): boolean {
 
 export type Post = {
   slug: string;
+  visibility: PostVisibility;
+  privateId: string;
   title: string;
   date: string;
   updatedAt: string;
@@ -37,10 +40,18 @@ export function getPost(slug: string): Post | null {
   const file = path.join(postsDir, `${slug}.md`);
   if (!fs.existsSync(file)) return null;
   const { data, content } = matter(fs.readFileSync(file, 'utf8'));
+  const access = parsePostAccess(content);
+  const mode = data.access?.mode || access.visibility;
+  if (!['public', 'password', 'unlisted'].includes(mode)) throw new Error('Invalid article visibility');
+  if (mode === 'password' && (access.visibility !== 'password' || data.access?.privateId !== access.privateId)) throw new Error('Protected article reference mismatch');
+  if (mode !== 'password' && access.visibility === 'password') throw new Error('Protected article cannot be published without its body');
+  access.visibility = mode;
   const date = formatDate(data.date);
   const updatedAt = formatDate(data.updatedAt);
   return {
     slug,
+    visibility: access.visibility,
+    privateId: access.privateId,
     title: String(data.title || slug),
     date,
     updatedAt,
@@ -50,20 +61,20 @@ export function getPost(slug: string): Post | null {
     cover: String(data.cover || ''),
     tags: Array.isArray(data.tags) ? data.tags.filter(Boolean).map(String) : [],
     pinned: data.pinned === true,
-    body: content,
-    audio: String(data.audio || ''),
-    video: String(data.video || ''),
-    attachment: String(data.attachment || ''),
+    body: access.body,
+    audio: access.visibility === 'password' ? '' : String(data.audio || ''),
+    video: access.visibility === 'password' ? '' : String(data.video || ''),
+    attachment: access.visibility === 'password' ? '' : String(data.attachment || ''),
   };
 }
 
-export function getAllPosts(): Post[] {
+export function getAllPosts(options: { includeUnlisted?: boolean } = {}): Post[] {
   if (!fs.existsSync(postsDir)) return [];
   return fs.readdirSync(postsDir)
     .filter(name => /^[a-z0-9]+(?:-[a-z0-9]+)*\.md$/.test(name))
     .flatMap(name => {
       const post = getPost(name.slice(0, -3));
-      return post ? [post] : [];
+      return post && (options.includeUnlisted || post.visibility !== 'unlisted') ? [post] : [];
     })
     .sort((a, b) => Number(b.pinned) - Number(a.pinned) || b.date.localeCompare(a.date));
 }

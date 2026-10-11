@@ -23,7 +23,7 @@ async function buildAssetIndex(root = process.cwd()) {
     const { data, content } = matter(fs.readFileSync(file, 'utf8'));
     const slug = path.basename(file, '.md'), type = relative.includes('/posts/') ? 'posts' : relative.includes('/games/') ? 'games' : '';
     const route = type ? `/${type}/${slug}/` : `/${slug}/`;
-    const ref = { file: relative, title: String(data.title || slug), url: route };
+    const ref = type === 'posts' && (data.access?.mode === 'unlisted' || /^\s*<!-- blfy-access:unlisted -->/.test(content)) ? { file: '(unlisted article)', title: '未列出文章资源', url: '/sveltia/' } : { file: relative, title: String(data.title || slug), url: route };
     const collect = value => { const key = typeof value === 'string' ? assetPath(value, route) : null; if (key) { if (!references.has(key)) references.set(key, new Map()); references.get(key).set(relative, ref); } };
     const visitData = value => { if (Array.isArray(value)) value.forEach(visitData); else if (value && typeof value === 'object') Object.values(value).forEach(visitData); else collect(value); };
     visitData(data);

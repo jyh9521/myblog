@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 // Only local upload URLs may be passed to the self-hosted reader.
 export function pdfUploadUrl(value: string): string | null {
   try {
+    if (/^\/ns\/api\/posts\/assets\/[a-f0-9]{32}\/[a-f0-9]{32}$/.test(value)) return value;
     if (!value.startsWith('/uploads/') || /[?#\\]/.test(value)) return null;
     const decoded = decodeURIComponent(value);
     if (!/\.pdf$/i.test(decoded) || decoded.split('/').some(part => part === '.' || part === '..') || /[\x00-\x1f\\?#]/.test(decoded)) return null;

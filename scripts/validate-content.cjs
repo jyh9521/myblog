@@ -15,7 +15,7 @@ async function validateRepository(root = process.cwd()) {
   let config;
   try { config = yaml.load(fs.readFileSync(path.join(root, 'public/sveltia/config.yml'), 'utf8')); }
   catch (e) { error('CMS config', `YAML 格式错误：${e.message}`); }
-  const custom = ['custom.js', 'hltb.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
+  const custom = ['custom.js', 'hltb.js', 'article-access.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
   if (config) {
     if (config.backend?.name !== 'github' || !config.backend.repo || !config.backend.branch) error('CMS config', 'GitHub backend 配置不完整');
     if (!Array.isArray(config.collections)) error('CMS config', 'collections 必须为数组');
@@ -75,6 +75,17 @@ async function validateRepository(root = process.cwd()) {
     const filename = `content/${folder ? folder + '/' : ''}${name}`, full = path.join(root, filename);
     let data, content;
     try { ({ data, content } = matter(fs.readFileSync(full, 'utf8'))); } catch (e) { error(filename, `frontmatter 错误：${e.message}`); continue; }
+    if (folder === 'posts' && data.access) {
+      if (!['public', 'password', 'unlisted'].includes(data.access.mode)) error(filename, '文章访问方式无效');
+      if (data.access.mode === 'password' && (!/^[a-f0-9]{32}$/.test(data.access.privateId || '') || content.trim() !== '<!-- blfy-access:password:' + data.access.privateId + ' -->')) error(filename, '密码文章不能包含公共正文；请在后台保存私密正文');
+      if (data.access.mode !== 'password' && /^\s*<!-- blfy-access:password:/.test(content)) error(filename, '公开文章仍含密码引用，请载入正文后再发布');
+    }
+    if (folder === 'posts' && /^\s*<!--\s*blfy-access:/i.test(content)) {
+      const password = content.match(/^\s*<!-- blfy-access:password:([a-f0-9]{32}) -->\s*$/);
+      const unlisted = /^\s*<!-- blfy-access:unlisted -->/.test(content);
+      if (!password && !unlisted) error(filename, '访问标记无效；密码文章只能保存私密正文引用');
+      if (password && (data.audio || data.video || data.attachment)) error(filename, '密码文章附件应使用私密资源，不要填写公共附件字段');
+    }
     const base = folder ? `/${folder}/${name.slice(0, -3)}/` : '/about/';
     if (folder === 'games' && data.personalRating !== undefined && data.personalRating !== null && String(data.personalRating).trim() !== '') {
       const score = Number(data.personalRating);

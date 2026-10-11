@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+import ProtectedPost from '../protected-post';
 import { notFound } from 'next/navigation';
 import PostContent from '../post-content';
 import { extractHeadings, extractImages } from '../markdown-utils';
@@ -8,7 +10,12 @@ import GiscusComments from '../../comments/giscus-comments';
 import { withImageSize } from '../../../lib/article-image-size';
 
 export function generateStaticParams() {
-  return getAllPosts().map(post => ({ slug: post.slug }));
+  return getAllPosts({ includeUnlisted: true }).map(post => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const post = getPost((await params).slug);
+  return { title: post?.title, robots: post?.visibility === 'public' ? { index: true, follow: true } : { index: false, follow: false } };
 }
 
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
@@ -35,7 +42,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         {post.updateNote && <p className="update-note">更新说明：{post.updateNote}</p>}
         {post.gameSlug && <Link className="game-reference" href={`/games/${post.gameSlug}/`}>🎮 查看游戏档案与时间线 ↗</Link>}
       </header>
-      <PostContent body={post.body} title={post.title} headings={headings} images={images} games={games} cover={hasLocalAsset(post.cover) ? withImageSize({ src: post.cover, alt: post.title, caption: post.title, group: '封面' }) : undefined} audio={post.audio} video={post.video} attachment={post.attachment} />
+      {post.visibility === 'password' ? <ProtectedPost privateId={post.privateId} title={post.title} games={games} /> : <PostContent body={post.body} title={post.title} headings={headings} images={images} games={games} cover={hasLocalAsset(post.cover) ? withImageSize({ src: post.cover, alt: post.title, caption: post.title, group: '封面' }) : undefined} audio={post.audio} video={post.video} attachment={post.attachment} />}
       {(previous || next) && <nav className="post-neighbor-nav" aria-label="上一篇和下一篇">
         {previous ? <Link href={`/posts/${previous.slug}/`} className="neighbor-card neighbor-previous"><span>← 上一篇 · 更早</span><strong>{previous.title}</strong></Link> : <span />}
         {next ? <Link href={`/posts/${next.slug}/`} className="neighbor-card neighbor-next"><span>下一篇 · 更新 →</span><strong>{next.title}</strong></Link> : <span />}
@@ -43,7 +50,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
       {related.length > 0 && <section className="related-posts"><div className="section-title"><div><span className="section-kicker">KEEP READING</span><h2>相关文章</h2></div></div>
         <div className="related-grid">{related.map(item => <Link key={item.slug} className="related-card" href={`/posts/${item.slug}/`}><span>{item.tags.find(tag => post.tags.includes(tag)) || '文章'}</span><strong>{item.title}</strong><small>{item.date.slice(0, 10)} · 阅读文章 →</small></Link>)}</div>
       </section>}
-      <GiscusComments />
+      {post.visibility === 'public' && <GiscusComments />}
       <Link className="article-end" href="/">← 查看更多文章</Link>
     </div>
   </main>;

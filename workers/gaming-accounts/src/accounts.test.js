@@ -10,6 +10,7 @@ function env(){
   const db=new DatabaseSync(':memory:');db.exec(readFileSync(new URL('../migrations/0001_accounts.sql',import.meta.url),'utf8'));
   db.exec(readFileSync(new URL('../migrations/0002_configuration.sql',import.meta.url),'utf8'));
   db.exec(readFileSync(new URL('../migrations/0003_store_links.sql',import.meta.url),'utf8'));
+  db.exec(readFileSync(new URL('../migrations/0004_private_posts.sql',import.meta.url),'utf8'));
   const prepare=sql=>{let values=[];const s=db.prepare(sql);return {bind(...args){values=args;return this;},async first(){return s.get(...values)||null;},async all(){return {results:s.all(...values)};},async run(){return {meta:s.run(...values)};}};};
   return {DB:{prepare,async batch(statements){db.exec('BEGIN');try{const v=await Promise.all(statements.map(s=>s.run()));db.exec('COMMIT');return v;}catch(e){db.exec('ROLLBACK');throw e;}}},CREDENTIAL_KEY:KEY,SITE_ORIGIN:SITE,ADMIN_GITHUB_LOGIN:'owner',MICROSOFT_CLIENT_ID:'client',MICROSOFT_CLIENT_SECRET:'test-client-secret',STEAM_API_KEY:'test-key'};
 }

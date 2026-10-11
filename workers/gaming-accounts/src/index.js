@@ -1,6 +1,7 @@
 import { random, seal, open, upstream, readJson } from './security.js';
 import { platforms, names, configured, begin, complete, renew, collect } from './providers.js';
 import { enrichStoreLinks, regionalProductUrl } from './store-links.js';
+import { privatePostsRoute } from './private-posts.js';
 const ROOT='/ns/api/accounts';
 const COOKIE='__Host-gaming_admin';
 const now=()=>new Date().toISOString();
@@ -88,6 +89,7 @@ export async function publicProfile(env) {
 }
 export async function route(request,env,ctx,fetcher=fetch) {
   const url=new URL(request.url),path=url.pathname.replace(/^\/api\/auth\/(xbox|steam|psn|nintendo|gog|epic)\/callback$/,ROOT+'/callback/$1');
+  if(url.pathname.startsWith('/ns/api/posts/'))return privatePostsRoute(request,env,admin);
   if(request.method==='GET'&&path===ROOT+'/public')return json(await publicProfile(env));
   if(!['GET','POST','DELETE'].includes(request.method))return json({error:'METHOD_NOT_ALLOWED'},405);
   if(request.method!=='GET'&&!stateOrigin(request,env))return json({error:'INVALID_ORIGIN'},403);
@@ -200,6 +202,6 @@ export default {
     const {results}=await env.DB.prepare('SELECT platform FROM gaming_accounts').all();
     // Each platform is isolated: failure cannot stop later platforms or replace their cache.
     for(const row of results)await syncAccount(row.platform,env);
-    await env.DB.batch([env.DB.prepare('DELETE FROM gaming_auth_states WHERE expires_at<?').bind(Date.now()),env.DB.prepare('DELETE FROM gaming_sync_runs WHERE finished_at<?').bind(new Date(Date.now()-30*86400000).toISOString()),env.DB.prepare('DELETE FROM gaming_login_attempts')]);
+    await env.DB.batch([env.DB.prepare('DELETE FROM gaming_auth_states WHERE expires_at<?').bind(Date.now()),env.DB.prepare('DELETE FROM gaming_sync_runs WHERE finished_at<?').bind(new Date(Date.now()-30*86400000).toISOString()),env.DB.prepare('DELETE FROM private_post_attempts WHERE expires_at<?').bind(Date.now()),env.DB.prepare('DELETE FROM gaming_login_attempts')]);
   }
 };

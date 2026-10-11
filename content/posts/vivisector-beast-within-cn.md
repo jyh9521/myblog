@@ -10,6 +10,7 @@ cover: /uploads/chinesetranslationpatch/vivisectorbeastwithin/封面图.png
 tags:
   - 汉化
   - 游戏
+  - 活体解剖者
 pinned: false
 gameSlug: vivisector-beast-within
 ---

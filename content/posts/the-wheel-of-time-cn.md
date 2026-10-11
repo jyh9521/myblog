@@ -6,7 +6,7 @@ description: |-
   > 《时光之轮》简体中文汉化补丁
 cover: /uploads/chinesetranslationpatch/thewheeloftime/封面图.png
 tags:
-  - 汉化补丁
+  - 汉化
   - 时光之轮
   - 游戏
 pinned: false

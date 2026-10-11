@@ -45,7 +45,7 @@
       if(entry.get('collection')!=='post'&&entry.get('collectionName')!=='post')return entry;
       const access=entry.getIn(['data','access'])?.toJS?.()||entry.getIn(['data','access'])||{},mode=access.mode||'public',raw=entry.getIn(['data','body'])||'';
       if(!['public','unlisted','password'].includes(mode))throw Error('文章访问方式无效。');
-      if(mode!=='password') {if(/^\s*<!-- blfy-access:password:/.test(raw))throw Error('请先载入私密正文并复制到原正文编辑器，再保存公开文章。');return entry;}
+      if(mode!=='password') {if(!raw.trim())throw Error('正文不能为空。');if(/^\s*<!-- blfy-access:password:/.test(raw))throw Error('请先载入私密正文并复制到原正文编辑器，再保存公开文章。');return entry;}
       if(!validId(access.privateId))throw Error('私密正文引用无效，请重新选择密码访问。');
       if(entry.getIn(['data','audio'])||entry.getIn(['data','video'])||entry.getIn(['data','attachment']))throw Error('密码文章请清空公共附件字段，改用私密资源上传。');
       const editor=editors.get(access.privateId),publicDraft=raw.trim()===marker(access.privateId)?'':raw;

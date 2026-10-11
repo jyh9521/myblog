@@ -75,6 +75,7 @@ async function validateRepository(root = process.cwd()) {
     const filename = `content/${folder ? folder + '/' : ''}${name}`, full = path.join(root, filename);
     let data, content;
     try { ({ data, content } = matter(fs.readFileSync(full, 'utf8'))); } catch (e) { error(filename, `frontmatter 错误：${e.message}`); continue; }
+    if (folder === 'posts' && !content.trim()) error(filename, '正文不能为空');
     if (folder === 'posts' && data.access) {
       if (!['public', 'password', 'unlisted'].includes(data.access.mode)) error(filename, '文章访问方式无效');
       if (data.access.mode === 'password' && (!/^[a-f0-9]{32}$/.test(data.access.privateId || '') || content.trim() !== '<!-- blfy-access:password:' + data.access.privateId + ' -->')) error(filename, '密码文章不能包含公共正文；请在后台保存私密正文');

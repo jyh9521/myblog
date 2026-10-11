@@ -8,7 +8,7 @@ description: |-
   > 《活体解剖者：人面兽心》简体中文汉化补丁
 cover: /uploads/chinesetranslationpatch/vivisectorbeastwithin/封面图.png
 tags:
-  - 汉化补丁
+  - 汉化
   - 游戏
 pinned: false
 gameSlug: vivisector-beast-within

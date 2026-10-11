@@ -2,6 +2,22 @@
 // Identifiers are preferred; name fallback is exact after typography normalization.
 const DAY=86400000;
 const REGIONS={xbox:'TW',psn:'HK',nintendo:'JP'};
+const PSN_COVER_VERSION=':cover-v1';
+function psnCoverUrl(value) {
+  try {const u=new URL(value);return u.protocol==='https:'&&u.hostname==='image.api.playstation.com'&&!u.username&&!u.password?u.href:undefined;}catch{return undefined;}
+}
+// Read only the matching product's structured cover, never a screenshot or
+// another edition's artwork from the page's shared catalogue state.
+function psnPageCover(html,id) {
+  for(const script of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    if(!/\btype\s*=\s*["']application\/ld\+json["']/i.test(script[1]))continue;
+    try {
+      const data=JSON.parse(script[2]);
+      const entries=Array.isArray(data)?data:[data,...(Array.isArray(data['@graph'])?data['@graph']:[])];
+      for(const p of entries)if(p?.['@type']==='Product'&&p.sku===id){const cover=psnCoverUrl(p.image);if(cover)return cover;}
+    }catch{/* Missing or malformed artwork must not invalidate a verified link. */}
+  }
+}
 export function normalizedTitle(value) {
   return typeof value==='string'?value.normalize('NFKC').toLowerCase().replace(/[™®©]/g,'').replace(/[^\p{L}\p{N}]/gu,''):'';
 }
@@ -78,7 +94,7 @@ export async function psnStore(game,fetcher=fetch) {
   const data=match?JSON.parse(match[1]):null;
   const props=data?.props?.pageProps;
   if(props?.statusCode!==200||props.productId!==id||props.locale!=='zh-hant-hk'||!/<title>[^<]+<\/title>/.test(html))return null;
-  return {url,source};
+  return {url,cover:psnPageCover(html,id),source:source+PSN_COVER_VERSION};
 }
 export async function nintendoStore(game,fetcher=fetch) {
   if(!/^[0-9a-f]{16}$/i.test(game.id))return null;
@@ -125,9 +141,12 @@ export async function enrichStoreLinks(data,env,fetcher=fetch,now=Date.now()) {
     let row;
     try{row=await env.DB.prepare('SELECT * FROM gaming_store_links WHERE platform=? AND game_id=?').bind(data.platform,game.id).first();}catch{continue;}
     const cached=(row?.title===game.title||row?.source==='manual')&&regionalProductUrl(data.platform,row?.url);
-    if(cached){game.url=cached;if(!game.cover&&row.cover?.startsWith('https://'))game.cover=row.cover;}
-    if((row?.title===game.title||row?.source==='manual')&&row.expires_at>now)continue;
-    pending.push({game,row,cached});
+    const regionalCover=data.platform==='psn'&&row?.source?.endsWith(PSN_COVER_VERSION)&&psnCoverUrl(row.cover);
+    if(cached){game.url=cached;if(regionalCover)game.cover=regionalCover;else if(!game.cover&&row.cover?.startsWith('https://'))game.cover=row.cover;}
+    // Upgrade old link-only PSN cache entries once, including their 30-day TTL.
+    const upgrade=data.platform==='psn'&&cached&&row.source!=='manual'&&!row.source?.endsWith(PSN_COVER_VERSION);
+    if((row?.title===game.title||row?.source==='manual')&&row.expires_at>now&&!upgrade)continue;
+    pending.push({game,row,cached,originalCover:game.cover});
   }
   const misses=[];
   for(const item of pending){
@@ -140,12 +159,12 @@ export async function enrichStoreLinks(data,env,fetcher=fetch,now=Date.now()) {
   }
   for(const {game,row,cached,result,failed,failure} of pending){
     const url=regionalProductUrl(data.platform,result?.url);
-    if(url){game.url=url;if(!game.cover&&result.cover?.startsWith('https://'))game.cover=result.cover;}
+    if(url){game.url=url;if(data.platform==='psn'&&psnCoverUrl(result.cover))game.cover=result.cover;else if(!game.cover&&result.cover?.startsWith('https://'))game.cover=result.cover;}
     // Transient failures and missing mappings never erase a verified old link.
-    const keep=url||cached||null,cover=result?.cover||row?.cover||null;
+    const keep=url||cached||null,cover=result?.cover||(cached?row?.cover:null)||null;
     try{await env.DB.prepare('INSERT INTO gaming_store_links(platform,game_id,title,url,cover,source,checked_at,expires_at) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(platform,game_id) DO UPDATE SET title=excluded.title,url=excluded.url,cover=excluded.cover,source=excluded.source,checked_at=excluded.checked_at,expires_at=excluded.expires_at WHERE gaming_store_links.source<>\'manual\'').bind(data.platform,game.id,game.title,keep,cover,url?result.source:cached?row.source:failed?'retry:'+failure:'not-found',now,now+(url?30*DAY:failed?3600000:DAY)).run();}catch{/* Store enrichment must not break account synchronization. */}
   }
   // A manual correction made during a catalogue fetch takes precedence as well.
-  for(const {game} of pending){try{const latest=await env.DB.prepare('SELECT url,source FROM gaming_store_links WHERE platform=? AND game_id=?').bind(data.platform,game.id).first();if(latest?.source==='manual'){const url=regionalProductUrl(data.platform,latest.url);if(url)game.url=url;}}catch{}}
+  for(const {game,originalCover} of pending){try{const latest=await env.DB.prepare('SELECT url,source FROM gaming_store_links WHERE platform=? AND game_id=?').bind(data.platform,game.id).first();if(latest?.source==='manual'){const url=regionalProductUrl(data.platform,latest.url);if(url){game.url=url;if(data.platform==='psn'){if(originalCover)game.cover=originalCover;else delete game.cover;}}}}catch{}}
   return data;
 }

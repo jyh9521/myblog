@@ -10,8 +10,8 @@ description: |-
 cover: /uploads/chinesetranslationpatch/redfaction/封面图.avif
 tags:
   - 汉化
-  - 红色派系
   - 游戏
+  - 红色派系
 pinned: false
 gameSlug: red-faction
 patch:

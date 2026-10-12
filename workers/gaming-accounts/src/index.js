@@ -193,15 +193,24 @@ export async function route(request,env,ctx,fetcher=fetch) {
   }
   return json({error:'NOT_FOUND'},404);
 }
+// A separate Cron event gives each platform its own upstream request budget.
+export const syncCron='0,5,10,15,20,25 0 * * *';
+export const syncSchedules={0:'nintendo',5:'psn',10:'xbox',15:'steam',20:'gog',25:'epic'};
+export async function scheduledSync(event,env,fetcher=fetch) {
+  const time=new Date(event.scheduledTime);
+  if(event.cron!==syncCron || !Number.isFinite(time.getTime()) || time.getUTCHours()!==0)return;
+  const platform=syncSchedules[time.getUTCMinutes()];
+  if(!platform)return;
+  env=await providerEnv(env);
+  await syncAccount(platform,env,fetcher);
+  // Daily-history cleanup needs only one event per daily cycle.
+  if(platform==='nintendo')await env.DB.batch([env.DB.prepare('DELETE FROM gaming_auth_states WHERE expires_at<?').bind(Date.now()),env.DB.prepare('DELETE FROM gaming_sync_runs WHERE finished_at<?').bind(new Date(Date.now()-30*86400000).toISOString()),env.DB.prepare('DELETE FROM private_post_attempts WHERE expires_at<?').bind(Date.now()),env.DB.prepare('DELETE FROM gaming_login_attempts')]);
+}
 export default {
   async fetch(request,env,ctx) {
     try{return await route(request,env,ctx);}catch(e){return json({error:errorCode(e)},e?.message==='INPUT_TOO_LARGE'?413:503);}
   },
   async scheduled(event,env,ctx) {
-    env=await providerEnv(env);
-    const {results}=await env.DB.prepare('SELECT platform FROM gaming_accounts').all();
-    // Each platform is isolated: failure cannot stop later platforms or replace their cache.
-    for(const row of results)await syncAccount(row.platform,env);
-    await env.DB.batch([env.DB.prepare('DELETE FROM gaming_auth_states WHERE expires_at<?').bind(Date.now()),env.DB.prepare('DELETE FROM gaming_sync_runs WHERE finished_at<?').bind(new Date(Date.now()-30*86400000).toISOString()),env.DB.prepare('DELETE FROM private_post_attempts WHERE expires_at<?').bind(Date.now()),env.DB.prepare('DELETE FROM gaming_login_attempts')]);
+    await scheduledSync(event,env);
   }
 };

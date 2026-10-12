@@ -1,0 +1,14 @@
+{
+  "name": "blog-static-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:site": "node scripts/prepare-site.mjs",
+    "test": "node --test src/*.test.js",
+    "deploy": "wrangler deploy",
+    "verify:live": "node scripts/verify-live.mjs",
+    "verify:browser": "node scripts/verify-browser.mjs",
+    "types": "wrangler types"
+  },
+  "devDependencies": { "wrangler": "4.149.0", "playwright": "1.62.1" }
+}

@@ -9,6 +9,6 @@ access:
 
 ## 中文资源与 PDF
 
-![中文文件名](/uploads/主菜单.png)
+![中文文件名](/uploads/chinesetranslationpatch/bloodrayne/主菜单.png)
 
 [预览测试 PDF](/uploads/预览%20验证.pdf "pdf-embed")

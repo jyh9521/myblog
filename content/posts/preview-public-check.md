@@ -1,7 +1,8 @@
 ---
 title: 预览站公开文章验证
 date: 2026-10-13
-tags: []
+description: 预览迁移后台保存验证成功。仅测试分支，正式文章保持不变。
+pinned: false
 access:
   mode: unlisted
 ---

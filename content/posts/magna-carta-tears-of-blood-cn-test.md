@@ -69,9 +69,7 @@ access:
 
 
 
-## 60 FPS 金手指（实验性）
-
-**此韩版移植代码未经过长期稳定性验证，不保证全程 60 FPS，也不保证游戏逻辑保持原速。使用前备份记忆卡。** 以下代码保留原文，不代表已复核其移植地址、作者署名或 EE 超频需求；仅适用于本文记录的版本测试，其他 CRC 不应直接套用。
+## 金手指（实验性）
 
 ### 1. 打开游戏的金手指编辑器
 
@@ -92,15 +90,361 @@ access:
 将下面内容粘贴进去：
 
 ```plain
-[60 FPS]
+gametitle=Magna Carta - Tears of Blood NTSC-K (SCKA-20043)
+
+[60帧]
 author=Gabominated (NTSC-U original)
-description=NTSC-K port. Might need enable EE Overclock.
+description=解锁60帧。帧率不足时可尝试提高模拟器主处理器时钟。
+// 001C69E4: slti at,v0,2 -> slti at,v0,1
+
+// Gameplay ports: static verified; runtime pending.
+// Upstream: root670/CheatDevicePS2/CheatDatabase.txt (GPL-3.0).
+// Select ONE money-spend mode and ONE item mode at a time.
+// JP reference: https://xterminatorex.seesaa.net/category/6006620-2.html
+// Disable item modes before equipment changes (JP hang report; KR not tested).
+
+patch=1,EE,E0010001,extended,000C3FE0
 patch=1,EE,201C69E4,extended,28410001
+patch=1,EE,E0010000,extended,000C3FE0
+patch=1,EE,201C69E4,extended,28410002
+
+[快捷键提示：SELECT＋上开启作弊，SELECT＋下关闭作弊]
+description=仅为操作说明，勾选本行没有任何效果。
+
+[消费（下方最多启用1项）\关闭]
+description=关闭本组修改：先取消同组其他项，再勾选关闭。仅恢复本组原指令，不恢复已改变的金钱、数量或HP数值。
+patch=1,EE,003A06F0,word,14200004
+patch=1,EE,003A06F8,word,00451023
+patch=1,EE,003A0700,word,AC620000
+
+[消费（下方最多启用1项）\不扣钱]
+description=消费时不扣除金钱，但仍需满足原本的余额要求。
+// spend_no_decrease; original AC620000; intUMrtsPartyDataexecSpendMoney
+
+patch=1,EE,E0010001,extended,000C3FE0
+patch=1,EE,203A0700,extended,00000000
+patch=1,EE,E0010000,extended,000C3FE0
+patch=1,EE,203A0700,extended,AC620000
+
+[消费（下方最多启用1项）\反加钱]
+description=消费金额改为增加金钱，仍需满足原本的余额要求。
+// spend_increase; original 00451023; intUMrtsPartyDataexecSpendMoney
+
+patch=1,EE,E0010001,extended,000C3FE0
+patch=1,EE,203A06F8,extended,00451021
+patch=1,EE,E0010000,extended,000C3FE0
+patch=1,EE,203A06F8,extended,00451023
+
+[消费（下方最多启用1项）\钱不够也能消费]
+description=余额不足时也可消费，并保留现有金钱。
+// spend_free; original 14200004; intUMrtsPartyDataexecSpendMoney
+
+patch=1,EE,E0010001,extended,000C3FE0
+patch=1,EE,203A06F0,extended,10000005
+patch=1,EE,E0010000,extended,000C3FE0
+patch=1,EE,203A06F0,extended,14200004
+
+[金钱获取（可独立启用）\获得金钱时余额变为1000000]
+description=获得金钱时设为1000000；商店交易与战斗结算的触发场景待实测。无法由【消费反加钱】触发。
+// gain_max_money; original 14200003; intUMrtsPartyDataexecMakeMoney
+patch=1,EE,E0010001,extended,000C3FE0
+patch=1,EE,203A0E78,extended,00000000
+patch=1,EE,E0010000,extended,000C3FE0
+patch=1,EE,203A0E78,extended,14200003
+
+[物品数量不减少（包括出售）]
+description=移除或使用物品时保留原数量。
+// item_no_decrease; original AC620004; intUMrtsPartyDataexecRemoveItem
+
+patch=1,EE,E0010001,extended,000C3FE0
+patch=1,EE,2039FBB0,extended,00000000
+patch=1,EE,E0010000,extended,000C3FE0
+patch=1,EE,2039FBB0,extended,AC620004
+
+[战斗生命值（下方最多启用1项）\关闭]
+description=关闭本组修改：先取消同组其他项，再勾选关闭。仅恢复本组原指令，不恢复已改变的金钱、数量或HP数值。
+patch=1,EE,00399190,word,27BDFFF0
+patch=1,EE,00399194,word,FFBF0000
+
+[战斗生命值（下方最多启用1项）\我方HP恢复9999（查询时）]
+description=查询生命值时，将存活我方角色的最大及当前生命值设为9999，不复活已阵亡角色。
+
+patch=1,EE,E0370001,extended,000C3FE0
+patch=1,EE,200C1000,extended,27BDFFA0
+patch=1,EE,200C1004,extended,7FA10000
+patch=1,EE,200C1008,extended,7FA20010
+patch=1,EE,200C100C,extended,7FA30020
+patch=1,EE,200C1010,extended,7FA80030
+patch=1,EE,200C1014,extended,7FA90040
+patch=1,EE,200C1018,extended,7FAA0050
+patch=1,EE,200C101C,extended,8F88B2CC
+patch=1,EE,200C1020,extended,11000021
+patch=1,EE,200C1024,extended,00000000
+patch=1,EE,200C1028,extended,8C890024
+patch=1,EE,200C102C,extended,11280006
+patch=1,EE,200C1030,extended,00000000
+patch=1,EE,200C1034,extended,1120001C
+patch=1,EE,200C1038,extended,00000000
+patch=1,EE,200C103C,extended,8D290028
+patch=1,EE,200C1040,extended,1000FFFA
+patch=1,EE,200C1044,extended,00000000
+patch=1,EE,200C1048,extended,9088039C
+patch=1,EE,200C104C,extended,11000006
+patch=1,EE,200C1050,extended,00000000
+patch=1,EE,200C1054,extended,240A0005
+patch=1,EE,200C1058,extended,110A0011
+patch=1,EE,200C105C,extended,00000000
+patch=1,EE,200C1060,extended,10000011
+patch=1,EE,200C1064,extended,00000000
+patch=1,EE,200C1068,extended,8C89020C
+patch=1,EE,200C106C,extended,1120000E
+patch=1,EE,200C1070,extended,00000000
+patch=1,EE,200C1074,extended,8D290060
+patch=1,EE,200C1078,extended,1120000B
+patch=1,EE,200C107C,extended,00000000
+patch=1,EE,200C1080,extended,8D2A00AC
+patch=1,EE,200C1084,extended,19400008
+patch=1,EE,200C1088,extended,00000000
+patch=1,EE,200C108C,extended,240A270F
+patch=1,EE,200C1090,extended,AD2A0034
+patch=1,EE,200C1094,extended,AD2A00AC
+patch=1,EE,200C1098,extended,10000003
+patch=1,EE,200C109C,extended,00000000
+patch=1,EE,200C10A0,extended,10000001
+patch=1,EE,200C10A4,extended,00000000
+patch=1,EE,200C10A8,extended,7BA10000
+patch=1,EE,200C10AC,extended,7BA20010
+patch=1,EE,200C10B0,extended,7BA30020
+patch=1,EE,200C10B4,extended,7BA80030
+patch=1,EE,200C10B8,extended,7BA90040
+patch=1,EE,200C10BC,extended,7BAA0050
+patch=1,EE,200C10C0,extended,27BD0060
+patch=1,EE,200C10C4,extended,27BDFFF0
+patch=1,EE,200C10C8,extended,FFBF0000
+patch=1,EE,200C10CC,extended,080E6466
+patch=1,EE,200C10D0,extended,00000000
+patch=1,EE,20399190,extended,08030400
+patch=1,EE,20399194,extended,00000000
+patch=1,EE,E0020000,extended,000C3FE0
+patch=1,EE,20399190,extended,27BDFFF0
+patch=1,EE,20399194,extended,FFBF0000
+
+[战斗生命值（下方最多启用1项）\敌人HP降至1（查询时）]
+description=查询生命值时，将存活敌人的当前生命值降至1，不修改最大生命值或复活已死亡敌人。
+
+patch=1,EE,E0360001,extended,000C3FE0
+patch=1,EE,200C1000,extended,27BDFFA0
+patch=1,EE,200C1004,extended,7FA10000
+patch=1,EE,200C1008,extended,7FA20010
+patch=1,EE,200C100C,extended,7FA30020
+patch=1,EE,200C1010,extended,7FA80030
+patch=1,EE,200C1014,extended,7FA90040
+patch=1,EE,200C1018,extended,7FAA0050
+patch=1,EE,200C101C,extended,8F88B2CC
+patch=1,EE,200C1020,extended,11000020
+patch=1,EE,200C1024,extended,00000000
+patch=1,EE,200C1028,extended,8C890024
+patch=1,EE,200C102C,extended,11280006
+patch=1,EE,200C1030,extended,00000000
+patch=1,EE,200C1034,extended,1120001B
+patch=1,EE,200C1038,extended,00000000
+patch=1,EE,200C103C,extended,8D290028
+patch=1,EE,200C1040,extended,1000FFFA
+patch=1,EE,200C1044,extended,00000000
+patch=1,EE,200C1048,extended,9088039C
+patch=1,EE,200C104C,extended,11000006
+patch=1,EE,200C1050,extended,00000000
+patch=1,EE,200C1054,extended,240A0005
+patch=1,EE,200C1058,extended,110A0005
+patch=1,EE,200C105C,extended,00000000
+patch=1,EE,200C1060,extended,10000010
+patch=1,EE,200C1064,extended,00000000
+patch=1,EE,200C1068,extended,1000000E
+patch=1,EE,200C106C,extended,00000000
+patch=1,EE,200C1070,extended,8C89020C
+patch=1,EE,200C1074,extended,1120000B
+patch=1,EE,200C1078,extended,00000000
+patch=1,EE,200C107C,extended,8D290060
+patch=1,EE,200C1080,extended,11200008
+patch=1,EE,200C1084,extended,00000000
+patch=1,EE,200C1088,extended,8D2A00AC
+patch=1,EE,200C108C,extended,19400005
+patch=1,EE,200C1090,extended,00000000
+patch=1,EE,200C1094,extended,240A0001
+patch=1,EE,200C1098,extended,AD2A00AC
+patch=1,EE,200C109C,extended,10000001
+patch=1,EE,200C10A0,extended,00000000
+patch=1,EE,200C10A4,extended,7BA10000
+patch=1,EE,200C10A8,extended,7BA20010
+patch=1,EE,200C10AC,extended,7BA30020
+patch=1,EE,200C10B0,extended,7BA80030
+patch=1,EE,200C10B4,extended,7BA90040
+patch=1,EE,200C10B8,extended,7BAA0050
+patch=1,EE,200C10BC,extended,27BD0060
+patch=1,EE,200C10C0,extended,27BDFFF0
+patch=1,EE,200C10C4,extended,FFBF0000
+patch=1,EE,200C10C8,extended,080E6466
+patch=1,EE,200C10CC,extended,00000000
+patch=1,EE,20399190,extended,08030400
+patch=1,EE,20399194,extended,00000000
+patch=1,EE,E0020000,extended,000C3FE0
+patch=1,EE,20399190,extended,27BDFFF0
+patch=1,EE,20399194,extended,FFBF0000
+
+[战斗生命值（下方最多启用1项）\我方恢复9999＋敌人HP1]
+description=查询生命值时，我方存活角色恢复到9999，存活敌人降至1。
+
+patch=1,EE,E0420001,extended,000C3FE0
+patch=1,EE,200C1000,extended,27BDFFA0
+patch=1,EE,200C1004,extended,7FA10000
+patch=1,EE,200C1008,extended,7FA20010
+patch=1,EE,200C100C,extended,7FA30020
+patch=1,EE,200C1010,extended,7FA80030
+patch=1,EE,200C1014,extended,7FA90040
+patch=1,EE,200C1018,extended,7FAA0050
+patch=1,EE,200C101C,extended,8F88B2CC
+patch=1,EE,200C1020,extended,1100002C
+patch=1,EE,200C1024,extended,00000000
+patch=1,EE,200C1028,extended,8C890024
+patch=1,EE,200C102C,extended,11280006
+patch=1,EE,200C1030,extended,00000000
+patch=1,EE,200C1034,extended,11200027
+patch=1,EE,200C1038,extended,00000000
+patch=1,EE,200C103C,extended,8D290028
+patch=1,EE,200C1040,extended,1000FFFA
+patch=1,EE,200C1044,extended,00000000
+patch=1,EE,200C1048,extended,9088039C
+patch=1,EE,200C104C,extended,11000006
+patch=1,EE,200C1050,extended,00000000
+patch=1,EE,200C1054,extended,240A0005
+patch=1,EE,200C1058,extended,110A0011
+patch=1,EE,200C105C,extended,00000000
+patch=1,EE,200C1060,extended,1000001C
+patch=1,EE,200C1064,extended,00000000
+patch=1,EE,200C1068,extended,8C89020C
+patch=1,EE,200C106C,extended,11200019
+patch=1,EE,200C1070,extended,00000000
+patch=1,EE,200C1074,extended,8D290060
+patch=1,EE,200C1078,extended,11200016
+patch=1,EE,200C107C,extended,00000000
+patch=1,EE,200C1080,extended,8D2A00AC
+patch=1,EE,200C1084,extended,19400013
+patch=1,EE,200C1088,extended,00000000
+patch=1,EE,200C108C,extended,240A270F
+patch=1,EE,200C1090,extended,AD2A0034
+patch=1,EE,200C1094,extended,AD2A00AC
+patch=1,EE,200C1098,extended,1000000E
+patch=1,EE,200C109C,extended,00000000
+patch=1,EE,200C10A0,extended,8C89020C
+patch=1,EE,200C10A4,extended,1120000B
+patch=1,EE,200C10A8,extended,00000000
+patch=1,EE,200C10AC,extended,8D290060
+patch=1,EE,200C10B0,extended,11200008
+patch=1,EE,200C10B4,extended,00000000
+patch=1,EE,200C10B8,extended,8D2A00AC
+patch=1,EE,200C10BC,extended,19400005
+patch=1,EE,200C10C0,extended,00000000
+patch=1,EE,200C10C4,extended,240A0001
+patch=1,EE,200C10C8,extended,AD2A00AC
+patch=1,EE,200C10CC,extended,10000001
+patch=1,EE,200C10D0,extended,00000000
+patch=1,EE,200C10D4,extended,7BA10000
+patch=1,EE,200C10D8,extended,7BA20010
+patch=1,EE,200C10DC,extended,7BA30020
+patch=1,EE,200C10E0,extended,7BA80030
+patch=1,EE,200C10E4,extended,7BA90040
+patch=1,EE,200C10E8,extended,7BAA0050
+patch=1,EE,200C10EC,extended,27BD0060
+patch=1,EE,200C10F0,extended,27BDFFF0
+patch=1,EE,200C10F4,extended,FFBF0000
+patch=1,EE,200C10F8,extended,080E6466
+patch=1,EE,200C10FC,extended,00000000
+patch=1,EE,20399190,extended,08030400
+patch=1,EE,20399194,extended,00000000
+patch=1,EE,E0020000,extended,000C3FE0
+patch=1,EE,20399190,extended,27BDFFF0
+patch=1,EE,20399194,extended,FFBF0000
+
+[战斗其他（可独立启用）\我方统率力100（查询时）]
+description=查询我方统率力时，将统率力数值设为100。可与1种生命值模式配合。
+patch=1,EE,E0050001,extended,000C3FE0
+patch=1,EE,200C2000,extended,3C0142C8
+patch=1,EE,200C2004,extended,AC810028
+patch=1,EE,200C2008,extended,081060FC
+patch=1,EE,200C200C,extended,00000000
+patch=1,EE,203FD758,extended,0C030800
+patch=1,EE,E0010000,extended,000C3FE0
+patch=1,EE,203FD758,extended,0C1060FC
+
+[内部控制（请勿手动选择或取消）\快捷键控制（已自动启用，请保持勾选）]
+description=【【【请勿取消勾选】】】内部必需控制代码，已自动启用。包含64条开关初始化、原始手柄读取和状态维护代码。取消后快捷键开关金手指功能将失效。
+patch=0,EE,000C3FE0,word,00000000
+patch=1,EE,000C3000,word,27BDFF60
+patch=1,EE,000C3004,word,7FA40000
+patch=1,EE,000C3008,word,7FA50010
+patch=1,EE,000C300C,word,7FA60020
+patch=1,EE,000C3010,word,FFBF0030
+patch=1,EE,000C3014,word,0C048200
+patch=1,EE,000C3018,word,00000000
+patch=1,EE,000C301C,word,7FA80040
+patch=1,EE,000C3020,word,7FA90050
+patch=1,EE,000C3024,word,7FAA0060
+patch=1,EE,000C3028,word,7FAB0070
+patch=1,EE,000C302C,word,8FA80000
+patch=1,EE,000C3030,word,1500002A
+patch=1,EE,000C3034,word,00000000
+patch=1,EE,000C3038,word,8FA80010
+patch=1,EE,000C303C,word,15000027
+patch=1,EE,000C3040,word,00000000
+patch=1,EE,000C3044,word,3C0B000C
+patch=1,EE,000C3048,word,356B3FE0
+patch=1,EE,000C304C,word,18400022
+patch=1,EE,000C3050,word,00000000
+patch=1,EE,000C3054,word,8FAA0020
+patch=1,EE,000C3058,word,91480000
+patch=1,EE,000C305C,word,1500001E
+patch=1,EE,000C3060,word,00000000
+patch=1,EE,000C3064,word,91480001
+patch=1,EE,000C3068,word,24090041
+patch=1,EE,000C306C,word,11090009
+patch=1,EE,000C3070,word,00000000
+patch=1,EE,000C3074,word,24090073
+patch=1,EE,000C3078,word,11090006
+patch=1,EE,000C307C,word,00000000
+patch=1,EE,000C3080,word,24090079
+patch=1,EE,000C3084,word,11090003
+patch=1,EE,000C3088,word,00000000
+patch=1,EE,000C308C,word,10000012
+patch=1,EE,000C3090,word,00000000
+patch=1,EE,000C3094,word,91480002
+patch=1,EE,000C3098,word,91490003
+patch=1,EE,000C309C,word,00094A00
+patch=1,EE,000C30A0,word,01094025
+patch=1,EE,000C30A4,word,3908FFFF
+patch=1,EE,000C30A8,word,31090041
+patch=1,EE,000C30AC,word,240A0041
+patch=1,EE,000C30B0,word,112A0009
+patch=1,EE,000C30B4,word,00000000
+patch=1,EE,000C30B8,word,31090011
+patch=1,EE,000C30BC,word,240A0011
+patch=1,EE,000C30C0,word,152A0006
+patch=1,EE,000C30C4,word,00000000
+patch=1,EE,000C30C8,word,24080001
+patch=1,EE,000C30CC,word,AD680000
+patch=1,EE,000C30D0,word,10000002
+patch=1,EE,000C30D4,word,00000000
+patch=1,EE,000C30D8,word,AD600000
+patch=1,EE,000C30DC,word,7BA80040
+patch=1,EE,000C30E0,word,7BA90050
+patch=1,EE,000C30E4,word,7BAA0060
+patch=1,EE,000C30E8,word,7BAB0070
+patch=1,EE,000C30EC,word,DFBF0030
+patch=1,EE,000C30F0,word,03E00008
+patch=1,EE,000C30F4,word,27BD00A0
+patch=1,EE,0017C738,word,0C030C00
 ```
 
 保存 PCSX2 为当前游戏生成的 `.pnach` 文件，然后关闭编辑器。不要另存成 `.pnach.txt`；使用“编辑作弊”可避免猜测作弊目录和文件名。
-
-![粘贴后保存](/uploads/chinesetranslationpatch/magna-carta-tears-of-blood/QQ20261011-161626.png "粘贴后保存")
 
 ### 4. 启用金手指
 
@@ -109,32 +453,16 @@ patch=1,EE,201C69E4,extended,28410001
 1. **右键游戏 → 属性**。
 2. 打开 修改 页面。
 3. 勾选 开启作弊。
-4. 勾选列表里的 **60 FPS**。
+4. 选择需要的项目。
 
-![修改 - 开启作弊](/uploads/chinesetranslationpatch/magna-carta-tears-of-blood/QQ20261011-161708.png "修改 - 开启作弊")
+![金手指](/uploads/chinesetranslationpatch/magna-carta-tears-of-blood/QQ20261012-115839.png "金手指")
 
 ### 5. 重新启动并验证
 
-完全停止游戏后正常启动，再读取游戏内的记忆卡存档；不要用即时存档作为此次开关金手指的对照起点。确认 `60 FPS` 条目启用，并检查模拟器日志或屏幕提示是否加载作弊。加载成功只说明代码被应用，不说明效果一定正确。
+在游戏中使用手柄快捷键“Select + 十字键上”启用已选择的金手指。
 
-代码描述中的 `Might need enable EE Overclock` 只是“可能需要 EE 超频”，没有给出经验证的配置。先保持默认 EE 设置，不要通过解除限速或快进来制造“60 帧”。
+游戏中，开启或关闭金手指后，使用“Select + 十字键下”关闭金手指，然后再次用“Select + 十字键上”开启金手指即可验收新的启用效果。
 
-![实验截图：FPS 60、VPS 60、速度 100%，不代表长期稳定性验证](/uploads/chinesetranslationpatch/magna-carta-tears-of-blood/QQ20261011-161824.png "60帧")
+## 问题反馈
 
-### 6. 区分帧率与游戏速度
-
-根据 [PCSX2 官方性能说明](https://pcsx2.net/docs/troubleshooting/performance)，**FPS** 是模拟器统计的游戏内部帧率，**VPS** 是视频输出速率，**速度（Speed）** 是模拟运行速度百分比。NTSC 输出通常约为 59.94 VPS（界面可能取整显示 60）；VPS 60 不等于游戏每秒生成 60 张不同画面，录屏文件标为 60 FPS 也不能单独证明这一点。
-
-上图在一个场景显示 FPS 60、VPS 60、速度 100%，只能作为该时刻的统计记录。即使速度为 100%，改变游戏内部帧率后仍可能让移动、动画或战斗计时加速。
-
-请按以下方法实测并记录结果：
-
-1. 关闭金手指、保持正常限速和默认 EE 设置，从同一记忆卡存档进入同一场景。在 **设置 → 屏上显示** 中开启 FPS、VPS 和速度统计，记录基线。本文尚未给出韩版原生实际帧率的对照测量，不能把约 60 VPS 当成原生 60 FPS。
-2. 开启金手指，完全重新启动后重复测试。保持相同分辨率、纹理、宽屏及其他设置，比较内部 FPS 和模拟速度是否稳定；低于 100% 说明模拟器未能保持正常速度。
-3. 用现实秒表比较相同路线的移动耗时、固定动作或动画时长、战斗节奏与计时、过场音画同步。若动作耗时明显缩短，即使速度显示 100%，也应视为可能存在游戏逻辑加速。
-4. 如需验证不同画面的数量，用足够帧率的录屏逐帧检查持续移动的场景，排除重复帧；同时保留上述耗时对照。不同场景、菜单和 FMV 应分别检查。
-5. 遇到加速、崩溃、音画不同步或战斗异常，关闭金手指并完全重启，用备份存档继续测试。不要把短时截图当成长期稳定性结论。
-
-## 
-
-有问题可以通过各种渠道反馈给我，比如[哔哩哔哩](https://space.bilibili.com/10119)、[QQ群](https://blog.blfy.cc/ns/)、本文评论区等。
+有问题可以通过各种渠道反馈给我，比如[哔哩哔哩](https://space.bilibili.com/10119)、[QQ群](https://blog.blfy.cc/ns/)等。

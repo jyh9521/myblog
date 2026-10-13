@@ -4,7 +4,7 @@
   const node = (tag, text, className) => { const element = document.createElement(tag); if (text !== undefined) element.textContent = text; if (className) element.className = className; return element; };
   const link = (text, href) => { const element = node('a', text); element.href = href; element.target = '_blank'; element.rel = 'noopener noreferrer'; return element; };
   function show(name) { for (const panel of ['publish', 'assets']) { $(panel).hidden = panel !== name; $(`show-${panel}`).setAttribute('aria-pressed', String(panel === name)); } }
-  $('show-publish').onclick = () => show('publish'); $('show-assets').onclick = () => show('assets');
+  $('show-publish').onclick = () => show('publish'); $('show-assets').onclick = () => { window.location.href='/sveltia/resources.html'; };
   async function json(url) {
     const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw Error(response.status === 403 || response.status === 429 ? 'GitHub 查询限流，请稍后手动刷新' : `请求失败（HTTP ${response.status}）`);

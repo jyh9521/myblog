@@ -10,12 +10,12 @@ try {
  const page=await browser.newPage({locale:'zh-CN',viewport:{width:1440,height:1000}});
  await page.goto(site+'/sveltia/',{waitUntil:'networkidle'});
  await page.getByRole('button',{name:'使用访问令牌登录',exact:true}).click();await page.locator('input').first().fill(githubToken());await page.getByRole('button',{name:'登录',exact:true}).click();
- await page.getByText('预览站公开文章验证',{exact:true}).dblclick();await page.getByRole('button',{name:'浏览 / 上传 R2 资源',exact:true}).first().click();
- const dialog=page.getByRole('dialog',{name:'R2 公开资源库'});await dialog.getByRole('button',{name:'选择资源',exact:true}).first().waitFor();
- await dialog.getByLabel('R2 管理员 GitHub Token',{exact:true}).fill(githubToken());await dialog.getByRole('button',{name:'连接后台',exact:true}).click();await dialog.getByText('管理员已连接；',{exact:false}).waitFor();
+ await page.getByText('预览站公开文章验证',{exact:true}).dblclick();await page.getByRole('button',{name:'选择已有图片',exact:true}).first().click();
+ const dialog=page.getByRole('dialog',{name:'资源库'});await dialog.locator('.blog-media-choice').first().waitFor();
+ await dialog.locator('.blog-media-management summary').click();await dialog.getByLabel('管理身份 GitHub Token',{exact:true}).fill(githubToken());await dialog.getByRole('button',{name:'验证管理身份',exact:true}).click();await dialog.getByText('管理身份已验证。',{exact:false}).waitFor();
  const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aRZkAAAAASUVORK5CYII=','base64');
  const fixtureName='后台资源 验证-'+Date.now()+'.png';
- await dialog.getByLabel('上传 R2 文件',{exact:true}).setInputFiles({name:fixtureName,mimeType:'image/png',buffer:png});await dialog.waitFor({state:'hidden',timeout:60000});
+ await dialog.getByLabel('上传图片',{exact:true}).setInputFiles({name:fixtureName,mimeType:'image/png',buffer:png});await dialog.waitFor({state:'hidden',timeout:60000});
  await page.getByRole('button',{name:'保存',exact:true}).click();
  let doc;for(let i=0;i<30;i++){doc=await github('/repos/jyh9521/myblog/contents/content/posts/preview-public-check.md?ref='+branch);const text=Buffer.from(doc.content,'base64').toString();if(text.includes(encodeURIComponent(fixtureName))||text.includes(fixtureName))break;await page.waitForTimeout(1000);}
  const body=Buffer.from(doc.content,'base64').toString();assert.ok(body.includes('/uploads/cms/'));const after=(await github('/repos/jyh9521/myblog/git/ref/heads/'+branch)).object.sha;

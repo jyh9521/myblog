@@ -7,7 +7,7 @@ description: |-
   > No One Lives Forever 2: A Spy in H.A.R.M.'s Way Simplified Chinese Patch
   > 《无人永生2：H.A.R.M. 之道》简体中文汉化补丁
   > 基于 Modernizer2 Beta 2C
-cover: /uploads/chinesetranslationpatch/nolf2/封面图.png
+cover: /uploads/chinesetranslationpatch/nolf2/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 汉化
   - 游戏
@@ -57,17 +57,17 @@ NOLF2 使用的 LithTech (Jupiter) 是一款 2002 年的老引擎，给汉化带
 
 ## 三、截图
 
-![主菜单](/uploads/chinesetranslationpatch/nolf2/主菜单.avif "主菜单")
+![主菜单](/uploads/chinesetranslationpatch/nolf2/%E4%B8%BB%E8%8F%9C%E5%8D%95.avif)
 
-![设置选项](/uploads/chinesetranslationpatch/nolf2/设置选项.avif "设置选项")
+![设置选项](/uploads/chinesetranslationpatch/nolf2/%E8%AE%BE%E7%BD%AE%E9%80%89%E9%A1%B9.avif)
 
-![载入界面](/uploads/chinesetranslationpatch/nolf2/载入界面.avif "载入界面")
+![载入界面](/uploads/chinesetranslationpatch/nolf2/%E8%BD%BD%E5%85%A5%E7%95%8C%E9%9D%A2.avif)
 
-![游戏暂停界面](/uploads/chinesetranslationpatch/nolf2/游戏暂停界面.avif "游戏暂停界面")
+![游戏暂停界面](/uploads/chinesetranslationpatch/nolf2/%E6%B8%B8%E6%88%8F%E6%9A%82%E5%81%9C%E7%95%8C%E9%9D%A2.avif)
 
-![游戏内文档](/uploads/chinesetranslationpatch/nolf2/游戏内文档.avif "游戏内文档")
+![游戏内文档](/uploads/chinesetranslationpatch/nolf2/%E6%B8%B8%E6%88%8F%E5%86%85%E6%96%87%E6%A1%A3.avif)
 
-![过场动画](/uploads/chinesetranslationpatch/nolf2/过场动画.avif "过场动画")
+![过场动画](/uploads/chinesetranslationpatch/nolf2/%E8%BF%87%E5%9C%BA%E5%8A%A8%E7%94%BB.avif)
 
 
 
@@ -107,7 +107,7 @@ NOLF2 使用的 LithTech (Jupiter) 是一款 2002 年的老引擎，给汉化带
 
 游戏中按 T（聊天/控制台）输入以下命令即可：
 
-![作弊码](/uploads/chinesetranslationpatch/nolf2/%E4%BD%9C%E5%BC%8A%E7%A0%81.avif "作弊码")
+![作弊码](/uploads/chinesetranslationpatch/nolf2/%E4%BD%9C%E5%BC%8A%E7%A0%81.avif)
 
 
 

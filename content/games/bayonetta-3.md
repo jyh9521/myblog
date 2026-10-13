@@ -1,57 +1,29 @@
 ---
 title: 蓓优妮塔3
 status:
-  - 想玩
+  - 已通关
 playTime:
   hours: 11.5
 personalRating: 8
 hltb:
-  id: 51276
-  url: https://howlongtobeat.com/game/51276
-  title: Bayonetta 3
   auto: true
+  id: 51276
   snapshot:
+    completionist: 47.54
+    extras: 18.75
     id: 51276
     main: 13.06
-    extras: 18.75
-    completionist: 47.54
     updatedAt: 2026-10-09T15:20:07.608Z
+  title: Bayonetta 3
+  url: https://howlongtobeat.com/game/51276
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/c30/c30ac50cb13096f5402250bf666a321c.jpg
-  description: |-
-    Bayonetta struts through multiple locations in an all-new, over-the-top climax action game. Sporting a wicked new ensemble and somehow familiar pigtails, the titular Umbra Witch must face a mysterious evil using her signature guns and time-slowing Witch Time ability. This time, invading manmade bioweapons called Homunculi find themselves in Bayonetta’s crosshairs.
-
-    Tap into Bayonetta’s naughtier side with Demon Masquerade, a new ability that channels the demon linked to her weapon allowing for some exciting action options, not to mention some hair-raising combos. She can also summon her demonic darlings like Gomorrah, Malphas, and Phantasmaraneae during battle, unleashing their demonic powers in the heat of combat and in new, larger-than-life battles where you directly control the action.
-
-    Fight your way through the streets of Tokyo, the mountains of China, and many other locales! Along the way you’ll meet a virtual coven of Bayonettas, each more fabulous than the last. You’ll also slash and slay as Viola, a feisty witch in training who fights with a sword and a capricious companion, the demon Cheshire. Find out what fate awaits Bayonetta, and if this arcane alliance can really save reality!
-  developers:
-    - Platinum Games
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: manual
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-  id: rawg:50737
-  localizedName: ''
-  manualFields:
-    - title
-    - selectedPlatforms
-  originalName: Bayonetta 3
   platforms:
     - Nintendo Switch
-  publishers:
-    - Nintendo
-  releaseDate: 2022-10-28
+  selectedPlatforms:
+    - Nintendo Switch
+  localizedName: ''
+  developers:
+    - Platinum Games
   screenshots:
     - https://media.rawg.io/media/screenshots/97c/97c8f93509436d5fed288247b406e2e1_E0cjjr4.jpg
     - https://media.rawg.io/media/screenshots/fa3/fa38af1eade91f988c6de8b994dfe37e.jpg
@@ -59,16 +31,44 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/31f/31f0ff47f4f21a3e83b8f354e38e0a8d.jpg
     - https://media.rawg.io/media/screenshots/d98/d98af0bd19f496faaaec02722221e75c.jpg
     - https://media.rawg.io/media/screenshots/206/20631430a21c28a40ba884157c8be355.jpg
-  selectedPlatforms:
-    - Nintendo Switch
+  updatedAt: 2026-10-09T15:20:02.300Z
+  genres:
+    - Action
+  releaseDate: 2022-10-28
+  publishers:
+    - Nintendo
+  cover: https://media.rawg.io/media/games/c30/c30ac50cb13096f5402250bf666a321c.jpg
+  title: Bayonetta 3
   sources:
     rawg:
       id: '50737'
       slug: bayonetta-3
       url: https://rawg.io/games/50737
-  title: Bayonetta 3
-  updatedAt: 2026-10-09T15:20:02.300Z
   website: https://www.platinumgames.com/games/bayonetta-3
+  id: rawg:50737
+  alternativeNames: []
+  description: |-
+    Bayonetta struts through multiple locations in an all-new, over-the-top climax action game. Sporting a wicked new ensemble and somehow familiar pigtails, the titular Umbra Witch must face a mysterious evil using her signature guns and time-slowing Witch Time ability. This time, invading manmade bioweapons called Homunculi find themselves in Bayonetta’s crosshairs.
+
+    Tap into Bayonetta’s naughtier side with Demon Masquerade, a new ability that channels the demon linked to her weapon allowing for some exciting action options, not to mention some hair-raising combos. She can also summon her demonic darlings like Gomorrah, Malphas, and Phantasmaraneae during battle, unleashing their demonic powers in the heat of combat and in new, larger-than-life battles where you directly control the action.
+
+    Fight your way through the streets of Tokyo, the mountains of China, and many other locales! Along the way you’ll meet a virtual coven of Bayonettas, each more fabulous than the last. You’ll also slash and slay as Viola, a feisty witch in training who fights with a sword and a capricious companion, the demon Cheshire. Find out what fate awaits Bayonetta, and if this arcane alliance can really save reality!
+  originalName: Bayonetta 3
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: rawg
+    title: manual
+    website: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - title
+    - selectedPlatforms
 manual:
   availabilityStatus: available
   officialStores:

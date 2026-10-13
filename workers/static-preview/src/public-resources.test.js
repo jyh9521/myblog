@@ -17,6 +17,18 @@ const env=()=>({PUBLIC_UPLOADS:new Bucket(),SITE_ORIGIN:SITE,RESOURCE_REPOSITORY
 const req=(path,method='GET',body,extra={})=>new Request(SITE+path,{method,headers:{Origin:SITE,'X-Gaming-Admin':'1',Cookie:'admin','X-GitHub-Read-Token':'test-token',...extra},...(body!==undefined?{body:typeof body==='string'||body instanceof Uint8Array?body:JSON.stringify(body)}:{})});
 function github(text='',changed=false){let heads=0;return async(url,options)=>{if(url.includes('/git/ref/heads/'))return Response.json({object:{sha:changed&&heads++?'b'.repeat(40):SHA}});if(url.includes('/git/trees/'))return Response.json({truncated:false,tree:[{type:'blob',path:'content/posts/demo.md'}]});if(url==='https://api.github.com/graphql'){assert.equal(options.headers.Authorization,'Bearer test-token');return Response.json({data:{repository:{b0:{text,isBinary:false,byteSize:text.length}}}});}throw Error('Unexpected fetch '+url);};}
 async function pdf(e,key='source.pdf'){await e.PUBLIC_UPLOADS.put(key,'%PDF-1.4\nfixture',{httpMetadata:{contentType:'application/pdf'},customMetadata:{sha256:'b'.repeat(64)}});}
+test('file rename requires authentication, enforces CAS, survives reload and leaves referenced bytes intact',async()=>{
+ const e=env();await pdf(e,'folder/source.pdf');const call=r=>resourceAdminRoute(r,e,{},accounts);const before=await resourceCatalog(e);
+ const input={action:'rename-file',key:'folder/source.pdf',name:'新名称.pdf',revision:before.folderRevision};
+ assert.equal((await call(req('/ns/api/resources/folders','POST',input,{Cookie:''}))).status,401);
+ assert.equal((await call(req('/ns/api/resources/folders','POST',input,{Origin:'https://foreign.test'}))).status,403);
+ const response=await call(req('/ns/api/resources/folders','POST',input));assert.equal(response.status,200);assert.equal((await response.json()).files[0].name,'新名称.pdf');
+ assert.equal((await call(req('/ns/api/resources/folders','POST',input))).status,409);
+ const updated=await resourceCatalog(e);assert.equal(updated.files[0].name,'新名称.pdf');assert.equal(updated.files[0].path,before.files[0].path);assert.equal(updated.files[0].sha256,before.files[0].sha256);
+ assert.equal(await (await servePublicResource(req('/uploads/folder/source.pdf'),e)).text(),'%PDF-1.4\nfixture');
+ const invalid=await call(req('/ns/api/resources/folders','POST',{...input,name:'script.html',revision:updated.folderRevision}));assert.equal(invalid.status,400);assert.equal((await invalid.json()).error,'RESOURCE_EXTENSION_CHANGED');
+ const renameFolder=await call(req('/ns/api/resources/folders','POST',{action:'rename',source:'folder',destination:'renamed',revision:updated.folderRevision}));assert.equal(renameFolder.status,200);assert.equal((await renameFolder.json()).files[0].name,'新名称.pdf');
+});
 test('public keys preserve Unicode/space paths and reject hidden, traversal, encoded separators and control paths',()=>{
   assert.equal(publicKey('/uploads/'+encodeURIComponent('说明 文档.pdf')),'说明 文档.pdf');
   for(const path of ['/private/a','/uploads/.trash/a','/uploads/a/%2e%2e/b','/uploads/a%5Cb','/uploads/a%00.pdf','/uploads/a%3F.pdf','/uploads/%XX'])assert.equal(publicKey(path),null,path);

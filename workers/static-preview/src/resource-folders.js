@@ -8,15 +8,20 @@ export function folderPath(value) {
   return value.normalize('NFC');
 }
 export const defaultFolder=key=>key.startsWith('cms/')?'上传文件':key.split('/').slice(0,-1).join('/').normalize('NFC');
+export function resourceName(value) {
+  if(typeof value!=='string'||!value||value.length>150||value.trim()!==value||value.startsWith('.')||/[\\/\x00-\x1f\x7f?:*"<>|#]/.test(value))return null;
+  return value.normalize('NFC');
+}
+const originalName=key=>key.split('/').pop();
 export function folderLayout(files,state={folders:[],assignments:{}}) {
   const folders=new Set(state.folders);
-  const rows=files.map(file=>({...file,folder:Object.hasOwn(state.assignments,file.key)?state.assignments[file.key]:defaultFolder(file.key)}));
+  const rows=files.map(file=>({...file,name:Object.hasOwn(state.names||{},file.key)?state.names[file.key]:originalName(file.key),folder:Object.hasOwn(state.assignments,file.key)?state.assignments[file.key]:defaultFolder(file.key)}));
   for(const file of rows)if(file.folder)folders.add(file.folder);
   for(const folder of [...folders]){const parts=folder.split('/');for(let n=1;n<parts.length;n++)folders.add(parts.slice(0,n).join('/'));}
   return {files:rows,folders:[...folders].sort((a,b)=>a.localeCompare(b))};
 }
 export function planFolders(input,files,state) {
-  const layout=folderLayout(files,state),known=new Set(['',...layout.folders]),folders=new Set(layout.folders),assignments={...state.assignments};
+  const layout=folderLayout(files,state),known=new Set(['',...layout.folders]),folders=new Set(layout.folders),assignments={...state.assignments},names={...state.names};
   const destination=folderPath(input.destination);
   if(input.action==='create') {
     if(destination===null||!destination)throw Error('INVALID_FOLDER');
@@ -43,7 +48,14 @@ export function planFolders(input,files,state) {
     if(!Array.isArray(input.keys)||!input.keys.length||input.keys.length>500||input.keys.some(k=>typeof k!=='string')||new Set(input.keys).size!==input.keys.length)throw Error('INVALID_SELECTION');
     const active=new Set(files.map(f=>f.key));if(input.keys.some(key=>!active.has(key)))throw Error('RESOURCE_CHANGED');
     for(const key of input.keys)assignments[key]=destination;
+  }else if(input.action==='rename-file') {
+    const file=layout.files.find(f=>f.key===input.key);if(!file)throw Error('RESOURCE_CHANGED');
+    const name=resourceName(input.name);if(!name)throw Error('INVALID_RESOURCE_NAME');
+    const extension=value=>value.includes('.')?value.split('.').pop().toLowerCase():'';
+    if(extension(name)!==extension(originalName(file.key)))throw Error('RESOURCE_EXTENSION_CHANGED');
+    if(layout.files.some(f=>f.key!==file.key&&f.folder===file.folder&&f.name.toLocaleLowerCase()===name.toLocaleLowerCase()))throw Error('RESOURCE_NAME_EXISTS');
+    if(name===originalName(file.key))delete names[file.key];else names[file.key]=name;
   }else throw Error('INVALID_FOLDER_ACTION');
-  if(folders.size>2000||Object.keys(assignments).length>10000)throw Error('FOLDER_LIMIT');
-  return {schema:1,folders:[...folders],assignments};
+  if(folders.size>2000||Object.keys(assignments).length>10000||Object.keys(names).length>10000)throw Error('FOLDER_LIMIT');
+  return {schema:1,folders:[...folders],assignments,names};
 }

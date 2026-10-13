@@ -1,4 +1,4 @@
-import {FOLDER_STATE_KEY,folderPath,folderLayout,planFolders} from './resource-folders.js';
+import {FOLDER_STATE_KEY,folderPath,folderLayout,planFolders,resourceName} from './resource-folders.js';
 const ROOT='/ns/api/resources', MAX_UPLOAD=20*1024*1024;
 const json=(value,status=200)=>Response.json(value,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const hex=bytes=>Array.from(new Uint8Array(bytes),v=>v.toString(16).padStart(2,'0')).join('');
@@ -66,6 +66,7 @@ async function readFolderState(env) {
   const object=await env.PUBLIC_UPLOADS.get(FOLDER_STATE_KEY);
   if(!object)return {state:{schema:1,folders:[],assignments:{}},revision:'none'};
   const state=await boundedJson(object);
+  if(state.names!==undefined&&(!state.names||typeof state.names!=='object'||Array.isArray(state.names)||Object.keys(state.names).length>10000||Object.entries(state.names).some(([key,name])=>!publicKey(publicUrl(key))||resourceName(name)!==name)))throw Error('INVALID_FOLDER_STATE');
   if(state.schema!==1||!Array.isArray(state.folders)||state.folders.length>2000||state.folders.some(f=>!f||folderPath(f)!==f)||!state.assignments||typeof state.assignments!=='object'||Array.isArray(state.assignments)||Object.keys(state.assignments).length>10000||Object.entries(state.assignments).some(([key,f])=>!publicKey(publicUrl(key))||folderPath(f)!==f))throw Error('INVALID_FOLDER_STATE');
   return {state,revision:object.etag};
 }
@@ -205,5 +206,5 @@ export async function resourceAdminRoute(request,env,ctx,accounts,fetcher=fetch)
       await env.PUBLIC_UPLOADS.delete('.deleted/'+key);return json({status:'restored',key,path:publicUrl(key)});
     }
     return json({error:'NOT_FOUND'},404);
-  }catch(error){const conflicts=new Set(['FOLDER_CHANGED','FOLDER_EXISTS','FOLDER_NOT_FOUND','FOLDER_NOT_EMPTY','RESOURCE_CHANGED']),invalid=new Set(['INVALID_FOLDER','INVALID_SELECTION','INVALID_FOLDER_ACTION','FOLDER_LIMIT']);const codes=new Set(['INPUT_TOO_LARGE','EMPTY_BODY','UPLOAD_CONFLICT','REFERENCE_TOKEN_REQUIRED','REFERENCE_SOURCE_NOT_CONFIGURED','REFERENCE_SOURCE_UNAVAILABLE','INVALID_REFERENCE_COMMIT','REFERENCE_TREE_TRUNCATED','REFERENCE_SCAN_TOO_LARGE','REFERENCE_CONTENT_UNAVAILABLE','REFERENCE_SOURCE_CHANGED',...conflicts,...invalid]);return json({error:codes.has(error.message)?error.message:'RESOURCE_OPERATION_FAILED'},error.message==='INPUT_TOO_LARGE'?413:conflicts.has(error.message)?409:invalid.has(error.message)?400:503);}
+  }catch(error){const conflicts=new Set(['FOLDER_CHANGED','FOLDER_EXISTS','FOLDER_NOT_FOUND','FOLDER_NOT_EMPTY','RESOURCE_CHANGED','RESOURCE_NAME_EXISTS']),invalid=new Set(['INVALID_FOLDER','INVALID_SELECTION','INVALID_FOLDER_ACTION','FOLDER_LIMIT','INVALID_RESOURCE_NAME','RESOURCE_EXTENSION_CHANGED']);const codes=new Set(['INPUT_TOO_LARGE','EMPTY_BODY','UPLOAD_CONFLICT','REFERENCE_TOKEN_REQUIRED','REFERENCE_SOURCE_NOT_CONFIGURED','REFERENCE_SOURCE_UNAVAILABLE','INVALID_REFERENCE_COMMIT','REFERENCE_TREE_TRUNCATED','REFERENCE_SCAN_TOO_LARGE','REFERENCE_CONTENT_UNAVAILABLE','REFERENCE_SOURCE_CHANGED',...conflicts,...invalid]);return json({error:codes.has(error.message)?error.message:'RESOURCE_OPERATION_FAILED'},error.message==='INPUT_TOO_LARGE'?413:conflicts.has(error.message)?409:invalid.has(error.message)?400:503);}
 }

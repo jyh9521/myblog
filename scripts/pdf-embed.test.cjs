@@ -20,7 +20,7 @@ function component() {
 }
 test('PDF toolbar uses shared file resource picker and round-trips encoded Chinese filenames', () => {
   const pdf = component();
-  assert.equal(pdf.trigger, 'button'); assert.equal(pdf.fields[0].widget, 'file');
+  assert.equal(pdf.trigger, 'button'); assert.equal(pdf.fields[0].widget, 'r2-file');
   assert.equal(pdf.fields[0].choose_url, false); assert.ok(pdf.fields[0].accept.includes('.pdf'));
   assert.equal(pdf.fields[0].media_folder, undefined);
   const block = pdf.toBlock({ file: '/uploads/手册 (1).pdf', title: '游戏说明' });
@@ -33,6 +33,20 @@ test('PDF toolbar uses shared file resource picker and round-trips encoded Chine
   assert.equal(pdf.fromBlock(draft.match(pdf.pattern)).file, 'blob:http://localhost:3104/1234-abcd');
   assert.ok(!pdf.toPreview({ title: '<script>alert(1)</script>' }).includes('<'));
   for (const file of ['/uploads/a.png', 'https://example.test/a.pdf', '/uploads/../a.pdf', '/uploads/%2e%2e/a.pdf', '/uploads/a.pdf?x=1']) assert.equal(pdf.toBlock({ file }), '');
+});
+test('editor components wait for R2 controls instead of permanently registering the legacy file picker', () => {
+  const components = []; let ready = false, retry;
+  const window = { h() {}, createClass: x => x, setInterval: fn => { retry = fn; return 1; }, clearInterval() {}, CMS: {
+    getFieldType: name => name === 'select' || ready ? { control() {} } : undefined,
+    registerFieldType() {}, registerEditorComponent: x => components.push(x),
+  } };
+  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js', 'utf8'), { window });
+  assert.equal(components.length, 0); assert.equal(typeof retry, 'function');
+  ready = true; retry();
+  assert.equal(components.find(x => x.id === 'pdf').fields[0].widget, 'r2-file');
+  const compare = components.find(x => x.id === 'image-compare');
+  assert.equal(compare.fields[0].widget, 'r2-image'); assert.equal(compare.fields[1].widget, 'r2-image');
+  assert.ok(!fs.readFileSync('public/sveltia/index.html', 'utf8').includes('custom.js?v=store-channel-a49f8c5'));
 });
 test('PDF URL validation and native download fallback never embed remote or traversal paths', () => {
   const { pdfUploadUrl, default: Pdf } = loadPdf();

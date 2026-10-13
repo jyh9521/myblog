@@ -1,0 +1,19 @@
+{
+  "$schema": "../static-preview/node_modules/wrangler/config-schema.json",
+  "name": "blog-static-host",
+  "account_id": "cf4b9d821c2fe041b84fa71647e57bcd",
+  "compatibility_date": "2026-10-13",
+  "workers_dev": true,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "blog.blfy.cc/*",
+      "zone_name": "blfy.cc"
+    }
+  ],
+  "assets": {
+    "directory": "../../out",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

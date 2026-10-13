@@ -1,10 +1,10 @@
 # 博客维护
 
-网站由 Next.js 静态导出，通过 GitHub Actions 部署到 GitHub Pages。
+网站由 Next.js 静态导出，通过 GitHub Actions 主发布到 Cloudflare Workers Static Assets，并同步 GitHub Pages 回退副本。
 
 ## 编辑文章
 
-打开 https://blog.blfy.cc/sveltia/ ，使用 GitHub 访问令牌登录 Sveltia CMS。文章保存在 `content/posts/*.md`，公开图片和附件通过 R2 资源库上传，地址仍为 `/uploads/*`；二进制文件不再提交 Git。保存后会提交到 `main`，Pages 工作流自动重新构建网站。文章网址为 `/posts/<文件名>/`。
+打开 https://blog.blfy.cc/sveltia/ ，使用 GitHub 访问令牌登录 Sveltia CMS。文章保存在 `content/posts/*.md`，公开图片和附件通过 R2 资源库上传，地址仍为 `/uploads/*`；二进制文件不再提交 Git。保存后会提交到 `main`，发布工作流自动重新构建网站。文章网址为 `/posts/<文件名>/`。
 
 编辑器配置位于 `public/sveltia/config.yml`。访问令牌请只输入后台登录页面，勿写入仓库或文章。
 
@@ -87,7 +87,7 @@ RAWG / ScreenScraper / 未来 IGDB 是资料来源；Steam、GOG、Nintendo eSho
 
 ## 发布状态、图片资源与文章搜索
 
-后台右下角“发布状态 / 图片资源”打开只读维护工具。发布状态按 main 最新提交匹配 GitHub Pages 流程，区分已保存待部署、部署中、已上线和失败，并提供失败步骤与日志入口。
+后台右下角“发布状态 / 图片资源”打开只读维护工具。发布状态按 main 最新提交匹配 Workers 主发布与 Pages 回退副本流程，区分已保存待部署、部署中、已上线和失败，并提供失败步骤与日志入口。
 
 公开资源清单从 R2 同步并展示大小、重复内容及引用。使用后台右下角“资源库”上传、筛选和检查最新引用；未引用资源可移至可恢复回收区。旧 Git 清理入口不再删除公开资源，私密附件仍走原私密服务。配置、构建与回退说明见 [公开资源存储](docs/public-resources-r2.md)。
 

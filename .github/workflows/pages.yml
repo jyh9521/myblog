@@ -1,4 +1,4 @@
-name: Deploy blog to GitHub Pages
+name: Deploy blog to Workers and Pages fallback
 on:
   push:
     branches: [main]
@@ -23,6 +23,7 @@ jobs:
           node-version: '22'
       - run: npm ci
       - run: npm ci --prefix workers/gaming-accounts
+      - run: npm ci --prefix workers/static-preview
       - run: npm test
       - run: npm run check
       - run: npm run validate
@@ -36,10 +37,22 @@ jobs:
           if-no-files-found: ignore
       - run: npm run build
       - run: cp CNAME out/CNAME
+      - run: node scripts/prepare-static-host.cjs
+        env:
+          BLOG_RELEASE: ${{ github.sha }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
+      - name: Deploy primary Workers Static Assets
+        run: node workers/static-preview/node_modules/wrangler/bin/wrangler.js deploy --config workers/static-host/wrangler.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: cf4b9d821c2fe041b84fa71647e57bcd
+      - name: Verify primary release
+        run: node scripts/verify-static-host.cjs https://blog.blfy.cc
+        env:
+          BLOG_RELEASE: ${{ github.sha }}
   deploy:
     needs: build
     runs-on: ubuntu-latest

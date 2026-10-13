@@ -4,7 +4,7 @@
 
 ## 编辑文章
 
-打开 https://blog.blfy.cc/sveltia/ ，使用 GitHub 访问令牌登录 Sveltia CMS。文章保存在 `content/posts/*.md`，图片和附件保存在 `public/uploads/`。保存后会提交到 `main`，Pages 工作流自动重新构建网站。文章网址为 `/posts/<文件名>/`。
+打开 https://blog.blfy.cc/sveltia/ ，使用 GitHub 访问令牌登录 Sveltia CMS。文章保存在 `content/posts/*.md`，公开图片和附件通过 R2 资源库上传，地址仍为 `/uploads/*`；二进制文件不再提交 Git。保存后会提交到 `main`，Pages 工作流自动重新构建网站。文章网址为 `/posts/<文件名>/`。
 
 编辑器配置位于 `public/sveltia/config.yml`。访问令牌请只输入后台登录页面，勿写入仓库或文章。
 
@@ -83,13 +83,13 @@ RAWG / ScreenScraper / 未来 IGDB 是资料来源；Steam、GOG、Nintendo eSho
 
 网站构建和编辑已不使用 TinaCloud。确认 Sveltia 正常编辑和 Pages 部署后，可在 GitHub 仓库 Settings → Secrets and variables → Actions 删除旧的 `TINA_TOKEN` secret 和 `TINA_CLIENT_ID` variable，并在 GitHub Settings → Applications 中撤销 TinaCloud App 对本仓库的访问；TinaCloud 控制台中的旧项目也可以删除。
 
-文章图片在构建时读取本地尺寸并预留空间；远程或无有效尺寸的图片使用固定 16:9 容器完整显示，不会在加载后挤动正文。目录高亮变化不会重建正文图片。
+文章图片在构建时读取本地文件或 R2 目录中的尺寸并预留空间；远程或无有效尺寸的图片使用固定 16:9 容器完整显示，不会在加载后挤动正文。目录高亮变化不会重建正文图片。
 
 ## 发布状态、图片资源与文章搜索
 
 后台右下角“发布状态 / 图片资源”打开只读维护工具。发布状态按 main 最新提交匹配 GitHub Pages 流程，区分已保存待部署、部署中、已上线和失败，并提供失败步骤与日志入口。
 
-图片资源清单在构建时生成，展示文件大小、内容相同的重复文件及文章/档案引用。可筛选未引用文件、选择后预览并导出清理 JSON，或点击删除按钮确认后提交到 GitHub。删除需要在维护工具中填写本仓库 Contents 读写令牌，令牌不保存。删除前核对最新 main 提交、最新内容引用及文件 SHA256，批量删除只生成一个提交，非强制更新分支避免覆盖同时保存的文章；部署后生效。通过 GitHub 的删除提交记录或 git revert 恢复。清理前应等待当前提交部署完成并再次核对引用。
+公开资源清单从 R2 同步并展示大小、重复内容及引用。使用后台右下角“R2 资源库”上传、筛选和检查最新引用；未引用资源可移至可恢复回收区。旧 Git 清理入口不再删除公开资源，私密附件仍走原私密服务。配置、构建与回退说明见 [公开资源存储](docs/public-resources-r2.md)。
 
 文章正文和封面图片加载失败时保留原有尺寸及图注，显示重试按钮。文章搜索展示匹配正文附近的摘要并高亮关键词。没有加入阅读位置记忆。
 

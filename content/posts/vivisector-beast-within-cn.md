@@ -6,7 +6,7 @@ date: 2026-06-30
 description: |-
   > Vivisector: Beast Within Simplified Chinese Patch
   > 《活体解剖者：人面兽心》简体中文汉化补丁
-cover: /uploads/chinesetranslationpatch/vivisectorbeastwithin/封面图.png
+cover: /uploads/chinesetranslationpatch/vivisectorbeastwithin/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 汉化
   - 游戏
@@ -47,25 +47,27 @@ gameSlug: vivisector-beast-within
 
 ## **三、截图：**
 
-![主菜单](/uploads/chinesetranslationpatch/vivisectorbeastwithin/主菜单.webp "主菜单")
+![主菜单](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E4%B8%BB%E8%8F%9C%E5%8D%95.webp)
 
-![设置选项](/uploads/chinesetranslationpatch/vivisectorbeastwithin/设置选项.webp "设置选项")
+![设置选项](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E8%AE%BE%E7%BD%AE%E9%80%89%E9%A1%B9.webp)
 
-![难度选项](/uploads/chinesetranslationpatch/vivisectorbeastwithin/难度选项.webp "难度选项")
+![难度选项](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E9%9A%BE%E5%BA%A6%E9%80%89%E9%A1%B9.webp)
 
-![技能升级界面](/uploads/chinesetranslationpatch/vivisectorbeastwithin/技能升级界面.webp "技能升级界面")![拾取物品](/uploads/chinesetranslationpatch/vivisectorbeastwithin/拾取物品.webp "拾取物品")
+![技能升级界面](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E6%8A%80%E8%83%BD%E5%8D%87%E7%BA%A7%E7%95%8C%E9%9D%A2.webp)
 
-![过场动画字幕1](/uploads/chinesetranslationpatch/vivisectorbeastwithin/过场动画字幕1.webp "过场动画字幕1")
+![拾取物品](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E6%8B%BE%E5%8F%96%E7%89%A9%E5%93%81.webp)
 
-![过场动画字幕2](/uploads/chinesetranslationpatch/vivisectorbeastwithin/过场动画字幕2.webp "过场动画字幕2")
+![过场动画字幕1](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E8%BF%87%E5%9C%BA%E5%8A%A8%E7%94%BB%E5%AD%97%E5%B9%951.webp)
 
-![过场动画字幕3](/uploads/chinesetranslationpatch/vivisectorbeastwithin/过场动画字幕3.webp "过场动画字幕3")
+![过场动画字幕2](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E8%BF%87%E5%9C%BA%E5%8A%A8%E7%94%BB%E5%AD%97%E5%B9%952.webp)
 
-![电台字幕1](/uploads/chinesetranslationpatch/vivisectorbeastwithin/电台字幕1.webp "电台字幕1")
+![过场动画字幕3](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E8%BF%87%E5%9C%BA%E5%8A%A8%E7%94%BB%E5%AD%97%E5%B9%953.webp)
 
-![电台字幕2](/uploads/chinesetranslationpatch/vivisectorbeastwithin/电台字幕2.webp "电台字幕2")
+![电台字幕1](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E7%94%B5%E5%8F%B0%E5%AD%97%E5%B9%951.webp)
 
-![电台字幕3](/uploads/chinesetranslationpatch/vivisectorbeastwithin/电台字幕3.webp "电台字幕3")
+![](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E7%94%B5%E5%8F%B0%E5%AD%97%E5%B9%952.webp)
+
+![](/uploads/chinesetranslationpatch/vivisectorbeastwithin/%E7%94%B5%E5%8F%B0%E5%AD%97%E5%B9%953.webp)
 
 
 

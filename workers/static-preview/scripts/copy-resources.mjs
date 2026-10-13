@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {repo} from './resource-manifest.mjs';
 const worker=resolve(dirname(fileURLToPath(import.meta.url)),'..');
-const args=process.argv.slice(2),bucket=args[0],manifestPath=resolve(args[1]||resolve(repo,'../r2-migration-evidence/source-manifest.json'));
+const args=process.argv.slice(2),bucket=args[0],manifestPath=resolve(args.slice(1).find(a=>!a.startsWith('--'))||resolve(repo,'../r2-migration-evidence/source-manifest.json'));
 if(!['blog-public-assets-preview','blog-public-assets'].includes(bucket)||bucket==='blog-public-assets'&&!args.includes('--production'))throw Error('Explicit preview bucket, or --production for production bucket, required');
 const mode=args.includes('--local')?'--local':'--remote';
 const manifest=JSON.parse(readFileSync(manifestPath,'utf8'));

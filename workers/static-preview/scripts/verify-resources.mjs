@@ -6,6 +6,7 @@ import {githubToken} from './github.mjs';
 import {fixturePdf} from './fixture-pdf.mjs';
 import {repo} from './resource-manifest.mjs';
 const site=process.argv[2]||'https://blog-static-preview.342433419.workers.dev';
+if(!['https://blog-static-preview.342433419.workers.dev','https://blog.blfy.cc'].includes(site))throw Error('Verification origin is not an approved blog origin');
 const evidence=resolve(repo,'../r2-migration-evidence',site.includes('workers.dev')?'preview-delivery':'production-delivery');mkdirSync(evidence,{recursive:true});
 const manifest=JSON.parse(readFileSync(resolve(repo,'../r2-migration-evidence/source-manifest.json'),'utf8'));
 const sha=data=>createHash('sha256').update(data).digest('hex');const url=key=>'/uploads/'+key.split('/').map(encodeURIComponent).join('/');

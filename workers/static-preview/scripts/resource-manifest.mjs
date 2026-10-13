@@ -1,5 +1,5 @@
 import {createRequire} from 'node:module';
-import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {dirname,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
@@ -10,7 +10,7 @@ export const repo=resolve(dirname(fileURLToPath(import.meta.url)),'../../..');
 export const mimeFor=key=>({png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',webp:'image/webp',gif:'image/gif',avif:'image/avif',svg:'image/svg+xml',pdf:'application/pdf',mp3:'audio/mpeg',mp4:'video/mp4',ogg:'audio/ogg',wav:'audio/wav',zip:'application/zip',txt:'text/plain; charset=utf-8'}[key.split('.').pop().toLowerCase()]||'application/octet-stream');
 export async function resourceManifest(root=repo) {
   const index=await buildAssetIndex(root);
-  const files=index.files.map(f=>{
+  const files=index.files.filter(f=>existsSync(resolve(root,'public'+decodeURIComponent(f.path)))).map(f=>{
     const key=decodeURIComponent(f.path).slice('/uploads/'.length);
     if(!key||key.split('/').some(p=>p==='.'||p==='..'||!p)||/[\\\x00-\x1f?#]/.test(key))throw Error('Invalid source asset key: '+key);
     const source='public'+decodeURIComponent(f.path),data=readFileSync(resolve(root,source));

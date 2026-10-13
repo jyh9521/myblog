@@ -24,6 +24,7 @@ if(!existsSync(join(build,'content/posts/preview-public-check.md')))writeFileSyn
 let config=readFileSync(join(build,'public/sveltia/config.yml'),'utf8');
 config=config.replace('branch: main','branch: codex/static-assets-preview');
 if(r2) {
+  config=config.replace(/^media_folder:.*\r?\n/m,'');
   config=config.replace(/widget: image\b/g,'widget: r2-image').replace(/widget: file\b/g,'widget: r2-file').replace('[code-block, image,','[code-block, r2-image,');
   writeFileSync(join(build,'resources.config.json'),JSON.stringify({enabled:true,catalogUrl:'https://blog-static-preview.342433419.workers.dev/ns/api/resources/catalog'}));
   const index=join(build,'public/sveltia/index.html');

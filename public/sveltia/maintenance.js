@@ -71,10 +71,11 @@
   $('asset-query').oninput = renderAssets; $('asset-filter').onchange = renderAssets;
   $('select-unused').onclick = () => { filtered().filter(file => !file.references.length).forEach(file => selected.add(file.path)); invalidatePreview(); renderAssets(); };
   $('clear-selection').onclick = () => { selected.clear(); invalidatePreview(); renderAssets(); };
-  $('preview-cleanup').onclick = () => { if (!index) return; preview = core.cleanupPreview(index, selected); $('cleanup').hidden = false; $('cleanup-summary').textContent = `选中 ${preview.files.length} 个未引用文件，共 ${size(preview.totalBytes)}。这是预览，尚未删除任何文件。`; $('cleanup-files').textContent = preview.files.map(file => file.path).join('\n') || '没有选中可清理文件。'; $('export-cleanup').disabled = !preview.files.length; };
+  $('preview-cleanup').onclick = () => { if (!index) return; if(index.storage === 'r2') { window.open('/sveltia/resources.html','_blank','noopener'); return; } preview = core.cleanupPreview(index, selected); $('cleanup').hidden = false; $('cleanup-summary').textContent = `选中 ${preview.files.length} 个未引用文件，共 ${size(preview.totalBytes)}。这是预览，尚未删除任何文件。`; $('cleanup-files').textContent = preview.files.map(file => file.path).join('\n') || '没有选中可清理文件。'; $('export-cleanup').disabled = !preview.files.length; };
   $('export-cleanup').onclick = () => { if (!preview || !preview.files.length) return; const url = URL.createObjectURL(new Blob([JSON.stringify(preview, null, 2)], { type: 'application/json' })); const download = node('a'); download.href = url; download.download = 'blog-cleanup-preview.json'; document.body.append(download); download.click(); download.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); };
   let deleting = false, deletePreview = null;
   $('delete-selected').onclick = () => {
+    if(index?.storage === 'r2') { window.open('/sveltia/resources.html','_blank','noopener'); return; }
     if (!preview?.files.length) { $('delete-status').textContent = '请先选择文件并生成清理预览。'; return; }
     deletePreview = structuredClone(preview); $('delete-files').textContent = deletePreview.files.map(file => file.path).join('\n'); $('delete-error').textContent = ''; $('delete-token').value = ''; $('delete-dialog').showModal();
   };

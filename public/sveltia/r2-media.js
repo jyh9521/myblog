@@ -62,5 +62,5 @@
     return true;
   };
   window.BlogResources={upload,picker};
-  if(!register()){const timer=setInterval(()=>{if(register())clearInterval(timer);},200);}
+  if(window.CMS&&!register()){const timer=setInterval(()=>{if(register())clearInterval(timer);},200);}
 })();

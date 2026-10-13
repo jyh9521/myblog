@@ -6,6 +6,7 @@
     return { label: run.conclusion === 'success' ? '已上线' : run.conclusion === 'cancelled' ? '部署已取消，修改仍在 GitHub' : '发布失败，修改仍在 GitHub', kind: run.conclusion === 'success' ? 'success' : 'error', run };
   }
   function cleanupPreview(index, paths) {
+    if(index.storage === 'r2') throw Error('公开资源已迁至 R2，请打开 R2 资源库。');
     const selected = new Set(paths);
     const eligible = index.files.filter(file => selected.has(file.path) && !file.references.length);
     return { commit: index.commit, generatedAt: index.generatedAt, action: 'review-only-no-files-deleted', files: eligible.map(file => ({ path: `public${file.path}`, sha256: file.sha256, bytes: file.bytes })), totalBytes: eligible.reduce((sum, file) => sum + file.bytes, 0) };

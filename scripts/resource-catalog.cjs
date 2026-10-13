@@ -1,5 +1,7 @@
 const fs=require('node:fs'),path=require('node:path');
 function resourceCatalog(root=process.cwd()) {
+  const config=path.join(root,'resources.config.json');
+  if(!fs.existsSync(config)||!JSON.parse(fs.readFileSync(config,'utf8')).enabled)return {files:[]};
   const file=path.join(root,'public/sveltia/r2-assets.json');
   if(!fs.existsSync(file))return {files:[]};
   const value=JSON.parse(fs.readFileSync(file,'utf8'));

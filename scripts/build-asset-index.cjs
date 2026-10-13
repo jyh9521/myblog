@@ -44,7 +44,7 @@ async function buildAssetIndex(root = process.cwd()) {
   const groups = new Map(); files.forEach(file => { if (!groups.has(file.sha256)) groups.set(file.sha256, []); groups.get(file.sha256).push(file.path); });
   files.forEach(file => { file.duplicates = groups.get(file.sha256).filter(name => name !== file.path); });
   let commit = 'local'; try { commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch {}
-  return { commit, generatedAt: new Date().toISOString(), files };
+  return { commit, storage: resourceCatalog(root).storage === 'r2' ? 'r2' : 'git', generatedAt: new Date().toISOString(), files };
 }
 module.exports = { buildAssetIndex, assetPath };
 if (require.main === module) buildAssetIndex().then(index => {

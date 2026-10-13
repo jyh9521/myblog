@@ -313,3 +313,5 @@ gameSlug: the-wheel-of-time
 ## 附赠：简体中文游戏手册
 
 除了游戏本体的汉化，我还以 GOG 版附带的原版英文用户手册为基础，重新翻译、排版并制作了完整的简体中文版 PDF 手册，方便中文玩家查阅游戏背景、操作说明及玩法机制。
+
+[《时光之轮》用户手册](/uploads/chinesetranslationpatch/thewheeloftime/%E3%80%8A%E6%97%B6%E5%85%89%E4%B9%8B%E8%BD%AE%E3%80%8B%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C.pdf "pdf-embed")

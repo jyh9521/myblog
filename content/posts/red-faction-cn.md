@@ -168,9 +168,7 @@ Alpine Faction 本来就有一条 TTF 渲染路径，而且已经在按 Unicode 
 
 中途会让你选择游戏路径下的 RF.exe，默认是在\steamapps\common\Red Faction\，下一步会弹出下面的窗口，点击 OK 即可。
 
-![选择OK](/uploads/chinesetranslationpatch/redfaction/af1.avif)
-
-![点击OK](/uploads/chinesetranslationpatch/redfaction/af1.avif "点击OK")
+![点击OK](/uploads/chinesetranslationpatch/redfaction/af1.avif)
 
 在这一步建议保持默认即可，至少建议保留第二个选项，这样可以从 Steam 来启动游戏。
 

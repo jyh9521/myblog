@@ -110,7 +110,7 @@ Alpine Faction 本来就有一条 TTF 渲染路径，而且已经在按 Unicode 
 
 补丁的改动全部在显示层（字形查表、断行、字符串测量），没有碰网络协议、存档格式和游戏逻辑，所以理论上兼容所有 MOD。
 
-高清材质包可以正常共存， 中文标牌包故意用 zz_ 开头命名，因为引擎是按文件名顺序加载 client_mods，后加载的覆盖先加载的，为了排在所有的 MOD 之后加载才以 zz 开头命名。
+高清材质包可以正常共存， 中文标牌包故意用 zz\_ 开头命名，因为引擎是按文件名顺序加载 client_mods，后加载的覆盖先加载的，为了排在所有的 MOD 之后加载才以 zz 开头命名。
 
 
 
@@ -168,6 +168,8 @@ Alpine Faction 本来就有一条 TTF 渲染路径，而且已经在按 Unicode 
 
 中途会让你选择游戏路径下的 RF.exe，默认是在\steamapps\common\Red Faction\，下一步会弹出下面的窗口，点击 OK 即可。
 
+![选择OK](/uploads/chinesetranslationpatch/redfaction/af1.avif)
+
 ![点击OK](/uploads/chinesetranslationpatch/redfaction/af1.avif "点击OK")
 
 在这一步建议保持默认即可，至少建议保留第二个选项，这样可以从 Steam 来启动游戏。
@@ -176,7 +178,7 @@ Alpine Faction 本来就有一条 TTF 渲染路径，而且已经在按 Unicode 
 
 ### **3.覆盖补丁**
 
-关掉游戏，然后将 AlpineFaction.dll 覆盖到 **Alpine Faction 安装目录**，默认是 C:\Program Files (x86)\Alpine Faction\
+关掉游戏，然后将 AlpineFaction.dll 覆盖到 **Alpine Faction 安装目录**，默认是 C:\Program Files (x86)\Alpine Faction\\
 
 ![覆盖原文件](/uploads/chinesetranslationpatch/redfaction/af3.avif "覆盖原文件")
 

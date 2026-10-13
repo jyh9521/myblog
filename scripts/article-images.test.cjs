@@ -14,14 +14,18 @@ function load(file, imports = {}, globals = {}) {
   return context.exports;
 }
 
-test('local AVIF dimensions are emitted before download; encoded paths and missing/remote assets are handled', () => {
+test('local fixture dimensions are emitted before download; encoded paths and missing/remote assets are handled', () => {
   const { withImageSize } = load('lib/article-image-size.ts');
-  const image = withImageSize({ src: '/uploads/chinesetranslationpatch/nolf2/主菜单.avif', alt: '', caption: '' });
+  const path=require('node:path'),os=require('node:os');
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'blog-image-'));fs.mkdirSync(path.join(root,'uploads'));
+  fs.writeFileSync(path.join(root,'uploads/图.png'),Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aRZkAAAAASUVORK5CYII=','base64'));
+  const image = withImageSize({ src: '/uploads/图.png', alt: '', caption: '' },root);
   assert.ok(image.width > 0 && image.height > 0);
-  assert.deepEqual(withImageSize({ ...image, src: encodeURI(image.src) }).width, image.width);
+  assert.deepEqual(withImageSize({ ...image, src: encodeURI(image.src) },root).width, image.width);
   for (const src of ['https://example.test/image.jpg', '/missing.avif', '/../package.json', '/%2e%2e/package.json']) {
-    assert.equal(withImageSize({ src }).width, undefined);
+    assert.equal(withImageSize({ src },root).width, undefined);
   }
+  fs.rmSync(root,{recursive:true,force:true});
 });
 
 test('TOC and lightbox updates preserve Markdown image nodes, reserved geometry and correct caption', async () => {

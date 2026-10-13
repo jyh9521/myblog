@@ -3,6 +3,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const matter = require('gray-matter');
 const { execFileSync } = require('node:child_process');
+const {resourceCatalog}=require('./resource-catalog.cjs');
 function walk(dir) {
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => entry.isSymbolicLink() ? [] : entry.isDirectory() ? walk(path.join(dir, entry.name)) : [path.join(dir, entry.name)]);
@@ -35,10 +36,15 @@ async function buildAssetIndex(root = process.cwd()) {
     const bytes = fs.readFileSync(file);
     return { path: url, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex'), image: /\.(avif|png|jpe?g|gif|webp|svg|bmp)$/i.test(file), pdf: /\.pdf$/i.test(file), references: [...(references.get(url)?.values() || [])] };
   }).sort((a, b) => a.path.localeCompare(b.path));
+  const localPaths=new Set(files.map(f=>decodeURIComponent(f.path)));
+  for(const resource of resourceCatalog(root).files) {
+    const url=decodeURIComponent(resource.path);
+    if(!localPaths.has(url))files.push({...resource,path:url,references:[...(references.get(url)?.values()||[])]});
+  }
   const groups = new Map(); files.forEach(file => { if (!groups.has(file.sha256)) groups.set(file.sha256, []); groups.get(file.sha256).push(file.path); });
   files.forEach(file => { file.duplicates = groups.get(file.sha256).filter(name => name !== file.path); });
   let commit = 'local'; try { commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch {}
-  return { commit, generatedAt: new Date().toISOString(), files };
+  return { commit, storage: resourceCatalog(root).storage === 'r2' ? 'r2' : 'git', generatedAt: new Date().toISOString(), files };
 }
 module.exports = { buildAssetIndex, assetPath };
 if (require.main === module) buildAssetIndex().then(index => {

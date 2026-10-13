@@ -1,0 +1,6 @@
+{
+  "name": "blog-public-resources",
+  "private": true,
+  "type": "module",
+  "scripts": {"deploy":"node ../static-preview/node_modules/wrangler/bin/wrangler.js deploy","types":"node ../static-preview/node_modules/wrangler/bin/wrangler.js types"}
+}

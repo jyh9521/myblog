@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { imageSize } from 'image-size';
+import { resourceFor } from '../scripts/resource-catalog.cjs';
 import type { ArticleImage } from '../app/posts/markdown-utils';
 
 // Read only local image headers at build time; remote images use a stable fallback frame.
@@ -11,7 +12,8 @@ export function withImageSize(image: ArticleImage, publicDir = path.join(process
     const root = path.resolve(publicDir);
     const file = path.resolve(root, `.${pathname}`);
     if (!file.startsWith(`${root}${path.sep}`)) return image;
-    const size = imageSize(fs.readFileSync(file));
+    const size = fs.existsSync(file) ? imageSize(fs.readFileSync(file)) : resourceFor(image.src, path.dirname(publicDir));
+    if (!size) return image;
     return size.width && size.height ? { ...image, width: size.width, height: size.height } : image;
   } catch { return image; }
 }

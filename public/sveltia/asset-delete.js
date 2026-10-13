@@ -2,6 +2,7 @@
   const base = 'https://api.github.com/repos/jyh9521/myblog';
   function bytes(content) { return Uint8Array.from(atob(content.replace(/\s/g, '')), char => char.charCodeAt(0)); }
   function checkedFiles(preview) {
+    if(preview?.storage === 'r2') throw Error('公开资源已迁至 R2，请使用 R2 资源库的回收与恢复功能。');
     if (!preview || !/^[a-f0-9]{40}$/.test(preview.commit) || !preview.files?.length) throw Error('请先生成非空清理预览');
     const seen = new Set();
     return preview.files.map(file => {

@@ -5,7 +5,12 @@ backend:
   branch: main
   auth_methods: [token]
 
+# Built-in Git uploads blocked; use the R2 controls.
 media_folder: /public/uploads
+media_libraries:
+  default:
+    config:
+      max_file_size: 0
 public_folder: /uploads
 output:
   omit_empty_optional_fields: true
@@ -31,17 +36,17 @@ collections:
         required: true
         default: '{{now}}'
       - { name: description, label: 摘要, widget: text, required: false }
-      - { name: cover, label: 封面图片, widget: image, required: false }
+      - { name: cover, label: 封面图片, widget: r2-image, required: false }
       - { name: tags, label: 标签, widget: list, required: false }
       - { name: pinned, label: 置顶文章, widget: boolean, required: false, default: false }
       - { name: updatedAt, label: 最近更新日期, widget: datetime, type: date, required: false }
       - { name: updateNote, label: 更新说明, widget: text, required: false }
       - { name: gameSlug, label: 关联游戏档案, widget: game-archive-picker, required: false, hint: "展开下拉框，用手动名称、原名或别名筛选已有档案；显示手动覆盖名称。不需要关联时可取消关联。" }
       - { name: access, label: 文章访问设置, widget: article-access, required: false, hint: "公开 / 密码访问 / 仅链接可见。密码正文单独保存到私密存储，GitHub 只保存引用。" }
-      - { name: body, label: 正文, widget: richtext, required: false, editor_components: [code-block, image, game-card, image-compare, horizontal-rule, pdf], hint: "图片描述优先读取 Markdown 图片引号标题。点击添加游戏，在可搜索下拉框中选择已保存的游戏档案；默认显示档案的手动覆盖名称。已有平台游戏卡片继续兼容。截图前后对比按钮可插入两张图并拖动滑块查看差异。代码块支持一键复制。插入 PDF 按钮可从共用资源库上传或选择 PDF，并在正文内嵌阅读。" }
-      - { name: audio, label: 音频文件, widget: file, required: false }
-      - { name: video, label: 视频文件, widget: file, required: false }
-      - { name: attachment, label: 下载附件, widget: file, required: false }
+      - { name: body, label: 正文, widget: richtext, required: false, editor_components: [code-block, r2-image, game-card, image-compare, horizontal-rule, pdf], hint: "图片描述优先读取 Markdown 图片引号标题。点击添加游戏，在可搜索下拉框中选择已保存的游戏档案；默认显示档案的手动覆盖名称。已有平台游戏卡片继续兼容。截图前后对比按钮可插入两张图并拖动滑块查看差异。代码块支持一键复制。插入 PDF 按钮可从共用资源库上传或选择 PDF，并在正文内嵌阅读。" }
+      - { name: audio, label: 音频文件, widget: r2-file, required: false }
+      - { name: video, label: 视频文件, widget: r2-file, required: false }
+      - { name: attachment, label: 下载附件, widget: r2-file, required: false }
   - name: games
     label: 游戏档案
     folder: /content/games

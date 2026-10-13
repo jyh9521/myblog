@@ -324,7 +324,7 @@
     window.CMS.registerEditorComponent({
       id: 'pdf', label: '插入 PDF', tooltip: '上传或选择 PDF', icon: 'picture_as_pdf', trigger: 'button',
       fields: [
-        { name: 'file', label: 'PDF 文件', widget: 'file', required: true, accept: '.pdf,application/pdf', choose_url: false, pattern: ['\\.[pP][dD][fF]$', '请选择 PDF 文件'], hint: '与图片共用资源库。请选择或上传 .pdf 文件。' },
+        { name: 'file', label: 'PDF 文件', widget: window.BlogResources ? 'r2-file' : 'file', required: true, accept: '.pdf,application/pdf', choose_url: false, pattern: ['\\.[pP][dD][fF]$', '请选择 PDF 文件'], hint: '与图片共用资源库。请选择或上传 .pdf 文件。' },
         { name: 'title', label: '文件标题', widget: 'string', required: false, default: 'PDF 文档' },
       ],
       pattern: /^\[([^\]\n]*)\]\((\/uploads\/[^\s)]+\.pdf|blob:[^\s)]+) "pdf-embed"\)$/i,
@@ -355,8 +355,8 @@
     window.CMS.registerEditorComponent({
       id: 'image-compare', label: '截图前后对比', icon: 'compare', trigger: 'button',
       fields: [
-        { name: 'before', label: '之前的图片', widget: 'image', required: true },
-        { name: 'after', label: '之后的图片', widget: 'image', required: true },
+        { name: 'before', label: '之前的图片', widget: window.BlogResources ? 'r2-image' : 'image', required: true },
+        { name: 'after', label: '之后的图片', widget: window.BlogResources ? 'r2-image' : 'image', required: true },
         { name: 'beforeLabel', label: '左侧说明', widget: 'string', required: false },
         { name: 'afterLabel', label: '右侧说明', widget: 'string', required: false },
       ],

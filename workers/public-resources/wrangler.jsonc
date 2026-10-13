@@ -1,0 +1,13 @@
+{
+  "$schema": "../static-preview/node_modules/wrangler/config-schema.json",
+  "name": "blog-public-resources",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "routes": [{"pattern":"blog.blfy.cc/uploads/*","zone_name":"blfy.cc"},{"pattern":"blog.blfy.cc/ns/api/resources*","zone_name":"blfy.cc"}],
+  "vars": {"SITE_ORIGIN":"https://blog.blfy.cc","RESOURCE_REPOSITORY":"jyh9521/myblog","RESOURCE_BRANCH":"main"},
+  "r2_buckets": [{"binding":"PUBLIC_UPLOADS","bucket_name":"blog-public-assets"}],
+  "services": [{"binding":"GAMING_ACCOUNTS","service":"blog-gaming-accounts"}],
+  "observability": {"enabled":true,"head_sampling_rate":1}
+}

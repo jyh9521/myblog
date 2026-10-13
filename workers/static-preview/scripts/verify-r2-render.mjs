@@ -1,0 +1,10 @@
+import {chromium} from 'playwright';import assert from 'node:assert/strict';import {readFileSync,writeFileSync} from 'node:fs';
+const site=process.argv[2]||'https://blog-static-preview.342433419.workers.dev';if(!['https://blog-static-preview.342433419.workers.dev','https://blog.blfy.cc'].includes(site))throw Error('Invalid site');
+const evidence='../r2-migration-evidence';const fixture=JSON.parse(readFileSync(evidence+'/'+(site.includes('workers.dev')?'preview-delivery':'production-delivery')+'/fixture.json'));
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{const page=await browser.newPage({locale:'zh-CN',viewport:{width:1440,height:1000}});
+ if(site.includes('workers.dev')){await page.goto(site+'/posts/preview-public-check/',{waitUntil:'networkidle'});await page.waitForFunction(()=>[...document.images].some(i=>i.src.includes('/uploads/cms/')&&i.complete&&i.naturalWidth>0));}
+ await page.goto(site+'/pdfjs/web/viewer.html?file='+encodeURIComponent(fixture.path),{waitUntil:'networkidle'});await page.locator('.page[data-page-number="1"] canvas').waitFor({timeout:60000});await page.getByText('Static Assets Preview PDF',{exact:true}).waitFor();await page.screenshot({path:evidence+'/'+(site.includes('workers.dev')?'preview':'production')+'-r2-pdf.png'});
+ await page.goto(site+'/sveltia/resources.html',{waitUntil:'networkidle'});await page.getByRole('button',{name:'打开 R2 资源库',exact:true}).click();await page.getByRole('button',{name:'选择资源',exact:true}).first().waitFor();assert.ok(await page.getByRole('button',{name:'选择资源',exact:true}).count()>=86);await page.screenshot({path:evidence+'/'+(site.includes('workers.dev')?'preview':'production')+'-r2-library.png'});
+ writeFileSync(evidence+'/'+(site.includes('workers.dev')?'preview':'production')+'-r2-render.json',JSON.stringify({site,pdf:'canvas and text rendered',resourcePicker:'86+ files rendered',newR2Cover:site.includes('workers.dev')?'loaded':'not tested'},null,2));console.log('R2_RENDER_RESULT PDF=canvas+text resources=86+ newPreviewCover='+(site.includes('workers.dev')?'loaded':'not-tested'));
+}finally{await browser.close();}

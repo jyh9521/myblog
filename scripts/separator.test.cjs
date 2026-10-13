@@ -26,7 +26,7 @@ test('separator is a direct toolbar button with no fields and standard Markdown 
   assert.ok(component.pattern.test('---'));
   const config = yaml.load(fs.readFileSync('public/sveltia/config.yml', 'utf8'));
   const body = config.collections.find(collection => collection.name === 'post').fields.find(field => field.name === 'body');
-  for (const id of ['horizontal-rule', 'game-card', 'image-compare', 'code-block', 'image']) assert.ok(body.editor_components.includes(id));
+  for (const id of ['horizontal-rule', 'game-card', 'image-compare', 'code-block', 'r2-image']) assert.ok(body.editor_components.includes(id));
 });
 
 test('inserted separator renders an hr without turning adjacent paragraphs into headings', async () => {

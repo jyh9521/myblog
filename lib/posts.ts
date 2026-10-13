@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { resourceFor } from '../scripts/resource-catalog.cjs';
 import { parsePostAccess, type PostVisibility } from './post-access';
 
 const postsDir = path.join(process.cwd(), 'content/posts');
@@ -13,7 +14,7 @@ export function hasLocalAsset(url: string): boolean {
   if (!url || !url.startsWith('/') || url.startsWith('//')) return false;
   const relative = url.slice(1);
   if (relative.split('/').includes('..')) return false;
-  return fs.existsSync(path.join(process.cwd(), 'public', relative));
+  return fs.existsSync(path.join(process.cwd(), 'public', relative)) || !!resourceFor(url);
 }
 
 export type Post = {

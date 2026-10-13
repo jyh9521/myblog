@@ -1,4 +1,7 @@
 (function () {
+  const resources=document.createElement('a'); resources.textContent='R2 资源库'; resources.href='/sveltia/resources.html'; resources.target='_blank'; resources.rel='noopener noreferrer';
+  resources.style.cssText='position:fixed;right:18px;bottom:122px;z-index:99999;padding:10px 16px;border-radius:10px;border:1px solid #777;background:#24282e;color:#fff;font:14px system-ui;text-decoration:none';
+  if(window.BlogResources)document.body.append(resources);
   const accounts = document.createElement('a'); accounts.textContent = '游戏平台账号'; accounts.href = '/sveltia/accounts.html'; accounts.target = '_blank'; accounts.rel = 'noopener noreferrer';
   accounts.style.cssText = 'position:fixed;right:18px;bottom:70px;z-index:99999;padding:10px 16px;border-radius:10px;border:1px solid #777;background:#24282e;color:#fff;font:14px system-ui;text-decoration:none;box-shadow:0 3px 15px #0004';
   document.body.append(accounts);

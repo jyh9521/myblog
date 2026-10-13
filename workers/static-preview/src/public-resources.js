@@ -168,7 +168,7 @@ export async function resourceAdminRoute(request,env,ctx,accounts,fetcher=fetch)
       const target=url.searchParams.get('folder'),folder=target===null?null:folderPath(target);let folderSnapshot;
       if(target!==null){if(folder===null)return json({error:'INVALID_FOLDER'},400);folderSnapshot=await readFolderState(env);const catalog=await resourceCatalog(env,folderSnapshot);if(folder&&!catalog.folders.includes(folder))return json({error:'FOLDER_NOT_FOUND'},409);}
       if(Number(request.headers.get('Content-Length'))>MAX_UPLOAD)return json({error:'INPUT_TOO_LARGE'},413);
-      const name=String(url.searchParams.get('name')||'').replace(/[\\/:*?"<>|\x00-\x1f\x7f]/g,'_').slice(0,150),extension=name.split('.').pop().toLowerCase();
+      const name=String(url.searchParams.get('name')||'').normalize('NFC').replace(/[\\/:*?"<>|#\x00-\x1f\x7f]/g,'_').replace(/^\.+/,'_').slice(0,150),extension=name.split('.').pop().toLowerCase();
       if(!types[extension]||!name||!name.includes('.'))return json({error:'INVALID_FILE_TYPE'},400);
       const bytes=await readBounded(request.body,MAX_UPLOAD);if(!bytes.length||!fileSignature(bytes,extension))return json({error:'INVALID_FILE_TYPE'},400);
       const digest=await crypto.subtle.digest('SHA-256',bytes),sha256=hex(digest),key='cms/'+sha256+'/'+name;

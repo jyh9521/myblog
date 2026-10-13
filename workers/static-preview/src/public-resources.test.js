@@ -69,6 +69,7 @@ test('upload goes into requested directory; a duplicate upload never silently re
  const duplicate=await resourceAdminRoute(req('/ns/api/resources/upload?name=a.pdf&folder=','PUT','%PDF-1.4\nfolder'),e,{},accounts);assert.equal((await duplicate.json()).reused,true);assert.equal((await resourceCatalog(e)).files[0].folder,'文档');assert.equal(file.path,(await resourceCatalog(e)).files[0].path);
  assert.equal((await resourceAdminRoute(req('/ns/api/resources/upload?name=b.pdf&folder=missing','PUT','%PDF-file'),e,{},accounts)).status,409);
 });
+test('hidden or hash-containing upload names become public-safe before folder metadata is written',async()=>{const e=env();const response=await resourceAdminRoute(req('/ns/api/resources/upload?folder=&name='+encodeURIComponent('.参考#文档.pdf'),'PUT','%PDF-1.4\nname'),e,{},accounts);assert.equal(response.status,200);const file=await response.json();assert.ok(file.key.endsWith('_参考_文档.pdf'));assert.equal((await servePublicResource(req(file.path),e)).status,200);assert.equal((await resourceCatalog(e)).files[0].folder,'');});
 test('reference scanner uses pinned Git blobs, current head checks and requires ephemeral read token',async()=>{
   await assert.rejects(()=>scanReferences(env(),github(''),''),/REFERENCE_TOKEN_REQUIRED/);
   const snapshot=await scanReferences(env(),github('![a](/uploads/source.pdf)'),'test-token');assert.equal(snapshot.commit,SHA);assert.equal(referencesFor('source.pdf',snapshot).length,1);

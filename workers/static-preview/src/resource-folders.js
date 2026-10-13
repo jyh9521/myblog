@@ -7,7 +7,7 @@ export function folderPath(value) {
   const parts=value.split('/');if(parts.length>12||parts.some(p=>!p||p.startsWith('.')||p.trim()!==p||p.length>100))return null;
   return value.normalize('NFC');
 }
-export const defaultFolder=key=>key.startsWith('cms/')?'上传文件':key.split('/').slice(0,-1).join('/');
+export const defaultFolder=key=>key.startsWith('cms/')?'上传文件':key.split('/').slice(0,-1).join('/').normalize('NFC');
 export function folderLayout(files,state={folders:[],assignments:{}}) {
   const folders=new Set(state.folders);
   const rows=files.map(file=>({...file,folder:Object.hasOwn(state.assignments,file.key)?state.assignments[file.key]:defaultFolder(file.key)}));

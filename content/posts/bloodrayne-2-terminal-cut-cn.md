@@ -76,7 +76,7 @@ gameSlug: bloodrayne2-terminal-cut
 
 这部分字幕和普通游戏内对白不是同一套系统，而是单独的视频字幕文件。所以游戏里的预渲染动画也重新制作了中文字幕，并重新校准了时间轴。目前一共处理了 15段视频字幕。
 
-由于整个汉化使用的是俄文语言槽，所以这些视频字幕同样使用游戏的 \*_RU.srt 文件来加载。
+由于整个汉化使用的是俄文语言槽，所以这些视频字幕同样使用游戏的 \*\_RU.srt 文件来加载。
 
 也就是说实际游戏时：
 
@@ -145,7 +145,7 @@ W32ART.POD、W32ENSND.POD、视频文件、存档等都不会被修改。
 
 BloodRayne 2 Terminal Cut/
 
-├─ rayne2.exe ├─ dinput8.dll ├─ LANGUAGE.POD └─ video/ 　　└─ \*_RU.srt
+├─ rayne2.exe ├─ dinput8.dll ├─ LANGUAGE.POD └─ video/ 　　└─ \*\_RU.srt
 
 ### 4. 游戏设置
 
@@ -157,7 +157,7 @@ BloodRayne 2 Terminal Cut/
 
 如果进入游戏以后看到中文菜单，就说明汉化已经正常加载。
 
-![启动器](/uploads/chinesetranslationpatch/bloodrayne2/videooptioins.webp "启动器")
+![启动器](/uploads/chinesetranslationpatch/bloodrayne2/videooptioins.webp)
 
 
 
@@ -167,19 +167,19 @@ BloodRayne 2 Terminal Cut/
 
 ## 六、截图
 
-![主菜单](/uploads/chinesetranslationpatch/bloodrayne2/1.webp "主菜单")
+![主菜单](/uploads/chinesetranslationpatch/bloodrayne2/1.webp)
 
-![作弊选单](/uploads/chinesetranslationpatch/bloodrayne2/2.webp "作弊选单")
+![作弊选单](/uploads/chinesetranslationpatch/bloodrayne2/2.webp)
 
-![招式说明](/uploads/chinesetranslationpatch/bloodrayne2/3.webp "招式说明")
+![招式说明](/uploads/chinesetranslationpatch/bloodrayne2/3.webp)
 
-![即时演算动画字幕](/uploads/chinesetranslationpatch/bloodrayne2/4.webp "即时演算动画字幕")
+![即时演算动画字幕](/uploads/chinesetranslationpatch/bloodrayne2/4.webp)
 
-![预渲染动画字幕](/uploads/chinesetranslationpatch/bloodrayne2/5.webp "预渲染动画字幕")
+![预渲染动画字幕](/uploads/chinesetranslationpatch/bloodrayne2/5.webp)
 
-![任务目标](/uploads/chinesetranslationpatch/bloodrayne2/6.webp "任务目标")
+![任务目标](/uploads/chinesetranslationpatch/bloodrayne2/6.webp)
 
-![存档界面](/uploads/chinesetranslationpatch/bloodrayne2/7.webp "存档界面")
+![](/uploads/chinesetranslationpatch/bloodrayne2/7.webp)
 
 
 

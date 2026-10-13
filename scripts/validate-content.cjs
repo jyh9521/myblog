@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const matter = require('gray-matter');
 const yaml = require('js-yaml');
+const {resourceFor}=require('./resource-catalog.cjs');
 const origin = 'https://blog.blfy.cc';
 const filesIn = (dir, extension = '.md') => fs.existsSync(dir) ? fs.readdirSync(dir).filter(file => file.endsWith(extension)) : [];
 
@@ -15,7 +16,7 @@ async function validateRepository(root = process.cwd()) {
   let config;
   try { config = yaml.load(fs.readFileSync(path.join(root, 'public/sveltia/config.yml'), 'utf8')); }
   catch (e) { error('CMS config', `YAML 格式错误：${e.message}`); }
-  const custom = ['custom.js', 'hltb.js', 'article-access.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
+  const custom = ['custom.js', 'hltb.js', 'article-access.js', 'r2-media.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
   if (config) {
     if (config.backend?.name !== 'github' || !config.backend.repo || !config.backend.branch) error('CMS config', 'GitHub backend 配置不完整');
     if (!Array.isArray(config.collections)) error('CMS config', 'collections 必须为数组');
@@ -67,6 +68,7 @@ async function validateRepository(root = process.cwd()) {
     try { pathname = decodeURIComponent(url.pathname); } catch { error(file, `路径编码错误：${value}`); return; }
     const normalized = pathname.endsWith('/') || path.extname(pathname) ? pathname : `${pathname}/`;
     if (routes.has(normalized)) return;
+    if (resourceFor(pathname,root)) return;
     const asset = path.resolve(root, 'public', `.${pathname}`);
     if (!asset.startsWith(path.resolve(root, 'public') + path.sep) || !fs.existsSync(asset) || fs.statSync(asset).isDirectory()) error(file, `${kind}不存在：${value}`);
   };

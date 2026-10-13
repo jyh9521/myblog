@@ -8,6 +8,7 @@ import {fixturePdf} from './fixture-pdf.mjs';
 const worker=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const repo=resolve(worker,'../..');
 const ref=process.argv[2] || 'HEAD';
+const r2=process.argv.includes('--r2');
 const sourceCommit=execFileSync('git',['rev-parse',ref+'^{commit}'],{cwd:repo,encoding:'utf8'}).trim();
 const stamp=new Date().toISOString().replace(/[:.]/g,'-');
 const build=join(worker,'.wrangler','build-'+stamp);
@@ -22,6 +23,14 @@ writeFileSync(join(build,'public/uploads/预览 验证.pdf'),fixturePdf());
 if(!existsSync(join(build,'content/posts/preview-public-check.md')))writeFileSync(join(build,'content/posts/preview-public-check.md'),`---\ntitle: 预览站公开文章验证\ndate: 2026-10-13\ntags: []\naccess:\n  mode: unlisted\n---\n\n## 中文资源与 PDF\n\n![中文文件名](/uploads/chinesetranslationpatch/bloodrayne/主菜单.png)\n\n[预览测试 PDF](/uploads/预览%20验证.pdf "pdf-embed")\n`);
 let config=readFileSync(join(build,'public/sveltia/config.yml'),'utf8');
 config=config.replace('branch: main','branch: codex/static-assets-preview');
+if(r2) {
+  config=config.replace(/widget: image\b/g,'widget: r2-image').replace(/widget: file\b/g,'widget: r2-file').replace('[code-block, image,','[code-block, r2-image,');
+  writeFileSync(join(build,'resources.config.json'),JSON.stringify({enabled:true,catalogUrl:'https://blog-static-preview.342433419.workers.dev/ns/api/resources/catalog'}));
+  const index=join(build,'public/sveltia/index.html');
+  let html=readFileSync(index,'utf8');if(!html.includes('/sveltia/r2-media.js'))html=html.replace('<script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>','<script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script><script src="/sveltia/r2-media.js"></script>');writeFileSync(index,html);
+  const customFile=join(build,'public/sveltia/custom.js');
+  writeFileSync(customFile,readFileSync(customFile,'utf8').replace(/widget: 'image'/g,"widget: 'r2-image'").replace(/widget: 'file'/g,"widget: 'r2-file'"));
+}
 writeFileSync(join(build,'public/sveltia/config.yml'),config);
 const run=cmd=>execFileSync('cmd.exe',['/d','/s','/c',cmd],{cwd:build,stdio:'inherit'});
 run('npm run validate');

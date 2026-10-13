@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "blog-static-preview",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {
+    "directory": ".wrangler/site",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/uploads/*", "/ns/api/*", "/api/auth/*"]
+  },
+  "vars": {
+    "SITE_ORIGIN": "https://blog-static-preview.342433419.workers.dev",
+    "ADMIN_GITHUB_LOGIN": "jyh9521",
+    "RESOURCE_STATIC_FALLBACK": "1",
+    "RESOURCE_REPOSITORY": "jyh9521/myblog",
+    "RESOURCE_BRANCH": "codex/static-assets-preview"
+  },
+  "d1_databases": [{"binding":"DB","database_name":"blog-static-preview","database_id":"fd10c36e-d6fe-4012-af42-a5fe8932b824"}],
+  "r2_buckets": [{"binding":"PUBLIC_UPLOADS","bucket_name":"blog-public-assets-preview"}],
+  "services": [{"binding":"PUBLIC_ACCOUNTS","service":"blog-gaming-accounts"}],
+  "observability": {"enabled":true,"head_sampling_rate":1}
+}

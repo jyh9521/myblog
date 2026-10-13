@@ -1,3 +1,4 @@
+import {servePublicResource,resourceAdminRoute} from './public-resources.js';
 // Explicit dispatch keeps preview writes in its own backend/database.
 export function backendFor(path) {
   if (path === '/ns/api/accounts/public') return 'public-accounts';
@@ -10,7 +11,12 @@ export function backendFor(path) {
 export async function dispatch(request, env, ctx, backends) {
   const target = backendFor(new URL(request.url).pathname);
   let response;
-  if (target === 'public-accounts') {
+  const path=new URL(request.url).pathname;
+  if(path.startsWith('/uploads/')&&env.PUBLIC_UPLOADS) {
+    response=await servePublicResource(request,env);
+  } else if(path==='/ns/api/resources'||path.startsWith('/ns/api/resources/')) {
+    response=await resourceAdminRoute(request,env,ctx,backends.accounts);
+  } else if (target === 'public-accounts') {
     if (!['GET', 'HEAD'].includes(request.method)) {
       response = Response.json({error:'METHOD_NOT_ALLOWED'}, {status:405});
     } else {

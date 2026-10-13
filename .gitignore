@@ -3,6 +3,8 @@ node_modules/
 out/
 reports/
 public/sveltia/assets.json
+public/sveltia/r2-assets.json
+workers/public-resources/worker-configuration.d.ts
 .env*
 !.env.example
 workers/ns-counter/.dev.vars*

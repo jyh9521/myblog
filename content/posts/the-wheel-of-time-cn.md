@@ -4,7 +4,7 @@ date: 2026-10-08
 description: |-
   > The Wheel of Time Simplified Chinese Patch
   > 《时光之轮》简体中文汉化补丁
-cover: /uploads/chinesetranslationpatch/thewheeloftime/封面图.png
+cover: /uploads/chinesetranslationpatch/thewheeloftime/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 汉化
   - 游戏
@@ -179,7 +179,7 @@ gameSlug: the-wheel-of-time
 
 ## 四、安装方法
 
-![《时光之轮》简体中文汉化补丁安装器](/uploads/chinesetranslationpatch/thewheeloftime/%E5%AE%89%E8%A3%85%E5%99%A8.png "《时光之轮》简体中文汉化补丁安装器")
+![《时光之轮》简体中文汉化补丁安装器](/uploads/chinesetranslationpatch/thewheeloftime/%E5%AE%89%E8%A3%85%E5%99%A8.png)
 
 本汉化补丁适配 《时光之轮》GOG 版（Build 333b），请先确认游戏版本符合要求。
 
@@ -209,15 +209,15 @@ gameSlug: the-wheel-of-time
 
 ## 五、游戏截图
 
-![主菜单](/uploads/chinesetranslationpatch/thewheeloftime/%E4%B8%BB%E8%8F%9C%E5%8D%95.jpg "主菜单")
+![主菜单](/uploads/chinesetranslationpatch/thewheeloftime/%E4%B8%BB%E8%8F%9C%E5%8D%95.jpg)
 
-![FMV字幕](/uploads/chinesetranslationpatch/thewheeloftime/FMV%E5%AD%97%E5%B9%95.jpg "FMV字幕")
+![FMV字幕](/uploads/chinesetranslationpatch/thewheeloftime/FMV%E5%AD%97%E5%B9%95.jpg)
 
-![顶部字幕](/uploads/chinesetranslationpatch/thewheeloftime/%E9%A1%B6%E9%83%A8%E5%AD%97%E5%B9%95.jpg "顶部字幕")
+![顶部字幕](/uploads/chinesetranslationpatch/thewheeloftime/%E9%A1%B6%E9%83%A8%E5%AD%97%E5%B9%95.jpg)
 
-![任务说明](/uploads/chinesetranslationpatch/thewheeloftime/%E4%BB%BB%E5%8A%A1%E8%AF%B4%E6%98%8E.jpg "任务说明")
+![任务说明](/uploads/chinesetranslationpatch/thewheeloftime/%E4%BB%BB%E5%8A%A1%E8%AF%B4%E6%98%8E.jpg)
 
-![特法器说明](/uploads/chinesetranslationpatch/thewheeloftime/%E7%89%B9%E6%B3%95%E5%99%A8%E8%AF%B4%E6%98%8E.jpg "特法器说明")
+![](/uploads/chinesetranslationpatch/thewheeloftime/%E7%89%B9%E6%B3%95%E5%99%A8%E8%AF%B4%E6%98%8E.jpg)
 
 
 
@@ -313,5 +313,3 @@ gameSlug: the-wheel-of-time
 ## 附赠：简体中文游戏手册
 
 除了游戏本体的汉化，我还以 GOG 版附带的原版英文用户手册为基础，重新翻译、排版并制作了完整的简体中文版 PDF 手册，方便中文玩家查阅游戏背景、操作说明及玩法机制。
-
-[《时光之轮》用户手册](/uploads/chinesetranslationpatch/thewheeloftime/%E3%80%8A%E6%97%B6%E5%85%89%E4%B9%8B%E8%BD%AE%E3%80%8B%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C.pdf "pdf-embed")

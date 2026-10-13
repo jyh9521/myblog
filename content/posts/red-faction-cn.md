@@ -7,7 +7,7 @@ description: |-
   > Red Faction Simplified Chinese Patch
   > 《红色派系》简体中文汉化补丁
   > 基于 Alpine Faction 1.3.0
-cover: /uploads/chinesetranslationpatch/redfaction/封面图.avif
+cover: /uploads/chinesetranslationpatch/redfaction/%E5%B0%81%E9%9D%A2%E5%9B%BE.avif
 tags:
   - 汉化
   - 游戏
@@ -120,7 +120,7 @@ Alpine Faction 本来就有一条 TTF 渲染路径，而且已经在按 Unicode 
 
 ## **三、汉化内容**
 
-![汉化内容](/uploads/chinesetranslationpatch/redfaction/%E6%B1%89%E5%8C%96%E5%86%85%E5%AE%B9.avif "汉化内容")
+![汉化内容](/uploads/chinesetranslationpatch/redfaction/%E6%B1%89%E5%8C%96%E5%86%85%E5%AE%B9.avif)
 
 这应该是我除了很久以前做的《喋血街头2》汉化以外，汉化的最完整的游戏了。
 
@@ -172,13 +172,13 @@ Alpine Faction 本来就有一条 TTF 渲染路径，而且已经在按 Unicode 
 
 在这一步建议保持默认即可，至少建议保留第二个选项，这样可以从 Steam 来启动游戏。
 
-![安装选项](/uploads/chinesetranslationpatch/redfaction/af2.avif "安装选项")
+![安装选项](/uploads/chinesetranslationpatch/redfaction/af2.avif)
 
 ### **3.覆盖补丁**
 
 关掉游戏，然后将 AlpineFaction.dll 覆盖到 **Alpine Faction 安装目录**，默认是 C:\Program Files (x86)\Alpine Faction\\
 
-![覆盖原文件](/uploads/chinesetranslationpatch/redfaction/af3.avif "覆盖原文件")
+![覆盖原文件](/uploads/chinesetranslationpatch/redfaction/af3.avif)
 
 将 client_mods 和 data 文件夹 复制到游戏目录，默认是 ...\steamapps\common\Red Faction\client_mods\ ，如果提示覆盖则全部覆盖。
 
@@ -188,7 +188,7 @@ Alpine Faction 本来就有一条 TTF 渲染路径，而且已经在按 Unicode 
 
 推荐注册一个 factionfiles 账号并关联，这样可以使用 Alpine Faction 的成就系统，游戏本身是没有 Steam 成就的。
 
-![Alpine Faction主界面](/uploads/chinesetranslationpatch/redfaction/af4.avif "Alpine Faction主界面")
+![Alpine Faction主界面](/uploads/chinesetranslationpatch/redfaction/af4.avif)
 
 ### **（可选）高清贴图**
 
@@ -204,23 +204,23 @@ https://www.factionfiles.com/ff.php?action=file&id=7630
 
 ## **六、截图**
 
-![主菜单](/uploads/chinesetranslationpatch/redfaction/主菜单.avif "主菜单")
+![主菜单](/uploads/chinesetranslationpatch/redfaction/%E4%B8%BB%E8%8F%9C%E5%8D%95.avif)
 
-![开头动画的硬字幕](/uploads/chinesetranslationpatch/redfaction/开头动画的硬字幕.avif "开头动画的硬字幕")
+![开头动画的硬字幕](/uploads/chinesetranslationpatch/redfaction/%E5%BC%80%E5%A4%B4%E5%8A%A8%E7%94%BB%E7%9A%84%E7%A1%AC%E5%AD%97%E5%B9%95.avif)
 
-![对话字幕1](/uploads/chinesetranslationpatch/redfaction/对话字幕1.avif "对话字幕1")
+![对话字幕1](/uploads/chinesetranslationpatch/redfaction/%E5%AF%B9%E8%AF%9D%E5%AD%97%E5%B9%951.avif)
 
-![对话字幕2](/uploads/chinesetranslationpatch/redfaction/对话字幕2.avif "对话字幕2")
+![对话字幕2](/uploads/chinesetranslationpatch/redfaction/%E5%AF%B9%E8%AF%9D%E5%AD%97%E5%B9%952.avif)
 
-![这张图展示的比较完整，上方游戏自带的字幕框，右侧汉化的贴图，下方白色我做的字幕通道，下方绿色游戏自带的拾取和武器文本通道。](/uploads/chinesetranslationpatch/redfaction/对话字幕3.avif "对话字幕3")
+![这张图展示的比较完整，上方游戏自带的字幕框，右侧汉化的贴图，下方白色我做的字幕通道，下方绿色游戏自带的拾取和武器文本通道。](/uploads/chinesetranslationpatch/redfaction/%E5%AF%B9%E8%AF%9D%E5%AD%97%E5%B9%953.avif)
 
-![日志界面](/uploads/chinesetranslationpatch/redfaction/日志界面.avif "日志界面")
+![日志界面](/uploads/chinesetranslationpatch/redfaction/%E6%97%A5%E5%BF%97%E7%95%8C%E9%9D%A2.avif)
 
-![汉化的贴图1](/uploads/chinesetranslationpatch/redfaction/汉化的贴图1.avif "汉化的贴图1")
+![汉化的贴图1](/uploads/chinesetranslationpatch/redfaction/%E6%B1%89%E5%8C%96%E7%9A%84%E8%B4%B4%E5%9B%BE1.avif)
 
-![汉化的贴图2](/uploads/chinesetranslationpatch/redfaction/汉化的贴图2.avif "汉化的贴图2")
+![汉化的贴图2](/uploads/chinesetranslationpatch/redfaction/%E6%B1%89%E5%8C%96%E7%9A%84%E8%B4%B4%E5%9B%BE2.avif)
 
-![即时演算动画字幕](/uploads/chinesetranslationpatch/redfaction/即时演算动画字幕.avif "即时演算动画字幕")
+![即时演算动画字幕](/uploads/chinesetranslationpatch/redfaction/%E5%8D%B3%E6%97%B6%E6%BC%94%E7%AE%97%E5%8A%A8%E7%94%BB%E5%AD%97%E5%B9%95.avif)
 
 
 
@@ -250,7 +250,7 @@ https://www.factionfiles.com/ff.php?action=file&id=7630
 - 原始 AI 高清化贴图由 **Captain_Dagon** 制作，其发布版本在 ModDB 标注为 **Public Domain**：https://www.moddb.com/games/red-faction/addons/red-faction-ai-upscale-textures
 - 本补丁使用的是由 **Goober** 重打包、修复及改进的版本：www.factionfiles.com/ff.php?action=file&id=7630
 - 本人已获得 Goober 对相关贴图进行修改及随本汉化补丁免费再分发的明确许可，感谢 Captain_Dagon 与 Goober 的工作与授权。 授权记录：
-- ![Discord](/uploads/chinesetranslationpatch/redfaction/discord.avif "Discord")
+- ![Discord沟通记录](/uploads/chinesetranslationpatch/redfaction/discord.avif)
 - 中文字体是 Noto Sans CJK SC 的子集，遵循 SIL Open Font License 1.1，版权 © 2014-2021 Adobe。 
 -  全部中文译文、语音转写、构建工具采用 CC BY-SA 4.0，欢迎拿去做繁体版或其他语言，请保留署名并同样开放。 
 -  《红色派系》版权归 Volition 及 THQ Nordic 所有，本项目与两者无任何隶属关系。

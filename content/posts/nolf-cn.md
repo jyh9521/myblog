@@ -7,7 +7,7 @@ description: |-
   > The Operative: No One Lives Forever Simplified Chinese Patch
   > 《秘密特工：无人永生》简体中文汉化补丁
   > 基于 NOLF Modernizer v1.006 Patch 4
-cover: /uploads/chinesetranslationpatch/nolf/封面.webp
+cover: /uploads/chinesetranslationpatch/nolf/%E5%B0%81%E9%9D%A2.webp
 tags:
   - 汉化
   - 游戏
@@ -184,21 +184,23 @@ Alt+Tab 切换出去再切回游戏，这层黑边有可能不见了。
 
 ## 四、截图
 
-![4K主菜单](/uploads/chinesetranslationpatch/nolf/4K主菜单.avif "4K主菜单")
+![4K主菜单](/uploads/chinesetranslationpatch/nolf/4K%E4%B8%BB%E8%8F%9C%E5%8D%95.avif)
 
-![1080P拉伸4K主菜单](/uploads/chinesetranslationpatch/nolf/1080p拉伸4K主菜单.avif)
+![1080P拉伸4K主菜单](/uploads/chinesetranslationpatch/nolf/1080p%E6%8B%89%E4%BC%B84K%E4%B8%BB%E8%8F%9C%E5%8D%95.avif)
 
-![任务选择界面](/uploads/chinesetranslationpatch/nolf/任务选择界面.avif "任务选择界面")
+![任务选择界面](/uploads/chinesetranslationpatch/nolf/%E4%BB%BB%E5%8A%A1%E9%80%89%E6%8B%A9%E7%95%8C%E9%9D%A2.avif)
 
-![任务简报界面](/uploads/chinesetranslationpatch/nolf/任务简报界面.avif "任务简报界面")
+![任务简报界面](/uploads/chinesetranslationpatch/nolf/%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%8A%A5%E7%95%8C%E9%9D%A2.avif)
 
-![载入界面](/uploads/chinesetranslationpatch/nolf/载入界面.avif "载入界面")
+![载入界面](/uploads/chinesetranslationpatch/nolf/%E8%BD%BD%E5%85%A5%E7%95%8C%E9%9D%A2.avif)
 
-![剧情动画1](/uploads/chinesetranslationpatch/nolf/剧情动画1.avif "剧情动画1")
+![载入界面](/uploads/chinesetranslationpatch/nolf/%E8%BD%BD%E5%85%A5%E7%95%8C%E9%9D%A2.avif)
 
-![剧情动画2](/uploads/chinesetranslationpatch/nolf/剧情动画2.avif "剧情动画2")
+![剧情动画1](/uploads/chinesetranslationpatch/nolf/%E5%89%A7%E6%83%85%E5%8A%A8%E7%94%BB1.avif)
 
-![选项选择](/uploads/chinesetranslationpatch/nolf/选项选择.avif)
+![剧情动画2](/uploads/chinesetranslationpatch/nolf/%E5%89%A7%E6%83%85%E5%8A%A8%E7%94%BB2.avif)
+
+![选项选择](/uploads/chinesetranslationpatch/nolf/%E9%80%89%E9%A1%B9%E9%80%89%E6%8B%A9.avif)
 
 
 
@@ -380,7 +382,7 @@ NOLF_CN_GDI.REZ         ← 汉化
 - 必须全小写，而且都以 mp 开头；
 - 用过作弊码的存档会被标记。
 
-![作弊码](/uploads/chinesetranslationpatch/nolf/%E4%BD%9C%E5%BC%8A%E7%A0%81.avif "作弊码")
+![作弊码](/uploads/chinesetranslationpatch/nolf/%E4%BD%9C%E5%BC%8A%E7%A0%81.avif)
 
 
 

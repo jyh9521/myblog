@@ -84,19 +84,19 @@ STextureEntry::loadOptimized - Out of memory
 
 ## 四、截图
 
-![启动界面](/uploads/chinesetranslationpatch/bloodrayne/%E5%90%AF%E5%8A%A8%E7%95%8C%E9%9D%A2.png "启动界面")
+![启动界面](/uploads/chinesetranslationpatch/bloodrayne/%E5%90%AF%E5%8A%A8%E7%95%8C%E9%9D%A2.png)
 
-![主菜单](/uploads/chinesetranslationpatch/bloodrayne/%E4%B8%BB%E8%8F%9C%E5%8D%95.png "主菜单")
+![主菜单](/uploads/chinesetranslationpatch/bloodrayne/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)
 
-![开场动画的硬字幕](/uploads/chinesetranslationpatch/bloodrayne/%E5%BC%80%E5%9C%BA%E5%8A%A8%E7%94%BB%E7%9A%84%E7%A1%AC%E5%AD%97%E5%B9%95.png "开场动画的硬字幕")
+![开场动画的硬字幕](/uploads/chinesetranslationpatch/bloodrayne/%E5%BC%80%E5%9C%BA%E5%8A%A8%E7%94%BB%E7%9A%84%E7%A1%AC%E5%AD%97%E5%B9%95.png)
 
-![按键说明](/uploads/chinesetranslationpatch/bloodrayne/%E6%8C%89%E9%94%AE%E8%AF%B4%E6%98%8E.png "按键说明")
+![按键说明](/uploads/chinesetranslationpatch/bloodrayne/%E6%8C%89%E9%94%AE%E8%AF%B4%E6%98%8E.png)
 
-![剧情动画1](/uploads/chinesetranslationpatch/bloodrayne/%E5%89%A7%E6%83%85%E5%8A%A8%E7%94%BB1.png "剧情动画1")
+![剧情动画1](/uploads/chinesetranslationpatch/bloodrayne/%E5%89%A7%E6%83%85%E5%8A%A8%E7%94%BB1.png)
 
-![剧情动画2](/uploads/chinesetranslationpatch/bloodrayne/%E5%89%A7%E6%83%85%E5%8A%A8%E7%94%BB2.png "剧情动画2")
+![剧情动画2](/uploads/chinesetranslationpatch/bloodrayne/%E5%89%A7%E6%83%85%E5%8A%A8%E7%94%BB2.png)
 
-![残留的英文 / 德文](/uploads/chinesetranslationpatch/bloodrayne/%E6%AE%8B%E7%95%99%E7%9A%84%E8%8B%B1%E6%96%87%20%E5%BE%B7%E6%96%87.png "残留的英文 / 德文")
+![残留的英文 / 德文](/uploads/chinesetranslationpatch/bloodrayne/%E6%AE%8B%E7%95%99%E7%9A%84%E8%8B%B1%E6%96%87%20%E5%BE%B7%E6%96%87.png)
 
 
 
@@ -137,7 +137,7 @@ STextureEntry::loadOptimized - Out of memory
 
 ### 1. 切换
 
-![切换](/uploads/chinesetranslationpatch/bloodrayne/%E5%88%87%E6%8D%A2.avif "切换")
+![切换](/uploads/chinesetranslationpatch/bloodrayne/%E5%88%87%E6%8D%A2.avif)
 
 毕竟汉化占用了日语的槽位，避免有些玩家想听日语语音，所以干脆做了个切换的功能。
 可以分别选择：
@@ -156,7 +156,7 @@ STextureEntry::loadOptimized - Out of memory
 
 ### 2. 文本编辑
 
-![文本编辑](/uploads/chinesetranslationpatch/bloodrayne/%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91.avif "文本编辑")
+![文本编辑](/uploads/chinesetranslationpatch/bloodrayne/%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91.avif)
 
 如果你觉得某句翻译不顺眼，或者发现漏翻、换行不舒服、闪退的文本之类的，可以直接在工具里改。
 功能包括：
@@ -181,7 +181,7 @@ STextureEntry::loadOptimized - Out of memory
 
 ### 3. 游戏字体
 
-![游戏字体](/uploads/chinesetranslationpatch/bloodrayne/%E6%B8%B8%E6%88%8F%E5%AD%97%E4%BD%93.avif "游戏字体")
+![游戏字体](/uploads/chinesetranslationpatch/bloodrayne/%E6%B8%B8%E6%88%8F%E5%AD%97%E4%BD%93.avif)
 
 可以更换游戏的字体。
 
@@ -202,7 +202,7 @@ STextureEntry::loadOptimized - Out of memory
 
 ### 4. 游戏修复
 
-![游戏修复](/uploads/chinesetranslationpatch/bloodrayne/%E6%B8%B8%E6%88%8F%E4%BF%AE%E5%A4%8D.avif "游戏修复")
+![游戏修复](/uploads/chinesetranslationpatch/bloodrayne/%E6%B8%B8%E6%88%8F%E4%BF%AE%E5%A4%8D.avif)
 
 这里有两个功能：
 

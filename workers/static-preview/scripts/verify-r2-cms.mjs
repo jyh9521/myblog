@@ -11,7 +11,7 @@ try {
  await page.goto(site+'/sveltia/',{waitUntil:'networkidle'});
  await page.getByRole('button',{name:'使用访问令牌登录',exact:true}).click();await page.locator('input').first().fill(githubToken());await page.getByRole('button',{name:'登录',exact:true}).click();
  await page.getByText('预览站公开文章验证',{exact:true}).dblclick();await page.getByRole('button',{name:'选择已有图片',exact:true}).first().click();
- const dialog=page.getByRole('dialog',{name:'资源库'});await dialog.locator('.blog-media-choice').first().waitFor();
+ const dialog=page.getByRole('dialog',{name:'资源库'});await dialog.getByRole('button',{name:'全部文件',exact:true}).click();await dialog.locator('.blog-media-choice').first().waitFor();
  await dialog.locator('.blog-media-management summary').click();await dialog.getByLabel('管理身份 GitHub Token',{exact:true}).fill(githubToken());await dialog.getByRole('button',{name:'验证管理身份',exact:true}).click();await dialog.getByText('管理身份已验证。',{exact:false}).waitFor();
  const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aRZkAAAAASUVORK5CYII=','base64');
  const fixtureName='后台资源 验证-'+Date.now()+'.png';

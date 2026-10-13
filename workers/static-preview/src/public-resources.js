@@ -1,3 +1,4 @@
+import {FOLDER_STATE_KEY,folderPath,folderLayout,planFolders} from './resource-folders.js';
 const ROOT='/ns/api/resources', MAX_UPLOAD=20*1024*1024;
 const json=(value,status=200)=>Response.json(value,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const hex=bytes=>Array.from(new Uint8Array(bytes),v=>v.toString(16).padStart(2,'0')).join('');
@@ -61,7 +62,20 @@ async function readBounded(stream,max) {
   const bytes=new Uint8Array(length);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}return bytes;
 }
 async function boundedJson(response,max=2*1024*1024) {return JSON.parse(new TextDecoder().decode(await readBounded(response.body,max)));}
-export async function resourceCatalog(env) {
+async function readFolderState(env) {
+  const object=await env.PUBLIC_UPLOADS.get(FOLDER_STATE_KEY);
+  if(!object)return {state:{schema:1,folders:[],assignments:{}},revision:'none'};
+  const state=await boundedJson(object);
+  if(state.schema!==1||!Array.isArray(state.folders)||state.folders.length>2000||state.folders.some(f=>!f||folderPath(f)!==f)||!state.assignments||typeof state.assignments!=='object'||Array.isArray(state.assignments)||Object.keys(state.assignments).length>10000||Object.entries(state.assignments).some(([key,f])=>!publicKey(publicUrl(key))||folderPath(f)!==f))throw Error('INVALID_FOLDER_STATE');
+  return {state,revision:object.etag};
+}
+async function writeFolderState(env,state,revision) {
+  const content=JSON.stringify({...state,nonce:crypto.randomUUID()});
+  if(new TextEncoder().encode(content).length>2*1024*1024)throw Error('FOLDER_LIMIT');
+  const result=await env.PUBLIC_UPLOADS.put(FOLDER_STATE_KEY,content,{onlyIf:revision==='none'?{etagDoesNotMatch:'*'}:{etagMatches:revision},httpMetadata:{contentType:'application/json',cacheControl:'no-store'}});
+  if(!result)throw Error('FOLDER_CHANGED');return result.etag;
+}
+export async function resourceCatalog(env,folderState) {
   const initialObject=await env.PUBLIC_UPLOADS.get('.catalog/initial.json');
   const initial=initialObject?await boundedJson(initialObject):{files:[]};
   const original=new Map(initial.files.map(f=>[f.key,f]));
@@ -79,7 +93,8 @@ export async function resourceCatalog(env) {
   }while(true);
   const groups=new Map();for(const f of files)if(f.sha256){if(!groups.has(f.sha256))groups.set(f.sha256,[]);groups.get(f.sha256).push(f.path);}
   for(const f of files)f.duplicates=f.sha256?groups.get(f.sha256).filter(p=>p!==f.path):[];
-  return {schema:1,storage:'r2',generatedAt:new Date().toISOString(),files};
+  const {state,revision}=folderState||await readFolderState(env);
+  return {schema:1,storage:'r2',generatedAt:new Date().toISOString(),folderRevision:revision,...folderLayout(files,state)};
 }
 function fileSignature(bytes,extension) {
   const start=new TextDecoder().decode(bytes.slice(0,16));
@@ -138,11 +153,20 @@ export async function resourceAdminRoute(request,env,ctx,accounts,fetcher=fetch)
   if(request.method!=='GET'&&(request.headers.get('Origin')!==env.SITE_ORIGIN||request.headers.get('X-Gaming-Admin')!=='1'))return json({error:'INVALID_ORIGIN'},403);
   if(!await authenticated(request,env,accounts,ctx))return json({error:'ADMIN_LOGIN_REQUIRED'},401);
   try {
+    if(path==='/folders'&&request.method==='POST') {
+      const input=await boundedJson(request,128*1024),snapshot=await readFolderState(env);
+      if(typeof input.revision!=='string'||input.revision!==snapshot.revision)return json({error:'FOLDER_CHANGED'},409);
+      const catalog=await resourceCatalog(env,snapshot),next=planFolders(input,catalog.files,snapshot.state);
+      const revision=await writeFolderState(env,next,snapshot.revision);
+      return json({...catalog,folderRevision:revision,...folderLayout(catalog.files,next)});
+    }
     if(path==='/references'&&request.method==='GET') {
       const [catalog,snapshot]=await Promise.all([resourceCatalog(env),scanReferences(env,fetcher,request.headers.get('X-GitHub-Read-Token'))]);
       return json({...catalog,commit:snapshot.commit,files:catalog.files.map(f=>({...f,references:referencesFor(f.key,snapshot)}))});
     }
     if(path==='/upload'&&request.method==='PUT') {
+      const target=url.searchParams.get('folder'),folder=target===null?null:folderPath(target);let folderSnapshot;
+      if(target!==null){if(folder===null)return json({error:'INVALID_FOLDER'},400);folderSnapshot=await readFolderState(env);const catalog=await resourceCatalog(env,folderSnapshot);if(folder&&!catalog.folders.includes(folder))return json({error:'FOLDER_NOT_FOUND'},409);}
       if(Number(request.headers.get('Content-Length'))>MAX_UPLOAD)return json({error:'INPUT_TOO_LARGE'},413);
       const name=String(url.searchParams.get('name')||'').replace(/[\\/:*?"<>|\x00-\x1f\x7f]/g,'_').slice(0,150),extension=name.split('.').pop().toLowerCase();
       if(!types[extension]||!name||!name.includes('.'))return json({error:'INVALID_FILE_TYPE'},400);
@@ -152,8 +176,11 @@ export async function resourceAdminRoute(request,env,ctx,accounts,fetcher=fetch)
       const dimensions=Number.isInteger(width)&&Number.isInteger(height)&&width>0&&height>0&&width<=50000&&height<=50000?{width:String(width),height:String(height)}:{};
       const object=await env.PUBLIC_UPLOADS.put(key,bytes,{onlyIf:{etagDoesNotMatch:'*'},sha256:digest,httpMetadata:{contentType:types[extension]},customMetadata:{sha256,name,...dimensions}});
       if(!object&&!(await env.PUBLIC_UPLOADS.head(key)))throw Error('UPLOAD_CONFLICT');
+      // A duplicate upload reuses its existing location; moving it is explicit.
+      let folderWarning;
+      if(object&&target!==null)try{const state={...folderSnapshot.state,assignments:{...folderSnapshot.state.assignments,[key]:folder}};await writeFolderState(env,state,folderSnapshot.revision);}catch(error){if(error.message!=='FOLDER_CHANGED')throw error;folderWarning='FOLDER_CHANGED';}
       await env.PUBLIC_UPLOADS.delete('.deleted/'+key);
-      return json({key,path:publicUrl(key),bytes:bytes.length,sha256,contentType:types[extension],...dimensions});
+      return json({key,path:publicUrl(key),bytes:bytes.length,sha256,contentType:types[extension],reused:!object,folderWarning,...dimensions});
     }
     if(path==='/delete'&&request.method==='POST') {
       const input=await boundedJson(request,8192),key=publicKey(publicUrl(String(input.key||'')));
@@ -178,5 +205,5 @@ export async function resourceAdminRoute(request,env,ctx,accounts,fetcher=fetch)
       await env.PUBLIC_UPLOADS.delete('.deleted/'+key);return json({status:'restored',key,path:publicUrl(key)});
     }
     return json({error:'NOT_FOUND'},404);
-  }catch(error){const codes=new Set(['INPUT_TOO_LARGE','EMPTY_BODY','UPLOAD_CONFLICT','REFERENCE_TOKEN_REQUIRED','REFERENCE_SOURCE_NOT_CONFIGURED','REFERENCE_SOURCE_UNAVAILABLE','INVALID_REFERENCE_COMMIT','REFERENCE_TREE_TRUNCATED','REFERENCE_SCAN_TOO_LARGE','REFERENCE_CONTENT_UNAVAILABLE','REFERENCE_SOURCE_CHANGED']);return json({error:codes.has(error.message)?error.message:'RESOURCE_OPERATION_FAILED'},error.message==='INPUT_TOO_LARGE'?413:503);}
+  }catch(error){const conflicts=new Set(['FOLDER_CHANGED','FOLDER_EXISTS','FOLDER_NOT_FOUND','FOLDER_NOT_EMPTY','RESOURCE_CHANGED']),invalid=new Set(['INVALID_FOLDER','INVALID_SELECTION','INVALID_FOLDER_ACTION','FOLDER_LIMIT']);const codes=new Set(['INPUT_TOO_LARGE','EMPTY_BODY','UPLOAD_CONFLICT','REFERENCE_TOKEN_REQUIRED','REFERENCE_SOURCE_NOT_CONFIGURED','REFERENCE_SOURCE_UNAVAILABLE','INVALID_REFERENCE_COMMIT','REFERENCE_TREE_TRUNCATED','REFERENCE_SCAN_TOO_LARGE','REFERENCE_CONTENT_UNAVAILABLE','REFERENCE_SOURCE_CHANGED',...conflicts,...invalid]);return json({error:codes.has(error.message)?error.message:'RESOURCE_OPERATION_FAILED'},error.message==='INPUT_TOO_LARGE'?413:conflicts.has(error.message)?409:invalid.has(error.message)?400:503);}
 }

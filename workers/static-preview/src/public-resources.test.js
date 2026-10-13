@@ -8,7 +8,7 @@ class Bucket {
   async head(key){const row=this.map.get(key);return row?this.object(key,row):null;}
   object(key,row){return {key,size:row.data.length,etag:row.etag,httpEtag:'"'+row.etag+'"',uploaded:row.uploaded,httpMetadata:row.httpMetadata,customMetadata:row.customMetadata,writeHttpMetadata(headers){for(const [k,v]of Object.entries(row.httpMetadata)){if(k==='contentType')headers.set('Content-Type',v);if(k==='cacheControl')headers.set('Cache-Control',v);}}};}
   async get(key,options={}){const row=this.map.get(key);if(!row)return null;const object=this.object(key,row);if(options.onlyIf?.etagMatches&&options.onlyIf.etagMatches!==row.etag)return object;const data=options.range?row.data.subarray(options.range.offset,options.range.offset+options.range.length):row.data;return {...object,body:new Response(data).body};}
-  async put(key,value,options={}){if(options.onlyIf?.etagDoesNotMatch==='*'&&this.map.has(key))return null;const data=Buffer.from(value?.getReader?await new Response(value).arrayBuffer():value instanceof ArrayBuffer?new Uint8Array(value):value);const row={data,etag:createHash('md5').update(data).digest('hex'),uploaded:new Date('2026-10-13T00:00:00Z'),httpMetadata:options.httpMetadata||{},customMetadata:options.customMetadata||{}};this.map.set(key,row);return this.object(key,row);}
+  async put(key,value,options={}){if(options.onlyIf?.etagDoesNotMatch==='*'&&this.map.has(key)||options.onlyIf?.etagMatches&&options.onlyIf.etagMatches!==this.map.get(key)?.etag)return null;const data=Buffer.from(value?.getReader?await new Response(value).arrayBuffer():value instanceof ArrayBuffer?new Uint8Array(value):value);const row={data,etag:createHash('md5').update(data).digest('hex'),uploaded:new Date('2026-10-13T00:00:00Z'),httpMetadata:options.httpMetadata||{},customMetadata:options.customMetadata||{}};this.map.set(key,row);return this.object(key,row);}
   async delete(key){this.map.delete(key);}
   async list(){return {objects:[...this.map].map(([key,row])=>this.object(key,row)),truncated:false};}
 }
@@ -50,6 +50,24 @@ test('admin uploads require session and same origin, reject executable types and
 test('immutable uploads deduplicate same filename/content and catalog does not expose archives',async()=>{
   const e=env();const a=await resourceAdminRoute(req('/ns/api/resources/upload?name='+encodeURIComponent('说明.pdf'),'PUT','%PDF-1.4\nfile'),e,{},accounts);assert.equal(a.status,200);const file=await a.json();assert.ok(file.key.startsWith('cms/'+file.sha256+'/'));assert.equal((await resourceAdminRoute(req('/ns/api/resources/upload?name='+encodeURIComponent('说明.pdf'),'PUT','%PDF-1.4\nfile'),e,{},accounts)).status,200);
   await e.PUBLIC_UPLOADS.put('.trash/backup','secret');const catalog=await resourceCatalog(e);assert.equal(catalog.files.length,1);assert.equal(catalog.files[0].sha256,file.sha256);
+});
+test('folder operations authenticate, reject stale revisions and move without changing public bytes or ETag',async()=>{
+ const e=env();await pdf(e);const call=(body,extra={})=>resourceAdminRoute(req('/ns/api/resources/folders','POST',body,extra),e,{},accounts);
+ assert.equal((await call({action:'create',destination:'文档',revision:'none'},{Cookie:''})).status,401);
+ const created=await call({action:'create',destination:'文档',revision:'none'});assert.equal(created.status,200);const catalog=await created.json();assert.ok(catalog.folders.includes('文档'));
+ assert.equal((await call({action:'rename',source:'文档',destination:'资料',revision:'none'})).status,409);
+ const before=await e.PUBLIC_UPLOADS.head('source.pdf');const moved=await call({action:'move',keys:['source.pdf'],destination:'文档',revision:catalog.folderRevision});assert.equal(moved.status,200);assert.equal((await moved.json()).files[0].folder,'文档');assert.equal((await e.PUBLIC_UPLOADS.head('source.pdf')).etag,before.etag);assert.equal(await(await servePublicResource(req('/uploads/source.pdf'),e)).text(),'%PDF-1.4\nfixture');
+});
+test('a conditional folder write loses a concurrent race cleanly, preserving the winning state',async()=>{
+ const e=env();await pdf(e);const create=await resourceAdminRoute(req('/ns/api/resources/folders','POST',{action:'create',destination:'first',revision:'none'}),e,{},accounts);const version=(await create.json()).folderRevision;
+ const put=e.PUBLIC_UPLOADS.put.bind(e.PUBLIC_UPLOADS);let raced=false;e.PUBLIC_UPLOADS.put=async(key,data,options)=>{if(key==='.catalog/folders.json'&&!raced){raced=true;const state=JSON.parse(e.PUBLIC_UPLOADS.map.get(key).data);state.folders.push('concurrent');await put(key,JSON.stringify(state));}return put(key,data,options);};
+ const loser=await resourceAdminRoute(req('/ns/api/resources/folders','POST',{action:'rename',source:'first',destination:'lost',revision:version}),e,{},accounts);assert.equal(loser.status,409);const catalog=await resourceCatalog(e);assert.ok(catalog.folders.includes('concurrent'));assert.ok(catalog.folders.includes('first'));assert.ok(!catalog.folders.includes('lost'));
+});
+test('upload goes into requested directory; a duplicate upload never silently relocates existing files',async()=>{
+ const e=env();const created=await resourceAdminRoute(req('/ns/api/resources/folders','POST',{action:'create',destination:'文档',revision:'none'}),e,{},accounts);assert.equal(created.status,200);
+ const upload=await resourceAdminRoute(req('/ns/api/resources/upload?name=a.pdf&folder='+encodeURIComponent('文档'),'PUT','%PDF-1.4\nfolder'),e,{},accounts);assert.equal(upload.status,200);const file=await upload.json();assert.equal((await resourceCatalog(e)).files[0].folder,'文档');
+ const duplicate=await resourceAdminRoute(req('/ns/api/resources/upload?name=a.pdf&folder=','PUT','%PDF-1.4\nfolder'),e,{},accounts);assert.equal((await duplicate.json()).reused,true);assert.equal((await resourceCatalog(e)).files[0].folder,'文档');assert.equal(file.path,(await resourceCatalog(e)).files[0].path);
+ assert.equal((await resourceAdminRoute(req('/ns/api/resources/upload?name=b.pdf&folder=missing','PUT','%PDF-file'),e,{},accounts)).status,409);
 });
 test('reference scanner uses pinned Git blobs, current head checks and requires ephemeral read token',async()=>{
   await assert.rejects(()=>scanReferences(env(),github(''),''),/REFERENCE_TOKEN_REQUIRED/);

@@ -68,7 +68,7 @@ manual:
   notes: 版权关系极为混乱，目前没有数字版售卖渠道。
 events:
   - date: 2026-07-27
-    title: 发布汉化补丁
+    title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/NOLF-CN
     name: 《无人永生》简体中文汉化补丁

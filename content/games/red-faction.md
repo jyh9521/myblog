@@ -85,7 +85,7 @@ manual:
       url: https://store.steampowered.com/app/20530
 events:
   - date: 2026-08-07
-    title: 发布汉化补丁
+    title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/Red-Faction-CN
     name: 《红色派系》简体中文汉化补丁

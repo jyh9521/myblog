@@ -15,9 +15,9 @@ import PdfEmbed from './pdf-embed';
 import { externalLinkProps } from '../../lib/external-links';
 import type { GameRecord } from '../../lib/game-types';
 
-type Props = { body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
+type Props = { compact?: boolean; body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
 
-export default function PostContent({ body, title, headings, images, games, cover, audio, video, attachment }: Props) {
+export default function PostContent({ body, title, headings, images, games, cover, audio, video, attachment, compact = false }: Props) {
   const [tocOpen, setTocOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
   const [activeHeading, setActiveHeading] = useState('');
@@ -85,13 +85,13 @@ export default function PostContent({ body, title, headings, images, games, cove
   }), [images, games, galleryOffset]);
 
   return <>
-    <ReadingProgress />
+    {!compact && <ReadingProgress />}
     {cover && <span className="article-cover-button">
       <span className="article-cover-viewport"><RetryableImage key={cover.src} src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} imageRef={coverRef} imageClass="cover cover-parallax" lazy={false} onOpen={() => setActiveImage(0)} label={`放大封面图片：${cover.caption}`} /></span><span className="article-image-caption">{cover.caption}</span>
     </span>}
-    <div className="article-content">
-      <div className="article-actions"><span>阅读文章</span><ShareButton title={title} /></div>
-      {headings.length > 0 && <nav className={`post-toc${tocOpen ? ' is-open' : ''}`} aria-label="文章目录">
+    <div className={compact ? "article-content article-content-compact" : "article-content"}>
+      {!compact && <div className="article-actions"><span>阅读文章</span><ShareButton title={title} /></div>}
+      {!compact && headings.length > 0 && <nav className={`post-toc${tocOpen ? ' is-open' : ''}`} aria-label="文章目录">
         <button className="toc-toggle" type="button" aria-expanded={tocOpen} onClick={() => setTocOpen(open => !open)}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg><span>文章目录</span>
         </button>
@@ -99,7 +99,7 @@ export default function PostContent({ body, title, headings, images, games, cove
           <a href={`#${encodeURIComponent(heading.id)}`} onClick={() => setTocOpen(false)}>{heading.text}</a>
         </li>)}</ol>
       </nav>}
-      <div className="body"><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, remarkHeadingIds, remarkGameFrames, remarkImageCompare]} components={markdownComponents}>{body}</ReactMarkdown></div>
+      <div className="body"><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, ...(compact ? [] : [remarkHeadingIds]), remarkGameFrames, remarkImageCompare]} components={markdownComponents}>{body}</ReactMarkdown></div>
       {audio && <section className="media"><h2>音频</h2><audio controls src={audio} /></section>}
       {video && <section className="media"><h2>视频</h2><video controls src={video} /></section>}
       {attachment && <p className="media"><a href={attachment} download {...externalLinkProps(attachment)}>下载附件 ↗</a></p>}

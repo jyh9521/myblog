@@ -116,7 +116,11 @@ async function validateRepository(root = process.cwd()) {
       } catch (e) { error(filename, `GitHub 项目无效：${e.message}`); }
     }
     for (const key of ['cover', 'audio', 'video', 'attachment']) checkUrl(data[key], filename, base, key);
-    const tree = parser.parse(content);
+    if (folder === 'games') {
+      const allowedEvents = config?.collections?.find(item => item.name === 'games')?.fields?.find(item => item.name === 'events')?.fields?.find(item => item.name === 'title')?.options || [];
+      for (const event of data.events || []) if (!allowedEvents.includes(event.title)) error(filename, `时间线事件无效：${event.title}`);
+    }
+    const tree = { children: [parser.parse(content), ...(folder === 'games' ? (data.events || []).filter(event => typeof event.note === 'string').map(event => parser.parse(event.note)) : [])] };
     const definitions = new Map();
     const walk = (node, fn) => { fn(node); for (const child of node.children || []) walk(child, fn); };
     walk(tree, node => { if (node.type === 'definition') definitions.set(node.identifier, node.url); });

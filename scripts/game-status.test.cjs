@@ -39,7 +39,7 @@ test('saved dossiers use allowed states and retain patch-release timeline entrie
   for (const file of fs.readdirSync('content/games').filter(file => file.endsWith('.md'))) {
     const { data } = matter(fs.readFileSync(`content/games/${file}`, 'utf8'));
     assert.ok(Array.isArray(data.status) && data.status.length > 0 && data.status.every(status => gameStatuses.includes(status)), `${file}: ${data.status}`);
-    if (file.startsWith('bloodrayne')) assert.ok(data.events.some(event => event.title === '发布汉化补丁'));
+    if (file.startsWith('bloodrayne')) assert.ok(data.events.some(event => event.title === '已发布汉化补丁'));
   }
 });
 

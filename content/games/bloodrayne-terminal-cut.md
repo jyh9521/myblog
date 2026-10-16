@@ -76,7 +76,7 @@ events:
     title: 通关游戏
     note: 名气虽然大，但是玩起来挺一般的。手感稀烂，地图设计和流程设计也基本没有，一路就是砍砍砍。
   - date: 2026-07-30
-    title: 发布汉化补丁
+    title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/BloodRayne-CN
     name: 《吸血莱恩：终极剪辑版》简体中文汉化补丁

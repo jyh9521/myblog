@@ -30,6 +30,9 @@ async function buildAssetIndex(root = process.cwd()) {
     visitData(data);
     const visit = node => { collect(node.url); if (node.type === 'html') for (const match of node.value.matchAll(/(?:src|href)=["']([^"']+)["']/g)) collect(match[1]); if (node.type === 'text') for (const match of node.value.matchAll(/\[compare\]([^|\]]+)\|([^|\]]+)/g)) { collect(match[1]); collect(match[2]); } (node.children || []).forEach(visit); };
     visit(parser.parse(content));
+    if (type === 'games') for (const event of data.events || []) {
+      if (typeof event.note === 'string') visit(parser.parse(event.note));
+    }
   }
   const files = walk(path.join(root, 'public/uploads')).filter(file => !path.basename(file).startsWith('.')).map(file => {
     const url = '/' + path.relative(path.join(root, 'public'), file).replaceAll('\\', '/');

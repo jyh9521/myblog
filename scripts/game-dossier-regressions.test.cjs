@@ -26,7 +26,8 @@ test('timeline keeps CMS order including undated records and preserves literal l
   assert.equal(games[0].updatedAt, '2026-10-08T01:00:00Z');
   const page = fs.readFileSync('app/games/[slug]/page.tsx', 'utf8');
   assert.match(page, /game.events.map/); assert.doesNotMatch(page, /\.reverse\(/);
-  assert.match(fs.readFileSync('app/style.css', 'utf8'), /\.game-event-note\{white-space:pre-wrap/);
+  assert.match(page, /PostContent compact body=\{event.note\}/);
+  assert.match(fs.readFileSync('app/posts/post-content.tsx', 'utf8'), /remarkBreaks/);
 });
 test('back restoration tracks card offset across async layout shifts and stops on user scroll', () => {
   let y = 900, cardTop = 1000, onResize, nextFrame, timer, disconnected = false;

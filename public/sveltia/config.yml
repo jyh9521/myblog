@@ -99,8 +99,8 @@ collections:
         required: false
         fields:
           - { name: date, label: 日期, widget: datetime, type: date, required: false }
-          - { name: title, label: 事件, widget: string, required: true }
-          - { name: note, label: 说明, widget: text, required: false }
+          - { name: title, label: 事件, widget: select, options: [开始游戏, 通关游戏, 开始汉化工作, 开始测试汉化, 已发布汉化补丁, AFK], required: true }
+          - { name: note, label: 说明, widget: richtext, editor_components: [code-block, r2-image, game-card, image-compare, horizontal-rule, pdf], required: false, hint: "与文章正文共用编辑器：支持标题、粗体、列表、链接、表格及插图；图片使用共用 R2 资源库。" }
       - name: projects
         label: 关联 GitHub 项目
         widget: list

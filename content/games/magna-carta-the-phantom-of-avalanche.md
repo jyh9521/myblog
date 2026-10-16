@@ -64,5 +64,5 @@ manual:
   availabilityStatus: physical-only
 events:
   - date: 2026-10-12
-    title: 开始制作汉化
+    title: 开始汉化工作
 ---

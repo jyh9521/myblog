@@ -1,5 +1,5 @@
 ---
-title: 马力欧&路易吉 RPG 2
+title: 马力欧与路易吉RPG2
 status:
   - 已通关
 playTime:

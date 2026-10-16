@@ -1,7 +1,7 @@
 ---
 title: 幽灵线：东京
 status:
-  - 暂时搁置
+  - AFK
 playTime:
   hours: 2
 personalRating: 5
@@ -80,4 +80,6 @@ manual:
 events:
   - date: 2023-04-13
     title: 开始游戏
+  - title: AFK
+    note: 没什么意思，空荡荡的东京，罐头支线。
 ---

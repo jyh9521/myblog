@@ -1,5 +1,5 @@
 ---
-title: 马力欧&路易吉RPG x 纸片马力欧MIX
+title: 马力欧与路易吉RPG x 纸片马力欧MIX
 status:
   - 暂时搁置
 playTime:

@@ -4,63 +4,28 @@ status:
   - 已通关
   - 已制作补丁
 hltb:
-  id: 7681
-  url: https://howlongtobeat.com/game/7681
-  title: Red Faction
   auto: true
+  id: 7681
   snapshot:
+    completionist: 9.04
+    extras: 7.21
     id: 7681
     main: 6.02
-    extras: 7.21
-    completionist: 9.04
     updatedAt: 2026-10-09T01:30:47.796Z
+  title: Red Faction
+  url: https://howlongtobeat.com/game/7681
 gameMetadata:
-  alternativeNames:
-    - Red Faction :สงครามแดงเดือด
-    - 红色派系
-  cover: https://media.rawg.io/media/games/a81/a81632a0060ca9fc0e33552a5c52bb9e.jpg
-  description: |-
-    The series of video games, known for the destructiveness of virtual environments. The action takes place at the end of the 21st century. Humanity has colonized Mars and now is extracting minerals that are no longer available on Earth. The player takes control over the miner who goes by the name Parker, and who helps rebel forces with the uprising against the evil Ultor Corporation. The latter is entirely out of hand and violates the fundamental human rights: does not provide workers food and medicine and treats miners as slaves.
-
-    The main game mechanics is the GeoMod technology, which allows players to extensively change the virtual environment. For example, with the help of explosives or other improvised instruments. Unavailable earlier freedom of action allowы players to complete levels non-linearly, and change them beyond recognition. The version for the PC included an additional level of Glass House, in which GeoMod's capabilities could be used in full, and a multiplayer with 25 maps.
-  developers:
-    - THQ Nordic
-    - Volition
-  fieldSources:
-    alternativeNames: rawg
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    selectedPlatforms: manual
-    title: manual
-    website: rawg
-  genres:
-    - Action
-    - Shooter
-  id: rawg:680
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-    - title
-  originalName: Red Faction
   platforms:
     - macOS
     - PC
     - PlayStation 4
     - PlayStation 2
-  publishers:
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
     - THQ Nordic
-    - THQ
-    - Nordic Games
-    - Nordic Games Publishing
-    - Nordic Trolls
-    - Graphsim Entertainment
-  releaseDate: 2001-05-01
+    - Volition
   screenshots:
     - https://media.rawg.io/media/screenshots/194/1949724f9cba3c8c51e9de9827637375.jpg
     - https://media.rawg.io/media/screenshots/c65/c65c7e5fdd07f926d37ffa4f104b6264.jpg
@@ -68,14 +33,49 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/0a7/0a70080582149032604a8f1a99a03af2.jpg
     - https://media.rawg.io/media/screenshots/474/4740462839fb6ec9a4e55ea95e7d2bd3.jpg
     - https://media.rawg.io/media/screenshots/0bc/0bc20263b9041f4434330e951c856645.jpg
-  selectedPlatforms:
-    - PC
+  updatedAt: 2026-10-02T03:48:26.710Z
+  genres:
+    - Action
+    - Shooter
+  releaseDate: 2001-05-01
+  publishers:
+    - THQ Nordic
+    - THQ
+    - Nordic Games
+    - Nordic Games Publishing
+    - Nordic Trolls
+    - Graphsim Entertainment
+  cover: https://media.rawg.io/media/games/a81/a81632a0060ca9fc0e33552a5c52bb9e.jpg
+  title: Red Faction
   sources:
     rawg:
       id: '680'
-  title: Red Faction
-  updatedAt: 2026-10-02T03:48:26.710Z
   website: http://www.redfaction.com
+  id: rawg:680
+  alternativeNames:
+    - Red Faction :สงครามแดงเดือด
+    - 红色派系
+  description: |-
+    The series of video games, known for the destructiveness of virtual environments. The action takes place at the end of the 21st century. Humanity has colonized Mars and now is extracting minerals that are no longer available on Earth. The player takes control over the miner who goes by the name Parker, and who helps rebel forces with the uprising against the evil Ultor Corporation. The latter is entirely out of hand and violates the fundamental human rights: does not provide workers food and medicine and treats miners as slaves.
+
+    The main game mechanics is the GeoMod technology, which allows players to extensively change the virtual environment. For example, with the help of explosives or other improvised instruments. Unavailable earlier freedom of action allowы players to complete levels non-linearly, and change them beyond recognition. The version for the PC included an additional level of Glass House, in which GeoMod's capabilities could be used in full, and a multiplayer with 25 maps.
+  originalName: Red Faction
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: rawg
+    title: manual
+    website: rawg
+    alternativeNames: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - selectedPlatforms
+    - title
 manual:
   availabilityStatus: available
   officialStores:
@@ -84,6 +84,11 @@ manual:
       region: ''
       url: https://store.steampowered.com/app/20530
 events:
+  - date: 2026-08-07
+    title: 开始测试汉化
+  - date: 2026-08-07
+    title: 通关游戏
+    note: 挺有特色的FPS游戏，地形破坏效果蛮有意思的，不过单人剧情这块没什么太大发挥。
   - date: 2026-08-07
     title: 已发布汉化补丁
 projects:

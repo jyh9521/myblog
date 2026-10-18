@@ -1,0 +1,2303 @@
+{
+  "reviewDate": "2026-10-18",
+  "base": "67131d2b673ae0b7ecd3322715fa486520138685",
+  "scope": "原版电脑游戏六作，原典复核与中文译名整理",
+  "events": 315,
+  "originalItems": 897,
+  "sourceItems": 103,
+  "sourceFamilies": [
+    "原年表整理者年表",
+    "社区百科及其历史镜像",
+    "塔利实机图文系列",
+    "原版第二作对白转录系列",
+    "热忱记录攻略系列",
+    "2013年韩文实机图文记录",
+    "玫瑰刀新浪攻略",
+    "原版第二篇章实机留存"
+  ],
+  "terms": 62,
+  "displayFieldsWithForeignTextBefore": 334,
+  "displayFieldsWithForeignTextAfter": 0,
+  "before": {
+    "single-source": 119,
+    "crosschecked": 187,
+    "conflict": 9
+  },
+  "after": {
+    "corrected": 6,
+    "crosschecked": 229,
+    "single-source": 76,
+    "conflict": 4
+  },
+  "primaryMediumEvents": [
+    "event-l47",
+    "event-l65",
+    "event-l95",
+    "event-l150",
+    "event-l179",
+    "event-l187",
+    "event-l219",
+    "event-l238",
+    "event-l259",
+    "event-l317",
+    "event-l365",
+    "event-l418",
+    "event-l476",
+    "event-l581",
+    "event-l649",
+    "event-l1297",
+    "event-l1314",
+    "event-l1327",
+    "event-l1337",
+    "event-l1346",
+    "event-l1352",
+    "event-l1368",
+    "event-l1373",
+    "event-l1386",
+    "event-l1398",
+    "event-l1406",
+    "event-l1417",
+    "event-l1932",
+    "event-l1936",
+    "event-l1962",
+    "event-l1970",
+    "event-l1988",
+    "event-l2000",
+    "event-l2004",
+    "event-l2008"
+  ],
+  "removedMisattachedCitations": [
+    {
+      "id": "event-l418",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l428",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l441",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l449",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l476",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l489",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l500",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l525",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l534",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l573",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l581",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l589",
+      "source": "source-11",
+      "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+    },
+    {
+      "id": "event-l463",
+      "source": "source-11",
+      "reason": "全文查找卡琳、海盗、卡嘉商路均不属于该篇所录对白；不能用别处战斗背景替本条作证。"
+    },
+    {
+      "id": "event-l481",
+      "source": "source-11",
+      "reason": "该篇未录本条南海护航、卡嘉舰队及玛哈拉贾会面；只有其他政治／战争背景。"
+    },
+    {
+      "id": "event-l691",
+      "source": "source-21",
+      "reason": "用更精确脚注定位替代宽泛“其他版本”说法，避免把后出4代资料误当旧PC日期冲突。"
+    },
+    {
+      "id": "event-l1381",
+      "source": "source-35",
+      "reason": "章节日期表没有“墓地交易”这一独立节点，科学魔法研究所的100日刻度不能自动证实插入对白发生在同日。"
+    },
+    {
+      "id": "event-l1192",
+      "source": "source-34",
+      "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+    },
+    {
+      "id": "event-l1194",
+      "source": "source-34",
+      "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+    },
+    {
+      "id": "event-l1195",
+      "source": "source-34",
+      "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+    },
+    {
+      "id": "event-l1196",
+      "source": "source-34",
+      "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+    },
+    {
+      "id": "event-l1197",
+      "source": "source-34",
+      "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+    },
+    {
+      "id": "event-l1198",
+      "source": "source-34",
+      "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+    },
+    {
+      "id": "event-l1199",
+      "source": "source-34",
+      "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+    },
+    {
+      "id": "event-l1193",
+      "source": "source-33",
+      "reason": "篇253此处是杰拉德引诱、父母与H-BOMB研究所事件，不是底本写的詹姆斯终盘任务；不能强称同一事件。"
+    },
+    {
+      "id": "event-l2008",
+      "source": "source-49",
+      "reason": "原有笼统百科定位未单独支持抵达后命名；以已读原作对白替换该部分事件证据。"
+    }
+  ],
+  "unresolvedDateConflicts": [
+    {
+      "id": "event-l649",
+      "note": "已直接核读原版《Ⅱ》结局滚动字幕：黑太子于1213年去世，字幕接着明确说“次年”九国在格拉特斯缔结和平、拉希德成为盟主与圣王，即1214年。底本把1213标题写作圣王元年，却又用1217=圣王4年，内部存在一年差；不能用剧情已对照消去这处日期冲突。杜兰追谥、白金汉授爵仍缺原手册页。 本条合并底本的和平大会与授爵记录，1214年的原作依据只对应大会，不推广为全部子项的发生年。"
+    },
+    {
+      "id": "event-l758",
+      "note": "禁书事件在部分人物资料被记为1249年末，伯恩斯坦家覆灭也有1250年的版本；此处保存原年表1250/1251的次序，并公开分歧。"
+    },
+    {
+      "id": "event-l767",
+      "note": "家族覆灭也有1250异说；修里年龄仅见该整理表，未由原版人物页独立复核。"
+    },
+    {
+      "id": "event-l946",
+      "note": "底本享年74与部分后出资料的生年1194不一致，不能用不同版本生日反推成唯一正确年龄。"
+    },
+    {
+      "id": "event-l1772",
+      "note": "场景已与原游戏图文流程交叉核对。精确日期仍未解：底本置1283年第20日；社区表列光之使者于1282年第220日。本轮取得的原游戏年代表截图只显示1281年前段，没有后期节点，故仍保留日期异说，未宣称已从画面解决。"
+    }
+  ],
+  "remainingSingleSource": [
+    {
+      "id": "event-l77",
+      "title": "埃斯格尔历创立"
+    },
+    {
+      "id": "event-l83",
+      "title": "图尔帝国建立"
+    },
+    {
+      "id": "event-l89",
+      "title": "冒险王发现桑德梅尔"
+    },
+    {
+      "id": "event-l103",
+      "title": "莫格雷活动时期"
+    },
+    {
+      "id": "event-l115",
+      "title": "黑太子初次出征"
+    },
+    {
+      "id": "event-l121",
+      "title": "黑太子代理国政"
+    },
+    {
+      "id": "event-l129",
+      "title": "创世战争开端"
+    },
+    {
+      "id": "event-l140",
+      "title": "格拉特斯惨败与王室流亡"
+    },
+    {
+      "id": "event-l159",
+      "title": "卡尔斯封印火龙"
+    },
+    {
+      "id": "event-l195",
+      "title": "复兴军回到达卡尔"
+    },
+    {
+      "id": "event-l216",
+      "title": "里奥斯港与柯蒂斯要塞交战"
+    },
+    {
+      "id": "event-l463",
+      "title": "商路战争扩大"
+    },
+    {
+      "id": "event-l481",
+      "title": "南海护航与公王派反攻"
+    },
+    {
+      "id": "event-l664",
+      "title": "切萨雷学习宗教"
+    },
+    {
+      "id": "event-l677",
+      "title": "图尔入侵与五十年战争"
+    },
+    {
+      "id": "event-l686",
+      "title": "亨利王子诞生"
+    },
+    {
+      "id": "event-l691",
+      "title": "凯莉诞生与罗宾去世"
+    },
+    {
+      "id": "event-l695",
+      "title": "希拉诺与梅尔西迪斯诞生"
+    },
+    {
+      "id": "event-l703",
+      "title": "乔治王子诞生"
+    },
+    {
+      "id": "event-l708",
+      "title": "梅尔西迪斯之母去世"
+    },
+    {
+      "id": "event-l713",
+      "title": "威廉王子诞生"
+    },
+    {
+      "id": "event-l718",
+      "title": "玛莎公主诞生"
+    },
+    {
+      "id": "event-l723",
+      "title": "图尔再攻与王储失踪"
+    },
+    {
+      "id": "event-l730",
+      "title": "理查德王子诞生"
+    },
+    {
+      "id": "event-l735",
+      "title": "海伦疑点与切萨雷赴任"
+    },
+    {
+      "id": "event-l743",
+      "title": "简·肖尔诞生"
+    },
+    {
+      "id": "event-l748",
+      "title": "克劳塞维茨诞生"
+    },
+    {
+      "id": "event-l753",
+      "title": "爱德华诞生"
+    },
+    {
+      "id": "event-l780",
+      "title": "凯瑟琳·斯宾塞诞生"
+    },
+    {
+      "id": "event-l785",
+      "title": "德尔诞生与图尔扩张"
+    },
+    {
+      "id": "event-l791",
+      "title": "伍德斯托克归国与伊丽莎白诞生"
+    },
+    {
+      "id": "event-l800",
+      "title": "莉娜与玛丽诞生"
+    },
+    {
+      "id": "event-l806",
+      "title": "伍德斯托克去世与扎德诞生"
+    },
+    {
+      "id": "event-l812",
+      "title": "王立魔法师团谋杀案"
+    },
+    {
+      "id": "event-l817",
+      "title": "罗纳德诞生"
+    },
+    {
+      "id": "event-l820",
+      "title": "克劳塞维茨离宫与菲利普诞生"
+    },
+    {
+      "id": "event-l826",
+      "title": "约翰诞生"
+    },
+    {
+      "id": "event-l837",
+      "title": "东方战事复燃"
+    },
+    {
+      "id": "event-l928",
+      "title": "柯蒂斯秘密贸易"
+    },
+    {
+      "id": "event-l929",
+      "title": "图尔王位争夺"
+    },
+    {
+      "id": "event-l933",
+      "title": "苏莱曼回国与停战"
+    },
+    {
+      "id": "event-l950",
+      "title": "玫瑰战争开始"
+    },
+    {
+      "id": "event-l951",
+      "title": "克里斯蒂娜统一帝国"
+    },
+    {
+      "id": "event-l959",
+      "title": "乔治败亡"
+    },
+    {
+      "id": "event-l965",
+      "title": "威廉即位与流亡"
+    },
+    {
+      "id": "event-l971",
+      "title": "比弗罗斯特改制内战"
+    },
+    {
+      "id": "event-l975",
+      "title": "亚历山大记载疑点"
+    },
+    {
+      "id": "event-l988",
+      "title": "王子失踪"
+    },
+    {
+      "id": "event-l992",
+      "title": "理查德掌权"
+    },
+    {
+      "id": "event-l1192",
+      "title": "玛丽分支"
+    },
+    {
+      "id": "event-l1193",
+      "title": "柯蒂莉亚分支"
+    },
+    {
+      "id": "event-l1194",
+      "title": "奥菲莉娅娅娅娅分支"
+    },
+    {
+      "id": "event-l1195",
+      "title": "莉娜分支"
+    },
+    {
+      "id": "event-l1196",
+      "title": "凯瑟琳分支"
+    },
+    {
+      "id": "event-l1197",
+      "title": "扎德分支"
+    },
+    {
+      "id": "event-l1198",
+      "title": "安妮分支"
+    },
+    {
+      "id": "event-l1199",
+      "title": "简·肖尔分支"
+    },
+    {
+      "id": "event-l1220",
+      "title": "克劳塞维茨登基"
+    },
+    {
+      "id": "event-l1237",
+      "title": "重建与科学魔法"
+    },
+    {
+      "id": "event-l1241",
+      "title": "两次图尔远征"
+    },
+    {
+      "id": "event-l1251",
+      "title": "比弗罗斯特灭亡"
+    },
+    {
+      "id": "event-l1252",
+      "title": "帝国的反对势力"
+    },
+    {
+      "id": "event-l1257",
+      "title": "暗杀阴谋与帝国秘密情报局"
+    },
+    {
+      "id": "event-l1266",
+      "title": "图尔继承危机"
+    },
+    {
+      "id": "event-l1271",
+      "title": "图尔南北分裂"
+    },
+    {
+      "id": "event-l1278",
+      "title": "达卡尔闭关"
+    },
+    {
+      "id": "event-l1284",
+      "title": "柯蒂斯扩张"
+    },
+    {
+      "id": "event-l1381",
+      "title": "墓地中的交易"
+    },
+    {
+      "id": "event-l1406",
+      "title": "分支：解救白金汉"
+    },
+    {
+      "id": "event-l1430",
+      "title": "分支：开拓东航路"
+    },
+    {
+      "id": "event-l1442",
+      "title": "分支：达卡马商队"
+    },
+    {
+      "id": "event-l1608",
+      "title": "分支：亡国的后裔"
+    },
+    {
+      "id": "event-l1816",
+      "title": "跃迁后的漫长间隔"
+    },
+    {
+      "id": "event-l1908",
+      "title": "露西恩成为记者"
+    },
+    {
+      "id": "zephyr-route-two",
+      "title": "西风可选结局：离开猎鹰"
+    },
+    {
+      "id": "zephyr-route-three",
+      "title": "西风可选结局：复仇到底"
+    }
+  ],
+  "remainingPlotConflicts": [
+    {
+      "id": "event-l758",
+      "note": "禁书事件在部分人物资料被记为1249年末，伯恩斯坦家覆灭也有1250年的版本；此处保存原年表1250/1251的次序，并公开分歧。"
+    },
+    {
+      "id": "event-l767",
+      "note": "家族覆灭也有1250异说；修里年龄仅见该整理表，未由原版人物页独立复核。"
+    },
+    {
+      "id": "event-l946",
+      "note": "底本享年74与部分后出资料的生年1194不一致，不能用不同版本生日反推成唯一正确年龄。"
+    },
+    {
+      "id": "event-l1970",
+      "note": "露西恩死亡有明确剧情；原作留存截图直接确认红发留下掩护和诀别，但本轮未取得他被杀的直接画面。底本和图文作者均判定红发死亡，攻略简述则止于殿后，因此本页叙事不把被杀方式当作已直接核验事实。"
+    }
+  ],
+  "corrected": [
+    {
+      "id": "event-l47",
+      "title": "奥德赛与诸神战争",
+      "note": "原年表写75人死亡；原版《Ⅱ》石板正文（对白1023）明确记为假死，故此处按原作修正。创造生命是世界内历史叙述，不等于凭空创造整个行星；神话的精确年份仍未确定。"
+    },
+    {
+      "id": "event-l65",
+      "title": "休眠者苏醒与诸神封印",
+      "note": "原年表称死者复活；原版《Ⅱ》对白1033记为休眠者被唤醒，已据此修正。“约两千年前”、石化后的文明编年仍沿用底本，不是新取得的精确日期。"
+    },
+    {
+      "id": "event-l476",
+      "title": "拉希德平定埃里希",
+      "note": "底本称其显露暗黑神身份；原版战斗画面直接写明“格里玛”，人物对话由此怀疑他是德布尔族，并未认定他是13暗黑神之一。已按原作修正文案；后出作品的血统补充不混入旧版正文。"
+    },
+    {
+      "id": "event-l1297",
+      "title": "帝国军火案与暗杀未遂",
+      "note": "原游戏年代表截图把可玩章节“因佩尔诺的阴谋”置于1281年第20日，直接画面证据优先于社区表。底本把整段置1280年，需保留为编年异记；不能把背景概述与整章可玩流程强合为同一天。"
+    },
+    {
+      "id": "event-l1932",
+      "title": "露西恩一度被捕",
+      "note": "原作对白确认阿塞拉斯把她带回，并说明手下已对她洗脑；另一场娜塔莉自认疏忽，没想到遭洗脑者还能逃走。故改为具体可核的获救过程，不使用军方主动释放的说法。"
+    },
+    {
+      "id": "event-l2008",
+      "title": "为目的地命名安塔利亚",
+      "note": "原作中理查德在启航前提议，把未来首先抵达的行星按星团名命名为安塔利亚。底本在抵达后收束时记载命名；本页按原作把命名表述改为预定目的地，而非再次发生的一次命名仪式。确切抵达日期仍未独立核验。 本条据启航前的原作对白调整年内排序，放在船员集合之后、启航之前；原稳定链接和底本覆盖行号不变。"
+    }
+  ],
+  "changes": [
+    {
+      "id": "event-l47",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/645",
+          "locator": "对白1010、1022—1034，尤其1023与1027—1030",
+          "supports": "event",
+          "scope": "100人、75人假死、25人后遗症、命名安塔利亚、繁殖改造生命与两派战争。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l65",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/645",
+          "locator": "对白1033—1034",
+          "supports": "event",
+          "scope": "旧同伴苏醒后无差别破坏，诸神封印与集体冬眠；不单独证明约两千年前或之后各国建立的年代。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l95",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/645",
+          "locator": "对白968—973",
+          "supports": "event",
+          "scope": "德劳普尼尔明确说明冒险王与圣剑一同失踪，地点线索指向魔塔；时间只说三百多年前。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l150",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/652",
+          "locator": "对白1205—1206",
+          "supports": "event",
+          "scope": "黑太子确认自己从燃烧的飞空艇坠落，并提到七年记忆空白；不直接给出1203年份，也不单独证明宰相掌权的全部细节。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l174",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/130",
+          "locator": "“王国遗产剧情”中夺杖、伯恩斯坦与卡修塔尔追击画面",
+          "supports": "event",
+          "scope": "荣光之杖夺回、帝国追击与比弗罗斯特撤退路线；不确认约第30日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l179",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/640",
+          "locator": "对白490—506及其沙漠金字塔场景指示",
+          "supports": "event",
+          "scope": "贝拉丁派卡尔斯协助卡西姆在特里西斯金字塔回收神像；不确认底本日数。"
+        },
+        {
+          "url": "https://tali.kr/133",
+          "locator": "金字塔中的破坏神像、卡尔斯与卡西姆场景",
+          "supports": "event",
+          "scope": "神像回收任务与现场取得神像；不是卡尔斯封印火龙年份的直接证据。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l184",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/133",
+          "locator": "金字塔任务后贝拉丁的刺杀命令、半藏与卡尔斯对话",
+          "supports": "event",
+          "scope": "伯恩斯坦刺杀命令与伪造死亡的核心场景；冰龙城夺像仍未在本章独立核实。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l187",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/639",
+          "locator": "对白360—430与冰龙事件场景指示",
+          "supports": "event",
+          "scope": "莫泽尔请G.S引导伊欧琳穿越吉甘特斯、拉希德进入冰龙城及救援路线；不独立证明卡利珀族屠杀的全部细节。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l219",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/640",
+          "locator": "对白490—496，尤其492",
+          "supports": "event",
+          "scope": "昆与帕尔塔米拉已被派往赛拉普斯处理水下都市；不证明向格拉纳达借潜艇的细节。"
+        },
+        {
+          "url": "https://tali.kr/134",
+          "locator": "罗宾盗取羊皮文书、克罗援助、吉什涅加入的流程画面",
+          "supports": "event",
+          "scope": "罗宾取得古文书并遭追击的场景；不确认水下都市支线或第200日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l238",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/641",
+          "locator": "对白674—681及“宁从地下宫殿归来”的场景指示",
+          "supports": "event",
+          "scope": "宁发现瀑布后的地下宫殿及向巴尔坦村展示遗物；不证明已经删除的阿巴雷斯特获取支线。"
+        },
+        {
+          "url": "https://tali.kr/136",
+          "locator": "佣兵队赶到阿斯塔尼亚、围攻帝国驻军的画面",
+          "supports": "event",
+          "scope": "阿斯塔尼亚反攻主干；水下都市与阿巴雷斯特仍按删节／底本独有内容区分。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l249",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/136",
+          "locator": "佣兵队走陆路、半藏伏兵、抵达阿斯塔尼亚战场",
+          "supports": "event",
+          "scope": "G.S佣兵队赶赴阿斯塔尼亚、途中遭暗杀部队及参与城战。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l259",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/640",
+          "locator": "对白595—603",
+          "supports": "event",
+          "scope": "四国部队决定正式重建银箭同盟，推举伊欧琳指挥。"
+        },
+        {
+          "url": "https://riedel.tistory.com/641",
+          "locator": "对白610—673，尤其643—652",
+          "supports": "event",
+          "scope": "舞会、G.S与伊欧琳跳舞及接吻；不确认220日的编年。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l317",
+      "addedEvidence": [
+        {
+          "url": "https://riedel.tistory.com/644",
+          "locator": "卡嘉航路剧情、对白821、拉尔戈／佩内罗／太阳石各段",
+          "supports": "event",
+          "scope": "卡嘉出海动机、修里协助、拉尔戈与佩内罗入队、取得太阳石；原版剧情成立不等于底本第140—180日获独立证实。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l365",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/145",
+          "locator": "“卡嘉与修里救援”“天空之城封印地”两节，三神器神殿与启动画面",
+          "supports": "event",
+          "scope": "卡嘉、修里与白玉堂会合、三神殿解封与取得天空之城；同条帝国在大陆的并行攻势不由本页证明。"
+        },
+        {
+          "url": "https://riedel.tistory.com/645",
+          "locator": "对白1002—1052，尤其1036—1052",
+          "supports": "event",
+          "scope": "G.S以启动口令使系统响应，天空之城可以由一行控制；不确认底本同年日序。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l418",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/150",
+          "locator": "半藏、阿加西、卡修塔尔重新归队的逐段画面",
+          "supports": "event",
+          "scope": "黑太子召集旧部；同条柯蒂斯共和制部分另有原对白1221—1231支持。"
+        },
+        {
+          "url": "https://riedel.tistory.com/652",
+          "locator": "对白1221—1231、1310—1316",
+          "supports": "event",
+          "scope": "阿尔西亚与艾莉卡、阿莉安娜讨论治安及共和制；后段拉希德祝贺其就任总统。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l428",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/150",
+          "locator": "毗湿奴拒绝归队、伊鲁斯逮捕、救援与再加入画面",
+          "supports": "event",
+          "scope": "毗湿奴拒绝复出后被逮捕，黑太子救援并使其归队；莱特报信与佣兵准备细节仍需逐句文本。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l441",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/167",
+          "locator": "军队集结、伊鲁斯作战与推进暗黑城前的画面",
+          "supports": "event",
+          "scope": "黑太子与贝拉丁两派内战、击败伊鲁斯并推进；不独立证明每座要塞的全部驻将名单。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l449",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/167",
+          "locator": "黑桥卡尔斯决斗、贝拉丁群体传送、监牢伊欧琳场景",
+          "supports": "event",
+          "scope": "夺回帝位、统一宣言及伊欧琳牢中对话。"
+        },
+        {
+          "url": "https://tali.kr/169",
+          "locator": "审判兰达姆、修里协助出逃、埃里希囚禁公王的画面",
+          "supports": "event",
+          "scope": "阿斯塔尼亚政变分支；与夺回帝位的同步日期仍为底本编排。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l476",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/169",
+          "locator": "第33—37张图（从0计数32—36）：兰达姆说明加里乌斯拒绝、格里玛单位、拉希德及兰达姆对话",
+          "supports": "event",
+          "scope": "加里乌斯拒绝操纵、埃里希格里玛变身、众人怀疑德布尔血统；不能支持“他是暗黑神”。"
+        },
+        {
+          "url": "https://tali.kr/wp-content/uploads/2023/08/992BD8465BD496A415.jpg",
+          "locator": "战场对白框“拉希德”，与前后两图的格里玛单位／德布尔族疑问相互定位",
+          "supports": "event",
+          "scope": "原作称这种形态为格里玛，而不是直接宣布暗黑神身份。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l489",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/189",
+          "locator": "征服加拉德、浪天挑战及特里西斯卡西姆归队画面",
+          "supports": "event",
+          "scope": "浪天决斗归附、加拉德与特里西斯征服；不支持手册独有的阿泽罗斯与艾琳人物。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l500",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/190",
+          "locator": "暗黑城地下牢狱、黑桥突破及伊欧琳回归各段",
+          "supports": "event",
+          "scope": "克罗救出伊欧琳、突破黑桥包围并护送归国；不确认约第160日。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l525",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/192",
+          "locator": "开场双方集兵、赛拉普斯空战、黑太子与拉希德单挑画面",
+          "supports": "event",
+          "scope": "双方集兵、空战与格拉特斯决斗。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l534",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/193",
+          "locator": "两次海战与阿加西铁甲舰增援的画面",
+          "supports": "event",
+          "scope": "铁甲舰增援与海战胜负；十余年前即已筹备的长度未获独立原典确认。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l573",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/205",
+          "locator": "灰色骑士团到达雷霆要塞、格拉特斯野战与双方“黑太子／G.S”并立画面",
+          "supports": "event",
+          "scope": "灰色骑士团援助银箭、伯恩斯坦假扮黑太子的战场安排；原第8篇对白只能说明构想，不能替代此处实际发生。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l581",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/205",
+          "locator": "第72—78张图（从0计数71—77），尤其弗莱奥斯点名三名反对者的画面",
+          "supports": "event",
+          "scope": "反对者确为维斯巴登、奥布斯库拉、阿比多斯；该文作者正文误把阿比多斯写成拉埃维乌斯，必须以原画面为准。"
+        },
+        {
+          "url": "https://tali.kr/wp-content/uploads/2023/08/99B26D465BF05F8D0A.jpg",
+          "locator": "弗莱奥斯台词逐一列出三名反对者；相邻画面阿比多斯要求对创造的世界负责",
+          "supports": "event",
+          "scope": "直接确认维斯巴登、奥布斯库拉、阿比多斯的名单。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l589",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/206",
+          "locator": "三主神说明阴谋、G.S自荐出使、伯恩斯坦代理与船上谈判画面",
+          "supports": "event",
+          "scope": "神的计划、人类结盟及名义扣押G.S作为人质的安排；此段在原第8篇对白结束之后。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "原第8篇对白1200—1415不是该条全部场景的定位；替换为实际对应章节／画面，不再以泛化范围背书。"
+        }
+      ]
+    },
+    {
+      "id": "event-l463",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "全文查找卡琳、海盗、卡嘉商路均不属于该篇所录对白；不能用别处战斗背景替本条作证。"
+        }
+      ]
+    },
+    {
+      "id": "event-l481",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/168",
+          "locator": "公王派与莎拉击败元老院及援军的实机结尾",
+          "supports": "context",
+          "scope": "仅对照本条最后一个比弗罗斯特支线，不能为南海护航组作剧情确认。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-11",
+          "reason": "该篇未录本条南海护航、卡嘉舰队及玛哈拉贾会面；只有其他政治／战争背景。"
+        }
+      ]
+    },
+    {
+      "id": "event-l605",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/207",
+          "locator": "舰队运输、两场海战与魔装机登陆方案",
+          "supports": "event",
+          "scope": "暴风岛运输与以魔装机转运上岸的计划；不独立确认第1—30日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l649",
+      "addedEvidence": [
+        {
+          "url": "https://tali.kr/wp-content/uploads/2023/08/9938594B5BF05E1108.jpg",
+          "locator": "结局滚动字幕第一幅：1213黑太子去世、帝国解体，紧接“次年”安塔利亚九国在格拉特斯集会",
+          "supports": "date",
+          "scope": "直接确认死亡与和平盟主仪式不是同一年；不确认白金汉授爵。"
+        },
+        {
+          "url": "https://tali.kr/wp-content/uploads/2023/08/993E8E4B5BF05E1208.jpg",
+          "locator": "紧接上一幅的结局滚动字幕，拉希德成为同盟盟主、登上圣王之位",
+          "supports": "event",
+          "scope": "补全上一幅“次年”和平大会的结果；不直接定义圣王纪年元年的文字规则。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l691",
+      "addedEvidence": [
+        {
+          "url": "https://namu.moe/w/로빈%20보니르",
+          "locator": "人物栏死亡年份与脚注A、B；A=《暴风雨》手册年表，B=《创世纪战4》百科",
+          "supports": "variant",
+          "scope": "仅用来追溯两个年份各自声称来自哪个作品，不作为新取得的原包装手册证据。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-21",
+          "reason": "用更精确脚注定位替代宽泛“其他版本”说法，避免把后出4代资料误当旧PC日期冲突。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1297",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/412",
+          "locator": "아포칼립스 - 인페르노의 음모；赛鲁普斯217室→港口→洛温贫民区→因费尔诺",
+          "supports": "event",
+          "scope": "军火调查、何塞被杀与刺杀未遂流程。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281.00下方20刻度右列：인페르노의 음모",
+          "supports": "variant",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1352",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/412",
+          "locator": "아포칼립스 - 임페리얼 발키리",
+          "supports": "event",
+          "scope": "ISS搭档调查与女武神相关任务。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第80日右列：임페리얼 발키리",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1386",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/412",
+          "locator": "아포칼립스 - 안타나나리보의 괴사",
+          "supports": "event",
+          "scope": "调查失踪探员、教团据点与兰伯特。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第120日右列：안타나나리보의 괴사",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1314",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/406",
+          "locator": "시반슈미터 - 카디스 요새",
+          "supports": "event",
+          "scope": "暗道营救公主、因她坚持而一并救走平民。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第60日左列：카디스 요새",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1337",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/406",
+          "locator": "시반슈미터 - 무타나비의 성녀",
+          "supports": "event",
+          "scope": "追击刺客、拉什卡逃走、协助村民治疗。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第80日左列：무타나비의 성녀",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1368",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/406",
+          "locator": "포위망 돌파；/407 항구 티비앙导语",
+          "supports": "event",
+          "scope": "总部被攻、弃守及突围。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第100日左列：포위망 돌파",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1327",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/409",
+          "locator": "크림슨 크루세이더 - 반기",
+          "supports": "event",
+          "scope": "远征引起贵族叛乱，大公逃往乔尔领。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第60日中列：반기",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1346",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/409",
+          "locator": "바이올라 헤이스팅스",
+          "supports": "event",
+          "scope": "薇奥拉率军追击及与伯蒙特密会。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第80日中列：바이올라 헤이스팅스",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1373",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/409",
+          "locator": "과학마법연구소",
+          "supports": "event",
+          "scope": "救出摩根、道格拉斯后前往研究所求援。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第100日中列：과학마법연구소",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1398",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/407",
+          "locator": "항구 티비앙",
+          "supports": "event",
+          "scope": "花朵支线、攻取港口、东西航路选择。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第140日左列：항구 티비앙",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1425",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/407",
+          "locator": "사략해적",
+          "supports": "event",
+          "scope": "西线海战路线与其后先攻卡迪斯或扬的选择；不单证宝岛条件。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1470",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/408",
+          "locator": "카디스 공략작전",
+          "supports": "event",
+          "scope": "卡迪斯作战路线；不另证底本中的完整先后次序。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1476",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/408",
+          "locator": "예니체리 얀 지슈카",
+          "supports": "event",
+          "scope": "击败并关押扬，萨拉丁请求保其性命。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1412",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/410",
+          "locator": "아델라이데 우드빌",
+          "supports": "event",
+          "scope": "伍德维尔救援路线。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1446",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/410",
+          "locator": "영광의 크리사오르",
+          "supports": "event",
+          "scope": "击败凯特霍克并说服加入。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1481",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/410",
+          "locator": "왕성탈환",
+          "supports": "event",
+          "scope": "夺回王城的可玩战斗路线。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1523",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/410",
+          "locator": "레이지 오브 라이언",
+          "supports": "event",
+          "scope": "黑斯廷斯领地推进战。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1417",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/413",
+          "locator": "수수께끼의 방해자",
+          "supports": "event",
+          "scope": "铁假面救援伯蒙特未选择的领地；分支依此前选择改变。"
+        },
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第140日右列：철가면단 등장",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1451",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/413",
+          "locator": "암흑성",
+          "supports": "event",
+          "scope": "进入暗黑城追查。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1460",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/413",
+          "locator": "흑태자교 봉기",
+          "supports": "event",
+          "scope": "教团起事后的帝国调查与镇压。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1490",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/414",
+          "locator": "그라나다",
+          "supports": "event",
+          "scope": "强制搜查商团、兰伯特帮助与暴风岛线索。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1501",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/414",
+          "locator": "폭풍도의 결전",
+          "supports": "event",
+          "scope": "暴风岛交战、乘铁假面飞空艇脱身并转向扎马赫沙里。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1518",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/415",
+          "locator": "자마후자리의 비밀",
+          "supports": "event",
+          "scope": "萨拉丁与ISS交战、兰伯特断后让其他人先撤。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1544",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/415",
+          "locator": "동망밀사（页内原题拼字）",
+          "supports": "event",
+          "scope": "护送伊本·西那出使遇铁假面袭击，西兹现身。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1572",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/415",
+          "locator": "시지아의 결전",
+          "supports": "event",
+          "scope": "童年约定说服扬、占领西吉亚及韩帝国使节归来。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1553",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/411",
+          "locator": "난공불략",
+          "supports": "event",
+          "scope": "钟楼开门、黑斯廷斯败亡的要塞战。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1596",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/411",
+          "locator": "호수의 여왕",
+          "supports": "event",
+          "scope": "港口与湖上海战、商团关系。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1619",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/411",
+          "locator": "커티스 침공작전",
+          "supports": "event",
+          "scope": "攻打库提斯与总统最后抵抗的实机流程。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1592",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/416",
+          "locator": "백의 검객；무휼 구출",
+          "supports": "event",
+          "scope": "本页只实证白衣剑客陆路及无恤获救；不证明海路燕赤心路线。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1639",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/416",
+          "locator": "불타는 자비단",
+          "supports": "event",
+          "scope": "苏丹军败退、挟持苏丹出逃并杀害；不证实第138日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1663",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/416",
+          "locator": "광휘의 후예",
+          "supports": "event",
+          "scope": "即位仪式遭铁假面袭击、雪拉扎德继位；不证实第145日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1648",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/417",
+          "locator": "아스타니아의 바람",
+          "supports": "event",
+          "scope": "奥斯曼占旧阿斯塔尼亚后被大公收编作向导。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1688",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/417",
+          "locator": "크림슨 크루세이더",
+          "supports": "event",
+          "scope": "飞空艇远征、军港登陆与首都空虚。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1677",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/417",
+          "locator": "사막의 광풍",
+          "supports": "event",
+          "scope": "平叛后赶往首都、铁假面拦截、救出雪拉扎德。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1702",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/418",
+          "locator": "시지아 방어작전；보급지",
+          "supports": "event",
+          "scope": "西吉亚阻击与攻击补给据点。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1710",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/418",
+          "locator": "운명의 사슬／사막의 덫",
+          "supports": "event",
+          "scope": "身份坦白、伪装刺杀、谈判背叛及玛尔扎娜死亡；不单证铁假面所见褪色细节。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1563",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/419",
+          "locator": "흑전사／정체불명의 전사",
+          "supports": "event",
+          "scope": "铁假面与西兹冲突；与萨拉丁路线属同一事件不同视角。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1582",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/419",
+          "locator": "생츄어리",
+          "supports": "event",
+          "scope": "圣地与研究所会谈；不单证扎巴卡斯归降命令全部对白。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1613",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/419",
+          "locator": "사이럽스",
+          "supports": "event",
+          "scope": "选择格拉纳达方向调查并与商团交战。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1629",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/419",
+          "locator": "가즈공작의 최후（页内原题）",
+          "supports": "event",
+          "scope": "帝国内战尾声与吉兹公爵战斗路线。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1742",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/420",
+          "locator": "피로물든 대지",
+          "supports": "event",
+          "scope": "明确记述违背女苏丹意愿的强迫婚姻；未单独证实性侵细节。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1745",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/420",
+          "locator": "불사조；总部防守与카디스 요새",
+          "supports": "event",
+          "scope": "旧部被俘与处决、扬挡弹而死、萨拉丁恢复战意。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1761",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/420",
+          "locator": "형제；술탄궁 내부2与형제여",
+          "supports": "event",
+          "scope": "女苏丹被挟持、自尽与兄弟决斗。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1772",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/421",
+          "locator": "라이트브링거；아드리아노플 지하",
+          "supports": "event",
+          "scope": "揭示调查目标、地下击败西兹与南极高能量线索；不证明1282.220/1283.20日期。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1780",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/421",
+          "locator": "크리스탈 신전",
+          "supports": "event",
+          "scope": "伊本·西那、玛丽亚、西安战败后变成西兹的机制与画面。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1791",
+      "addedEvidence": [
+        {
+          "url": "https://knowing-passion.tistory.com/421",
+          "locator": "묵시록",
+          "supports": "event",
+          "scope": "贝尔杰布尔决战及进入结局；不单证全部结尾年代表述。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1406",
+      "addedEvidence": [
+        {
+          "url": "https://appdata.hungryapp.co.kr/data_file/data_img/201311/24/W2bxjj4138529759411614143.jpg",
+          "locator": "1281年第140日中列：버킹엄",
+          "supports": "date",
+          "scope": "只核对画面可见的章节日期，不把界面日期自动扩大为章节内全部小事件同日。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1381",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-35",
+          "reason": "章节日期表没有“墓地交易”这一独立节点，科学魔法研究所的100日刻度不能自动证实插入对白发生在同日。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1192",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-34",
+          "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1194",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-34",
+          "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1195",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-34",
+          "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1196",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-34",
+          "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1197",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-34",
+          "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1198",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-34",
+          "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1199",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-34",
+          "reason": "篇257是亲密度选项表，不记载本条具体终盘任务及地点/敌将；该精确事件不能据此交叉确认。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1193",
+      "addedEvidence": [],
+      "removedEvidence": [
+        {
+          "source": "source-33",
+          "reason": "篇253此处是杰拉德引诱、父母与H-BOMB研究所事件，不是底本写的詹姆斯终盘任务；不能强称同一事件。"
+        }
+      ]
+    },
+    {
+      "id": "event-l1123",
+      "addedEvidence": [
+        {
+          "url": "https://games.sina.com.cn/handbook/0006/06133492_c2.shtml#13",
+          "locator": "第十一幕：公演三——布里德港；敌方阵营：兹娟",
+          "supports": "event",
+          "scope": "布里德、兵工厂与女剑士的旧中文版称呼“兹娟”；不证实日期。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1834",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1836",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1842",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1844",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1848",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1850",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1852",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1854",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1856",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1858",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1860",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1862",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1864",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1866",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1868",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1870",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1872",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1874",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1876",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1878",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1880",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1884",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1886",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1888",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1890",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1892",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1894",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1896",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1898",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1900",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1902",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1908",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1914",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1916",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1918",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1920",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1922",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1924",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1926",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1928",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1930",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1932",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/614/613749_9.jpg",
+          "locator": "第五章群〈灰色幻影、佩昂〉，露西恩返回贫民区；613749_9.jpg",
+          "supports": "event",
+          "scope": "里恩确认阿塞拉斯把露西恩带回。"
+        },
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/614/613749_10.jpg",
+          "locator": "同场阿塞拉斯回应；613749_10.jpg",
+          "supports": "event",
+          "scope": "阿塞拉斯确认未能完全救助，原因是手下已实施洗脑。"
+        },
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/615/614854_7.jpg",
+          "locator": "第五章群〈疑惑〉末尾；614854_7.jpg",
+          "supports": "event",
+          "scope": "娜塔莉对白明确提到遭洗脑者逃离，不支持主动释放。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1934",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1936",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/615/614851_6.jpg",
+          "locator": "第五章群〈疑惑〉，教官发来的毕业邮件；614851_6.jpg",
+          "supports": "event",
+          "scope": "直接支持毕业和毕业后自由活动，未显示绝对年号。"
+        },
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/615/614851_7.jpg",
+          "locator": "第五章群〈疑惑〉，贝拉莫德对全员的通过总结；614851_7.jpg",
+          "supports": "event",
+          "scope": "直接支持全体共同通过，不确认237652年。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1938",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1940",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1942",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1944",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1946",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1948",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1950",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1952",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1954",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1956",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1958",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1960",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1962",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/619/618732_3.jpg",
+          "locator": "第五章群〈邓弗林德〉结尾的兰独白；618732_3.jpg",
+          "supports": "event",
+          "scope": "支持兰离开医院束缚、同伴被困与寻求贫民区援助；无独立年份。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1964",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1966",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1968",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1970",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/619/618937_5.jpg",
+          "locator": "第五章群〈绝望〉，红发向撤离同伴告别；618937_5.jpg",
+          "supports": "event",
+          "scope": "支持红发自愿殿后，与阿修雷对峙；单帧没有死亡结果。"
+        },
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/619/618937_6.jpg",
+          "locator": "紧接上一画面；618937_6.jpg",
+          "supports": "event",
+          "scope": "支持诀别语境，不单独证明死亡。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1972",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1974",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1976",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1978",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1980",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1982",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1984",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1986",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1988",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/622/621558_11.jpg",
+          "locator": "终章奥德赛舰桥，戴米安下令；621558_11.jpg",
+          "supports": "event",
+          "scope": "直接支持目的地为阿尔克和安格拉·迈纽计划。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1990",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1992",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1994",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1996",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l1998",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l2000",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/622/621564_11.jpg",
+          "locator": "终章最后决战之后；621564_11.jpg",
+          "supports": "event",
+          "scope": "玛丽亚明确要求贝拉莫德继承萨拉丁遗志，赴阿尔克完成计划并返回安塔利亚。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l2002",
+      "addedEvidence": [],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l2004",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/622/621566_1.jpg",
+          "locator": "终章结局动画；621566_1.jpg",
+          "supports": "event",
+          "scope": "直接可见阿修罗剑插入新世界地表；不单帧推定完整宇宙机制。"
+        }
+      ],
+      "removedEvidence": []
+    },
+    {
+      "id": "event-l2008",
+      "addedEvidence": [
+        {
+          "url": "https://img2.ruliweb.com/img/img_link7/622/621558_8.jpg",
+          "locator": "终章启航前舰桥，理查德发言；621558_8.jpg",
+          "supports": "event",
+          "scope": "直接支持启航前提出未来目的地的名称，不支持抵达后才首次命名。"
+        }
+      ],
+      "removedEvidence": [
+        {
+          "source": "source-49",
+          "reason": "原有笼统百科定位未单独支持抵达后命名；以已读原作对白替换该部分事件证据。"
+        }
+      ]
+    }
+  ],
+  "manualStatus": "尚未取得能直接核对王室年份的原包装手册。所谓手册附件实际是玩家攻略集合，未将其冒称官方手册。",
+  "editorialAdjustments": [
+    {
+      "id": "event-l1257",
+      "change": "将帝国背景分组与1281年可玩暗杀章节分开，避免在两个年代重复断言同一行动。"
+    },
+    {
+      "id": "event-l649",
+      "change": "明确1214年和平大会与尚未定年的追谥授爵，避免整组合并强行定年。"
+    },
+    {
+      "id": "event-l2008",
+      "change": "命名事件排序移到启航之前，稳定锚点与覆盖行号不变。"
+    }
+  ]
+}

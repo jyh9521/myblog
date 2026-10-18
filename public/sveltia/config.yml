@@ -131,6 +131,17 @@ collections:
       - { name: title, label: 标题, widget: string }
       - { name: description, label: 简介与整理范围, widget: text }
       - { name: calendarNote, label: 纪年说明, widget: text }
+      - { name: terminologyNote, label: 译名规范说明, widget: text, required: false }
+      - name: terms
+        label: 中文译名对照
+        widget: list
+        required: false
+        fields:
+          - { name: id, label: 术语 ID, widget: string }
+          - { name: title, label: 统一中文名, widget: string }
+          - { name: kind, label: 类别, widget: string }
+          - { name: note, label: 采用依据与局限, widget: text }
+          - { name: aliases, label: 其他中文译写, widget: list, required: false }
       - name: works
         label: 作品（ID 用于事件关联及剧透控制）
         widget: list
@@ -155,6 +166,7 @@ collections:
           - { name: kind, label: 资料类型, widget: string, required: false }
           - { name: family, label: 同源资料家族, widget: string, required: false }
           - { name: scope, label: 适用范围与局限, widget: text, required: false }
+          - { name: originalTitle, label: 资料原题（存档不显示为中文正文）, widget: string, required: false }
       - name: events
         label: 历史事件（不要填写个人游玩动态）
         widget: list
@@ -178,8 +190,8 @@ collections:
             widget: chronology-evidence
             default: compiled
           - { name: sources, label: 来源 ID 列表, widget: list, min: 1 }
-          - { name: verification, label: 剧情核对状态, widget: select, options: [crosschecked, single-source, conflict], required: false }
-          - { name: dateStatus, label: 日期核对状态, widget: select, options: [crosschecked, single-source, conflict, undated], required: false }
+          - { name: verification, label: 剧情核对状态, widget: select, options: [{label: 剧情已对照, value: crosschecked}, {label: 剧情单源, value: single-source}, {label: 资料有分歧, value: conflict}, {label: 已据原作订正, value: corrected}], required: false }
+          - { name: dateStatus, label: 日期核对状态, widget: select, options: [{label: 日期已对照, value: crosschecked}, {label: 日期单源, value: single-source}, {label: 纪年有分歧, value: conflict}, {label: 日期未定, value: undated}], required: false }
           - { name: sourceLines, label: 底本覆盖行号（保留供自动审计）, widget: list, required: false }
           - name: citations
             label: 逐条引证（剧情与日期分开）
@@ -187,8 +199,11 @@ collections:
             required: false
             fields:
               - { name: source, label: 来源 ID, widget: string }
-              - { name: locator, label: 章节、场景或原文定位, widget: text }
-              - { name: supports, label: 支持范围, widget: select, options: [event, date, context, variant] }
+              - { name: medium, label: 原典载体类型, widget: select, options: [{label: 原版游戏画面, value: game-capture}, {label: 原版对白转录, value: game-transcript}, {label: 原版手册扫描, value: manual-scan}, {label: 原作者攻略, value: firsthand-guide}, {label: 二手整理, value: secondary}], required: false }
+              - { name: locator, label: 章节、场景或原文定位（中文）, widget: text }
+              - { name: originalLocator, label: 原文定位存档（不混入中文正文）, widget: text, required: false }
+              - { name: originalNote, label: 原文备注存档, widget: text, required: false }
+              - { name: supports, label: 支持范围, widget: select, options: [{label: 剧情依据, value: event}, {label: 纪年依据, value: date}, {label: 背景说明, value: context}, {label: 差异对照, value: variant}] }
               - { name: note, label: 依据与局限, widget: text, required: false }
           - { name: related, label: 关联事件 ID 列表, widget: list, required: false }
 

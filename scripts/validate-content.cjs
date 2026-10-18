@@ -4,6 +4,7 @@ const matter = require('gray-matter');
 const yaml = require('js-yaml');
 const {resourceFor}=require('./resource-catalog.cjs');
 const {validateChronology}=require('../lib/chronology-schema.cjs');
+const {auditChronologyLanguage}=require('../lib/chronology-language.cjs');
 const origin = 'https://blog.blfy.cc';
 const filesIn = (dir, extension = '.md') => fs.existsSync(dir) ? fs.readdirSync(dir).filter(file => file.endsWith(extension)) : [];
 
@@ -19,6 +20,7 @@ async function validateRepository(root = process.cwd()) {
     try {
       const data = JSON.parse(fs.readFileSync(path.join(root, 'content/chronologies', name), 'utf8'));
       for (const message of validateChronology(data)) error(name, message);
+      if (data.id === 'genesis') for (const message of auditChronologyLanguage(data)) error(name, `中文字段含未翻译文本：${message}`);
       if (data.id !== name.slice(0, -5)) error(name, '文件名必须与年表 ID 一致');
       chronologies.set(data.id, data);
       routes.add(`/chronicles/${data.id}/`);

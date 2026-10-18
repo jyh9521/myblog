@@ -1,0 +1,814 @@
+{
+  "version": 1,
+  "policy": "中文叙述统一用名；已有中文用例、编辑音译、官方原名的证据层级分别记录。原名和旧译保留在检索元数据，不混进中文正文；身份化名不强行替换为真名。",
+  "terms": [
+    {
+      "id": "term-1",
+      "canonical": "希拉诺",
+      "aliases": [
+        "西拉诺",
+        "希罗尼",
+        "西罗诺",
+        "希拉諾",
+        "시라노",
+        "Cyrano"
+      ],
+      "kind": "人物",
+      "note": "沿用已有中文音译用例；旧中文攻略称希罗尼，原名保留检索，不把现代音译冒称旧版官方用名。",
+      "status": "中文用例或原名已定位",
+      "evidence": [
+        {
+          "url": "https://store.steampowered.com/api/appdetails?appids=5099430&l=schinese",
+          "locator": "当前返回的官方原名为韩文，不能据此声称中文译名已获官方确认。"
+        },
+        {
+          "url": "https://bangumi.tv/person/42412/works/voice",
+          "locator": "既有中文用例希拉诺·伯恩斯坦；仅作为中文用名参考。"
+        }
+      ]
+    },
+    {
+      "id": "term-2",
+      "canonical": "伯恩斯坦",
+      "aliases": [
+        "班史顿",
+        "贝恩斯坦",
+        "번스타인",
+        "Bernstein"
+      ],
+      "kind": "家族",
+      "note": "同一家族的跨篇章称呼统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-3",
+      "canonical": "吉·艾斯",
+      "aliases": [
+        "G.S",
+        "G.S.",
+        "지에스"
+      ],
+      "kind": "人物",
+      "note": "按原代号读音统一音译，不另创代号含义，也不提前改称黑太子。",
+      "status": "中文用例或原名已定位",
+      "evidence": [
+        {
+          "url": "https://www.dailygame.co.kr/view.php?ud=201810161728061556d01e022ea6_26",
+          "locator": "开发者访谈明确韩文读法；中文为本页音译，不是原官方译名。"
+        }
+      ]
+    },
+    {
+      "id": "term-4",
+      "canonical": "伊欧琳",
+      "aliases": [
+        "伊欧林",
+        "伊奥林",
+        "伊奥琳",
+        "이올린"
+      ],
+      "kind": "人物",
+      "note": "前后篇同一人物，统一字形。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-5",
+      "canonical": "比弗罗斯特",
+      "aliases": [
+        "比佛洛斯特",
+        "比弗罗丝特",
+        "彼弗罗斯特",
+        "비프로스트"
+      ],
+      "kind": "地名",
+      "note": "不同译写指同一国家；不混同不同年代的政权。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-6",
+      "canonical": "赛拉普斯",
+      "aliases": [
+        "西拉普斯",
+        "赛鲁普斯",
+        "사이럽스"
+      ],
+      "kind": "地名",
+      "note": "港口与水下都市同源地名统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-7",
+      "canonical": "达卡马",
+      "aliases": [
+        "达卡玛",
+        "다카마"
+      ],
+      "kind": "地名",
+      "note": "港口名统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-8",
+      "canonical": "盖西尔",
+      "aliases": [
+        "凯西尔",
+        "盖希尔",
+        "凯西勒",
+        "게이시르",
+        "盖西勒"
+      ],
+      "kind": "地名",
+      "note": "旧中文有凯西勒、凯西尔等写法，本页统一盖西尔；帝国与同名城仍按语境区分。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-9",
+      "canonical": "梅尔西迪斯",
+      "aliases": [
+        "梅尔塞德斯",
+        "梅尔赛德斯",
+        "梅尔西蒂斯",
+        "메르세데스",
+        "Mercedes",
+        "梅尔瑟德斯"
+      ],
+      "kind": "人物",
+      "note": "与克里斯、希拉诺剧情相关的同一人物统一；不把艾丝梅拉达误并为她。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-10",
+      "canonical": "克劳塞维茨",
+      "aliases": [
+        "克劳塞维兹",
+        "克勒杰比",
+        "클라우제비츠"
+      ],
+      "kind": "人物",
+      "note": "真名与夏恩霍斯特、铁假面等身份并存，不强制把所有身份替换为真名。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-11",
+      "canonical": "夏恩霍斯特",
+      "aliases": [
+        "沙恩霍斯特",
+        "夏恩霍斯托",
+        "莎伦·哈斯特",
+        "샤른호스트"
+      ],
+      "kind": "人物",
+      "note": "与克劳塞维茨相关的化名，按故事阶段保留化名。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-12",
+      "canonical": "萨菲·阿尔丁",
+      "aliases": [
+        "萨菲·阿尔·丁",
+        "사피 알 딘"
+      ],
+      "kind": "人物",
+      "note": "同一人物的分词与间隔号统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-13",
+      "canonical": "阿德里安堡",
+      "aliases": [
+        "阿德里亚诺普尔",
+        "아드리아노플"
+      ],
+      "kind": "地名",
+      "note": "同一城市统一；不是把不同城池相互合并。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-14",
+      "canonical": "安格拉·迈纽",
+      "aliases": [
+        "安格拉·麦纽",
+        "앙그라 마이뉴"
+      ],
+      "kind": "术语",
+      "note": "跨作品同一名称统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-15",
+      "canonical": "光之使者",
+      "aliases": [
+        "光明使者号",
+        "光明使者",
+        "Lightbringer",
+        "라이트 블링거"
+      ],
+      "kind": "载具",
+      "note": "作品中同一飞行器称谓统一；章节名亦用中文。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-16",
+      "canonical": "阿隆戴特",
+      "aliases": [
+        "阿伦戴特",
+        "阿伦代特",
+        "Arondight",
+        "아론다이트"
+      ],
+      "kind": "魔装机",
+      "note": "同一机体名称统一；剑名与机体按语境区分。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-17",
+      "canonical": "炽天使",
+      "aliases": [
+        "Seraph",
+        "瑟拉芙",
+        "瑟拉夫",
+        "세라프"
+      ],
+      "kind": "魔装机",
+      "note": "机体名称统一采用中文意译；不改写其在不同作品中的形态。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-18",
+      "canonical": "因佩尔诺",
+      "aliases": [
+        "Inferno",
+        "因费尔诺",
+        "인페르노"
+      ],
+      "kind": "地名与章节",
+      "note": "监狱与同名章节按语境表述，不将章节名自动当成地点证明。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-19",
+      "canonical": "飞龙突击",
+      "aliases": [
+        "Dragon Strike",
+        "드래곤 스트라이크"
+      ],
+      "kind": "作战",
+      "note": "作战名称统一意译。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-20",
+      "canonical": "亚历山大",
+      "aliases": [
+        "Alexander",
+        "알렉산더"
+      ],
+      "kind": "人物待考",
+      "note": "只统一写法，不擅自确定底本所指人物的身份。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-21",
+      "canonical": "暴风雨",
+      "aliases": [
+        "Tempest",
+        "템페스트"
+      ],
+      "kind": "作品与组织",
+      "note": "作品及马戏团名称按语境使用。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-22",
+      "canonical": "埃尔·赫纳罗",
+      "aliases": [
+        "El Genaro",
+        "엘 제나로"
+      ],
+      "kind": "人物",
+      "note": "本页统一音译，未标为已核实的官方中文名。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-23",
+      "canonical": "王者之剑",
+      "aliases": [
+        "Excalibur",
+        "엑스칼리버"
+      ],
+      "kind": "武器",
+      "note": "本页统一中文称谓，保留原名检索；与斯坦布林格区分。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-24",
+      "canonical": "博福特",
+      "aliases": [
+        "Beaufort",
+        "보포트"
+      ],
+      "kind": "家族",
+      "note": "家族名与布拉德福德城不同，不混为同一词。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-25",
+      "canonical": "布拉德福德",
+      "aliases": [
+        "Bradford",
+        "브래드포드"
+      ],
+      "kind": "地名",
+      "note": "保留底本城名与攻略章节家族名的差别。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-26",
+      "canonical": "氢弹",
+      "aliases": [
+        "H-bomb",
+        "H봄"
+      ],
+      "kind": "术语",
+      "note": "任务中的炸弹名称统一中文表述。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-27",
+      "canonical": "女武神装甲",
+      "aliases": [
+        "Valkyrie Armor",
+        "발키리 아머"
+      ],
+      "kind": "装备",
+      "note": "中文意译，不与女武神部队混同。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-28",
+      "canonical": "奥斯基尔",
+      "aliases": [
+        "Oskill",
+        "오스킬"
+      ],
+      "kind": "地名",
+      "note": "地名统一音译。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-29",
+      "canonical": "韦克菲尔德",
+      "aliases": [
+        "Wakefield",
+        "웨이크필드"
+      ],
+      "kind": "地名",
+      "note": "地名统一音译。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-30",
+      "canonical": "拉三型",
+      "aliases": [
+        "Ra MKⅢ",
+        "拉MK3",
+        "拉MKⅢ",
+        "Ra MK3"
+      ],
+      "kind": "魔装机",
+      "note": "型号采用中文写法。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-31",
+      "canonical": "帝国秘密情报局",
+      "aliases": [
+        "ISS",
+        "제국비밀정보국"
+      ],
+      "kind": "组织",
+      "note": "帝国情报组织统一中文全称，不混成女武神部队。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-32",
+      "canonical": "月影西藩刃",
+      "aliases": [
+        "Shivan Scimitar",
+        "시반 슈미터"
+      ],
+      "kind": "组织",
+      "note": "采用已有中文游戏介绍用名，不与所有普通佣兵团混同。",
+      "status": "中文用例或原名已定位",
+      "evidence": [
+        {
+          "url": "https://acg.gamer.com.tw/acgDetail.php?s=52404",
+          "locator": "旧版中文游戏介绍中的佣兵组织称谓。"
+        }
+      ]
+    },
+    {
+      "id": "term-33",
+      "canonical": "突击者公会",
+      "aliases": [
+        "Strikers",
+        "스트라이커즈"
+      ],
+      "kind": "组织",
+      "note": "本页统一意译，未声称已直接核对官方中文字符串。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-34",
+      "canonical": "罗德反抗组织",
+      "aliases": [
+        "ROD",
+        "Rage of Dark",
+        "레이지 오브 다크"
+      ],
+      "kind": "组织",
+      "note": "按原作对白中的名称音译并说明组织性质；不臆造英文缩写的展开含义。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-35",
+      "canonical": "人偶载体",
+      "aliases": [
+        "Doll",
+        "DOLL",
+        "달"
+      ],
+      "kind": "术语",
+      "note": "指承载灵子的人工身体；不把萨拉丁与青年贝拉莫德简单写成同一人的转世。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-36",
+      "canonical": "失忆症事件",
+      "aliases": [
+        "Brain Empty",
+        "브레인 엠티"
+      ],
+      "kind": "事件",
+      "note": "沿用中文原作者攻略的既有译法；不字面误译为脑空白。",
+      "status": "中文用例或原名已定位",
+      "evidence": [
+        {
+          "url": "https://gl.ali213.net/html/2004/4834.html",
+          "locator": "中文原作者攻略的失忆症调查段落；与同篇转载不是两个独立来源。"
+        }
+      ]
+    },
+    {
+      "id": "term-37",
+      "canonical": "凯博士",
+      "aliases": [
+        "K 博士",
+        "K博士",
+        "닥터 K"
+      ],
+      "kind": "人物",
+      "note": "仅为代号的本页音译，不视作已核实的姓名。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-38",
+      "canonical": "提恩提电视台",
+      "aliases": [
+        "T&T",
+        "티앤티"
+      ],
+      "kind": "组织",
+      "note": "电视台字母名称的本页音译，不冒称官方中文公司全称；记者任职由原作画面核对。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-39",
+      "canonical": "兹娟",
+      "aliases": [
+        "자연"
+      ],
+      "kind": "人物",
+      "note": "采用2000年原作者中文攻略中的剑士用名；不把韩文同形普通词译成自然，也不误认其他游戏人物紫燕。",
+      "status": "中文攻略既有译名",
+      "evidence": [
+        {
+          "url": "https://games.sina.com.cn/handbook/0006/06133492_c2.shtml#13",
+          "locator": "第十一幕工厂剑士场景"
+        }
+      ]
+    },
+    {
+      "id": "term-40",
+      "canonical": "柯蒂斯",
+      "aliases": [
+        "卡提斯",
+        "库提斯",
+        "커티스"
+      ],
+      "kind": "地名",
+      "note": "与卡迪斯要塞不同，前者为国家或共和国，后者为另一处军事设施。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-41",
+      "canonical": "阿斯莫德乌斯",
+      "aliases": [
+        "阿斯摩德斯",
+        "아스모데우스"
+      ],
+      "kind": "魔装机",
+      "note": "诸作同一名称统一，不与阿修罗混同。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-42",
+      "canonical": "沙克巴利",
+      "aliases": [
+        "沙克巴里",
+        "샤크바리"
+      ],
+      "kind": "人物",
+      "note": "同一主神姓名统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-43",
+      "canonical": "阿尔克",
+      "aliases": [
+        "阿尔凯",
+        "아르케"
+      ],
+      "kind": "地名与纪年",
+      "note": "星团与纪年按语境区分；不与安塔利亚历直接相减。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-44",
+      "canonical": "艾丝梅拉达",
+      "aliases": [
+        "埃斯梅拉达",
+        "艾斯梅拉达",
+        "에스메랄다"
+      ],
+      "kind": "人物",
+      "note": "与梅尔西迪斯不是同一个人，不因结局牺牲情节而混名。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-45",
+      "canonical": "卡娜",
+      "aliases": [
+        "嘉娜",
+        "카나"
+      ],
+      "kind": "人物",
+      "note": "与卡嘉不是同一个人。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-46",
+      "canonical": "卡嘉",
+      "aliases": [
+        "卡佳",
+        "카자"
+      ],
+      "kind": "人物",
+      "note": "与卡娜不是同一个人；在前代与简·肖尔的家族关系按原作区分。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-47",
+      "canonical": "露西恩",
+      "aliases": [
+        "鲁塞恩",
+        "루시엔"
+      ],
+      "kind": "人物",
+      "note": "本页采用同一姓名，旧中文攻略异译仅用于检索。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-48",
+      "canonical": "海德伦",
+      "aliases": [
+        "海德卢恩",
+        "하이델룬"
+      ],
+      "kind": "职衔",
+      "note": "先后不同角色使用的职衔，不将全部行为都归为同一人。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-49",
+      "canonical": "尤真",
+      "aliases": [
+        "尤珍",
+        "유진"
+      ],
+      "kind": "人物",
+      "note": "与旧版译写差异另存别名，不凭通用外语名扩写身份。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-50",
+      "canonical": "恩布拉",
+      "aliases": [
+        "恩普拉",
+        "엠블라"
+      ],
+      "kind": "人物",
+      "note": "人名统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-51",
+      "canonical": "阿塞拉斯",
+      "aliases": [
+        "阿瑟拉斯",
+        "아셀라스"
+      ],
+      "kind": "人物",
+      "note": "人名统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-52",
+      "canonical": "阿贝利安",
+      "aliases": [
+        "阿比利安",
+        "아벨리안"
+      ],
+      "kind": "机构",
+      "note": "学院名与所在行星名分别表述。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-53",
+      "canonical": "潘德拉贡",
+      "aliases": [
+        "潘德莱肯",
+        "番迪来建",
+        "팬드래건"
+      ],
+      "kind": "王国与家族",
+      "note": "王国与王室同源称谓统一；不混同不同国王的个人名字。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-54",
+      "canonical": "安塔纳纳利沃",
+      "aliases": [
+        "安塔那那利佛",
+        "안타나나리보"
+      ],
+      "kind": "地名",
+      "note": "跨西风和第三部出现的同一地名统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-55",
+      "canonical": "普里托利亚",
+      "aliases": [
+        "普利托里亚"
+      ],
+      "kind": "地名",
+      "note": "帝国城市统一用字。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-56",
+      "canonical": "奥莉维亚",
+      "aliases": [
+        "奥莉薇亚"
+      ],
+      "kind": "人物",
+      "note": "王后姓名统一；不与科学魔法研究所人造人奥利维尔混同。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-57",
+      "canonical": "德尔",
+      "aliases": [
+        "戴尔"
+      ],
+      "kind": "人物",
+      "note": "乔治之子，出生与败亡条目统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-58",
+      "canonical": "梅默德二世",
+      "aliases": [
+        "马穆德二世",
+        "梅默德Ⅱ",
+        "메머드2세",
+        "메머드 2세"
+      ],
+      "kind": "人物",
+      "note": "原年表同一图尔苏丹用字统一，保留原名检索；不借用现实君主事迹。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-59",
+      "canonical": "巴利萨达",
+      "aliases": [
+        "巴里萨达"
+      ],
+      "kind": "武器",
+      "note": "同一名剑的中文用字统一。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-60",
+      "canonical": "罗温",
+      "aliases": [
+        "洛温",
+        "로우엔"
+      ],
+      "kind": "地名",
+      "note": "伯恩斯坦领地与第三部贫民区统一地名用字。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-61",
+      "canonical": "阿兹达哈卡",
+      "aliases": [
+        "阿基达哈克",
+        "아지다하카"
+      ],
+      "kind": "生物",
+      "note": "飞龙名称统一；已知旧版中文异译用于检索。",
+      "status": "本页统一译写",
+      "evidence": []
+    },
+    {
+      "id": "term-62",
+      "canonical": "奥菲莉娅",
+      "aliases": [
+        "奥菲莉亚",
+        "奥菲莉",
+        "오필리어"
+      ],
+      "kind": "人物",
+      "note": "白金汉家族人物，跨事件与章节定位统一中文用字。",
+      "status": "本页统一译写",
+      "evidence": []
+    }
+  ]
+}

@@ -13,5 +13,5 @@ export default async function ChroniclePage({ params }: { params: Promise<{ slug
   const { slug } = await params;
   const data = getChronologies().find(item => item.id === slug);
   if (!data) notFound();
-  return <main className="chronicle-shell"><div className="container chronicle-container"><header className="chronicle-title"><a className="back" href="/">← 返回博客</a><span className="section-kicker">THE WAR OF GENESIS · CHRONICLE</span><h1>{data.title}</h1><p>{data.description}</p><p className="chronicle-warning">本页包含全系列重大剧情与结局。默认展示完整年表；可在剧透设置中隐藏尚未游玩的作品。</p><div className="chronicle-stats"><span>{data.events.length} 条历史事件</span><span>{data.works.length} 部作品</span><span>{data.sources.length} 项来源资料</span></div></header><Chronology data={data} /></div></main>;
+  return <main className="chronicle-shell"><div className="container chronicle-container"><header className="chronicle-title"><a className="back" href="/">← 返回博客</a><span className="section-kicker">创世纪战 · 系列历史档案</span><h1>{data.title}</h1><p>{data.description}</p><p className="chronicle-warning">本页包含全系列重大剧情与结局。默认展示完整年表；可在剧透设置中隐藏尚未游玩的作品。</p><div className="chronicle-stats"><span>{data.events.length} 条历史事件</span><span>{data.works.length} 部作品</span><span>{data.sources.length} 项来源资料</span></div></header><Chronology data={data} /></div></main>;
 }

@@ -8,6 +8,6 @@ export function readableEvents(data: Chronology, allowed: string[]): ChronologyE
 export function filterChronology(data: Chronology, allowed: string[], works: string[], query: string) {
   const terms = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   return readableEvents(data, allowed).filter(event => (!works.length || event.works.some(work => works.includes(work))) &&
-    terms.every(term => [event.title, event.summary, event.detail, event.note, event.year, event.day, ...(event.keywords || [])].filter(Boolean).join(' ').toLocaleLowerCase().includes(term)))
+    terms.every(term => [event.title, event.summary, event.detail, event.note, event.year, event.day, ...event.works.map(id=>data.works.find(work=>work.id===id)?.title), ...(event.keywords || [])].filter(Boolean).join(' ').toLocaleLowerCase().includes(term)))
     .sort((a, b) => data.eras.findIndex(era => era.id === a.era) - data.eras.findIndex(era => era.id === b.era) || a.yearOrder - b.yearOrder || a.order - b.order);
 }

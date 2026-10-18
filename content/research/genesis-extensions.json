@@ -1,0 +1,401 @@
+{
+  "version": 1,
+  "baseCommit": "b60a775d3d471f1d69d87a260251895739caff80",
+  "originalEventCount": 315,
+  "originalEventsSha256": "bfb609304b7e95dd9fc1ec269ea4f6c8d8c04ee1722edb54f9b37cb01481660d",
+  "addedEvents": [
+    {
+      "id": "gray-01",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-02",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-03",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-04",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-05",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-06",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-07",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-08",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-09",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-10",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-12",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "gray-13",
+      "era": "gray-remnant",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "mobile-01",
+      "era": "hero-tomb",
+      "works": [
+        "hero-tomb"
+      ]
+    },
+    {
+      "id": "mobile-02",
+      "era": "crow-spinoffs",
+      "works": [
+        "crow-1"
+      ]
+    },
+    {
+      "id": "mobile-03",
+      "era": "crow-spinoffs",
+      "works": [
+        "crow-2"
+      ]
+    },
+    {
+      "id": "mobile-04",
+      "era": "nangcheon",
+      "works": [
+        "nangcheon"
+      ]
+    },
+    {
+      "id": "mobile-05",
+      "era": "genesis-3-mobile",
+      "works": [
+        "genesis-3-mobile"
+      ]
+    },
+    {
+      "id": "mobile-06",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-07",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-08",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-09",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-10",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-11",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-12",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-13",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-14",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-15",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-16",
+      "era": "cosmos-side",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-17",
+      "era": "cosmos-stories",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-18",
+      "era": "cosmos-side",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-19",
+      "era": "mobile-main",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-20",
+      "era": "mobile-main",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "later-antaria-01",
+      "era": "antaria-war",
+      "works": [
+        "antaria-war"
+      ]
+    },
+    {
+      "id": "later-g4-01",
+      "era": "genesis-4",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "later-g4-02",
+      "era": "genesis-4",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "later-g4-02a",
+      "era": "genesis-4",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "later-g4-02b",
+      "era": "genesis-4",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "later-g4-03",
+      "era": "genesis-4",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "later-g4-04",
+      "era": "genesis-4",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "later-g4-05",
+      "era": "genesis-4",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "later-mobile-main-02",
+      "era": "mobile-main",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "later-mobile-main-03",
+      "era": "mobile-main",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-21",
+      "era": "mobile-crossovers",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-22",
+      "era": "mobile-crossovers",
+      "works": [
+        "asura-project"
+      ]
+    }
+  ],
+  "addedWorks": [
+    {
+      "id": "gray-remnant",
+      "hasEvents": true
+    },
+    {
+      "id": "hero-tomb",
+      "hasEvents": true
+    },
+    {
+      "id": "crow-1",
+      "hasEvents": true
+    },
+    {
+      "id": "crow-2",
+      "hasEvents": true
+    },
+    {
+      "id": "nangcheon",
+      "hasEvents": true
+    },
+    {
+      "id": "genesis-3-mobile",
+      "hasEvents": true
+    },
+    {
+      "id": "genesis-4",
+      "hasEvents": true
+    },
+    {
+      "id": "antaria-war",
+      "hasEvents": true
+    },
+    {
+      "id": "asura-project",
+      "hasEvents": true
+    },
+    {
+      "id": "dice-original",
+      "hasEvents": false
+    },
+    {
+      "id": "dice-mobile",
+      "hasEvents": false
+    },
+    {
+      "id": "genesis-arena",
+      "hasEvents": false
+    },
+    {
+      "id": "inner-world",
+      "hasEvents": false
+    },
+    {
+      "id": "genesis-idle-mobile",
+      "hasEvents": false
+    },
+    {
+      "id": "genesis-idle-pc",
+      "hasEvents": false
+    }
+  ],
+  "datePolicy": "相对阶段与主题排列，不使用发行日期冒充故事日期。",
+  "deferred": [
+    {
+      "id": "gray-11",
+      "reason": "让位时点差异尚未获得原画面核对。"
+    },
+    {
+      "id": "gray-14",
+      "reason": "暴风岛致命动作差异尚未获得原画面核对。"
+    }
+  ],
+  "exclusions": [
+    "无关同名格斗网游",
+    "未证明发行的勇者之墓续作",
+    "未证明发行的第三代手机第五与第六集",
+    "玩家自编的黑太子生还结局"
+  ],
+  "counts": {
+    "events": 359,
+    "works": 21,
+    "sources": 151,
+    "terms": 69
+  }
+}

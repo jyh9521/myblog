@@ -809,6 +809,104 @@
       "note": "白金汉家族人物，跨事件与章节定位统一中文用字。",
       "status": "本页统一译写",
       "evidence": []
+    },
+    {
+      "id": "extension-term-1",
+      "canonical": "浪天",
+      "aliases": [],
+      "kind": "人物",
+      "note": "功能机外传主角的统一工作译写；没有以现代汉语直译冒称原版官方用名。",
+      "status": "编辑统一工作译写，非官方中文认证",
+      "evidence": [
+        {
+          "url": "https://game.donga.com/39057/",
+          "locator": "原厂浪天篇前提；中文为工作译写。"
+        }
+      ]
+    },
+    {
+      "id": "extension-term-2",
+      "canonical": "西兹群体",
+      "aliases": [],
+      "kind": "设定群体",
+      "note": "移动版宇宙传奇的相关群体用名；与第四作时空旅行者区分。旧条目西兹仍保留其人物称呼。",
+      "status": "编辑统一工作译写，非官方中文认证",
+      "evidence": [
+        {
+          "url": "https://www.gameinsight.co.kr/news/articleView.html?idxno=33847",
+          "locator": "시즈群体与宇宙系统；非第四作时空旅行者。"
+        }
+      ]
+    },
+    {
+      "id": "extension-term-3",
+      "canonical": "凯",
+      "aliases": [],
+      "kind": "异世界人物",
+      "note": "卡尔斯在另一世界的形态；与旧条目凯博士不是同一人物称号，生还情节不改旧史。",
+      "status": "编辑统一工作译写，非官方中文认证",
+      "evidence": [
+        {
+          "url": "https://apps.apple.com/kr/app/id6450174109",
+          "locator": "卡尔斯异时空形态카이；非凯博士。"
+        }
+      ]
+    },
+    {
+      "id": "extension-term-4",
+      "canonical": "埃斯卡托斯",
+      "aliases": [],
+      "kind": "地点",
+      "note": "第四作时间裂隙城市的统一音译；不赋予安塔利亚旧作的绝对年份。",
+      "status": "编辑统一工作译写，非官方中文认证",
+      "evidence": [
+        {
+          "url": "https://m.hungryapp.co.kr/news/news_view.php?pid=42163",
+          "locator": "埃斯卡托斯城市舞台。"
+        }
+      ]
+    },
+    {
+      "id": "extension-term-5",
+      "canonical": "伊安与诺艾尔",
+      "aliases": [],
+      "kind": "人物",
+      "note": "第四作序章的可选同行伙伴；两条路线并列，不写成连续经过。",
+      "status": "编辑统一工作译写，非官方中文认证",
+      "evidence": [
+        {
+          "url": "https://m.hungryapp.co.kr/news/news_view.php?pid=42163",
+          "locator": "이안、노엘伙伴分支。"
+        }
+      ]
+    },
+    {
+      "id": "extension-term-6",
+      "canonical": "莉欧娜与修安",
+      "aliases": [],
+      "kind": "人物",
+      "note": "灰色重制营救支线的中文工作译写；目前具体经历仅有百科重制专节，尚待游戏画面核对。",
+      "status": "编辑统一工作译写，非官方中文认证",
+      "evidence": [
+        {
+          "url": "https://d.namu.moe/w/크로우(창세기전%20시리즈)",
+          "locator": "仅百科重制专节；中文音译暂定，未核原画面。"
+        }
+      ]
+    },
+    {
+      "id": "extension-term-7",
+      "canonical": "宇宙传奇",
+      "aliases": [],
+      "kind": "剧情分支",
+      "note": "移动版新增叙事的统一意译，包含模拟与方舟外层；不是新增独立游戏产品。",
+      "status": "编辑统一工作译写，非官方中文认证",
+      "evidence": [
+        {
+          "url": "https://www.khgames.co.kr/news/articleView.html?idxno=234703",
+          "locator": "코스모스 사가分支框架，中文为编辑意译。"
+        }
+      ]
     }
   ]
 }

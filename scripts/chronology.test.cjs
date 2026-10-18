@@ -14,17 +14,19 @@ const logic=load('lib/chronology.ts'),Component=load('app/chronicles/chronology.
 const clone=()=>JSON.parse(JSON.stringify(data));const all=data.works.map(w=>w.id);
 const config=yaml.load(fs.readFileSync('public/sveltia/config.yml','utf8'));
 
-test('standalone corpus validates six works and covers the complete original including Part II ending',()=>{
- assert.deepEqual(validateChronology(data),[]);assert.equal(data.events.length,315);assert.equal(data.works.length,6);
+test('standalone corpus preserves the six original works and extends into separately identified versions',()=>{
+ assert.deepEqual(validateChronology(data),[]);assert.ok(data.events.length>315);assert.ok(data.works.length>6);
+ for(const id of ['genesis-1','genesis-2','zephyr','tempest','genesis-3-p1','genesis-3-p2'])assert.ok(data.works.some(w=>w.id===id));
  assert.equal(load('lib/chronologies.ts').getChronologies()[0].id,'genesis');
  assert.match(data.events.find(e=>e.id==='event-l2008').summary,/奥德赛|安塔利亚/);
  assert.equal(data.events.filter(e=>e.era==='part-two').length,79);
 });
 test('coverage is exact once for all 897 source facts plus two explicitly separate branches',()=>{
- const actual=data.events.flatMap(e=>e.sourceLines).sort((a,b)=>a-b);
+ const actual=data.events.flatMap(e=>e.sourceLines||[]).sort((a,b)=>a-b);
  assert.equal(actual.length,897);assert.equal(new Set(actual).size,897);
  assert.deepEqual(actual,coverage.expectedSourceLines);assert.deepEqual(coverage.missing,[]);assert.deepEqual(coverage.duplicates,[]);
- for(const e of data.events)assert.deepEqual(e.sourceLines,coverage.events.find(x=>x.id===e.id).sourceLines);
+ for(const e of coverage.events)assert.deepEqual(data.events.find(x=>x.id===e.id).sourceLines,e.sourceLines);
+ for(const e of data.events.filter(e=>!coverage.events.some(x=>x.id===e.id)))assert.deepEqual(e.sourceLines,[]);
  assert.equal(data.events.filter(e=>e.id.startsWith('zephyr-route-')).length,2);assert.match(coverage.sourceSha256,/^[a-f0-9]{64}$/);
 });
 test('sources have page-specific locators, scope and common-family provenance without inflating independence',()=>{
@@ -56,7 +58,7 @@ test('calendar ordering is era-scoped and does not numerically interleave the tw
 });
 test('SSR contains complete readable chronology, stable deep links and specific citations',()=>{
  const html=renderToStaticMarkup(React.createElement(Component,{data}));
- assert.match(html,/当前显示 315 \/ 315/);assert.match(html,/为目的地命名安塔利亚/);
+ assert.ok(html.includes(`当前显示 ${data.events.length} / ${data.events.length}`));assert.match(html,/为目的地命名安塔利亚/);
  assert.match(html,/knowing-passion.tistory.com\/768/);assert.match(html,/剧情依据|纪年依据/);
  assert.match(html,/id="chronology-genesis-event-event-l2008"/);
  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
@@ -132,4 +134,50 @@ test('misattached affection-guide and general-transcript citations are removed r
  for(const id of [1192,1194,1195,1196,1197,1198,1199]){const e=data.events.find(e=>e.id==='event-l'+id);assert.ok(!e.citations.some(c=>c.source==='source-34'));assert.equal(e.verification,'single-source');}
  for(const id of [463,481]){const e=data.events.find(e=>e.id==='event-l'+id);assert.ok(!e.citations.some(c=>c.source==='source-11'));assert.equal(e.verification,'single-source');}
  for(const e of data.events.filter(e=>e.verification==='corrected'))assert.ok(e.citations.some(c=>c.source!=='arestes2'&&['game-capture','game-transcript','manual-scan'].includes(c.medium)));
+});
+
+test('new editions have sourced story boundaries and stay separate from the original 315 events',()=>{
+ const originalIds=new Set(coverage.events.map(e=>e.id));assert.equal(originalIds.size,315);
+ const originalEras=new Set(['myth','early','war','interwar','zephyr-era','succession','tempest-era','aftermath','part-one','transition','part-two']);
+ const added=data.events.filter(e=>!originalIds.has(e.id));assert.ok(added.length>0);
+ for(const e of added){assert.ok(!originalEras.has(e.era));assert.ok(e.citations.length);assert.ok(e.works.every(w=>!['genesis-1','genesis-2','zephyr','tempest','genesis-3-p1','genesis-3-p2'].includes(w)));assert.ok(e.spoilerWorks.length);assert.deepEqual(e.sourceLines,[]);}
+ for(const w of data.works.slice(6)){assert.ok(w.continuity&&w.synopsis&&w.coverageNote&&w.sources.length);assert.ok(data.events.some(e=>e.works.includes(w.id))||/待|未|目录|改编|复述/.test(w.coverageNote));}
+ assert.ok(data.works.some(w=>w.title.includes('灰色的残影')));
+});
+
+test('edition guide and official-story evidence survive CMS and language validation',()=>{
+ const fields=config.collections.find(c=>c.name==='chronologies').fields;
+ for(const n of ['continuity','synopsis','coverageNote','sources','originalTitle'])assert.ok(fields.find(f=>f.name==='works').fields.some(f=>f.name===n));
+ const opts=fields.find(f=>f.name==='events').fields.find(f=>f.name==='citations').fields.find(f=>f.name==='medium').options;
+ for(const value of ['official-publication','creator-interview'])assert.ok(opts.some(o=>o.value===value));
+ const d=clone();d.works[6].synopsis='English leak';assert.ok(require('../lib/chronology-language.cjs').auditChronologyLanguage(d).length);
+ const invalid=clone();invalid.works[6].sources=['missing'];assert.ok(validateChronology(invalid).length);
+ const html=renderToStaticMarkup(React.createElement(Component,{data}));assert.match(html,/重制与衍生作品/);assert.match(html,/发行年份不作为故事年份/);
+});
+
+test('new works filter and hide without leaking their event titles into unrelated editions',()=>{
+ for(const work of data.works.slice(6)){
+  const own=logic.filterChronology(data,all,[work.id],'');assert.ok(own.every(e=>e.works.includes(work.id)));
+  const hidden=logic.filterChronology(data,all.filter(w=>w!==work.id),[work.id],'');assert.ok(hidden.every(e=>!e.spoilerWorks.includes(work.id)));
+ }
+});
+
+test('version-scoped eras reject events borrowed from another continuity',()=>{
+ const d=clone();const scoped=d.eras.find(e=>e.works?.length);assert.ok(scoped);const event=d.events.find(e=>e.era===scoped.id);assert.ok(event);event.works.push('genesis-2');assert.ok(validateChronology(d).some(s=>s.includes('其他版本')));
+ for(const e of data.eras.filter(e=>e.works))assert.ok(e.note&&e.calendar);
+});
+
+test('official announcements and creator interviews do not masquerade as direct game corrections',()=>{
+ for(const medium of ['official-publication','creator-interview']){
+  const d=clone();d.events[0].verification='corrected';d.events[0].citations.forEach(c=>c.medium=medium);assert.ok(validateChronology(d).some(s=>s.includes('原作订正')));
+ }
+ const d=clone();d.eras[0].works=['not-a-work'];assert.ok(validateChronology(d).some(s=>s.includes('分线作品')));
+});
+
+test('extension manifest preserves the exact original corpus and records all additions',()=>{
+ const m=require('../content/research/genesis-extensions.json'),crypto=require('crypto');const original=data.events.filter(e=>coverage.events.some(c=>c.id===e.id));assert.equal(original.length,315);assert.equal(crypto.createHash('sha256').update(JSON.stringify(original)).digest('hex'),m.originalEventsSha256);
+ assert.deepEqual(data.events.slice(315).map(e=>e.id),m.addedEvents.map(e=>e.id));assert.equal(data.events.length,m.counts.events);assert.equal(data.sources.length,m.counts.sources);assert.equal(data.works.length,m.counts.works);
+ const g4=data.events.filter(e=>e.id==='later-g4-02a'||e.id==='later-g4-02b');assert.equal(g4.length,2);assert.equal(g4[0].yearOrder,g4[1].yearOrder);assert.ok(g4.every(e=>e.note.includes('并列')));
+ for(const e of data.events.slice(315))assert.equal(e.dateStatus,'undated');
+ assert.ok(data.events.filter(e=>e.era==='mobile-crossovers').every(e=>e.note.includes('联动')));
 });

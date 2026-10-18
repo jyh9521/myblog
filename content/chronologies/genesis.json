@@ -1,8 +1,8 @@
 {
   "id": "genesis",
   "title": "创世纪战系列时间线",
-  "description": "以六部原版电脑游戏为范围：从诸神传说、Ⅰ／Ⅱ与战后历史，到西风、暴风雨、Ⅲ 第一篇章及第二篇章终局。原年表897项记录按连续场景合并整理为313条事件，并补入2条互斥结局分支；不把后出重制与手游改写无标识混入。展开每条事件可查看具体资料、日期依据及版本分歧。",
-  "calendarNote": "埃斯格尔历与阿尔克历分别展示，时间间距不按比例缩放；保留约数、区间和原有细分日序，不换算现实月份。剧情对照与日期核验分开：单源及冲突均保留标识，不代表全部已经官方确认。 “剧情已对照”仅指对应场景或核心情节，不表示条目每个细节均获独立证实；来自同一作者、百科镜像的资料按同源处理。",
+  "description": "以旧电脑版六作为基础，另设灰色的残影、早期手机外传、第四作及现代手游的版本分线。旧年表897项记录整理成315条场景与分支，新增作品只收录有具体出处的剧情阶段；未核到的完整关卡与结局明确保留研究状态。展开事件可查看剧情依据、日期依据与版本区别。",
+  "calendarNote": "埃斯格尔历与阿尔克历分别展示，时间间距不按比例缩放；保留约数、区间和原有细分日序，不换算现实月份。剧情对照与日期核验分开：单源及冲突均保留标识，不代表全部已经官方确认。 “剧情已对照”仅指对应场景或核心情节，不表示条目每个细节均获独立证实；来自同一作者、百科镜像的资料按同源处理。 重制、衍生与模拟故事各自分区；各分区在页面中的位置不代表彼此历史先后。相对阶段及主题排列不换算为绝对年日，发行与更新年月只用于引文定位。",
   "works": [
     {
       "id": "genesis-1",
@@ -27,6 +27,182 @@
     {
       "id": "genesis-3-p2",
       "title": "创世纪战Ⅲ：第二篇章"
+    },
+    {
+      "id": "gray-remnant",
+      "title": "创世纪战：灰色的残影",
+      "continuity": "主机重制叙事",
+      "synopsis": "重述初代与第二代的战争，并补写、调整旧作未充分展开的场景，吸收改编后的克罗外传。",
+      "coverageNote": "本区收录有出处的主线阶段与部分支线，不宣称完成四十二章逐镜复核。未核实的让位时点、结尾动作差异留在研究记录，不反写旧版。",
+      "sources": [
+        "extension-source-1",
+        "extension-source-2"
+      ],
+      "originalTitle": "창세기전: 회색의 잔영"
+    },
+    {
+      "id": "hero-tomb",
+      "title": "创世纪战外传：勇者之墓",
+      "continuity": "早期手机外传",
+      "synopsis": "以挑战勇者之墓、成为潘德拉贡强者为主题的早期手机外传。",
+      "coverageNote": "仅确认修行前提及暴风雨至第三代前的相对位置；完整关卡与结局待原游戏文本。",
+      "sources": [
+        "extension-source-3"
+      ],
+      "originalTitle": "창세기외전 용자의 무덤"
+    },
+    {
+      "id": "crow-1",
+      "title": "创世纪战外传：克罗",
+      "continuity": "早期手机外传",
+      "synopsis": "以流浪剑士克罗为主角，补叙第二代战争中未展开的经历。",
+      "coverageNote": "开篇训练情节已收录；与旧作相接不代表所有改写均为旧版同一事件。并非始终韩国独占，后续另有海外移植。",
+      "sources": [
+        "extension-source-4"
+      ],
+      "originalTitle": "창세기전 외전 크로우"
+    },
+    {
+      "id": "crow-2",
+      "title": "创世纪战外传：克罗Ⅱ",
+      "continuity": "早期手机外传",
+      "synopsis": "延续克罗一行的旅程，从另一视角讲述战争与营救故事。",
+      "coverageNote": "已收录营救目标；牺牲、决斗等后段细节待原游戏逐段核对，不把灰色重制改编当成本作原对白。",
+      "sources": [
+        "extension-source-5"
+      ],
+      "originalTitle": "창세기전 외전 크로우2"
+    },
+    {
+      "id": "nangcheon",
+      "title": "创世纪战外传：浪天篇",
+      "continuity": "早期手机外传",
+      "synopsis": "浪天游历世界、寻找强者并挑战对手。",
+      "coverageNote": "原始公告确认独立冒险前提；未取得对手、关卡及结局顺序。中文名为统一工作译写。",
+      "sources": [
+        "extension-source-6"
+      ],
+      "originalTitle": "창세기전 낭천편"
+    },
+    {
+      "id": "genesis-3-mobile",
+      "title": "创世纪战Ⅲ：手机版四集",
+      "continuity": "手机改编系列",
+      "synopsis": "以四集手机作品改编第一篇章的月影西藩刃、绯红十字军、启示录与最终创世。",
+      "coverageNote": "四集为同一改编系列，第四集收束第一篇章，不是电脑版第二篇章。现收录可证的收束概要，新增道具和系统不作为原创剧情。",
+      "sources": [
+        "extension-source-7"
+      ],
+      "originalTitle": "창세기전3 모바일 EP1–EP4"
+    },
+    {
+      "id": "genesis-4",
+      "title": "创世纪战Ⅳ",
+      "continuity": "时空旅行独立叙事",
+      "synopsis": "玩家以时空旅行者身份，从时间裂隙中的城市出发接触不同历史时代。",
+      "coverageNote": "收录城市起源、序章、两条并列路线和前两幕舞台；完整历史任务及停服前剧情未完成逐条复核。",
+      "sources": [
+        "extension-source-8",
+        "extension-source-9",
+        "extension-source-10",
+        "extension-source-11"
+      ],
+      "originalTitle": "창세기전4"
+    },
+    {
+      "id": "antaria-war",
+      "title": "创世纪战：安塔利亚战争",
+      "continuity": "移动策略改编",
+      "synopsis": "以飞空艇、王国重建和原作战争为舞台重新讲述系列故事。",
+      "coverageNote": "原作改编故事已列概要。开发者提过原创人物支线，但现有材料不足以重建具体事件；玩家自编故事另属创作功能，不当作官方结局。",
+      "sources": [
+        "extension-source-12",
+        "extension-source-13",
+        "extension-source-14"
+      ],
+      "originalTitle": "창세기전: 안타리아의 전쟁"
+    },
+    {
+      "id": "asura-project",
+      "title": "创世纪战移动版：阿修罗计划",
+      "continuity": "移动主线改编与原创分支",
+      "synopsis": "以第二代为起点，重述并补写系列故事；现亦以西风狂诗曲为更新主题，宇宙传奇另有原创章节。",
+      "coverageNote": "同一应用的不同阶段名称合并维护，不重复算成两部游戏。主线改编、宇宙传奇、方舟外层及独立外传分区；只有章名而未核到情节的内容在目录说明，不臆造事件。 第一季目录线索包括重新计数、普西、记忆方块、搭档、黑太子、怪盗、海盗王、西风猎鹰、为了皇帝、暗黑血、方舟；其中重新计数与暗黑血的章内经过仍待原文。第二季已查到四章的公开记录，章题线索为方舟夺回作战、魔王、系统核心、神曲；本页只按已证的总体目标收录，不臆造四章战斗结局。",
+      "sources": [
+        "extension-source-15",
+        "extension-source-16",
+        "extension-source-17",
+        "extension-source-18",
+        "extension-source-19",
+        "extension-source-46"
+      ],
+      "originalTitle": "창세기전 모바일: 아수라 프로젝트 / 창세기전 모바일 - 서풍의 광시곡"
+    },
+    {
+      "id": "dice-original",
+      "title": "骰子的残影：原版网络版",
+      "continuity": "角色棋盘衍生",
+      "synopsis": "以系列人物参与棋盘对战的网络作品，与旧电脑战争主线区分。",
+      "coverageNote": "列入作品目录；同期报道不足以核实独立剧情链，不因跨时代角色同场就编造历史事件。",
+      "sources": [
+        "extension-source-40"
+      ],
+      "originalTitle": "주사위의 잔영"
+    },
+    {
+      "id": "dice-mobile",
+      "title": "骰子的残影：移动版",
+      "continuity": "棋盘重制与独立世界观",
+      "synopsis": "重新开发的系列角色棋盘作品，有守护者与独立世界观的故事框架。",
+      "coverageNote": "已确认存在故事模式；当前未取得足以逐条复核的故事文本，目录收录而不虚构结局。",
+      "sources": [
+        "extension-source-41"
+      ],
+      "originalTitle": "주사위의 잔영 for Kakao"
+    },
+    {
+      "id": "genesis-arena",
+      "title": "创世纪战竞技场",
+      "continuity": "第二篇章附属网络对战",
+      "synopsis": "以第二篇章人物及战斗为基础提供网络对战。",
+      "coverageNote": "作为附属服务列入目录；未取得独立故事证据，不另造续篇时间线。",
+      "sources": [
+        "extension-source-42"
+      ],
+      "originalTitle": "창세기전 아레나"
+    },
+    {
+      "id": "inner-world",
+      "title": "内心世界：创世纪战联动",
+      "continuity": "独立作品中的联动（非系列正作）",
+      "synopsis": "独立卡牌作品；开发团队采访介绍过与本系列角色联动的安排。",
+      "coverageNote": "列作联动追查目录。未取得旧版任务全文，不把社区所列章节转折写成已核实的系列事件。",
+      "sources": [
+        "extension-source-43"
+      ],
+      "originalTitle": "이너월드"
+    },
+    {
+      "id": "genesis-idle-mobile",
+      "title": "创世纪战放置版：手机版",
+      "continuity": "授权手机放置衍生",
+      "synopsis": "以系列角色培养和放置战斗为核心的授权手机作品。",
+      "coverageNote": "开发商公告未提供可核实的独立剧情链；列入作品目录，不将授权、开服与成长系统当作剧情事件。",
+      "sources": [
+        "extension-source-44"
+      ],
+      "originalTitle": "창세기전 키우기"
+    },
+    {
+      "id": "genesis-idle-pc",
+      "title": "创世纪战放置版：无限刷装",
+      "continuity": "电脑桌面放置衍生",
+      "synopsis": "面向电脑平台的桌面放置作品，与手机放置版按产品分别识别。",
+      "coverageNote": "原厂商店确认产品存在，未取得独立剧情证据；目录收录，不把玩法宣传写成故事。",
+      "sources": [
+        "extension-source-45"
+      ],
+      "originalTitle": "창세기전 키우기: 무한 파밍"
     }
   ],
   "eras": [
@@ -85,6 +261,106 @@
       "title": "创世纪战Ⅲ：第二篇章",
       "calendar": "阿尔克历",
       "note": "本区年份沿用底本编排，不表示所有细节均有第二日期来源；结局时间循环不与前面纪年直接相减。"
+    },
+    {
+      "id": "gray-remnant",
+      "title": "灰色的残影 · 重制叙事",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "与旧电脑版分线；这里只列已找到出处的故事阶段。同阶段按主题阅读，不宣称逐章先后已获核定，关联旧事件仅供对照。",
+      "works": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "id": "crow-spinoffs",
+      "title": "克罗外传 · 两部手机故事",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "两作前后承接，与第二代战争并行；不把灰色重制吸收后的细节直接视为功能机原文。",
+      "works": [
+        "crow-1",
+        "crow-2"
+      ]
+    },
+    {
+      "id": "hero-tomb",
+      "title": "勇者之墓 · 手机外传",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "只有相对背景与修行前提可证；本区在页面的位置不表示晚于克罗故事。",
+      "works": [
+        "hero-tomb"
+      ]
+    },
+    {
+      "id": "nangcheon",
+      "title": "浪天篇 · 独立游历",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "与其他外传之间无已证实的统一先后，单独保留。",
+      "works": [
+        "nangcheon"
+      ]
+    },
+    {
+      "id": "genesis-3-mobile",
+      "title": "第三代手机版 · 改编故事",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "四集改编第一篇章，不与电脑第二篇章混淆。",
+      "works": [
+        "genesis-3-mobile"
+      ]
+    },
+    {
+      "id": "genesis-4",
+      "title": "第四作 · 时空旅行者",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "城市起源是背景前史，序章两条路线是互斥选择；时空任务不能按旧作历法排成一条线。",
+      "works": [
+        "genesis-4"
+      ]
+    },
+    {
+      "id": "antaria-war",
+      "title": "安塔利亚战争 · 改编舞台",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "原作改编与玩家自制故事严格区分，发行日期不是故事发生日期。",
+      "works": [
+        "antaria-war"
+      ]
+    },
+    {
+      "id": "mobile-main",
+      "title": "移动版 · 主线补叙",
+      "calendar": "相对阶段 · 不换算旧作纪年",
+      "note": "这些是移动版改编及新增解释，不覆盖旧电脑版。仅按可证的故事阶段排列。",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "cosmos-stories",
+      "title": "移动版 · 宇宙传奇与方舟",
+      "calendar": "独立篇章 · 不同模拟及外层世界",
+      "note": "独立章节含历史模拟、假设分支及方舟外层故事。各篇按主题及阅读线索分组，不声称拥有一条统一的旧作纪年；第二季目标不等于已实现的结局。",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "cosmos-side",
+      "title": "移动版 · 宇宙传奇独立外传",
+      "calendar": "独立故事 · 相互先后未定",
+      "note": "师徒和凯篇互不构成统一时间顺序；异世界角色的生还不改写旧作牺牲。",
+      "works": [
+        "asura-project"
+      ]
+    },
+    {
+      "id": "mobile-crossovers",
+      "title": "移动版 · 跨作品联动",
+      "calendar": "联动独立分支 · 相对时间未定",
+      "note": "外部作品人物的短篇联动单列；不同联动不表示在旧电脑版同一条历史中先后发生。",
+      "works": [
+        "asura-project"
+      ]
     }
   ],
   "sources": [
@@ -1014,6 +1290,390 @@
       "family": "塔利实机图文系列",
       "scope": "补全上一幅“次年”和平大会的结果；不直接定义圣王纪年元年的文字规则。",
       "originalTitle": "《创世纪战Ⅱ》原版结局字幕：拉希德成为圣王"
+    },
+    {
+      "id": "extension-source-1",
+      "title": "《灰色的残影》开发团队联合访谈",
+      "url": "https://m.gamechosun.co.kr/news/view.php?no=200276",
+      "kind": "开发者访谈",
+      "family": "作品开发团队采访",
+      "scope": "开篇及改编范围"
+    },
+    {
+      "id": "extension-source-2",
+      "title": "发行商《灰色的残影》产品页",
+      "url": "https://www.line.games/game/G2R?system_lang=ko_KR",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "作品定位、角色与主线前提"
+    },
+    {
+      "id": "extension-source-3",
+      "title": "《勇者之墓》最初发行报道",
+      "url": "https://www.gamemeca.com/view.php?gid=40200",
+      "kind": "发行商原始资料",
+      "family": "早期原厂供稿",
+      "scope": "直接确认故事相对位置。"
+    },
+    {
+      "id": "extension-source-4",
+      "title": "《克罗外传》最初发行说明",
+      "url": "https://game.donga.com/17027/",
+      "kind": "发行商原始资料",
+      "family": "早期原厂供稿",
+      "scope": "银箭败退、训练及分手。"
+    },
+    {
+      "id": "extension-source-5",
+      "title": "《克罗2》同期优秀游戏参评介绍",
+      "url": "https://www.etnews.com/200504180052",
+      "kind": "发行商原始资料",
+      "family": "早期原厂供稿",
+      "scope": "营救被俘妹妹、与《Ⅱ》并行。"
+    },
+    {
+      "id": "extension-source-6",
+      "title": "《浪天篇》最初发行公告",
+      "url": "https://game.donga.com/39057/",
+      "kind": "发行商原始资料",
+      "family": "早期原厂供稿",
+      "scope": "浪天游历世界与强者交锋的独立前提。"
+    },
+    {
+      "id": "extension-source-7",
+      "title": "原厂《创世纪战Ⅲ》手机版第四集预告",
+      "url": "https://www.inven.co.kr/webzine/news/?news=33334",
+      "kind": "发行商原始资料",
+      "family": "早期原厂供稿",
+      "scope": "改编第四集的故事范围。"
+    },
+    {
+      "id": "extension-source-8",
+      "title": "第四作美术总监谈舞台设计",
+      "url": "https://m.inven.co.kr/webzine/wznews.php?idx=152908&site=genesis4",
+      "kind": "开发者访谈",
+      "family": "第四作美术总监联合采访",
+      "scope": "时隙城市的来历、序章舞台与两名伙伴；不支持具体纪年"
+    },
+    {
+      "id": "extension-source-9",
+      "title": "第四作美术总监谈序章与时隙城市",
+      "url": "https://m.hungryapp.co.kr/news/news_view.php?pid=42163",
+      "kind": "开发者访谈",
+      "family": "第四作美术总监联合采访",
+      "scope": "光之使者号坠落地、从各时代调取建材与船体零件建城"
+    },
+    {
+      "id": "extension-source-10",
+      "title": "第四作序章与战斗系统体验",
+      "url": "https://www.gametrics.com/news/News01_View.aspx?seqid=27067",
+      "kind": "原作者实玩报道",
+      "family": "媒体原作者实玩报道",
+      "scope": "玩家遭囚禁与两名伙伴营救的序章事件"
+    },
+    {
+      "id": "extension-source-11",
+      "title": "第四作开发团队谈时空旅行者",
+      "url": "https://m.hungryapp.co.kr/news/news_view.php?bcode=news&catecode=008&pid=20623",
+      "kind": "开发者访谈",
+      "family": "作品开发团队采访",
+      "scope": "玩家入会的相对顺序；不支持绝对年份"
+    },
+    {
+      "id": "extension-source-12",
+      "title": "安塔利亚战争制作团队访谈",
+      "url": "https://www.gamemeca.com/view.php?gid=1499035",
+      "kind": "开发者访谈",
+      "family": "作品开发团队采访",
+      "scope": "开发者将舞台放在初代结尾与二代之间，并区分官方故事与玩家自编故事"
+    },
+    {
+      "id": "extension-source-13",
+      "title": "安塔利亚战争故事模式介绍",
+      "url": "https://www.gametoc.co.kr/news/articleView.html?idxno=49538",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "吉·艾斯与伊欧琳重建潘德拉贡；推出时以二代内容为主"
+    },
+    {
+      "id": "extension-source-14",
+      "title": "安塔利亚战争制作人谈原作与原创支线",
+      "url": "https://www.donga.com/news/It/article/all/20180125/88357463/1",
+      "kind": "开发者访谈",
+      "family": "作品开发团队采访",
+      "scope": "主线改编原作；开发团队准备原创人物支线；玩家自编故事另属创作功能"
+    },
+    {
+      "id": "extension-source-15",
+      "title": "开发者解释《宇宙传奇》的模拟框架",
+      "url": "https://www.gameinsight.co.kr/news/articleView.html?idxno=33847",
+      "kind": "开发者访谈",
+      "family": "移动版一周年联合采访",
+      "scope": "方舟内模拟、未描写事件及假设分支。"
+    },
+    {
+      "id": "extension-source-16",
+      "title": "原作者说明历史模拟与海德伦介入",
+      "url": "https://www.khgames.co.kr/news/articleView.html?idxno=234703",
+      "kind": "开发者访谈",
+      "family": "移动版一周年联合采访",
+      "scope": "海德伦破坏模拟与裂隙，不代表旧作历史被覆盖。"
+    },
+    {
+      "id": "extension-source-17",
+      "title": "发行商应用商店剧情介绍与版本记录",
+      "url": "https://apps.apple.com/kr/app/id6450174109",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "含方舟旧版本记录及凯外传前提；不同条目分别定位，不能据更新日期确定故事年代。"
+    },
+    {
+      "id": "extension-source-18",
+      "title": "发行商凯外传供稿",
+      "url": "https://www.gamevu.co.kr/news/articleView.html?idxno=61238",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "另一世界贝拉丁决战后幸存。"
+    },
+    {
+      "id": "extension-source-19",
+      "title": "发行商手游西风篇体验内容说明",
+      "url": "https://www.newspim.com/news/view/20251126000546",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "手机版独立前传范围。"
+    },
+    {
+      "id": "extension-source-20",
+      "title": "游戏朝鲜《灰色的残影》亲历评测",
+      "url": "https://www.gamechosun.co.kr/webzine/article/view.php?no=202082&pvMode=pc",
+      "kind": "原作者实玩报道",
+      "family": "游戏朝鲜实玩评测",
+      "scope": "初遇、舞会、黑太子表明身份与暴风岛结尾"
+    },
+    {
+      "id": "extension-source-21",
+      "title": "《灰色的残影》与原作差异整理",
+      "url": "https://m.namu.moe/w/창세기전:%20회색의%20잔영/원작과의%20차이점",
+      "kind": "二手整理",
+      "family": "百科及编辑整理",
+      "scope": "重制版改写项目"
+    },
+    {
+      "id": "extension-source-22",
+      "title": "拉希德角色条目：原版与重制版剧情",
+      "url": "https://m.namu.moe/w/라시드%20팬드래건",
+      "kind": "二手整理",
+      "family": "百科及编辑整理",
+      "scope": "特里西斯失败后的成长及阵营推进"
+    },
+    {
+      "id": "extension-source-23",
+      "title": "亲历玩家《灰色的残影》通关感想",
+      "url": "https://relaxmylife.tistory.com/328",
+      "kind": "原作者实玩报道",
+      "family": "媒体原作者实玩报道",
+      "scope": "银箭与帝国的视角切换"
+    },
+    {
+      "id": "extension-source-24",
+      "title": "克罗角色条目：《灰色的残影》段",
+      "url": "https://d.namu.moe/w/크로우(창세기전%20시리즈)",
+      "kind": "二手整理",
+      "family": "百科及编辑整理",
+      "scope": "克罗救援支线的重制版本"
+    },
+    {
+      "id": "extension-source-25",
+      "title": "游戏东亚《灰色的残影》通关评测",
+      "url": "https://v.daum.net/v/20240108170308888",
+      "kind": "原作者实玩报道",
+      "family": "媒体原作者实玩报道",
+      "scope": "主角成长与后期创世战争"
+    },
+    {
+      "id": "extension-source-26",
+      "title": "开发者谈宇宙传奇首个会战故事",
+      "url": "https://www.gametoc.co.kr/news/articleView.html?idxno=86658",
+      "kind": "开发者访谈",
+      "family": "移动版一周年联合采访",
+      "scope": "首个格拉特斯题材与黑太子崛起。"
+    },
+    {
+      "id": "extension-source-27",
+      "title": "发行商介绍乔安与搭档事件故事",
+      "url": "https://www.inven.co.kr/webzine/news/?news=299852",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "被兼并背景、探员身份及共同调查。"
+    },
+    {
+      "id": "extension-source-28",
+      "title": "发行商《海盗王》事件故事说明",
+      "url": "https://v.daum.net/v/20250204183041467",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "西尔弗成为海盗王。"
+    },
+    {
+      "id": "extension-source-29",
+      "title": "发行商《怪盗》事件故事说明",
+      "url": "https://ir.newspim.com/news/view/20250305000592",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "夏恩霍斯特与多个人格对话。"
+    },
+    {
+      "id": "extension-source-30",
+      "title": "发行商介绍伊莎贝尔入队前故事",
+      "url": "https://www.inven.co.kr/webzine/news/?news=304492",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "家族没落、克劳塞维茨邀请、入队前经历。"
+    },
+    {
+      "id": "extension-source-31",
+      "title": "发行商《为了皇帝》事件故事说明",
+      "url": "https://newspim.com/news/view/20250429000762",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "亲卫队长、恋人关系及守护皇帝。"
+    },
+    {
+      "id": "extension-source-32",
+      "title": "发行商《普西》事件故事说明",
+      "url": "https://member.newspim.com/news/view/20250527000603",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "普西追寻身份；同时存在两女神故事。"
+    },
+    {
+      "id": "extension-source-33",
+      "title": "发行商《记忆方块》故事说明",
+      "url": "https://www.inews24.com/view/1868252",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "失去恋人、倒转历史的行动目标。"
+    },
+    {
+      "id": "extension-source-34",
+      "title": "发行商《方舟》新章说明",
+      "url": "https://www.newsprime.co.kr/ezview/article_main.html?no=699259",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "方舟篇真实叙事主干。"
+    },
+    {
+      "id": "extension-source-35",
+      "title": "发行商《师徒》故事说明",
+      "url": "https://www.inven.co.kr/webzine/news/?news=308476",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "卡梅奥来自潘德拉贡并拜师贝拉莫德。"
+    },
+    {
+      "id": "extension-source-36",
+      "title": "开发者谈宇宙传奇第二季的复活之旅",
+      "url": "https://guildwars2.gameshot.net/common/con_view.php?code=GA6a3088260ba17",
+      "kind": "开发者访谈",
+      "family": "作品开发团队采访",
+      "scope": "海德伦救乔安、黑太子与神的援助、新铁假面及黑色暴风雨团。"
+    },
+    {
+      "id": "extension-source-37",
+      "title": "原作者解释手游西风篇的魔剑形态",
+      "url": "https://zdnet.co.kr/view/?no=20251223102541",
+      "kind": "开发者访谈",
+      "family": "作品开发团队采访",
+      "scope": "暗黑血包覆剑身与继承设定。"
+    },
+    {
+      "id": "extension-source-38",
+      "title": "移动版西风狂诗曲第三章公告",
+      "url": "https://www.line.games/company/news/1244?system_lang=ko_KR",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "第三章描绘希拉诺修行"
+    },
+    {
+      "id": "extension-source-39",
+      "title": "移动版比弗罗斯特的阴谋公告",
+      "url": "https://www.line.games/company/news/1353?system_lang=ko_KR",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "出使比弗罗斯特与西风猎鹰的阻止行动"
+    },
+    {
+      "id": "extension-source-40",
+      "title": "原版骰子网络游戏同期报道",
+      "url": "https://www.etnews.com/200107060026",
+      "kind": "同期原始报道",
+      "scope": "原版网络游戏服务与玩法，不证明新剧情。",
+      "family": "衍生产品原始资料"
+    },
+    {
+      "id": "extension-source-41",
+      "title": "移动版骰子开发团队访谈",
+      "url": "https://www.inven.co.kr/webzine/news/?news=196232&site=1",
+      "kind": "开发者访谈",
+      "scope": "确认独立世界框架与故事模式，不证明旧电脑版发生了人物跨界。",
+      "family": "作品开发团队采访"
+    },
+    {
+      "id": "extension-source-42",
+      "title": "竞技场对外开放的同期说明",
+      "url": "https://biz.chosun.com/site/data/html_dir/2001/02/19/2001021970118.html",
+      "kind": "同期原始报道",
+      "scope": "确认附属网络对战服务，不证明原创故事。",
+      "family": "衍生产品原始资料"
+    },
+    {
+      "id": "extension-source-43",
+      "title": "内心世界开发团队谈作品与联动",
+      "url": "https://game.mk.co.kr/news/it/5833950",
+      "kind": "开发者访谈",
+      "scope": "支持独立作品定位与联动安排；不是已读完整联动脚本。",
+      "family": "作品开发团队采访"
+    },
+    {
+      "id": "extension-source-44",
+      "title": "手机放置版开发商发布说明",
+      "url": "https://www.inven.co.kr/webzine/news/?news=314203",
+      "kind": "开发商原始资料",
+      "scope": "支持授权、产品及玩法，不证明新故事。",
+      "family": "衍生产品原始资料"
+    },
+    {
+      "id": "extension-source-45",
+      "title": "电脑放置版原厂商店与公告",
+      "url": "https://steamcommunity.com/app/4891320?l=koreana",
+      "kind": "原厂商店",
+      "scope": "支持产品识别与公告，不证明独立剧情。",
+      "family": "衍生产品原始资料"
+    },
+    {
+      "id": "extension-source-46",
+      "title": "移动版设定与章节追查目录",
+      "url": "https://m.namu.moe/w/창세기전%20모바일:%20아수라%20프로젝트/설정",
+      "kind": "二手目录",
+      "scope": "只作章题追查入口；章号不是日期，未核读剧情不据此填事件。",
+      "family": "百科及编辑整理"
+    },
+    {
+      "id": "extension-source-47",
+      "title": "发行商《纳米魔神》联动剧情说明",
+      "url": "https://www.gamechosun.co.kr/webzine/article/view.php?no=217726",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "来自异世界的千余云与文圭来到安塔利亚，与卡尔斯相遇。"
+    },
+    {
+      "id": "extension-source-48",
+      "title": "发行商《斗神转生记》联动剧情说明",
+      "url": "https://zdnet.co.kr/view/?no=20260407172639",
+      "kind": "发行商原始资料",
+      "family": "现代发行商原厂资料",
+      "scope": "杰菲尔与阿尔泰尔因次元裂隙迫降安塔利亚，踏上返回原来次元的旅程。"
     }
   ],
   "events": [
@@ -19345,6 +20005,1641 @@
       "verification": "single-source",
       "dateStatus": "undated",
       "sourceLines": []
+    },
+    {
+      "id": "gray-01",
+      "era": "gray-remnant",
+      "year": "失忆后的旅程",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "吉·艾斯调查事件",
+      "summary": "失去记忆的游侠吉·艾斯与同伴调查事件，故事由他的旅程展开。",
+      "note": "开篇调查为开发者直接说明；不补未经重制画面核对的失忆年份。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-1"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-1",
+          "medium": "creator-interview",
+          "locator": "第56、83、169行对应问答",
+          "supports": "event",
+          "note": "直接阅读访谈全文；有关后期填补和克罗外传改编，只证明改编关系，不证明全部细节。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l168"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-02",
+      "era": "gray-remnant",
+      "year": "王女的抵抗",
+      "yearOrder": 2,
+      "order": 2,
+      "title": "伊欧琳率军反抗帝国",
+      "summary": "失去祖国的伊欧琳继续抵抗盖西尔帝国；重制版开篇也切换到她的战斗视角。",
+      "note": "主角身份及反抗处境见发行商介绍，第二章战斗视角见开发访谈。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-2",
+        "extension-source-1"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-2",
+          "medium": "official-publication",
+          "locator": "产品介绍与2023年12月22日发布公告",
+          "supports": "context",
+          "note": "本次读取到搜索引擎索引正文；直接页面返回错误，未据此证明具体中后期场景。"
+        },
+        {
+          "source": "extension-source-1",
+          "medium": "creator-interview",
+          "locator": "第56、83、169行对应问答",
+          "supports": "event",
+          "note": "直接阅读访谈全文；有关后期填补和克罗外传改编，只证明改编关系，不证明全部细节。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l174"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-03",
+      "era": "gray-remnant",
+      "year": "相遇与同行",
+      "yearOrder": 3,
+      "order": 3,
+      "title": "游侠与王女相遇",
+      "summary": "吉·艾斯遇见伊欧琳，两人的旅程由此卷入安塔利亚的战争。",
+      "note": "评测直接概述重制主线；行军路线与具体年日尚未逐镜核验。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-20"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-20",
+          "medium": "firsthand-guide",
+          "locator": "正文剧情概述及紧接的经典场景段落",
+          "supports": "event",
+          "note": "已读正文；作者明确谈到重制版中再次呈现的场景，不只是1996年版本回顾。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l187"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-04",
+      "era": "gray-remnant",
+      "year": "复国战争期间（细序待考）",
+      "yearOrder": 4,
+      "order": 4,
+      "title": "潘德拉贡重获独立",
+      "summary": "银箭阵营重建力量，伊欧琳夺回祖国；战争随后仍未结束。",
+      "note": "二手版本差异页将光复之后的剧情作为重制既有阶段；本条只保留复国核心。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-21"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-21",
+          "medium": "secondary",
+          "locator": "第3.2、3.7节",
+          "supports": "event",
+          "note": "已读全文但含强烈评论性措辞；只抽取明确版本差异，未采纳其正史判定。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l259",
+        "event-l265"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-05",
+      "era": "gray-remnant",
+      "year": "复国战争期间（细序待考）",
+      "yearOrder": 4,
+      "order": 5,
+      "title": "拉希德走上成长之路",
+      "summary": "远征受挫后，拉希德接受克罗的指导，逐渐承担银箭阵营的领导责任。",
+      "note": "百科把原作与重制合写，成长核心可信度高于具体任务与日数；待重制第十六章画面复核。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-22"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-22",
+          "medium": "secondary",
+          "locator": "作品内行动：创世纪战Ⅱ／灰色的残影",
+          "supports": "event",
+          "note": "二手百科将原版与重制合写；只保留共同核心，不把旧作日期搬入重制。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l297",
+        "event-l306"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-06",
+      "era": "gray-remnant",
+      "year": "复国战争期间（细序待考）",
+      "yearOrder": 4,
+      "order": 6,
+      "title": "吉·艾斯与伊欧琳共舞",
+      "summary": "吉·艾斯与伊欧琳在舞会上相伴，这段同行时光与日后的敌对身份形成对照。",
+      "note": "亲历评测明确列举重制呈现的舞会场景；未补地点或日期。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-20"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-20",
+          "medium": "firsthand-guide",
+          "locator": "正文剧情概述及紧接的经典场景段落",
+          "supports": "event",
+          "note": "已读正文；作者明确谈到重制版中再次呈现的场景，不只是1996年版本回顾。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "gray-07",
+      "era": "gray-remnant",
+      "year": "黑太子归来",
+      "yearOrder": 7,
+      "order": 7,
+      "title": "吉·艾斯恢复黑太子的身份",
+      "summary": "吉·艾斯重拾黑太子的身份，并在半藏面前表明自己。",
+      "note": "亲历评测直接点名该场景；此阶段恢复的是黑太子记忆，不等于同时完整恢复游侠时期记忆。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-20"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-20",
+          "medium": "firsthand-guide",
+          "locator": "正文剧情概述及紧接的经典场景段落",
+          "supports": "event",
+          "note": "已读正文；作者明确谈到重制版中再次呈现的场景，不只是1996年版本回顾。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l390"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-08",
+      "era": "gray-remnant",
+      "year": "帝国与银箭再战",
+      "yearOrder": 8,
+      "order": 8,
+      "title": "两大阵营重返对抗",
+      "summary": "黑太子重返帝国一方，拉希德则继续领导银箭；大陆战争进入新的对抗阶段。",
+      "note": "通关评测明确指出操作视角交替于银箭和帝国；具体战役改写尚未逐段核实。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-23",
+        "extension-source-22"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-23",
+          "medium": "firsthand-guide",
+          "locator": "成长系统／游戏难度两节，第105—109行",
+          "supports": "event",
+          "note": "已读全文；直接说到交替操作银箭、帝国、黑太子、兰达姆及阿尔西亚，但不证明每场战役的具体安排。"
+        },
+        {
+          "source": "extension-source-22",
+          "medium": "secondary",
+          "locator": "作品内行动：创世纪战Ⅱ／灰色的残影",
+          "supports": "event",
+          "note": "二手百科将原版与重制合写；只保留共同核心，不把旧作日期搬入重制。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l441",
+        "event-l525"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-09",
+      "era": "gray-remnant",
+      "year": "救出伊欧琳",
+      "yearOrder": 9,
+      "order": 9,
+      "title": "克罗与同伴营救王女",
+      "summary": "克罗与莉欧娜、修安共同救出被囚禁的伊欧琳；撤离过程中，两名同伴先后牺牲。",
+      "note": "重制专节直接记载，现为单一百科来源；访谈仅另证实外传改编关系，不充当牺牲场面佐证。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-24"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-24",
+          "medium": "secondary",
+          "locator": "第4.3节《灰色的残影》",
+          "supports": "event",
+          "note": "已读重制专节；镜像与其他同百科页面不是第二独立来源。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l500"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-10",
+      "era": "gray-remnant",
+      "year": "营救之后",
+      "yearOrder": 10,
+      "order": 10,
+      "title": "克罗安置修安的弟妹",
+      "summary": "克罗解放被奴役的修安弟妹，资助他们前往潘德拉贡，随后走向与黑太子的决斗。",
+      "note": "重制专节特有记述，待录屏对白核实；不赋予旧作救援事件的精确日期。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-24"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-24",
+          "medium": "secondary",
+          "locator": "第4.3节《灰色的残影》",
+          "supports": "event",
+          "note": "已读重制专节；镜像与其他同百科页面不是第二独立来源。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l561"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-12",
+      "era": "gray-remnant",
+      "year": "创世战争终局",
+      "yearOrder": 12,
+      "order": 12,
+      "title": "人类迎向诸神的计划",
+      "summary": "战争最终转向贝拉丁的阴谋，人类争取安塔利亚的未来，故事进入创世战争的决战阶段。",
+      "note": "亲历评测确认反阴谋与后期创世战争；未凭概述增写重制奥德赛作战细节。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-20",
+        "extension-source-25"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-20",
+          "medium": "firsthand-guide",
+          "locator": "正文剧情概述及紧接的经典场景段落",
+          "supports": "event",
+          "note": "已读正文；作者明确谈到重制版中再次呈现的场景，不只是1996年版本回顾。"
+        },
+        {
+          "source": "extension-source-25",
+          "medium": "firsthand-guide",
+          "locator": "正文第118、131行",
+          "supports": "event",
+          "note": "已读媒体原作者评测的门户授权页；与原站转载视为同源。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "crosschecked",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l589",
+        "event-l605",
+        "event-l636"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "gray-13",
+      "era": "gray-remnant",
+      "year": "暴风岛的告别",
+      "yearOrder": 13,
+      "order": 13,
+      "title": "黑太子与伊欧琳迎来结局",
+      "summary": "黑太子与伊欧琳的故事在暴风岛迎来悲剧性的告别。",
+      "note": "亲历评测确认暴风岛结尾；具体致命一击的重制差异见另列待核候选，不与旧版表现混写。",
+      "works": [
+        "gray-remnant"
+      ],
+      "spoilerWorks": [
+        "gray-remnant"
+      ],
+      "sources": [
+        "extension-source-20"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-20",
+          "medium": "firsthand-guide",
+          "locator": "正文剧情概述及紧接的经典场景段落",
+          "supports": "event",
+          "note": "已读正文；作者明确谈到重制版中再次呈现的场景，不只是1996年版本回顾。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l636"
+      ],
+      "keywords": []
+    },
+    {
+      "id": "mobile-01",
+      "era": "hero-tomb",
+      "year": "克劳塞维茨流亡帝国之后",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "流亡之后的勇者之墓",
+      "summary": "克劳塞维茨流亡帝国后，《勇者之墓》的外传故事在《暴风雨》至《创世纪战Ⅲ》第一篇章之间展开。",
+      "note": "原始发行报道直接给出流亡后的相对背景；未取得完整关卡文本，不补挑战者姓名或结局。",
+      "works": [
+        "hero-tomb"
+      ],
+      "spoilerWorks": [
+        "hero-tomb"
+      ],
+      "sources": [
+        "extension-source-3"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-3",
+          "medium": "official-publication",
+          "locator": "2002年5月29日正文，关于外传情节与克劳塞维茨流亡后的段落",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "창세기외전 용자의 무덤",
+        "Tomb of Hero"
+      ]
+    },
+    {
+      "id": "mobile-02",
+      "era": "crow-spinoffs",
+      "year": "银箭远征特里西斯失败之后",
+      "yearOrder": 2,
+      "order": 2,
+      "title": "克罗传授拉希德剑术",
+      "summary": "银箭远征军败退后，拉希德在沙漠遇见克罗，接受数日剑术训练，随后与他分别。",
+      "note": "这是《克罗》原始报道明说的开篇；与《Ⅱ》重叠，不据此复制一条新历史。",
+      "works": [
+        "crow-1"
+      ],
+      "spoilerWorks": [
+        "crow-1"
+      ],
+      "sources": [
+        "extension-source-4"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-4",
+          "medium": "official-publication",
+          "locator": "正文第8行，故事开端段落",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "related": [
+        "event-l306"
+      ],
+      "keywords": [
+        "창세기전 외전-크로우전"
+      ]
+    },
+    {
+      "id": "mobile-03",
+      "era": "crow-spinoffs",
+      "year": "克罗外传后半",
+      "yearOrder": 3,
+      "order": 3,
+      "title": "克罗启程营救伊欧琳",
+      "summary": "克罗为救出成为俘虏的妹妹伊欧琳而继续冒险，故事与《Ⅱ》的战争并行推进。",
+      "note": "同期作品申报介绍确认目标与并行结构；尚未逐图核读牺牲、决斗与结尾，不补原攻略所述细节。",
+      "works": [
+        "crow-2"
+      ],
+      "spoilerWorks": [
+        "crow-2"
+      ],
+      "sources": [
+        "extension-source-5"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-5",
+          "medium": "official-publication",
+          "locator": "“本月优秀游戏”中《克罗2》段落",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "창세기전:크로우2"
+      ]
+    },
+    {
+      "id": "mobile-04",
+      "era": "nangcheon",
+      "year": "浪天独立游历时期",
+      "yearOrder": 4,
+      "order": 4,
+      "title": "浪天游历世界挑战强者",
+      "summary": "浪天离开既有舞台，游历各地，寻找并挑战强者。",
+      "note": "最初公告只给出冒险动机，没有给年历、对手顺序或结局；勿从发行顺序推为《克罗2》之后。",
+      "works": [
+        "nangcheon"
+      ],
+      "spoilerWorks": [
+        "nangcheon"
+      ],
+      "sources": [
+        "extension-source-6"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-6",
+          "medium": "official-publication",
+          "locator": "正文第10行",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "창세기전 낭천편"
+      ]
+    },
+    {
+      "id": "mobile-05",
+      "era": "genesis-3-mobile",
+      "year": "第一篇章末段的手机改编",
+      "yearOrder": 5,
+      "order": 5,
+      "title": "兄弟走向无法回避的对决",
+      "summary": "在三个国家并行的战争末段，兄弟的冲突汇合，《创世纪战Ⅲ》手机版第四集将故事引向第一篇章的最终结局。",
+      "note": "原厂供稿明确是第一篇章收束；第四集不是电脑第二篇章。不把新增系统、演出或分支宣传等同全新主线。",
+      "works": [
+        "genesis-3-mobile"
+      ],
+      "spoilerWorks": [
+        "genesis-3-mobile"
+      ],
+      "sources": [
+        "extension-source-7"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-7",
+          "medium": "official-publication",
+          "locator": "“资料提供：原开发商”之后，三国并行与兄弟对决段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "창세기전3 ep4"
+      ]
+    },
+    {
+      "id": "mobile-06",
+      "era": "cosmos-stories",
+      "year": "背景框架",
+      "yearOrder": 0,
+      "order": 6,
+      "title": "西兹群体测试历史变量",
+      "summary": "西兹群体在方舟的宇宙系统内重建历史空间，以不同变量测试历史的可能走向；海德伦试图突破这一模拟。",
+      "note": "开发者直接区分主线与此分支。后续方舟外层也有独立剧情，因此“全部只是梦”和“全是旧电脑真实历史”都过度概括。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-15",
+        "extension-source-16"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-15",
+          "medium": "creator-interview",
+          "locator": "2024年12月2日联合采访，宇宙传奇方向问答",
+          "supports": "event",
+          "note": "读取搜索引擎收录的采访问答；不是实机截图。"
+        },
+        {
+          "source": "extension-source-16",
+          "medium": "creator-interview",
+          "locator": "2024年12月2日联合采访，崔延奎关于目的与海德伦黑客行为的回答",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "창세기전 모바일: 아수라 프로젝트",
+        "코스모스 사가"
+      ]
+    },
+    {
+      "id": "mobile-07",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "黑太子在格拉特斯奠定威名",
+      "summary": "宇宙系统重现第一次格拉特斯大会战，黑太子在这场战役中奠定自己的威名。",
+      "note": "采访仅确认作为前传题材，未逐图核读本章觉醒、强制关闭等后半；不能把模拟参数直接补入1202年旧史。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-26"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-26",
+          "medium": "creator-interview",
+          "locator": "2024年12月2日采访，外传方向回答",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "흑태자"
+      ]
+    },
+    {
+      "id": "mobile-08",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 8,
+      "title": "乔安与克里斯蒂安共同执行任务",
+      "summary": "比弗罗斯特并入盖西尔后，乔安成为帝国女武神探员，与克里斯蒂安搭档调查帝国内部阴谋。",
+      "note": "发行商供稿确认两人的身份和搭档情节；宇宙传奇后续对这段有模拟异常叙事，未将手机分支直接并回第一篇章。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-27"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-27",
+          "medium": "official-publication",
+          "locator": "2024年10月8日“资料提供：发行商”正文",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "파트너"
+      ]
+    },
+    {
+      "id": "mobile-09",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 9,
+      "title": "西尔弗成为海盗王",
+      "summary": "西尔弗在独立事件故事中走上海盗王之路。",
+      "note": "当前一手供稿只确认此成长主题；四大海盗细节与模拟偏差尚未逐图核对，不补作既定旧史。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-28"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-28",
+          "medium": "official-publication",
+          "locator": "2025年2月4日发行商发布内容，海盗王故事段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "해적왕"
+      ]
+    },
+    {
+      "id": "mobile-10",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 10,
+      "title": "夏恩霍斯特面对多个人格",
+      "summary": "夏恩霍斯特在自己的无意识空间与不同人格交谈，怪盗身份与其内心冲突由此展开。",
+      "note": "原厂当期介绍可直接支持人格对话；阿内莫内被抹除及无法营救希拉诺等重大转折仍待原画面，不在此补写。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-29"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-29",
+          "medium": "official-publication",
+          "locator": "2025年3月5日正文，宇宙菜单中的无意识空间段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "괴도"
+      ]
+    },
+    {
+      "id": "mobile-11",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 11,
+      "title": "伊莎贝尔在家族没落后加入西风猎鹰",
+      "summary": "贵族出身的伊莎贝尔经历家族没落，受到克劳塞维茨邀请，加入西风猎鹰；独立事件故事回顾她入队前的经历。",
+      "note": "原厂介绍确认出身、邀请者与入队背景；1258年仅社区索引所载，本轮未用来定年。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-30"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-30",
+          "medium": "official-publication",
+          "locator": "2025年4月1日“资料提供：发行商”正文",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "제피르팰컨"
+      ]
+    },
+    {
+      "id": "mobile-12",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 12,
+      "title": "阿尔巴蒂尼守护克里斯蒂娜",
+      "summary": "阿尔巴蒂尼以帝国亲卫队长和恋人的身份守护克里斯蒂娜女皇。",
+      "note": "本条限定原厂简介确认的主干；未采纳仅社区所述枪杀分歧，不把其当作旧作结局修订。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-31"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-31",
+          "medium": "official-publication",
+          "locator": "2025年4月29日正文，主角身份与宇宙传奇新章段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "황제를 위하여"
+      ]
+    },
+    {
+      "id": "mobile-13",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 13,
+      "title": "普西追寻自己的身份",
+      "summary": "普西开始追寻自身身份的旅程。",
+      "note": "原厂当期介绍只确认寻我主题，未据此公开断言所有人格与乔安的等同关系。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-32"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-32",
+          "medium": "official-publication",
+          "locator": "2025年5月27日正文，“自己是谁”的寻求段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "프시"
+      ]
+    },
+    {
+      "id": "mobile-14",
+      "era": "cosmos-stories",
+      "year": "第一季：独立故事（主题排列）",
+      "yearOrder": 1,
+      "order": 14,
+      "title": "海德伦为失去乔安而试图回溯历史",
+      "summary": "失去恋人乔安后，海德伦试图让历史倒转，重新寻找挽回她的可能。",
+      "note": "原厂简介可直接确认动机；这不是旧电脑《第二篇章》已发生结局的替换说明。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-33"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-33",
+          "medium": "official-publication",
+          "locator": "2025年7月22日正文，新宇宙传奇段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "메모리 큐브"
+      ]
+    },
+    {
+      "id": "mobile-15",
+      "era": "cosmos-stories",
+      "year": "第一季：方舟外层",
+      "yearOrder": 2,
+      "order": 15,
+      "title": "海德伦离开模拟与西兹群体交锋",
+      "summary": "海德伦来到模拟之外，在方舟相关故事中与西兹群体发生冲突。",
+      "note": "原厂供稿明说“来到现实”，因此不能把方舟外层也一概称为单纯模拟；但这一分支的现实仍不等于旧电脑原史。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-34",
+        "extension-source-17"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-34",
+          "medium": "official-publication",
+          "locator": "2025年8月初更新汇总中发行商段，现实中的海德伦与西兹群体",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        },
+        {
+          "source": "extension-source-17",
+          "medium": "official-publication",
+          "locator": "旧版本2.9.5正文中的宇宙传奇“方舟”条目",
+          "supports": "context",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "방주"
+      ]
+    },
+    {
+      "id": "mobile-16",
+      "era": "cosmos-side",
+      "year": "师徒篇（相对时间未定）",
+      "yearOrder": 1,
+      "order": 16,
+      "title": "卡梅奥成为贝拉莫德的弟子",
+      "summary": "潘德拉贡出身的天才魔法师卡梅奥成为贝拉莫德的弟子。",
+      "note": "该章为明确存在的独立外传，不是角色上架日即拜师日；旧史绝对年份未取得。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-35"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-35",
+          "medium": "official-publication",
+          "locator": "2025年8月19日“资料提供：发行商”正文",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "스승과 제자",
+        "宇宙传奇独立外传"
+      ]
+    },
+    {
+      "id": "mobile-17",
+      "era": "cosmos-stories",
+      "year": "第二季：挽回乔安的旅程",
+      "yearOrder": 3,
+      "order": 17,
+      "title": "海德伦寻求复活乔安",
+      "summary": "海德伦为复活乔安继续冒险，黑太子与诸神参与援助，新铁假面与黑色暴风雨团也卷入冲突。",
+      "note": "2.5周年开发者采访直接确认第二季主线；此处合并为一个真实叙事节点，不把仅知名称的二季各章编成未经核读的细节。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-36"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-36",
+          "medium": "creator-interview",
+          "locator": "2026年6月16日联合采访，“手游的复仇者”部分",
+          "supports": "event",
+          "note": "核读到搜索索引的采访完整首节；章内具体胜负未由此确认。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "코스모스 사가 시즌2"
+      ]
+    },
+    {
+      "id": "mobile-18",
+      "era": "cosmos-side",
+      "year": "凯篇（另一世界）",
+      "yearOrder": 2,
+      "order": 18,
+      "title": "卡尔斯在另一世界幸存并成为凯",
+      "summary": "另一世界的卡尔斯在与贝拉丁的最终决战后幸存，以凯的身份与小赫尔凯特展开新的冒险。",
+      "note": "应用商店由发行商直接写明幸存结局与新冒险；这是另一命运的变体，不应修正旧电脑卡尔斯的牺牲。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-17",
+        "extension-source-18"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-17",
+          "medium": "official-publication",
+          "locator": "当前活动与应用介绍首段：决战后幸存的卡尔斯、小赫尔凯特的新冒险",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        },
+        {
+          "source": "extension-source-18",
+          "medium": "official-publication",
+          "locator": "2026年10月6日更新段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "코스모스 사가 외전 카이편",
+        "카이"
+      ]
+    },
+    {
+      "id": "mobile-19",
+      "era": "mobile-main",
+      "year": "西风篇：入狱前史",
+      "yearOrder": 1,
+      "order": 19,
+      "title": "希拉诺在入狱前遭到恶魔崇拜指控",
+      "summary": "手游《西风狂诗曲》前传回顾希拉诺遭受恶魔崇拜者指控、被关入因佩尔诺监狱之前的经历。",
+      "note": "原厂公开的四关体验内容；没有据更新日期推定入狱年，也没有据此消除原电脑版1250／1251分歧。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-19"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-19",
+          "medium": "official-publication",
+          "locator": "2025年11月26日正文，四个关卡和入狱前剧情",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "서풍의 광시곡 체험판"
+      ]
+    },
+    {
+      "id": "mobile-20",
+      "era": "mobile-main",
+      "year": "西风篇：修行与魔剑继承（细序待考）",
+      "yearOrder": 2,
+      "order": 20,
+      "title": "希拉诺以暗黑血重现阿修罗",
+      "summary": "希拉诺继承伊欧琳交付的旧王者之剑，体内暗黑血包覆普通剑身，使其显现阿修罗的形态。",
+      "note": "原作者采访说明新版可视化设定；是手机版解释，不倒灌成原电脑已明确演出的画面。 同阶段按主题列出，未把剑的形态演出定位成修行中某一日。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-37"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-37",
+          "medium": "creator-interview",
+          "locator": "2025年12月23日崔延奎访谈，暗黑血与旧王者之剑段",
+          "supports": "event",
+          "note": "发行商供稿或当日报道只确认此处列出的剧情；未把版本日期当作故事年份。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "창세기전 모바일 - 서풍의 광시곡"
+      ]
+    },
+    {
+      "id": "later-antaria-01",
+      "era": "antaria-war",
+      "year": "王国重建的改编阶段",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "王国重建的改编舞台",
+      "summary": "游戏围绕吉·艾斯与伊欧琳的王国重建行动重新讲述原作战争。",
+      "note": "制作人对初代结尾与二代之间的表述是版本定位，不宜据此创造原版空白年份。自制剧情不是官方续篇。",
+      "works": [
+        "antaria-war"
+      ],
+      "spoilerWorks": [
+        "antaria-war"
+      ],
+      "sources": [
+        "extension-source-12",
+        "extension-source-13",
+        "extension-source-14"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-12",
+          "medium": "creator-interview",
+          "locator": "关于原作与本作差异的回答；自制剧情工具与分享限制的回答",
+          "supports": "event",
+          "note": "开发者将舞台放在初代结尾与二代之间，并区分官方故事与玩家自编故事"
+        },
+        {
+          "source": "extension-source-13",
+          "medium": "official-publication",
+          "locator": "原作故事模式与角色支线介绍",
+          "supports": "event",
+          "note": "吉·艾斯与伊欧琳重建潘德拉贡；推出时以二代内容为主"
+        },
+        {
+          "source": "extension-source-14",
+          "medium": "creator-interview",
+          "locator": "原作故事重现程度的问答；故事自定义模式奖励的问答",
+          "supports": "event",
+          "note": "主线改编原作；开发团队准备原创人物支线；玩家自编故事另属创作功能；一月采访为开发计划，不能据此宣称每条计划支线均已上线。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-g4-01",
+      "era": "genesis-4",
+      "year": "时间裂隙的城市起源",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "光之使者号落入时间裂隙",
+      "summary": "前往未来的光之使者号坠入时间裂隙，幸存者以船体和从各时代带回的物资建立埃斯卡托斯。",
+      "note": "这是时隙城市的起源；不要给城市套用原作大陆纪年。",
+      "works": [
+        "genesis-4"
+      ],
+      "spoilerWorks": [
+        "genesis-4"
+      ],
+      "sources": [
+        "extension-source-8",
+        "extension-source-9"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-8",
+          "medium": "creator-interview",
+          "locator": "埃斯卡托斯段落；火狱监狱要塞段落；伙伴选择段落",
+          "supports": "event",
+          "note": "时隙城市的来历、序章舞台与两名伙伴；不支持具体纪年"
+        },
+        {
+          "source": "extension-source-9",
+          "medium": "creator-interview",
+          "locator": "埃斯卡托斯是什么地方的问答",
+          "supports": "event",
+          "note": "光之使者号坠落地、从各时代调取建材与船体零件建城；开发者解释游戏内容；并非实机完整对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-g4-02",
+      "era": "genesis-4",
+      "year": "序章：监狱救援",
+      "yearOrder": 2,
+      "order": 2,
+      "title": "火狱要塞的序章",
+      "summary": "玩家被困因佩尔诺监狱要塞，伊安或诺艾尔前来营救，序章由此开始。",
+      "note": "以官方设计说明核对舞台，不推定等同于西风狂诗曲原版全部事件。",
+      "works": [
+        "genesis-4"
+      ],
+      "spoilerWorks": [
+        "genesis-4"
+      ],
+      "sources": [
+        "extension-source-8",
+        "extension-source-10"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-8",
+          "medium": "creator-interview",
+          "locator": "埃斯卡托斯段落；火狱监狱要塞段落；伙伴选择段落",
+          "supports": "event",
+          "note": "时隙城市的来历、序章舞台与两名伙伴；不支持具体纪年"
+        },
+        {
+          "source": "extension-source-10",
+          "medium": "firsthand-guide",
+          "locator": "正文以火狱监狱开场、时空旅行者前来营救的段落",
+          "supports": "event",
+          "note": "玩家遭囚禁与两名伙伴营救的序章事件；实机体验的叙述，不是游戏对白逐字稿。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-g4-02a",
+      "era": "genesis-4",
+      "year": "序章：并列路线",
+      "yearOrder": 2.5,
+      "order": 2.5,
+      "title": "分支：伊安路线的魔装机研究所",
+      "summary": "玩家选择伊安同行，沿序章路线抵达魔装机研究所。",
+      "note": "两条可选路线并列，不表示玩家在一次序章中依次经历两座研究所。",
+      "works": [
+        "genesis-4"
+      ],
+      "spoilerWorks": [
+        "genesis-4"
+      ],
+      "sources": [
+        "extension-source-9"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-9",
+          "medium": "creator-interview",
+          "locator": "序章设置问答；伙伴路线问答；序章结束后去向问答；第一幕与第二幕问答",
+          "supports": "event",
+          "note": "伊安通往魔装机研究所，诺艾尔通往格里玛秘密研究所；序章后抵达城市；前两幕的角色相遇；开发者解释游戏内容；并非实机完整对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-g4-02b",
+      "era": "genesis-4",
+      "year": "序章：并列路线",
+      "yearOrder": 2.5,
+      "order": 2.5,
+      "title": "分支：诺艾尔路线的秘密研究所",
+      "summary": "玩家选择诺艾尔同行，沿序章路线抵达格里玛秘密研究所。",
+      "note": "两条可选路线并列，不表示玩家在一次序章中依次经历两座研究所。",
+      "works": [
+        "genesis-4"
+      ],
+      "spoilerWorks": [
+        "genesis-4"
+      ],
+      "sources": [
+        "extension-source-9"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-9",
+          "medium": "creator-interview",
+          "locator": "序章设置问答；伙伴路线问答；序章结束后去向问答；第一幕与第二幕问答",
+          "supports": "event",
+          "note": "伊安通往魔装机研究所，诺艾尔通往格里玛秘密研究所；序章后抵达城市；前两幕的角色相遇；开发者解释游戏内容；并非实机完整对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-g4-03",
+      "era": "genesis-4",
+      "year": "抵达城市之后",
+      "yearOrder": 3,
+      "order": 3,
+      "title": "加入时空旅行者",
+      "summary": "伊安或诺艾尔带领玩家抵达埃斯卡托斯，玩家接受训练并加入时空旅行者。",
+      "note": "后续历史任务各自有分歧；尚未取得足以重建全部任务顺序的原作录像。",
+      "works": [
+        "genesis-4"
+      ],
+      "spoilerWorks": [
+        "genesis-4"
+      ],
+      "sources": [
+        "extension-source-11",
+        "extension-source-9"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-11",
+          "medium": "creator-interview",
+          "locator": "序章中伊安、诺艾尔带领玩家抵达埃斯卡托斯并接受训练的说明",
+          "supports": "event",
+          "note": "玩家入会的相对顺序；不支持绝对年份"
+        },
+        {
+          "source": "extension-source-9",
+          "medium": "creator-interview",
+          "locator": "序章结束后去向问答",
+          "supports": "event",
+          "note": "序章结束后建立角色并抵达城市与据点；开发者解释游戏内容；并非实机完整对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-g4-04",
+      "era": "genesis-4",
+      "year": "第一幕",
+      "yearOrder": 4,
+      "order": 4,
+      "title": "重返西风猎鹰的时代",
+      "summary": "第一幕以西风狂诗曲的时代为舞台，玩家接触西风猎鹰基地及克劳塞维茨等人物。",
+      "note": "只确认此幕设定，不据此改写西风狂诗曲原版各战役。",
+      "works": [
+        "genesis-4"
+      ],
+      "spoilerWorks": [
+        "genesis-4"
+      ],
+      "sources": [
+        "extension-source-9"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-9",
+          "medium": "creator-interview",
+          "locator": "第一幕与第二幕等待玩家的问答",
+          "supports": "event",
+          "note": "第一幕舞台、基地与人物；开发者解释游戏内容；并非实机完整对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-g4-05",
+      "era": "genesis-4",
+      "year": "第二幕",
+      "yearOrder": 5,
+      "order": 5,
+      "title": "第二幕中的伊欧琳",
+      "summary": "第二幕围绕伊欧琳相关历史展开，并呈现她的不同阶段形象。",
+      "note": "原文的晨光与复仇女神是人物版本名称；不推定两个版本在本幕中的具体遭遇顺序。",
+      "works": [
+        "genesis-4"
+      ],
+      "spoilerWorks": [
+        "genesis-4"
+      ],
+      "sources": [
+        "extension-source-9"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-9",
+          "medium": "creator-interview",
+          "locator": "第一幕与第二幕等待玩家的问答",
+          "supports": "event",
+          "note": "第二幕伊欧琳的不同阶段版本；开发者解释游戏内容；并非实机完整对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-mobile-main-02",
+      "era": "mobile-main",
+      "year": "西风篇：修行与魔剑继承（细序待考）",
+      "yearOrder": 2,
+      "order": 2,
+      "title": "暴风岛上的修行",
+      "summary": "希拉诺在暴风岛接受修行。",
+      "note": "不把同次更新登场的安·米列尼安个人故事强行排进这一主线顺序。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-38"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-38",
+          "medium": "official-publication",
+          "locator": "第三章与暴风岛修行的说明",
+          "supports": "event",
+          "note": "第三章描绘希拉诺修行；已读官方搜索索引正文；直接页面抓取失败，尚无逐句实机对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "later-mobile-main-03",
+      "era": "mobile-main",
+      "year": "西风篇：比弗罗斯特的阴谋",
+      "yearOrder": 3,
+      "order": 3,
+      "title": "比弗罗斯特的阴谋",
+      "summary": "恺撒派马基雅维利出使比弗罗斯特，西风猎鹰察觉阴谋并展开阻止行动。",
+      "note": "公告支持剧情梗概；不支持胜负细节或绝对日期。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-39"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-39",
+          "medium": "official-publication",
+          "locator": "西风狂诗曲第十二章剧情说明",
+          "supports": "event",
+          "note": "出使比弗罗斯特与西风猎鹰的阻止行动；已读官方搜索索引正文；直接页面抓取失败，尚无逐句实机对白。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": []
+    },
+    {
+      "id": "mobile-21",
+      "era": "mobile-crossovers",
+      "year": "纳米魔神联动：异世界人",
+      "yearOrder": 1,
+      "order": 21,
+      "title": "异世界武者与卡尔斯相遇",
+      "summary": "来自异世界的千余云与文圭来到安塔利亚，与卡尔斯相遇。",
+      "note": "《纳米魔神》联动《异世界人》的独立前提；不补对决胜负或对原史的影响。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-47"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-47",
+          "medium": "official-publication",
+          "locator": "2025年10月28日“资料提供：发行商”正文，异世界人与卡尔斯段",
+          "supports": "event",
+          "note": "原厂发布的剧情简介；不是角色上架作为故事事件，不给旧史绝对日期。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "이세계인",
+        "나노마신",
+        "천여운",
+        "문규"
+      ]
+    },
+    {
+      "id": "mobile-22",
+      "era": "mobile-crossovers",
+      "year": "斗神转生记联动：归途",
+      "yearOrder": 2,
+      "order": 22,
+      "title": "杰菲尔与阿尔泰尔寻找归途",
+      "summary": "杰菲尔与阿尔泰尔因次元裂隙迫降安塔利亚，踏上返回原来次元的旅程。",
+      "note": "《斗神转生记》联动独立分支，所引公告只确认迫降与归途，不证明旧电脑版世界发生同一事件。",
+      "works": [
+        "asura-project"
+      ],
+      "spoilerWorks": [
+        "asura-project"
+      ],
+      "sources": [
+        "extension-source-48"
+      ],
+      "citations": [
+        {
+          "source": "extension-source-48",
+          "medium": "official-publication",
+          "locator": "2026年4月7日正文，次元裂隙和返乡旅程段",
+          "supports": "event",
+          "note": "原厂发布的剧情简介；不是角色上架作为故事事件，不给旧史绝对日期。"
+        }
+      ],
+      "evidence": "compiled",
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "sourceLines": [],
+      "keywords": [
+        "투신",
+        "투신전생기",
+        "제피르",
+        "알테어"
+      ]
     }
   ],
   "terminologyNote": "本页统一人物、地名和术语的中文写法；原文名称及不同中文版本的旧译仍可用于搜索。以下区分已有中文用例与编辑音译，不把所有统一译名都冒称官方译名。",
@@ -19887,6 +22182,48 @@
         "奥菲莉亚",
         "奥菲莉"
       ]
+    },
+    {
+      "id": "extension-term-1",
+      "title": "浪天",
+      "kind": "人物",
+      "note": "功能机外传主角的统一工作译写；没有以现代汉语直译冒称原版官方用名。"
+    },
+    {
+      "id": "extension-term-2",
+      "title": "西兹群体",
+      "kind": "设定群体",
+      "note": "移动版宇宙传奇的相关群体用名；与第四作时空旅行者区分。旧条目西兹仍保留其人物称呼。"
+    },
+    {
+      "id": "extension-term-3",
+      "title": "凯",
+      "kind": "异世界人物",
+      "note": "卡尔斯在另一世界的形态；与旧条目凯博士不是同一人物称号，生还情节不改旧史。"
+    },
+    {
+      "id": "extension-term-4",
+      "title": "埃斯卡托斯",
+      "kind": "地点",
+      "note": "第四作时间裂隙城市的统一音译；不赋予安塔利亚旧作的绝对年份。"
+    },
+    {
+      "id": "extension-term-5",
+      "title": "伊安与诺艾尔",
+      "kind": "人物",
+      "note": "第四作序章的可选同行伙伴；两条路线并列，不写成连续经过。"
+    },
+    {
+      "id": "extension-term-6",
+      "title": "莉欧娜与修安",
+      "kind": "人物",
+      "note": "灰色重制营救支线的中文工作译写；目前具体经历仅有百科重制专节，尚待游戏画面核对。"
+    },
+    {
+      "id": "extension-term-7",
+      "title": "宇宙传奇",
+      "kind": "剧情分支",
+      "note": "移动版新增叙事的统一意译，包含模拟与方舟外层；不是新增独立游戏产品。"
     }
   ]
 }

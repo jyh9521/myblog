@@ -148,6 +148,11 @@ collections:
         fields:
           - { name: id, label: 作品 ID, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', '使用小写英文、数字和连字符'] }
           - { name: title, label: 作品名, widget: string }
+          - { name: continuity, label: 版本与故事分类, widget: string, required: false }
+          - { name: synopsis, label: 无剧透故事前提, widget: text, required: false, hint: '只放官方公开故事前提；具体情节放事件并填写剧透控制。' }
+          - { name: coverageNote, label: 剧情收录边界, widget: text, required: false }
+          - { name: sources, label: 作品说明依据 ID, widget: list, required: false }
+          - { name: originalTitle, label: 作品原题（仅存档）, widget: string, required: false }
       - name: eras
         label: 时代（按此列表顺序展示，不跨纪年比较年份）
         widget: list
@@ -156,6 +161,7 @@ collections:
           - { name: title, label: 时代标题（避免包含剧情揭秘）, widget: string }
           - { name: calendar, label: 所属纪年, widget: string }
           - { name: note, label: 分段说明（仅放非剧透信息）, widget: text, required: false }
+          - { name: works, label: 分线限定作品 ID, widget: list, required: false, hint: '重制或平行故事须限定作品，避免混入旧作历史。' }
       - name: sources
         label: 资料来源
         widget: list
@@ -199,7 +205,7 @@ collections:
             required: false
             fields:
               - { name: source, label: 来源 ID, widget: string }
-              - { name: medium, label: 原典载体类型, widget: select, options: [{label: 原版游戏画面, value: game-capture}, {label: 原版对白转录, value: game-transcript}, {label: 原版手册扫描, value: manual-scan}, {label: 原作者攻略, value: firsthand-guide}, {label: 二手整理, value: secondary}], required: false }
+              - { name: medium, label: 原典载体类型, widget: select, options: [{label: 原版游戏画面, value: game-capture}, {label: 原版对白转录, value: game-transcript}, {label: 原版手册扫描, value: manual-scan}, {label: 原作者攻略, value: firsthand-guide}, {label: 官方剧情介绍, value: official-publication}, {label: 开发者访谈, value: creator-interview}, {label: 二手整理, value: secondary}], required: false }
               - { name: locator, label: 章节、场景或原文定位（中文）, widget: text }
               - { name: originalLocator, label: 原文定位存档（不混入中文正文）, widget: text, required: false }
               - { name: originalNote, label: 原文备注存档, widget: text, required: false }

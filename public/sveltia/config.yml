@@ -114,6 +114,69 @@ collections:
           - { name: description, label: 简短说明, widget: text, required: false }
           - { name: releaseUrl, label: 发布页地址, widget: string, required: false, hint: "可选，填写该仓库 Releases 或指定版本地址；留空不显示下载按钮。" }
 
+      - { name: body, label: 档案正文, widget: richtext, required: false, editor_components: [code-block, r2-image, game-card, image-compare, horizontal-rule, pdf, chronology], hint: "与文章共用富文本编辑器。点击插入年表，选择共用年表及默认作品；只在插入的档案显示，不新增网站入口。年表资料在系列年表资料中统一维护。正文位于项目信息之后、游玩与制作时间线之前。" }
+
+  - name: chronologies
+    label: 系列年表资料
+    label_singular: 年表资料
+    folder: /content/chronologies
+    extension: json
+    format: json
+    create: true
+    identifier_field: id
+    slug: '{{id}}'
+    summary: '{{title}}'
+    fields:
+      - { name: id, label: 年表 ID（与文件名一致）, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', '使用小写英文、数字和连字符'] }
+      - { name: title, label: 标题, widget: string }
+      - { name: description, label: 简介与整理范围, widget: text }
+      - { name: calendarNote, label: 纪年说明, widget: text }
+      - name: works
+        label: 作品（ID 用于事件关联及剧透控制）
+        widget: list
+        fields:
+          - { name: id, label: 作品 ID, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', '使用小写英文、数字和连字符'] }
+          - { name: title, label: 作品名, widget: string }
+      - name: eras
+        label: 时代（按此列表顺序展示，不跨纪年比较年份）
+        widget: list
+        fields:
+          - { name: id, label: 时代 ID, widget: string }
+          - { name: title, label: 时代标题（避免包含剧情揭秘）, widget: string }
+          - { name: calendar, label: 所属纪年, widget: string }
+          - { name: note, label: 分段说明（仅放非剧透信息）, widget: text, required: false }
+      - name: sources
+        label: 资料来源
+        widget: list
+        fields:
+          - { name: id, label: 来源 ID, widget: string }
+          - { name: title, label: 作者与资料标题, widget: string }
+          - { name: url, label: 原文链接, widget: string }
+      - name: events
+        label: 历史事件（不要填写个人游玩动态）
+        widget: list
+        summary: '{{fields.year}} · {{fields.title}}'
+        fields:
+          - { name: id, label: 事件 ID, widget: string }
+          - { name: era, label: 时代 ID, widget: string }
+          - { name: year, label: 显示年份（保留约、区间或不详）, widget: string }
+          - { name: yearOrder, label: 时代内年份排序值, widget: number, value_type: float, hint: '仅在该时代内比较，不强制将约数或其他纪年换算为精确日期。' }
+          - { name: day, label: 日期或日数范围, widget: string, required: false }
+          - { name: order, label: 同年事件排序值, widget: number, value_type: float }
+          - { name: title, label: 事件标题, widget: string }
+          - { name: summary, label: 简短经过, widget: text }
+          - { name: detail, label: 详细经过, widget: text, required: false }
+          - { name: note, label: 版本差异与考据说明, widget: text, required: false }
+          - { name: keywords, label: 人物原名、别名与地点检索词, widget: list, required: false }
+          - { name: works, label: 关联作品 ID 列表, widget: list, min: 1 }
+          - { name: spoilerWorks, label: 需要允许剧透的作品 ID 列表, widget: list, required: true, min: 0, default: [], hint: '必须明确填写。无剧透可设空列表；涉及多个作品揭秘时填写全部作品 ID。不要只按事件发生年代判断。' }
+          - name: evidence
+            label: 依据类型
+            widget: chronology-evidence
+            default: compiled
+          - { name: sources, label: 来源 ID 列表, widget: list, min: 1 }
+          - { name: related, label: 关联事件 ID 列表, widget: list, required: false }
+
   - name: pages
     label: 页面
     files:

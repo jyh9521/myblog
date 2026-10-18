@@ -1,0 +1,613 @@
+{
+  "id": "genesis",
+  "title": "创世纪战系列年表",
+  "description": "主要年代与作品节点版。依据 arestes2 的韩文年表整理，非原文逐条全译；细节及争议可在事件资料中继续补充。",
+  "calendarNote": "不同纪年分区展示，时间间隔不按比例拉伸。“约”“区间”和原有日数保持原貌，不换算为公历；跨纪年对应关系尚未作一手资料核验。",
+  "works": [
+    {
+      "id": "genesis-1",
+      "title": "创世纪战"
+    },
+    {
+      "id": "genesis-2",
+      "title": "创世纪战Ⅱ"
+    },
+    {
+      "id": "zephyr",
+      "title": "创世纪战外传：西风狂诗曲"
+    },
+    {
+      "id": "tempest",
+      "title": "创世纪战外传：暴风雨"
+    },
+    {
+      "id": "genesis-3-p1",
+      "title": "创世纪战Ⅲ Part I"
+    },
+    {
+      "id": "genesis-3-p2",
+      "title": "创世纪战Ⅲ Part II"
+    }
+  ],
+  "eras": [
+    {
+      "id": "myth",
+      "title": "神话与远古",
+      "calendar": "相对年代",
+      "note": "原文以相对年代记述，本区不赋予精确年份。"
+    },
+    {
+      "id": "early",
+      "title": "纪年与战争前史",
+      "calendar": "에스겔력（原文纪年）"
+    },
+    {
+      "id": "war",
+      "title": "创世纪战Ⅰ／Ⅱ相关时期",
+      "calendar": "에스겔력"
+    },
+    {
+      "id": "zephyr-era",
+      "title": "西风狂诗曲相关时期",
+      "calendar": "에스겔력"
+    },
+    {
+      "id": "tempest-era",
+      "title": "暴风雨相关时期",
+      "calendar": "에스겔력"
+    },
+    {
+      "id": "part-one",
+      "title": "创世纪战Ⅲ Part I相关时期",
+      "calendar": "에스겔력"
+    },
+    {
+      "id": "part-two",
+      "title": "创世纪战Ⅲ Part II相关时期",
+      "calendar": "아르케력（原文纪年）",
+      "note": "另一纪年体系；不与前面时代直接作年份大小比较。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "arestes2",
+      "title": "arestes2：《창세기전 연대표》（2008-07-10）",
+      "url": "https://blog.naver.com/arestes2/150033169242"
+    }
+  ],
+  "events": [
+    {
+      "id": "myth-war",
+      "era": "myth",
+      "year": "数千年前",
+      "yearOrder": 1,
+      "order": 10,
+      "title": "神话时代",
+      "summary": "诸神分裂，战争爆发。",
+      "works": [
+        "genesis-2",
+        "tempest",
+        "genesis-3-p2"
+      ],
+      "spoilerWorks": [
+        "genesis-2",
+        "tempest",
+        "genesis-3-p2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "라그나뢰크"
+      ]
+    },
+    {
+      "id": "human-age",
+      "era": "myth",
+      "year": "约两千年前",
+      "yearOrder": 2,
+      "order": 10,
+      "title": "人类时代",
+      "summary": "诸神隐退，人类建立国家。",
+      "works": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled"
+    },
+    {
+      "id": "calendar-origin",
+      "era": "early",
+      "year": "元年",
+      "yearOrder": 1,
+      "order": 10,
+      "title": "纪年确立",
+      "summary": "贤者制定一年220日的历法。",
+      "works": [
+        "genesis-1",
+        "genesis-2",
+        "zephyr",
+        "tempest",
+        "genesis-3-p1",
+        "genesis-3-p2"
+      ],
+      "spoilerWorks": [],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "에스겔"
+      ],
+      "note": "历法说明来自二手年表；原作者引用《暴风雨》初版手册第38页，本项目尚未直接核对手册。"
+    },
+    {
+      "id": "tur-origin",
+      "era": "early",
+      "year": "627年",
+      "yearOrder": 627,
+      "order": 10,
+      "title": "东方帝国成立",
+      "summary": "图尔帝国建立，图尔纪年开始。",
+      "works": [
+        "genesis-1",
+        "genesis-2",
+        "zephyr",
+        "tempest",
+        "genesis-3-p1",
+        "genesis-3-p2"
+      ],
+      "spoilerWorks": [],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "투르",
+        "무라마드"
+      ]
+    },
+    {
+      "id": "war-begins",
+      "era": "early",
+      "year": "1201年",
+      "yearOrder": 1201,
+      "order": 10,
+      "title": "战争开端",
+      "summary": "黑太子出兵，战争爆发。",
+      "works": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "칼 스타이너",
+        "사이럽스"
+      ]
+    },
+    {
+      "id": "prince-missing",
+      "era": "early",
+      "year": "1203年",
+      "yearOrder": 1203,
+      "order": 10,
+      "title": "黑太子失踪",
+      "summary": "返程飞空艇坠毁。",
+      "works": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled"
+    },
+    {
+      "id": "genesis-two-opens",
+      "era": "war",
+      "year": "1207年",
+      "yearOrder": 1207,
+      "order": 10,
+      "title": "硫黄洞调查",
+      "summary": "G.S一行受命调查；Ⅱ由此开场。",
+      "works": [
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "约第20日",
+      "keywords": [
+        "G.S",
+        "스트라이더",
+        "사라"
+      ],
+      "related": [
+        "genesis-one-opens"
+      ]
+    },
+    {
+      "id": "genesis-one-opens",
+      "era": "war",
+      "year": "1207年",
+      "yearOrder": 1207,
+      "order": 20,
+      "title": "复兴军撤退",
+      "summary": "复兴军夺杖后撤离；Ⅰ由此开场。",
+      "works": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "约第30日",
+      "related": [
+        "genesis-two-opens"
+      ]
+    },
+    {
+      "id": "alliance-renewed",
+      "era": "war",
+      "year": "1207年",
+      "yearOrder": 1207,
+      "order": 30,
+      "title": "联盟重建",
+      "summary": "银箭联盟再次成立。",
+      "works": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "约第220日",
+      "keywords": [
+        "실버애로우"
+      ]
+    },
+    {
+      "id": "capital-retaken",
+      "era": "war",
+      "year": "1208年",
+      "yearOrder": 1208,
+      "order": 10,
+      "title": "王都收复",
+      "summary": "伊欧琳夺回王城并即位。",
+      "works": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "约第1—59日",
+      "keywords": [
+        "이올린",
+        "팬드래건"
+      ]
+    },
+    {
+      "id": "genesis-one-ends",
+      "era": "war",
+      "year": "1209年",
+      "yearOrder": 1209,
+      "order": 10,
+      "title": "Ⅰ的结尾节点",
+      "summary": "G.S在暗黑城恢复记忆。",
+      "works": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-1",
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "约第200—220日",
+      "note": "原年表将此处标为第一部结束；Ⅰ、Ⅱ的叙事时间重叠，不是两段首尾相接的历史。"
+    },
+    {
+      "id": "genesis-two-ends",
+      "era": "war",
+      "year": "1213年",
+      "yearOrder": 1213,
+      "order": 10,
+      "title": "Ⅱ的结尾节点",
+      "summary": "暴风岛及其后的决战告一段落。",
+      "works": [
+        "genesis-2"
+      ],
+      "spoilerWorks": [
+        "genesis-2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "第31日以后",
+      "keywords": [
+        "폭풍도"
+      ]
+    },
+    {
+      "id": "zephyr-opens",
+      "era": "zephyr-era",
+      "year": "1263年",
+      "yearOrder": 1263,
+      "order": 10,
+      "title": "监狱袭击",
+      "summary": "监狱遭袭，西罗诺逃出。",
+      "works": [
+        "zephyr"
+      ],
+      "spoilerWorks": [
+        "zephyr"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "第84日",
+      "keywords": [
+        "시라노",
+        "인페르노",
+        "메디치"
+      ]
+    },
+    {
+      "id": "zephyr-island",
+      "era": "zephyr-era",
+      "year": "1264年末",
+      "yearOrder": 1264,
+      "order": 10,
+      "title": "离开岛屿",
+      "summary": "西罗诺结束修行后离岛。",
+      "works": [
+        "zephyr"
+      ],
+      "spoilerWorks": [
+        "zephyr"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "시라노",
+        "이올린",
+        "폭풍도"
+      ]
+    },
+    {
+      "id": "zephyr-ends",
+      "era": "zephyr-era",
+      "year": "1265年",
+      "yearOrder": 1265,
+      "order": 10,
+      "title": "西风篇结尾节点",
+      "summary": "西风篇主要事件在此年收束。",
+      "works": [
+        "zephyr"
+      ],
+      "spoilerWorks": [
+        "zephyr"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "note": "仅标注原年表的叙事节点；不同结局及其采用依据尚待逐条核对。"
+    },
+    {
+      "id": "tempest-opens",
+      "era": "tempest-era",
+      "year": "1271年",
+      "yearOrder": 1271,
+      "order": 10,
+      "title": "王女出逃",
+      "summary": "伊丽莎白一行逃离，暴风雨篇开场。",
+      "works": [
+        "tempest"
+      ],
+      "spoilerWorks": [
+        "tempest"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "约第0—30日",
+      "keywords": [
+        "엘리자베스",
+        "용자의 무덤"
+      ]
+    },
+    {
+      "id": "tempest-ends",
+      "era": "tempest-era",
+      "year": "1274年初",
+      "yearOrder": 1274,
+      "order": 10,
+      "title": "王权交替",
+      "summary": "克劳塞维茨登基，暴风雨篇收束。",
+      "works": [
+        "tempest"
+      ],
+      "spoilerWorks": [
+        "tempest"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "클라우제비츠"
+      ]
+    },
+    {
+      "id": "part-one-opens",
+      "era": "part-one",
+      "year": "1280年",
+      "yearOrder": 1280,
+      "order": 10,
+      "title": "军火调查",
+      "summary": "克里斯蒂安调查军火走私。",
+      "works": [
+        "genesis-3-p1"
+      ],
+      "spoilerWorks": [
+        "genesis-3-p1"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "크리스티앙",
+        "사이럽스"
+      ]
+    },
+    {
+      "id": "part-one-ends",
+      "era": "part-one",
+      "year": "1283年",
+      "yearOrder": 1283,
+      "order": 10,
+      "title": "Part I结尾节点",
+      "summary": "光明使者号展开时空跳跃。",
+      "works": [
+        "genesis-3-p1"
+      ],
+      "spoilerWorks": [
+        "genesis-3-p1"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "day": "约第40日",
+      "keywords": [
+        "라이트블링거"
+      ],
+      "related": [
+        "part-two-opens"
+      ]
+    },
+    {
+      "id": "part-two-opens",
+      "era": "part-two",
+      "year": "237647年",
+      "yearOrder": 237647,
+      "order": 10,
+      "title": "Part II开场",
+      "summary": "萨拉丁等人从休眠中苏醒。",
+      "works": [
+        "genesis-3-p2"
+      ],
+      "spoilerWorks": [
+        "genesis-3-p2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "살라딘",
+        "크리스티앙",
+        "죠안"
+      ],
+      "related": [
+        "part-one-ends"
+      ]
+    },
+    {
+      "id": "reporter-begins",
+      "era": "part-two",
+      "year": "237649年",
+      "yearOrder": 237649,
+      "order": 10,
+      "title": "记者生涯开始",
+      "summary": "卢西安开始从事记者工作。",
+      "works": [
+        "genesis-3-p2"
+      ],
+      "spoilerWorks": [
+        "genesis-3-p2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "루시엔 그레이",
+        "T&T"
+      ]
+    },
+    {
+      "id": "part-two-later",
+      "era": "part-two",
+      "year": "237652年",
+      "yearOrder": 237652,
+      "order": 10,
+      "title": "后续篇章",
+      "summary": "贝拉莫德参与抵抗活动。",
+      "works": [
+        "genesis-3-p2"
+      ],
+      "spoilerWorks": [
+        "genesis-3-p2"
+      ],
+      "sources": [
+        "arestes2"
+      ],
+      "evidence": "compiled",
+      "keywords": [
+        "베라모드",
+        "란 크로슬리"
+      ],
+      "note": "原文后段还记述多项事件；这里保留年代索引，不将最后记录年份标作整部作品结局。"
+    }
+  ]
+}

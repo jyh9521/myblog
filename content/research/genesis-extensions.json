@@ -2,7 +2,7 @@
   "version": 1,
   "baseCommit": "b60a775d3d471f1d69d87a260251895739caff80",
   "originalEventCount": 315,
-  "originalEventsSha256": "bfb609304b7e95dd9fc1ec269ea4f6c8d8c04ee1722edb54f9b37cb01481660d",
+  "originalEventsSha256": "017cb22a703a239808b7e8594c7cefa7ce66fa3a990d29bc7dc78db0e745543a",
   "addedEvents": [
     {
       "id": "gray-01",
@@ -396,6 +396,53 @@
     "events": 359,
     "works": 21,
     "sources": 151,
-    "terms": 69
-  }
+    "terms": 70
+  },
+  "beforeAuthorTerminologySha256": "bfb609304b7e95dd9fc1ec269ea4f6c8d8c04ee1722edb54f9b37cb01481660d",
+  "authorTerminologyChanges": [
+    {
+      "from": "希拉诺",
+      "to": "西拉诺"
+    },
+    {
+      "from": "吉·艾斯",
+      "to": "G.S."
+    },
+    {
+      "from": "达卡马",
+      "to": "达卡玛"
+    },
+    {
+      "from": "梅尔西迪斯",
+      "to": "梅尔茜迪斯"
+    },
+    {
+      "from": "萨菲·阿尔丁",
+      "to": "萨菲·阿尔·丁"
+    },
+    {
+      "from": "因佩尔诺",
+      "to": "因弗诺"
+    },
+    {
+      "from": "光之使者",
+      "to": "光明使者"
+    },
+    {
+      "from": "拉三型",
+      "to": "Ra MKⅢ"
+    },
+    {
+      "from": "卡娜",
+      "to": "迦娜"
+    },
+    {
+      "from": "浪天",
+      "to": "浪川"
+    },
+    {
+      "from": "克罗",
+      "to": "克楼乌"
+    }
+  ]
 }

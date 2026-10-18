@@ -106,7 +106,7 @@ test('every public chronology field is Chinese and original terms remain only se
  assert.doesNotMatch(fs.readFileSync('app/chronicles/[slug]/page.tsx','utf8'),/THE WAR OF GENESIS/);
 });
 test('canonical names and editions are consistent without replacing story-stage aliases with true identities',()=>{
- for(const e of data.events){assert.doesNotMatch(e.title+e.summary,/希拉诺|吉·艾斯|达卡马|梅尔西迪斯|萨菲·阿尔丁|因佩尔诺|光之使者|拉三型|卡娜|浪天|克罗|西罗诺|伊欧林|比佛洛斯特|赛鲁普斯|西拉普斯|梅尔塞德斯|安格拉·麦纽/);}
+ for(const e of data.events){assert.doesNotMatch(e.title+e.summary,/希拉诺|吉·艾斯|达卡马|梅尔西迪斯|萨菲·阿尔丁|因佩尔诺|光之使者|拉三型|卡娜|浪天|克罗|西罗诺|伊欧琳|伊欧林|比佛洛斯特|赛鲁普斯|西拉普斯|梅尔塞德斯|安格拉·麦纽/);}
  assert.ok(data.events.some(e=>e.summary.includes('西拉诺')));assert.ok(data.events.some(e=>e.summary.includes('铁假面')));assert.ok(data.events.some(e=>e.summary.includes('夏恩霍斯特')));
  assert.ok(data.works.some(w=>w.title.includes('第一篇章')));assert.ok(data.works.some(w=>w.title.includes('第二篇章')));
  const terms=require('../content/research/genesis-terminology.json');assert.ok(terms.terms.length>=35);assert.ok(terms.terms.every(t=>t.canonical&&t.note&&t.status));
@@ -183,7 +183,7 @@ test('extension manifest records approved terminology revisions and all addition
 });
 
 test('author-approved names apply across all public narrative fields and retain old search aliases',()=>{
- const changes=require('../content/research/genesis-extensions.json').authorTerminologyChanges;assert.equal(changes.length,11);
+ const changes=require('../content/research/genesis-extensions.json').authorTerminologyChanges;assert.equal(changes.length,12);
  const narrative={...data,terms:[],events:data.events.map(e=>({...e,keywords:[],citations:e.citations.map(c=>({...c,originalLocator:undefined,originalNote:undefined}))})),works:data.works.map(w=>({...w,originalTitle:undefined})),sources:data.sources.map(s=>({...s,originalTitle:undefined}))};
  const publicText=JSON.stringify(narrative);for(const {from,to}of changes){assert.ok(!publicText.includes(from),from);assert.ok(publicText.includes(to),to);assert.ok(logic.filterChronology(data,all,[],from).length>0,from);}
  for(const [id,title]of [['term-1','西拉诺'],['term-3','G.S.'],['term-7','达卡玛'],['term-9','梅尔茜迪斯'],['term-12','萨菲·阿尔·丁'],['term-18','因弗诺'],['term-15','光明使者'],['term-30','Ra MKⅢ'],['term-45','迦娜'],['extension-term-1','浪川'],['author-term-crow','克楼乌']])assert.equal(data.terms.find(t=>t.id===id).title,title);
@@ -195,4 +195,11 @@ test('only the two exact original spellings bypass the public language guard',()
  assert.equal(stripApprovedOriginalTerms('G.S.与Ra MKⅢ'),'与');
  for(const bad of ['Inferno','G.S.Bad','xG.S.','Ra MK3','Ra MKⅢbad','지에스']){const d=clone();d.events[0].summary=bad;assert.ok(auditChronologyLanguage(d).length,bad);}
  const d=clone();d.events[0].summary='G.S.驾驶Ra MKⅢ';assert.deepEqual(auditChronologyLanguage(d),[]);
+});
+
+
+test('author-approved Iolin spelling is canonical and old spelling remains searchable',()=>{
+ const term=data.terms.find(t=>t.id==='term-4');assert.equal(term.title,'伊奥琳');assert.ok(!term.aliases.includes('伊奥琳'));assert.ok(term.aliases.includes('伊欧琳'));
+ assert.ok(logic.filterChronology(data,all,[],'伊欧琳').length>0);assert.ok(data.events.some(e=>e.summary.includes('伊奥琳')));
+ assert.equal(require('../content/research/genesis-terminology.json').terms.find(t=>t.id==='term-4').canonical,'伊奥琳');
 });

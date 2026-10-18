@@ -1,10 +1,5 @@
 import type { Chronology, ChronologyEvent } from './chronology-types';
 
-import { dossierBlocks as splitBlocks, chronologyPattern } from './chronology-blocks.cjs';
-export { chronologyPattern };
-export type DossierBlock = { type: 'markdown'; body: string } | { type: 'chronology'; timeline: string; work: string };
-export const dossierBlocks = splitBlocks as (body: string) => DossierBlock[];
-
 export function readableEvents(data: Chronology, allowed: string[]): ChronologyEvent[] {
   // A reading aid, not access control: the underlying timeline is public data.
   // Gate before search/group/link so locked titles cannot leak through the UI.

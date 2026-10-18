@@ -4,7 +4,6 @@ const matter = require('gray-matter');
 const yaml = require('js-yaml');
 const {resourceFor}=require('./resource-catalog.cjs');
 const {validateChronology}=require('../lib/chronology-schema.cjs');
-const {dossierBlocks}=require('../lib/chronology-blocks.cjs');
 const origin = 'https://blog.blfy.cc';
 const filesIn = (dir, extension = '.md') => fs.existsSync(dir) ? fs.readdirSync(dir).filter(file => file.endsWith(extension)) : [];
 
@@ -22,6 +21,7 @@ async function validateRepository(root = process.cwd()) {
       for (const message of validateChronology(data)) error(name, message);
       if (data.id !== name.slice(0, -5)) error(name, '文件名必须与年表 ID 一致');
       chronologies.set(data.id, data);
+      routes.add(`/chronicles/${data.id}/`);
       for (const source of data.sources || []) if (source?.url) remote.add(source.url);
     } catch (e) { error(name, `年表读取失败：${e.message}`); }
   }
@@ -103,11 +103,6 @@ async function validateRepository(root = process.cwd()) {
       if (password && (data.audio || data.video || data.attachment)) error(filename, '密码文章附件应使用私密资源，不要填写公共附件字段');
     }
     const base = folder ? `/${folder}/${name.slice(0, -3)}/` : '/about/';
-    for (const block of dossierBlocks(content)) if (block.type === 'chronology') {
-      if (folder !== 'games') { error(filename, '年表模块目前仅支持游戏档案正文'); continue; }
-      const timeline = chronologies.get(block.timeline);
-      if (!timeline || (block.work && !timeline.works?.some(work => work.id === block.work))) error(filename, `年表或默认作品不存在：${block.timeline}|${block.work}`);
-    }
     if (folder === 'games' && data.personalRating !== undefined && data.personalRating !== null && String(data.personalRating).trim() !== '') {
       const score = Number(data.personalRating);
       if (!['number', 'string'].includes(typeof data.personalRating) || !Number.isFinite(score) || score < 0 || score > 10) error(filename, '个人评分必须是 0–10 之间的数字');

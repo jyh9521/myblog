@@ -1,131 +1,95 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
-const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),vm=require('node:vm');
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const React=require('react'),renderer=require('react-test-renderer'),ts=require('typescript'),yaml=require('js-yaml');
 const {renderToStaticMarkup}=require('react-dom/server');
 const {validateChronology}=require('../lib/chronology-schema.cjs');
-const {dossierBlocks}=require('../lib/chronology-blocks.cjs');
-const {validateRepository}=require('./validate-content.cjs');
-const {buildAssetIndex}=require('./build-asset-index.cjs');
 const data=require('../content/chronologies/genesis.json');
+const coverage=require('../content/research/genesis-coverage.json');
 function load(file,overrides={}){
-  const context={exports:{},process,URL,Response,require:name=>overrides[name]||(name.startsWith('.')?name.endsWith('.cjs')?require(path.resolve(path.dirname(file),name)):load(path.resolve(path.dirname(file),name)+'.ts'):require(name))};
-  vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText,context);
-  return context.exports;
+ const context={exports:{},process,URL,URLSearchParams,Response,require:name=>overrides[name]||(name.startsWith('.')?name.endsWith('.cjs')?require(path.resolve(path.dirname(file),name)):load(path.resolve(path.dirname(file),name)+'.ts'):require(name))};
+ vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText,context);return context.exports;
 }
-const logic=load('lib/chronology.ts');
-const Component=load('app/games/chronology.tsx').default;
-const clone=()=>JSON.parse(JSON.stringify(data));
+const logic=load('lib/chronology.ts'),Component=load('app/chronicles/chronology.tsx').default;
+const clone=()=>JSON.parse(JSON.stringify(data));const all=data.works.map(w=>w.id);
 const config=yaml.load(fs.readFileSync('public/sveltia/config.yml','utf8'));
-function cms(extra={}){
-  const fields={},components=[];
-  const window={h:React.createElement,createClass:value=>value,CMS:{getFieldType:()=>({control:()=>null}),registerFieldType:(id,value)=>fields[id]=value,registerEditorComponent:value=>components.push(value)}};
-  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js','utf8'),{window,...extra});return {fields,components};
-}
 
-test('chronology seed is a validated 22-node six-work source-attributed index, not claimed as full translation',()=>{
-  assert.deepEqual(validateChronology(data),[]);assert.equal(data.events.length,22);assert.equal(data.works.length,6);
-  assert.match(data.description,/非原文逐条全译/);assert.ok(data.events.every(event=>event.evidence==='compiled'));
-  assert.equal(load('lib/chronologies.ts').getChronologies()[0].id,'genesis');
+test('standalone corpus validates six works and covers the complete original including Part II ending',()=>{
+ assert.deepEqual(validateChronology(data),[]);assert.equal(data.events.length,315);assert.equal(data.works.length,6);
+ assert.equal(load('lib/chronologies.ts').getChronologies()[0].id,'genesis');
+ assert.match(data.events.find(e=>e.id==='event-l2008').summary,/奥德赛|安塔利亚/);
+ assert.equal(data.events.filter(e=>e.era==='part-two').length,79);
 });
-test('schema fails closed for missing spoiler metadata, invalid refs, dates, URLs and duplicate IDs',()=>{
-  for(const mutate of [d=>delete d.events[0].spoilerWorks,d=>d.events[0].spoilerWorks=['missing'],d=>d.events[0].works=[],d=>d.events[0].sources=['bad'],d=>d.events[0].related=['bad'],d=>d.events[0].yearOrder='1200',d=>d.events[0].era='bad',d=>d.sources[0].url='javascript:alert(1)',d=>d.works.push(d.works[0]),d=>d.events[0].evidence='official',d=>d.events[0].keywords=[{}],d=>d.events[0].detail={}]){
-    const value=clone();mutate(value);assert.ok(validateChronology(value).length);
-  }
+test('coverage is exact once for all 897 source facts plus two explicitly separate branches',()=>{
+ const actual=data.events.flatMap(e=>e.sourceLines).sort((a,b)=>a-b);
+ assert.equal(actual.length,897);assert.equal(new Set(actual).size,897);
+ assert.deepEqual(actual,coverage.expectedSourceLines);assert.deepEqual(coverage.missing,[]);assert.deepEqual(coverage.duplicates,[]);
+ for(const e of data.events)assert.deepEqual(e.sourceLines,coverage.events.find(x=>x.id===e.id).sourceLines);
+ assert.equal(data.events.filter(e=>e.id.startsWith('zephyr-route-')).length,2);assert.match(coverage.sourceSha256,/^[a-f0-9]{64}$/);
 });
-test('standalone insertion round-trips while code, inline examples and indents remain literal',()=>{
-  const source='## 历史\n\n[chronology]genesis|zephyr[/chronology]\n\n结尾';
-  const blocks=dossierBlocks(source);assert.equal(blocks.length,3);assert.equal(blocks[1].work,'zephyr');
-  for(const source of ['```md\n[chronology]genesis[/chronology]\n```','~~~\n[chronology]genesis[/chronology]\n~~~','    [chronology]genesis[/chronology]','正文 [chronology]genesis[/chronology]','````\n```\n[chronology]genesis[/chronology]\n````']) assert.ok(dossierBlocks(source).every(block=>block.type==='markdown'));
-  assert.equal(dossierBlocks('[chronology]genesis[/chronology]')[0].work,'');
+test('sources have page-specific locators, scope and common-family provenance without inflating independence',()=>{
+ assert.ok(data.sources.length>=50);assert.equal(new Set(data.sources.map(s=>s.url)).size,data.sources.length);
+ assert.ok(data.sources.every(s=>s.scope&&s.family&&s.kind));assert.ok(new Set(data.sources.map(s=>s.family)).size<data.sources.length);
+ for(const e of data.events){assert.ok(e.citations.length);assert.ok(e.citations.every(c=>c.locator&&c.supports));if(e.verification==='crosschecked')assert.ok(e.citations.some(c=>c.source!=='arestes2'&&c.supports==='event'));}
 });
-test('filter gates spoilers before searching, supports Korean names and overlapping works',()=>{
-  assert.equal(logic.filterChronology(data,[],[],'G.S').length,0);
-  assert.equal(logic.filterChronology(data,['genesis-2'],['genesis-2'],'G.S').length,1);
-  assert.equal(logic.filterChronology(data,['genesis-2'],['genesis-1'],'G.S').length,0);
-  assert.equal(logic.filterChronology(data,['zephyr'],['zephyr'],'시라노').length,2);
-  assert.equal(logic.filterChronology(data,['zephyr'],['zephyr'],'1263 시라노').length,1);
-  assert.equal(logic.filterChronology(data,[],[],'贝拉莫德').length,0);
+test('single-source dates, conflicts and genuinely uncorroborated events remain visible as uncertainty',()=>{
+ assert.ok(data.events.filter(e=>e.dateStatus==='single-source').length>200);
+ assert.ok(data.events.filter(e=>e.verification==='conflict').length>=5);
+ for(const line of [1908,1936,1962]){const e=data.events.find(e=>e.sourceLines.includes(line));assert.equal(e.verification,'single-source');}
+ assert.equal(data.events.find(e=>e.id==='event-l1816').year,'跨纪年／数万年后');
 });
-test('cross-work revelations require every listed work and calendars never compare globally',()=>{
-  assert.ok(!logic.readableEvents(data,['genesis-2','tempest']).some(event=>event.id==='myth-war'));
-  const all=data.works.map(work=>work.id),copy=clone();copy.events.find(event=>event.id==='part-two-opens').yearOrder=-999999;
-  const events=logic.filterChronology(copy,all,[],'');assert.ok(events.findIndex(e=>e.id==='part-two-opens')>events.findIndex(e=>e.id==='part-one-ends'));
-  assert.equal(logic.readableEvents(data,[]).length,2);
+test('mutually exclusive Zephyr endings are not asserted as simultaneous dated history',()=>{
+ for(const id of ['zephyr-route-two','zephyr-route-three']){const e=data.events.find(e=>e.id===id);assert.match(e.note,/不是.*同时发生/);assert.equal(e.dateStatus,'undated');}
 });
-test('SSR hides locked titles, details, links and nonvisible era navigation; repeated embeds have unique anchors',()=>{
-  const html=renderToStaticMarkup(React.createElement(React.Fragment,null,React.createElement(Component,{data}),React.createElement(Component,{data})));
-  assert.doesNotMatch(html,/G\.S|贝拉莫德|硫黄洞调查|href="#[^"]*myth/);
-  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
-  for(const match of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(match[1]));
-  assert.match(html,/默认隐藏所有剧情/);assert.match(html,/原文含全系列剧透/);
+test('schema fails closed on invalid metadata, source locators and unsafe URLs',()=>{
+ for(const mutate of [d=>delete d.events[0].spoilerWorks,d=>d.events[0].spoilerWorks=['missing'],d=>d.events[0].works=[],d=>d.events[0].sources=['bad'],d=>d.events[0].related=['bad'],d=>d.events[0].yearOrder='1200',d=>d.events[0].era='bad',d=>d.sources[0].url='javascript:alert(1)',d=>d.works.push(d.works[0]),d=>d.events[0].evidence='official',d=>d.events[0].keywords=[{}],d=>d.events[0].detail={},d=>d.events[0].citations[0].source='bad',d=>d.events[0].citations[0].locator='',d=>d.events[0].citations[0].supports='proof',d=>d.events[0].verification='official',d=>d.events[0].dateStatus='official']){const v=clone();mutate(v);assert.ok(validateChronology(v).length);}
 });
-test('interactive work filters do not grant spoilers, search is gated and revocation unmounts revealed details',()=>{
-  let app;renderer.act(()=>{app=renderer.create(React.createElement(Component,{data,defaultWork:'genesis-2'}));});
-  const text=()=>JSON.stringify(app.toJSON());assert.ok(!text().includes('硫黄洞调查'));
-  const check=()=>app.root.findAllByType('input').filter(node=>node.props.type==='checkbox');
-  renderer.act(()=>check()[1].props.onChange());assert.ok(text().includes('硫黄洞调查'));
-  const search=app.root.findAllByType('input').find(node=>node.props.type==='search');
-  renderer.act(()=>search.props.onChange({target:{value:'贝拉莫德'}}));assert.ok(!text().includes('后续篇章'));
-  renderer.act(()=>search.props.onChange({target:{value:''}}));
-  renderer.act(()=>app.root.findAllByType('button').find(node=>node.children.join('')==='隐藏全部剧透').props.onClick());assert.ok(!text().includes('硫黄洞调查'));
-  renderer.act(()=>app.unmount());
+test('filter gates every required work before search and accepts original Korean terms',()=>{
+ assert.equal(logic.filterChronology(data,[],[],'시라노').length,0);
+ assert.ok(logic.filterChronology(data,all,['zephyr'],'시라노').length>0);
+ assert.ok(!logic.readableEvents(data,['genesis-2']).some(e=>e.id==='event-l47'));
+ assert.ok(logic.readableEvents(data,all).some(e=>e.id==='event-l47'));
 });
-test('related links are omitted when their target is locked or excluded by work/search',()=>{
-  const copy=clone();const event=copy.events.find(e=>e.id==='calendar-origin');event.related=['part-two-later'];
-  const html=renderToStaticMarkup(React.createElement(Component,{data:copy}));assert.doesNotMatch(html,/关联事件：|后续篇章/);
+test('calendar ordering is era-scoped and does not numerically interleave the two calendars',()=>{
+ const copy=clone();copy.events.find(e=>e.era==='part-two').yearOrder=-999999;
+ const e=logic.filterChronology(copy,all,[],'');assert.ok(e.findIndex(x=>x.era==='part-two')>e.findIndex(x=>x.era==='part-one'));
 });
-test('CMS exposes insertion only in optional dossier body, retaining existing article and play-event editors',()=>{
-  const games=config.collections.find(c=>c.name==='games'),posts=config.collections.find(c=>c.name==='post');
-  const body=games.fields.find(f=>f.name==='body'),article=posts.fields.find(f=>f.name==='body');
-  assert.equal(body.widget,article.widget);assert.equal(body.required,false);assert.ok(body.editor_components.includes('chronology'));
-  assert.deepEqual(body.editor_components.filter(id=>id!=='chronology'),article.editor_components);
-  const collection=config.collections.find(c=>c.name==='chronologies');assert.equal(collection.format,'json');assert.ok(!collection.preview_path);
-  const spoilers=collection.fields.find(f=>f.name==='events').fields.find(f=>f.name==='spoilerWorks');assert.equal(spoilers.required,true);assert.deepEqual(spoilers.default,[]);
+test('SSR contains complete readable chronology, stable deep links and specific citations',()=>{
+ const html=renderToStaticMarkup(React.createElement(Component,{data}));
+ assert.match(html,/当前显示 315 \/ 315/);assert.match(html,/新世界被命名为安塔利亚/);
+ assert.match(html,/knowing-passion.tistory.com\/768/);assert.match(html,/剧情依据|纪年依据/);
+ assert.match(html,/id="chronology-genesis-event-event-l2008"/);
+ const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
+ for(const match of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(match[1]));
 });
-test('CMS shortcode serializer handles plain and immutable selections and rejects path/markup payloads',()=>{
-  const component=cms().components.find(c=>c.id==='chronology');
-  for(const block of ['[chronology]genesis[/chronology]','[chronology]genesis|zephyr[/chronology]'])assert.equal(component.toBlock(component.fromBlock(block.match(component.pattern))),block);
-  assert.equal(component.toBlock({selection:{toJS:()=>({timeline:'genesis',work:'zephyr'})}}),'[chronology]genesis|zephyr[/chronology]');
-  for(const timeline of ['../bad','<script>','x|y','a/b'])assert.equal(component.toBlock({selection:{timeline}}),'');
-  assert.doesNotMatch(component.toPreview({selection:{timeline:'<img>',work:'"bad"'}}),/<|>|"/);
+test('work choices, search and spoiler revocation update the standalone view',()=>{
+ let app;renderer.act(()=>{app=renderer.create(React.createElement(Component,{data}));});
+ const text=()=>JSON.stringify(app.toJSON());assert.ok(text().includes('新世界被命名为安塔利亚'));
+ renderer.act(()=>app.root.findAllByType('button').find(n=>n.children.join('')==='隐藏全部剧透').props.onClick());assert.ok(!text().includes('新世界被命名为安塔利亚'));
+ renderer.act(()=>app.root.findAllByType('button').find(n=>n.children.join('')==='显示完整年表').props.onClick());
+ const search=app.root.findAllByType('input').find(n=>n.props.type==='search');renderer.act(()=>search.props.onChange({target:{value:'不存在的查询XYZ'}}));assert.ok(text().includes('没有匹配事件'));
+ renderer.act(()=>app.unmount());
 });
-test('CMS reference widget uses direct radio choices, records default work and reports fetch failures',async()=>{
-  const {fields}=cms({fetch:async()=>({ok:true,json:async()=>[{id:data.id,title:data.title,works:data.works}]})});
-  let saved;const definition=fields['chronology-reference'];const picker={...definition,props:{forID:'picker',value:{timeline:'genesis',work:'zephyr'},onChange:value=>saved=value},state:definition.getInitialState(),setState(next){Object.assign(this.state,next);}};
-  await definition.componentDidMount.call(picker);
-  let app;renderer.act(()=>{app=renderer.create(definition.render.call(picker));});
-  assert.equal(app.root.findAllByType('select').length,0);assert.equal(app.root.findAllByType('input').length,8);
-  renderer.act(()=>app.root.findAllByType('input').at(-1).props.onChange());assert.equal(saved.work,'genesis-3-p2');
-  definition.componentWillUnmount.call(picker);assert.equal(picker.alive,false);renderer.act(()=>app.unmount());
-  const broken=cms({fetch:async()=>({ok:false})}).fields['chronology-reference'];picker.state=broken.getInitialState();await broken.componentDidMount.call(picker);assert.match(picker.state.error,/读取失败/);
+test('ordinary dossier schema remains unchanged and has no chronology insertion widget',()=>{
+ const games=config.collections.find(c=>c.name==='games');assert.ok(!games.fields.some(f=>f.name==='body'));
+ const js=fs.readFileSync('public/sveltia/custom.js','utf8');assert.doesNotMatch(js,/chronology-reference|chronology-catalog|id: 'chronology'/);
+ assert.doesNotMatch(fs.readFileSync('app/games/[slug]/page.tsx','utf8'),/DossierBody|Chronology|game.body/);
+ assert.ok(!fs.existsSync('lib/chronology-blocks.cjs'));assert.ok(!fs.existsSync('app/chronology-catalog.json/route.ts'));
 });
-test('CMS catalog exports titles and work IDs without event spoilers',async()=>{
-  const route=load('app/chronology-catalog.json/route.ts',{'../../lib/chronologies':{getChronologies:()=>[data]}});
-  const body=await route.GET().text();assert.match(body,/genesis-3-p2/);assert.doesNotMatch(body,/贝拉莫德|硫黄洞|events|spoilerWorks/);
+test('CMS maintains sources, citation purposes and scope on the independent timeline',()=>{
+ const c=config.collections.find(c=>c.name==='chronologies');assert.equal(c.format,'json');assert.match(c.preview_path,/chronicles/);
+ const f=c.fields.find(f=>f.name==='events').fields;for(const name of ['citations','verification','dateStatus','sourceLines'])assert.ok(f.some(f=>f.name===name));
+ const s=c.fields.find(f=>f.name==='sources').fields;for(const name of ['kind','family','scope'])assert.ok(s.some(f=>f.name===name));
 });
-test('dossier loader preserves Markdown body without altering old event ordering',()=>{
-  const source='---\ntitle: Fixture\nevents: []\n---\n## 历史\n\n[chronology]genesis|zephyr[/chronology]\n';
-  const games=load('lib/games.ts',{'node:fs':{existsSync:()=>true,readdirSync:()=>['fixture.md'],readFileSync:()=>source},'node:child_process':{execFileSync:()=>''},'../public/sveltia/game-platforms.js':require('../public/sveltia/game-platforms.js')}).getGames();
-  assert.equal(games[0].body,'## 历史\n\n[chronology]genesis|zephyr[/chronology]');assert.equal(games[0].events.length,0);
+test('new static route has canonical URL and no forced nav or automatic dossier insertion',()=>{
+ const page=fs.readFileSync('app/chronicles/[slug]/page.tsx','utf8');assert.match(page,/generateStaticParams/);assert.match(page,/canonical/);assert.match(page,/chronicles/);
+ assert.doesNotMatch(fs.readFileSync('app/layout.tsx','utf8'),/chronicles/);assert.doesNotMatch(fs.readFileSync('lib/games.ts','utf8'),/chronology|chronicles/);
 });
-test('content validation checks JSON and dossier references; new body images remain tracked',async()=>{
-  const root=fs.mkdtempSync(path.join(os.tmpdir(),'blog-chronology-'));
-  try{
-    for(const dir of ['content/games','content/chronologies','public/uploads','public/sveltia'])fs.mkdirSync(path.join(root,dir),{recursive:true});
-    for(const file of ['config.yml','custom.js','r2-media.js','article-access.js','hltb.js'])fs.copyFileSync('public/sveltia/'+file,path.join(root,'public/sveltia',file));
-    fs.writeFileSync(path.join(root,'content/chronologies/genesis.json'),JSON.stringify(data));fs.writeFileSync(path.join(root,'public/uploads/test.png'),'fixture');
-    const game=path.join(root,'content/games/fixture.md');fs.writeFileSync(game,'---\ntitle: 测试\n---\n![图](/uploads/test.png)\n\n[chronology]genesis|zephyr[/chronology]');
-    assert.deepEqual((await validateRepository(root)).errors,[]);
-    const assets=await buildAssetIndex(root);assert.equal(assets.files[0].references[0].url,'/games/fixture/');
-    fs.appendFileSync(game,'\n\n[chronology]genesis|bad[/chronology]\n\n[chronology]missing[/chronology]');
-    assert.equal((await validateRepository(root)).errors.filter(e=>e.includes('年表或默认作品不存在')).length,2);
-    const invalid=clone();delete invalid.events[0].spoilerWorks;fs.writeFileSync(path.join(root,'content/chronologies/genesis.json'),JSON.stringify(invalid));assert.ok((await validateRepository(root)).errors.some(e=>e.includes('spoilerWorks')));
-  }finally{fs.rmSync(root,{recursive:true,force:true});}
+test('content link validator registers standalone chronology pages as normal internal links',()=>{
+ assert.match(fs.readFileSync('scripts/validate-content.cjs','utf8'),/routes.add\(`\/chronicles\//);
 });
-test('feature adds neither a public chronology page nor navigation entry or automatic dossier insertions',()=>{
-  assert.ok(!fs.existsSync('app/chronologies/page.tsx'));assert.ok(!fs.existsSync('app/chronology/page.tsx'));
-  assert.doesNotMatch(fs.readFileSync('app/layout.tsx','utf8'),/chronolog/);
-  assert.doesNotMatch(fs.readFileSync('lib/games.ts','utf8'),/\[chronology\]/);
-  const page=fs.readFileSync('app/games/[slug]/page.tsx','utf8');assert.match(page,/game.body && <DossierBody/);
+test('share code preserves filtered views and event anchors with clipboard fallback',()=>{
+ const source=fs.readFileSync('app/chronicles/chronology.tsx','utf8');
+ for(const key of ['works','q','spoilers'])assert.ok(source.includes(`searchParams.set('${key}'`));
+ assert.match(source,/clipboard.writeText/);assert.match(source,/setShareFallback\(url.href\)/);assert.match(source,/url.hash = eventId/);
 });

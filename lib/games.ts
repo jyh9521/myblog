@@ -98,7 +98,7 @@ export function getGames(): GameRecord[] {
   if (!fs.existsSync(gamesDir)) return [];
   return fs.readdirSync(gamesDir).filter(file => /^[a-z0-9]+(?:-[a-z0-9]+)*\.md$/.test(file)).flatMap(file => {
     const slug = file.slice(0, -3);
-    const { data, content } = matter(fs.readFileSync(path.join(gamesDir, file), 'utf8'));
+    const { data } = matter(fs.readFileSync(path.join(gamesDir, file), 'utf8'));
     const rawMetadata = data.gameMetadata && typeof data.gameMetadata === 'object' ? data.gameMetadata : {};
     const hasMetadata = Object.keys(rawMetadata).length > 0;
     const metadata = normalizeMetadata(rawMetadata);
@@ -120,7 +120,7 @@ export function getGames(): GameRecord[] {
       date: asDate(event.date), title: asText(event.title), note: asText(event.note),
     })) : [];
     return [{
-      id: slug, slug, body: content.trim(),
+      id: slug, slug,
       updatedAt: dossierEditDates().get(`content/games/${file}`) || metadata.updatedAt,
       title: asText(data.title || metadata.localizedName || metadata.title), status: normalizeGameStatus(data.status),
       summary: asText(data.summary || metadata.description), metadata: hasMetadata ? metadata : null, manual, platforms, events, projects: normalizeProjects(data.projects),

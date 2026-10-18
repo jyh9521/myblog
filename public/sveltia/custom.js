@@ -306,37 +306,6 @@
       },
     });
     window.CMS.registerFieldType('game-archive-picker', GameArchivePicker);
-    const ChronologyReference = createClass({
-      getInitialState: function () { return { entries: [], loading: true, error: '' }; },
-      componentDidMount: async function () {
-        this.alive = true;
-        try {
-          const response = await fetch('/chronology-catalog.json', { cache: 'no-cache' });
-          if (!response.ok) throw Error('年表目录读取失败');
-          const entries = await response.json();
-          if (!Array.isArray(entries)) throw Error('年表目录格式错误');
-          if (this.alive) this.setState({ entries, loading: false });
-        } catch (error) { if (this.alive) this.setState({ loading: false, error: '年表目录读取失败，请关闭后重试。' }); }
-      },
-      componentWillUnmount: function () { this.alive = false; },
-      render: function () {
-        const raw = this.props.value;
-        const value = raw?.toJS ? raw.toJS() : raw || {};
-        const selected = this.state.entries.find(entry => entry.id === value.timeline);
-        return h('div', { id: this.props.forID },
-          this.state.loading && h('p', { role: 'status' }, '正在读取年表目录…'),
-          this.state.error && h('p', { role: 'alert' }, this.state.error),
-          h('fieldset', null, h('legend', null, '选择共用年表'), this.state.entries.map(entry => h('label', { key: entry.id, style: { display: 'block', padding: '7px' } },
-            h('input', { type: 'radio', name: `${this.props.forID}-timeline`, checked: value.timeline === entry.id, disabled: this.props.readonly,
-              onChange: () => this.props.onChange({ timeline: entry.id, work: '' }) }), entry.title))),
-          selected && h('fieldset', null, h('legend', null, '默认查看作品（不会解锁剧透）'), [{ id: '', title: '全部作品' }, ...selected.works].map(work => h('label', { key: work.id, style: { display: 'block', padding: '7px' } },
-            h('input', { type: 'radio', name: `${this.props.forID}-work`, checked: (value.work || '') === work.id, disabled: this.props.readonly,
-              onChange: () => this.props.onChange({ timeline: selected.id, work: work.id }) }), work.title))),
-          !this.state.loading && !this.state.error && !this.state.entries.length && h('p', null, '先在“系列年表资料”中建立年表并等待部署。'),
-          value.timeline && !this.state.loading && !selected && h('p', { role: 'alert' }, '原年表已不存在，请重新选择。'));
-      },
-    });
-    window.CMS.registerFieldType('chronology-reference', ChronologyReference);
     window.CMS.registerFieldType('chronology-evidence', createClass({
       render: function () {
         return h('fieldset', { id: this.props.forID }, h('legend', null, '依据类型'),
@@ -344,21 +313,7 @@
             h('label', { key: value, style: { display: 'block', padding: '7px' } }, h('input', { type: 'radio', name: this.props.forID, checked: (this.props.value || 'compiled') === value, disabled: this.props.readonly, onChange: () => this.props.onChange(value) }), label)));
       },
     }));
-    window.CMS.registerEditorComponent({
-      id: 'chronology', label: '插入年表', tooltip: '插入共用系列年表', icon: 'timeline', trigger: 'button',
-      fields: [{ name: 'selection', label: '年表与默认作品', widget: 'chronology-reference', required: true }],
-      pattern: /^\[chronology\]([a-z0-9]+(?:-[a-z0-9]+)*)(?:\|([a-z0-9]+(?:-[a-z0-9]+)*))?\[\/chronology\]$/,
-      fromBlock: match => ({ selection: { timeline: match[1], work: match[2] || '' } }),
-      toBlock: ({ selection = {} }) => {
-        const value = selection?.toJS ? selection.toJS() : selection;
-        const valid = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-        return valid.test(value.timeline || '') && (!value.work || valid.test(value.work)) ? `[chronology]${value.timeline}${value.work ? '|' + value.work : ''}[/chronology]` : '';
-      },
-      toPreview: ({ selection = {} }) => {
-        const value = selection?.toJS ? selection.toJS() : selection;
-        return `系列年表：${String(value.timeline || '请选择年表').replace(/[<>&"']/g, '')} · ${String(value.work || '全部作品').replace(/[<>&"']/g, '')}（前台支持筛选与剧透设置）`;
-      },
-    });
+
     window.CMS.registerEditorComponent({
         id: 'game-card', label: '添加游戏', tooltip: '添加游戏', icon: 'sports_esports', trigger: 'button',
         fields: [

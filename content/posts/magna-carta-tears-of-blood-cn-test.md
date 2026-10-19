@@ -153,13 +153,28 @@ patch=1,EE,E0010000,extended,000C3FE0
 patch=1,EE,203A0E78,extended,14200003
 
 [物品数量不减少（包括出售）]
-description=移除或使用物品时保留原数量。
-// item_no_decrease; original AC620004; intUMrtsPartyDataexecRemoveItem
-
-patch=1,EE,E0010001,extended,000C3FE0
-patch=1,EE,2039FBB0,extended,00000000
-patch=1,EE,E0010000,extended,000C3FE0
+description=普通使用或出售时保留数量；剧情事件强制扣除正常执行，包括任务道具及剧情要求上交的普通物品。SELECT＋上开启，SELECT＋下关闭；不会修复旧存档中已经残留的道具。
+// caller-selective v1; only known ordinary RemoveItem wrapper retains count
+// original story TakeItem callers and unknown callers keep stock decrement
+patch=1,EE,E00F0001,extended,000C3FE0
+patch=1,EE,200C3A00,extended,27BDFFF0
+patch=1,EE,200C3A04,extended,7FA10000
+patch=1,EE,200C3A08,extended,3C01003A
+patch=1,EE,200C3A0C,extended,2421FB3C
+patch=1,EE,200C3A10,extended,17E10003
+patch=1,EE,200C3A14,extended,00000000
+patch=1,EE,200C3A18,extended,10000002
+patch=1,EE,200C3A1C,extended,00000000
+patch=1,EE,200C3A20,extended,AC620004
+patch=1,EE,200C3A24,extended,7BA10000
+patch=1,EE,200C3A28,extended,27BD0010
+patch=1,EE,200C3A2C,extended,080E7EEE
+patch=1,EE,200C3A30,extended,8C620004
+patch=1,EE,2039FBB0,extended,08030E80
+patch=1,EE,2039FBB4,extended,00000000
+patch=1,EE,E0020000,extended,000C3FE0
 patch=1,EE,2039FBB0,extended,AC620004
+patch=1,EE,2039FBB4,extended,8C620004
 
 [战斗生命值（下方最多启用1项）\关闭]
 description=关闭本组修改：先取消同组其他项，再勾选关闭。仅恢复本组原指令，不恢复已改变的金钱、数量或HP数值。

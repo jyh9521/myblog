@@ -1,7 +1,7 @@
 ---
 title: 毁灭战士3：BFG版
 status:
-  - 正在玩
+  - AFK
 hltb:
   auto: true
   id: 2705
@@ -88,4 +88,7 @@ manual:
 events:
   - date: 2026-10-20
     title: 开始游戏
+  - date: 2026-10-20
+    title: AFK
+    note: 太吓人了（
 ---

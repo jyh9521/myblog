@@ -1,7 +1,7 @@
 ---
 title: 病房2
 status:
-  - 考虑制作补丁
+  - 正在玩
 hltb:
   auto: true
   id: 2427

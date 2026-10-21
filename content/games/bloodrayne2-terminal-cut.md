@@ -7,49 +7,24 @@ playTime:
   hours: 6.8
 personalRating: 6.5
 hltb:
-  id: 1190
-  url: https://howlongtobeat.com/game/1190
-  title: BloodRayne 2
   auto: true
+  id: 1190
   snapshot:
+    completionist: 10.72
+    extras: 9.99
     id: 1190
     main: 8.95
-    extras: 9.99
-    completionist: 10.72
     updatedAt: 2026-10-09T01:31:21.026Z
+  title: BloodRayne 2
+  url: https://howlongtobeat.com/game/1190
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/61e/61e3d39225c5761eb51cf035a508a91b.jpg
-  description: "Enhanced and updated for modern systems, this is the definitive edition of Rayne’s second adventure: a blood-soaked rampage of vengeance against the Cult of Kagan, a group led by Rayne's half-siblings that seek to carry out their father Kagan's legacy by creating a new era of vampire supremacy."
-  developers:
-    - Terminal Reality
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    selectedPlatforms: manual
-    title: manual
-    website: rawg
-  genres:
-    - Action
-  id: rawg:514900
-  localizedName: ''
-  manualFields:
-    - description
-    - selectedPlatforms
-    - title
-  originalName: 'BloodRayne 2: Terminal Cut'
   platforms:
     - PC
-  publishers:
-    - Ziggurat
-    - Ziggurat Interactive
-  releaseDate: 2020-11-19
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Terminal Reality
   screenshots:
     - https://media.rawg.io/media/screenshots/e15/e1535410516a12fede94f268602f1a02.jpg
     - https://media.rawg.io/media/screenshots/436/436c520f6f67e36c354b50813a3f7f4e.jpg
@@ -57,14 +32,39 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/3fb/3fb8174789081004d77790fdf899cbf9.jpg
     - https://media.rawg.io/media/screenshots/a65/a6579e6e8f9a5caf7e4bb28edc278359.jpg
     - https://media.rawg.io/media/screenshots/6ed/6ed273798676ace9679613486b856714.jpg
-  selectedPlatforms:
-    - PC
+  updatedAt: 2026-10-02T01:14:21.472Z
+  genres:
+    - Action
+  releaseDate: 2020-11-19
+  publishers:
+    - Ziggurat
+    - Ziggurat Interactive
+  cover: https://media.rawg.io/media/games/61e/61e3d39225c5761eb51cf035a508a91b.jpg
+  title: 'BloodRayne 2: Terminal Cut'
   sources:
     rawg:
       id: '514900'
-  title: 'BloodRayne 2: Terminal Cut'
-  updatedAt: 2026-10-02T01:14:21.472Z
   website: https://www.ziggurat.games/
+  id: rawg:514900
+  alternativeNames: []
+  description: "Enhanced and updated for modern systems, this is the definitive edition of Rayne’s second adventure: a blood-soaked rampage of vengeance against the Cult of Kagan, a group led by Rayne's half-siblings that seek to carry out their father Kagan's legacy by creating a new era of vampire supremacy."
+  originalName: 'BloodRayne 2: Terminal Cut'
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: rawg
+    title: manual
+    website: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - description
+    - selectedPlatforms
+    - title
 manual:
   officialStores:
     - name: Steam
@@ -83,7 +83,7 @@ events:
       但是抛开画面表现和剧情，整体质量反而不如初代，流程拖沓，莱恩的性能也下降非常多，流程中大量强制使用钩锁扔人进行的解密，以及最重要的，身为动作游戏，招式有大量需要轮圆一圈摇杆才能搓的招PC基本按不出来，打击感也极其烂。
 projects:
   - url: https://github.com/jyh9521/BloodRayne2-CN
-    name: 《吸血莱恩2：终极剪辑版》简体中文汉化补丁
+    name: '《吸血莱恩2：终极剪辑版》（BloodRayne 2: Terminal Cut）简体中文汉化项目'
     type: 汉化补丁
     releaseUrl: https://github.com/jyh9521/BloodRayne2-CN/releases
 ---

@@ -7,61 +7,61 @@ playTime:
   hours: 4
 personalRating: 7
 hltb:
-  id: 1189
-  url: https://howlongtobeat.com/game/1189
-  title: BloodRayne
   auto: true
+  id: 1189
   snapshot:
+    completionist: 10.05
+    extras: 8.1
     id: 1189
     main: 7.08
-    extras: 8.1
-    completionist: 10.05
     updatedAt: 2026-10-09T01:31:07.641Z
+  title: BloodRayne
+  url: https://howlongtobeat.com/game/1189
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/7bc/7bc71a03ca2351d7872ad37d29613718.jpg
-  description: Enhanced and updated for modern systems, this is the definitive edition of the action horror game that unleashed the red-headed dhampir on the world. In a story spanning five years, Rayne must stop a madman bent on using occult relics to bring about a new age of domination for the Third Reich.
-  developers:
-    - Terminal Reality
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: manual
-    website: rawg
-  genres:
-    - Action
-  id: rawg:514899
-  localizedName: ''
-  manualFields:
-    - title
-    - description
-    - selectedPlatforms
-  originalName: 'BloodRayne: Terminal Cut'
   platforms:
     - PC
-  publishers:
-    - Ziggurat
-    - Ziggurat Interactive
-  releaseDate: 2020-11-19
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Terminal Reality
   screenshots:
     - https://media.rawg.io/media/screenshots/7af/7afc1ec680faf152acf2622477586cf7.jpg
     - https://media.rawg.io/media/screenshots/1a2/1a2890fc20add5a8ff1e125d003fad28.jpg
     - https://media.rawg.io/media/screenshots/62f/62f4f1cd6cfc0a2ce1403fda09a186a9.jpg
     - https://media.rawg.io/media/screenshots/48c/48c2705c67aa195ab7ee3ba7c089d2dc.jpg
-  selectedPlatforms:
-    - PC
+  updatedAt: 2026-10-02T01:22:36.263Z
+  genres:
+    - Action
+  releaseDate: 2020-11-19
+  publishers:
+    - Ziggurat
+    - Ziggurat Interactive
+  cover: https://media.rawg.io/media/games/7bc/7bc71a03ca2351d7872ad37d29613718.jpg
+  title: 'BloodRayne: Terminal Cut'
   sources:
     rawg:
       id: '514899'
-  title: 'BloodRayne: Terminal Cut'
-  updatedAt: 2026-10-02T01:22:36.263Z
   website: https://www.ziggurat.games/
+  id: rawg:514899
+  alternativeNames: []
+  description: Enhanced and updated for modern systems, this is the definitive edition of the action horror game that unleashed the red-headed dhampir on the world. In a story spanning five years, Rayne must stop a madman bent on using occult relics to bring about a new age of domination for the Third Reich.
+  originalName: 'BloodRayne: Terminal Cut'
+  fieldSources:
+    platforms: rawg
+    developers: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: rawg
+    title: manual
+    website: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - title
+    - description
+    - selectedPlatforms
 manual:
   availabilityStatus: available
   officialStores:
@@ -79,7 +79,7 @@ events:
     title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/BloodRayne-CN
-    name: 《吸血莱恩：终极剪辑版》简体中文汉化补丁
+    name: '《吸血莱恩：终极剪辑版》（BloodRayne: Terminal Cut）简体中文汉化项目'
     type: 汉化补丁
     releaseUrl: https://github.com/jyh9521/BloodRayne-CN/releases
 ---

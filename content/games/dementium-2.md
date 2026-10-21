@@ -88,4 +88,8 @@ manual:
 events:
   - date: 2026-10-21
     title: 开始汉化工作
+projects:
+  - url: https://github.com/jyh9521/Dementium-II-CN
+    name: 《病房2》（Dementium II）简体中文汉化项目
+    type: 汉化补丁
 ---

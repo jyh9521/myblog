@@ -65,4 +65,8 @@ manual:
 events:
   - date: 2026-10-17
     title: 开始汉化工作
+projects:
+  - url: https://github.com/jyh9521/Magna-Carta-2-CN
+    name: 《真名法典2》（마그나카르타 2）简体中文汉化项目
+    type: 汉化补丁
 ---

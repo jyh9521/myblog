@@ -7,6 +7,7 @@ tags:
   - 游戏
   - 病房
 pinned: false
+gameSlug: dementium-2
 ---
 
 占位

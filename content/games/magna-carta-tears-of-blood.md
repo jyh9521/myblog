@@ -1,7 +1,7 @@
 ---
 title: 真名法典：真红的圣痕
 status:
-  - 考虑制作补丁
+  - 已制作补丁
 hltb:
   auto: true
   id: 5556
@@ -66,6 +66,8 @@ events:
     title: 开始汉化工作
   - date: 2026-10-11
     title: 开始测试汉化
+  - date: 2026-10-22
+    title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/Magna-Carta-Tears-Of-Blood-CN
     name: '《真名法典：真红的圣痕》（마그나카르타: 진홍의 성흔）简体中文汉化项目'

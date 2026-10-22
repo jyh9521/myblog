@@ -286,11 +286,11 @@ gameSlug: dementium-2
 
 [GitHub](https://github.com/jyh9521/Dementium-II-CN/releases/)
 
-[Google Drive](https://drive.google.com/file/d/1-8jHRjdPxFo5OgG1lSFVmEAA68MLGkC2/view?usp=drive_link)
+[Google Drive](https://drive.google.com/drive/folders/17XmxYzsgSeGZaonudYA4vekmPoWN1wqm?usp=sharing)
 
-[百度网盘](https://pan.baidu.com/s/1xCSyvJ84iLrQcAxRTsyXhA?pwd=blfy) 提取码:blfy
+[百度网盘](https://pan.baidu.com/s/1fRr5Mc67pxt6X9aKO7N7vQ?pwd=blfy) 提取码:blfy
 
-[夸克网盘](https://pan.quark.cn/s/2a7fc1661666)  提取码：rVMH
+[夸克网盘](https://pan.quark.cn/s/1a32f030e3e3)  提取码：UaJU
 
 SHA-256：
 

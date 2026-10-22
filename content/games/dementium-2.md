@@ -1,7 +1,10 @@
 ---
 title: 病房2
 status:
-  - 考虑制作补丁
+  - 已制作补丁
+playTime:
+  hours: 3.5
+personalRating: 7.3
 hltb:
   auto: true
   id: 2427
@@ -85,6 +88,18 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/5342930/
+events:
+  - date: 2026-10-21
+    title: 开始汉化工作
+  - date: 2026-10-22
+    title: 开始测试汉化
+  - date: 2026-10-22
+    title: 开始游戏
+  - date: 2026-10-22
+    title: 通关游戏
+    note: 掌机作品逆移植的，体量还是太小了，在掌机上还算合适，用PC玩的话感觉一下子就通关了。
+  - date: 2026-10-22
+    title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/Dementium-II-CN
     name: 《病房2》（Dementium II）简体中文汉化项目

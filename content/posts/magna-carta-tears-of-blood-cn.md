@@ -87,7 +87,27 @@ pinned: false
 
 
 
-## 三、下载与使用
+## 三、游戏截图
+
+![主菜单](/uploads/cms/46e1a2c14a76c62b7662507201c9afae38dee9ddee0faac6ff1f75ae26eca935/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)
+
+![读取存档](/uploads/cms/858079c98603d5f7dc350e6f0ffea0a98588a728360db3aaf3660439ca24870a/%E8%AF%BB%E5%8F%96%E5%AD%98%E6%A1%A3.png)
+
+![游戏菜单](/uploads/cms/be06798c5b553ed4c1962673c301bfb480982fd5d66d99cbd0a4b25d81025598/%E6%B8%B8%E6%88%8F%E8%8F%9C%E5%8D%95.png)
+
+![道具](/uploads/cms/3ddb2d3e3a6b8c56c5a8d879ebfd09a4dc473712a8f213739d85eec9f7ec51ec/%E9%81%93%E5%85%B7.png)
+
+![装备](/uploads/cms/b7fd85a1c75d9c8215131c3e49031858b9eee3822cc6c5aa27750c68fb9a04f5/%E8%A3%85%E5%A4%87.png)
+
+![流派](/uploads/cms/5965bcb0a4a96e554cc9309c777bc44ae016615496f9b828c53b6c2281c6efc2/%E6%B5%81%E6%B4%BE.png)
+
+
+
+---
+
+
+
+## 四、下载与使用
 
 ### 1. 相关地址
 
@@ -118,7 +138,7 @@ GitHub 仓库保留项目源码、译文、工具及技术研究资料，不提�
 
 
 
-## 四、PCSX2 画面与体验增强
+## 五、PCSX2 画面与体验增强
 
 除了简体中文汉化，我也整理了几项在 PCSX2 上游玩时可以使用的增强功能。
 
@@ -806,7 +826,7 @@ patch=1,EE,202F8B8C,extended,000217FE
 
 
 
-## 五、测试情况与已知问题
+## 六、测试情况与已知问题
 
 2026 年 10 月 22 日，本项目收到了测试人员对最新汉化版本的完整通关反馈，通关过程中未报告问题。
 
@@ -833,7 +853,7 @@ patch=1,EE,202F8B8C,extended,000217FE
 
 
 
-## 六、关于本次汉化
+## 七、关于本次汉化
 
 《真名法典》系列一直是我很感兴趣的作品。
 
@@ -853,7 +873,7 @@ patch=1,EE,202F8B8C,extended,000217FE
 
 
 
-## 七、致谢与声明
+## 八、致谢与声明
 
 本项目基于 [soyjxck/magna-carta-tears-of-blood-undub](https://github.com/soyjxck/magna-carta-tears-of-blood-undub) 的已有研究与工具继续开发，并保留相应的历史贡献及授权说明。
 
@@ -861,7 +881,13 @@ patch=1,EE,202F8B8C,extended,000217FE
 
 中文字体采用 Adobe 思源字体，相关许可信息可在 GitHub 仓库中查看。
 
-同时，感谢参与游戏测试并提供完整通关反馈的朋友，特别鸣谢。
+同时，感谢参与游戏测试的朋友们。
+
+![感谢~](/uploads/cms/525ca7327e7090aa565db16a24137584255e5a7bac8f4558c7a9405c6a0238bd/%E5%8F%82%E4%B8%8E%E6%B5%8B%E8%AF%95%E7%9A%84%E6%9C%8B%E5%8F%8B%E4%BB%AC.png)
+
+特别感谢@going，简直是肝上长个人，一周玩了70多个小时完整通关，并且持续向我反馈问题。
+
+![肝帝](/uploads/cms/feb7ea4e39123e306fae76167439d9f436e3375644e1f77734ed0fff08ed6fbc/going.png)
 
 本项目为非官方、非商业性质的玩家汉化项目，与游戏原开发商及发行商无关联。
 
@@ -873,7 +899,7 @@ patch=1,EE,202F8B8C,extended,000217FE
 
 
 
-## 八、问题反馈
+## 九、问题反馈
 
 如果在游玩中发现错字、漏译、文字显示异常、剧情字幕问题或其他错误，欢迎反馈。
 
@@ -889,6 +915,6 @@ patch=1,EE,202F8B8C,extended,000217FE
 
 - [GitHub](https://github.com/jyh9521/Magna-Carta-Tears-Of-Blood-CN)
 - [个人博客](https://blog.blfy.cc/)
-- [哔哩哔哩](https://space.bilibili.com/10119)： 
+- [哔哩哔哩](https://space.bilibili.com/10119)
 
 再次感谢大家的支持，希望各位游戏愉快！

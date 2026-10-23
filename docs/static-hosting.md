@@ -15,6 +15,8 @@
 权限限定 BLFY 账户的 Workers Scripts Write、blfy.cc 的 Workers Routes Write 和 Zone Read。
 此流水线不部署其他后端 Worker，也不修改 R2/D1 数据。
 
+`validate` 与 `prebuild` 会实时同步 R2 资源目录。每次请求（含响应体读取）限时 30 秒；网络错误、超时或 HTTP 408/429/500/502/503/504 最多尝试 3 次，间隔 1 秒、2 秒，并输出重试原因。永久 HTTP 错误、无效 JSON、目录校验失败或超过 8 MiB 不会重试。重试耗尽仍终止构建，不以旧目录或空目录代替成功同步。
+
 ```sh
 npm ci
 npm ci --prefix workers/gaming-accounts

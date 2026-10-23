@@ -10,6 +10,10 @@ tags:
   - 游戏
   - 病房
 pinned: false
+updatedAt: 2026-10-23
+updateNote: |-
+  更新v1.1.1：
+  修复两处名词错误。
 gameSlug: dementium-2
 ---
 

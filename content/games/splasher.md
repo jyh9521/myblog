@@ -6,19 +6,58 @@ playTime:
   hours: 5
 personalRating: 7
 hltb:
-  id: 43741
-  url: https://howlongtobeat.com/game/43741
-  title: Splasher
   auto: true
+  id: 43741
   snapshot:
+    completionist: 8.19
+    extras: 7.34
     id: 43741
     main: 5.27
-    extras: 7.34
-    completionist: 8.19
     updatedAt: 2026-10-08T23:40:36.495Z
+  title: Splasher
+  url: https://howlongtobeat.com/game/43741
 gameMetadata:
-  alternativeNames: []
+  platforms:
+    - Nintendo Switch
+    - PlayStation 4
+    - Xbox One
+    - macOS
+    - PC
+    - Linux
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Plug In Digital
+    - Splashteam
+  screenshots:
+    - https://media.rawg.io/media/screenshots/5f0/5f05331a509733e10120887863edebd2.jpg
+    - https://media.rawg.io/media/screenshots/50e/50ed4b14feaed084ce606db4776eab9c.jpg
+    - https://media.rawg.io/media/screenshots/347/34745dcdb781feb9ccc745d89e3bf9fd.jpg
+    - https://media.rawg.io/media/screenshots/4cf/4cf71283d1d33a601681679ca47414ea.jpg
+    - https://media.rawg.io/media/screenshots/fcb/fcb1ff7120dba2596b5065dd34addf52.jpg
+    - https://media.rawg.io/media/screenshots/eeb/eeb8c910e365d86eb9cfeaad7c0dff37.jpg
+  updatedAt: 2026-10-08T23:41:03.221Z
+  genres:
+    - Action
+    - Arcade
+    - Indie
+    - Platformer
+  releaseDate: 2017-02-07
+  publishers:
+    - Plug In Digital
+    - Playdius
+    - The Sidekicks
   cover: https://media.rawg.io/media/screenshots/942/942c57fe3a5a0edc24ac61869214a2e7.jpg
+  title: Splasher
+  sources:
+    rawg:
+      id: '9913'
+      slug: splasher
+      url: https://rawg.io/games/9913
+  website: http://www.splasher-game.com/
+  id: rawg:9913
+  alternativeNames: []
   description: |-
     Splasher is a 2D platformer with unique arcade/action gameplay. It offers gamers challenges that require agility, speed and fast reflexes, and is set in a crazy cartoon universe.a
     The Splashers are in great danger! The quiet and peaceful workers from Inkorp are being led to their doom by the greedy Docteur, the paint factory's evil boss.
@@ -30,62 +69,23 @@ gameMetadata:
     TIME ATTACK & SPEEDRUN
     Challenge gamers from around the globe with your best times, and share your scores on the leaderboards.
     Splasher is the latest project from Romain Claude, former Game Designer and Level Designer at Ubisoft (Rayman Origins, Rayman Legends). He gathered a small, talented team, including Richard Vatinel a.k.a Gromy, Art Director, and Aymeric Schwartz, composer and sound designer (Absolver, Rayman Origins or Valiant Hearts), to create Splasher. The game was also developed in partnership with famous speedrunners.
-  developers:
-    - Plug In Digital
-    - Splashteam
+  originalName: Splasher
   fieldSources:
-    cover: rawg
-    description: manual
+    platforms: rawg
+    selectedPlatforms: manual
     developers: rawg
     genres: rawg
-    originalName: manual
-    platforms: rawg
-    publishers: rawg
     releaseDate: rawg
-    selectedPlatforms: manual
+    publishers: rawg
+    cover: rawg
     title: rawg
     website: rawg
-  genres:
-    - Action
-    - Arcade
-    - Indie
-    - Platformer
-  id: rawg:9913
-  localizedName: ''
+    description: manual
+    originalName: manual
   manualFields:
     - selectedPlatforms
     - description
     - originalName
-  originalName: Splasher
-  platforms:
-    - Nintendo Switch
-    - PlayStation 4
-    - Xbox One
-    - macOS
-    - PC
-    - Linux
-  publishers:
-    - Plug In Digital
-    - Playdius
-    - The Sidekicks
-  releaseDate: 2017-02-07
-  screenshots:
-    - https://media.rawg.io/media/screenshots/5f0/5f05331a509733e10120887863edebd2.jpg
-    - https://media.rawg.io/media/screenshots/50e/50ed4b14feaed084ce606db4776eab9c.jpg
-    - https://media.rawg.io/media/screenshots/347/34745dcdb781feb9ccc745d89e3bf9fd.jpg
-    - https://media.rawg.io/media/screenshots/4cf/4cf71283d1d33a601681679ca47414ea.jpg
-    - https://media.rawg.io/media/screenshots/fcb/fcb1ff7120dba2596b5065dd34addf52.jpg
-    - https://media.rawg.io/media/screenshots/eeb/eeb8c910e365d86eb9cfeaad7c0dff37.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '9913'
-      slug: splasher
-      url: https://rawg.io/games/9913
-  title: Splasher
-  updatedAt: 2026-10-08T23:41:03.221Z
-  website: http://www.splasher-game.com/
 manual:
   availabilityStatus: available
   notes: ''
@@ -99,5 +99,8 @@ events:
     title: 开始游戏
   - date: 2020-07-04
     title: 通关游戏
-    note: 很优秀的平台跳跃游戏。
+    note: |-
+      游戏不需要什么炫酷的画面、什么波澜壮阔的BGM、什么牛逼的大公司3A制作。
+      游戏只要好玩就够了。
+      Splasher（又名《XBOX手柄的护理与保养》）就很好玩。
 ---

@@ -2,6 +2,9 @@
 title: 病房：封闭病区
 status:
   - 已制作补丁
+playTime:
+  hours: 3.1
+personalRating: 7.8
 hltb:
   auto: true
   id: 2428
@@ -71,6 +74,9 @@ events:
     title: 开始汉化工作
   - date: 2026-10-24
     title: 开始测试汉化
+  - date: 2026-10-24
+    title: 通关游戏
+    note: 比2代难多了，不能跑、不能跳、不能边用手电筒边拿武器、不能随身带药，场景一直都是在医院里绕来绕去，视野的话不开手电筒完全看不见任何东西，纯粹的生存恐怖游戏。
   - date: 2026-10-24
     title: 通关游戏
   - date: 2026-10-24

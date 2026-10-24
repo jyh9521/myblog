@@ -69,4 +69,10 @@ manual:
 events:
   - date: 2026-10-23
     title: 开始汉化工作
+  - date: 2026-10-24
+    title: 开始测试汉化
+  - date: 2026-10-24
+    title: 通关游戏
+  - date: 2026-10-24
+    title: 已发布汉化补丁
 ---

@@ -35,7 +35,7 @@
           h('small', null, 'Font Awesome Free Brands · ', h('a', { href: 'https://fontawesome.com', target: '_blank', rel: 'noopener noreferrer' }, 'Fonticons'), ' · ', h('a', { href: '/sveltia/brand-icons-LICENSE.txt', target: '_blank', rel: 'noopener noreferrer' }, 'CC BY 4.0')));
       }
     });
-    window.CMS.registerFieldType('social-icon', { control: Control });
+    window.CMS.registerFieldType('social-icon', Control);
     return true;
   };
   if (!register()) { const timer = setInterval(() => { if (register()) clearInterval(timer); }, 200); }

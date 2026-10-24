@@ -65,9 +65,9 @@ test('CMS exposes ordered list, independent platform and nickname, and searchabl
 });
 test('picker handles search, choice, remount and retry without changing stored value', async () => {
   let definition, control, fail = false, calls = 0;
-  const context = { window: { CMS: { registerFieldType: (name, value) => { assert.equal(name, 'social-icon'); control = value.control; } }, createClass: d => (definition = d), h: (tag, props, ...children) => ({tag, props, children}) }, fetch: async () => { calls++; if (fail) throw Error('offline'); return {ok:true,json:async()=>socialIconCatalog()}; }, setInterval: () => {throw Error('unexpected polling');} };
+  const context = { window: { CMS: { registerFieldType: (name, value) => { assert.equal(name, 'social-icon'); assert.equal(typeof value, 'function', 'Sveltia positional registerFieldType requires a component, not { control }'); control = value; } }, createClass: d => { definition = d; return Object.assign(function Control() {}, { definition: d }); }, h: (tag, props, ...children) => ({tag, props, children}) }, fetch: async () => { calls++; if (fail) throw Error('offline'); return {ok:true,json:async()=>socialIconCatalog()}; }, setInterval: () => {throw Error('unexpected polling');} };
   vm.runInNewContext(fs.readFileSync('public/sveltia/social-icons.js', 'utf8'), context);
-  assert.equal(control, definition);
+  assert.equal(control.definition, definition);
   let changed;
   const instance = { ...definition, props: {value:'github',onChange:value => {changed=value;}}, state: definition.getInitialState(), setState(update) {Object.assign(this.state,update);} };
   instance.componentDidMount(); await new Promise(resolve=>setImmediate(resolve));

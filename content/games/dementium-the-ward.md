@@ -1,7 +1,7 @@
 ---
 title: 病房：封闭病区
 status:
-  - 考虑制作补丁
+  - 已制作补丁
 hltb:
   auto: true
   id: 2428

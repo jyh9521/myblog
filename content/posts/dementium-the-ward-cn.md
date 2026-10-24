@@ -22,6 +22,10 @@ gameSlug: dementium-the-ward
 
 
 
+---
+
+
+
 ## 二、汉化内容
 
 本次汉化主要包含以下内容：
@@ -43,9 +47,17 @@ gameSlug: dementium-the-ward
 
 
 
+---
+
+
+
 ## 三、技术说明
 
-呃，和《病房2》几乎一样，不多说了。
+呃，虽然资源的地址不同，但是技术和《病房2》几乎一样，所以不多说了。
+
+
+
+---
 
 
 
@@ -71,7 +83,13 @@ gameSlug: dementium-the-ward
 
 
 
+---
+
+
+
 ## 五、汉化安装器
+
+![安装器](/uploads/cms/6282f9ad50f11708914cbdffb040808fe5979aad75864c0262a20a9a6f36d7d3/%E5%AE%89%E8%A3%85%E5%99%A8.png)
 
 依旧是为了避免汉化补丁过大不得不做安装器………………
 
@@ -94,6 +112,10 @@ gameSlug: dementium-the-ward
 安装器为 Windows x64 自包含程序，无需额外安装 Python 或 .NET 运行环境。
 
 汉化安装与恢复不会主动修改游戏存档或设置文件。
+
+
+
+---
 
 
 
@@ -132,6 +154,10 @@ gameSlug: dementium-the-ward
 
 
 
+---
+
+
+
 ## 七、游戏截图
 
 ![主菜单](/uploads/cms/02ac0b7396101a8433880a8afca3b64d798f711a20b569cdb3258c956d95e7a0/%E4%B8%BB%E8%8F%9C%E5%8D%95.jpg)
@@ -152,13 +178,27 @@ gameSlug: dementium-the-ward
 
 
 
+---
+
+
+
 ## 八、下载地址
 
 [GitHub](https://github.com/jyh9521/Dementium-The-Ward-CN/releases/)
 
-Google 
+[Google Drive](https://drive.google.com/drive/folders/17XmxYzsgSeGZaonudYA4vekmPoWN1wqm?usp=sharing)
+
+[百度网盘](https://pan.baidu.com/s/1fRr5Mc67pxt6X9aKO7N7vQ?pwd=blfy) 提取码:blfy
+
+[夸克网盘](https://pan.quark.cn/s/1a32f030e3e3)  提取码：UaJU
+
+本补丁完全免费，不包含游戏本体。
 
 项目的源码、结构化译文、资源处理工具、构建脚本及相关技术文档均可在 [GitHub 仓库](https://github.com/jyh9521/Dementium-The-Ward-CN) 中查看。
+
+
+
+---
 
 
 
@@ -187,6 +227,10 @@ Google
 
 
 
+---
+
+
+
 ## 十、最后
 
 在完成《病房2》的汉化之后接受了玩家请愿，开始了系列初代《病房：封闭病区》的汉化工作。
@@ -195,7 +239,9 @@ Google
 
 如今《病房》系列的前两部作品都已经重新登陆 Steam，也终于都有了对应的简体中文汉化补丁。
 
-希望这两份汉化能够让更多中文玩家有机会接触这个系列。
+
+
+---
 
 
 

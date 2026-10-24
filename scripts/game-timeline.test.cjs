@@ -56,7 +56,7 @@ test('timeline Markdown assets are tracked and validated, including reference im
   try {
     for (const dir of ['content/games', 'public/uploads', 'public/sveltia']) fs.mkdirSync(path.join(root,dir),{recursive:true});
     fs.copyFileSync('public/sveltia/config.yml',path.join(root,'public/sveltia/config.yml'));
-    for(const file of ['custom.js','r2-media.js','article-access.js','hltb.js']) fs.copyFileSync('public/sveltia/'+file,path.join(root,'public/sveltia/'+file));
+    for(const file of ['custom.js','r2-media.js','article-access.js','hltb.js','social-icons.js']) fs.copyFileSync('public/sveltia/'+file,path.join(root,'public/sveltia/'+file));
     const note = '![截图][shot]\n\n[shot]: /uploads/test.png\n\n[手册](/uploads/manual.pdf "pdf-embed")\n\n[compare]/uploads/before.png|/uploads/after.png|之前|之后[/compare]';
     const write = (text,title='通关游戏') => fs.writeFileSync(path.join(root,'content/games/test.md'),'---\n'+yaml.dump({ title:'测试游戏', events:[{title,note:text}] })+'---\n');
     for(const file of ['test.png','manual.pdf','before.png','after.png']) fs.writeFileSync(path.join(root,'public/uploads',file),'fixture');
@@ -69,5 +69,3 @@ test('timeline Markdown assets are tracked and validated, including reference im
     assert.ok(errors.some(e=>e.includes('时间线事件无效'))); assert.ok(errors.some(e=>e.includes('missing.png')));
   } finally { fs.rmSync(root,{recursive:true,force:true}); }
 });
-
-

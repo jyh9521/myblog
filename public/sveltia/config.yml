@@ -222,4 +222,15 @@ collections:
         fields:
           - { name: title, label: 标题, widget: string }
           - { name: intro, label: 简介, widget: text, required: false }
+          - name: socialLinks
+            label: 社交主页
+            widget: list
+            required: false
+            summary: '{{fields.platform}} · {{fields.nickname}}'
+            hint: '添加任意平台；拖动列表项目调整展示顺序。保存并部署后生效；删除全部项目后隐藏整个卡片墙。'
+            fields:
+              - { name: platform, label: 平台名称, widget: string, hint: '自由填写，例如 GitHub、哔哩哔哩、Discord 或个人网站。' }
+              - { name: nickname, label: 昵称或账号, widget: string }
+              - { name: url, label: 主页链接, widget: string, pattern: ['^https?://[^\s]+$', '请填写以 https:// 或 http:// 开头的完整主页链接'] }
+              - { name: icon, label: 平台图标, widget: social-icon, required: false, default: globe, hint: '搜索并点选图标；没有对应品牌时使用通用网站图标。平台名称独立填写，不受图标库限制。' }
           - { name: body, label: 正文, widget: richtext }

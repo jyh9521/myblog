@@ -4,6 +4,8 @@ out/
 reports/
 public/sveltia/assets.json
 public/sveltia/r2-assets.json
+public/sveltia/social-icon-catalog.json
+public/sveltia/brand-icons-LICENSE.txt
 workers/public-resources/worker-configuration.d.ts
 .env*
 !.env.example

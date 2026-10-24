@@ -5,6 +5,7 @@ const yaml = require('js-yaml');
 const {resourceFor}=require('./resource-catalog.cjs');
 const {validateChronology}=require('../lib/chronology-schema.cjs');
 const {auditChronologyLanguage}=require('../lib/chronology-language.cjs');
+const {validateSocialLinks}=require('../lib/social-links.cjs');
 const origin = 'https://blog.blfy.cc';
 const filesIn = (dir, extension = '.md') => fs.existsSync(dir) ? fs.readdirSync(dir).filter(file => file.endsWith(extension)) : [];
 
@@ -30,7 +31,7 @@ async function validateRepository(root = process.cwd()) {
   let config;
   try { config = yaml.load(fs.readFileSync(path.join(root, 'public/sveltia/config.yml'), 'utf8')); }
   catch (e) { error('CMS config', `YAML 格式错误：${e.message}`); }
-  const custom = ['custom.js', 'hltb.js', 'article-access.js', 'r2-media.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
+  const custom = ['custom.js', 'hltb.js', 'article-access.js', 'r2-media.js', 'social-icons.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
   if (config) {
     if (config.backend?.name !== 'github' || !config.backend.repo || !config.backend.branch) error('CMS config', 'GitHub backend 配置不完整');
     if (!Array.isArray(config.collections)) error('CMS config', 'collections 必须为数组');
@@ -92,6 +93,7 @@ async function validateRepository(root = process.cwd()) {
     const filename = `content/${folder ? folder + '/' : ''}${name}`, full = path.join(root, filename);
     let data, content;
     try { ({ data, content } = matter(fs.readFileSync(full, 'utf8'))); } catch (e) { error(filename, `frontmatter 错误：${e.message}`); continue; }
+    if (!folder && name === 'about.md') for (const issue of validateSocialLinks(data.socialLinks)) error(filename, issue);
     if (folder === 'posts' && !content.trim()) error(filename, '正文不能为空');
     if (folder === 'posts' && data.access) {
       if (!['public', 'password', 'unlisted'].includes(data.access.mode)) error(filename, '文章访问方式无效');

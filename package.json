@@ -3,15 +3,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/sync-resource-catalog.cjs && node scripts/build-asset-index.cjs",
+    "prebuild": "node scripts/build-social-icons.cjs && node scripts/sync-resource-catalog.cjs && node scripts/build-asset-index.cjs",
     "build": "next build",
     "check": "tsc --noEmit",
     "validate": "node scripts/sync-resource-catalog.cjs && node scripts/validate-content.cjs",
     "resources:sync": "node scripts/sync-resource-catalog.cjs",
     "audit:links": "node scripts/audit-content-links.cjs",
-    "test": "node --test scripts/*.test.cjs && npm --prefix workers/ns-counter test && npm --prefix workers/gaming-accounts test && npm --prefix workers/static-preview test"
+    "test": "node --test scripts/*.test.cjs && npm --prefix workers/ns-counter test && npm --prefix workers/gaming-accounts test && npm --prefix workers/static-preview test",
+    "predev": "node scripts/build-social-icons.cjs"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "7.3.1",
     "gray-matter": "^4.0.3",
     "image-size": "^2.0.4",
     "next": "^15.0.0",

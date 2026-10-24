@@ -10,6 +10,7 @@ gameMetadata:
   manualFields:
     - cover
     - title
+  releaseDate: ''
   title: 고룡전기 퍼시벌
   website: ''
 manual:

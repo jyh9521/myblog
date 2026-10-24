@@ -1,5 +1,5 @@
 ---
-title: 古龙战记
+title: 古龙战记：珀西瓦尔
 status:
   - 考虑制作补丁
 gameMetadata:

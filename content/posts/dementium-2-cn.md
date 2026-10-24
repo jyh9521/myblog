@@ -10,10 +10,11 @@ tags:
   - 游戏
   - 病房
 pinned: false
-updatedAt: 2026-10-23
+updatedAt: 2026-10-24
 updateNote: |-
-  更新v1.1.1：
-  修复两处名词错误。
+  更新v1.1.2：
+  适配游戏最新版本；
+  修复“行走晃动”选项的错误翻译。
 gameSlug: dementium-2
 ---
 
@@ -193,7 +194,7 @@ gameSlug: dementium-2
 ### 安装汉化
 
 1. 准备 Steam 2026 版《Dementium II》，并确保游戏已经退出。
-2. 下载并运行汉化安装器 `Dementium-II-CN-v1.0.exe`。
+2. 下载并运行汉化安装器。
 3. 确认安装器自动检测到的 Steam 游戏路径。如果没有检测到，可以手动选择游戏目录中的 `rom.zar` 文件。
 4. 点击安装，完成后从 Steam 正常启动游戏即可。
 
@@ -213,7 +214,6 @@ gameSlug: dementium-2
 
 - 本补丁仅适用于 Steam 2026 版，AppID 为 5342930。
 - 2013 年的《Dementium II HD》不受支持。
-- 本次开发与验证使用的参考构建版本为 build 26099941。
 - 不保证兼容所有未来更新以及第三方 MOD。
 - 游戏更新后，如果安装器提示文件不兼容，请勿强行替换。
 - 安装或恢复出现异常时，请保留安装日志及 `cn-backup` 目录，方便排查。

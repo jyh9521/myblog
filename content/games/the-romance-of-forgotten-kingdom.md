@@ -1,5 +1,5 @@
 ---
-title: 忘国战记
+title: 忘国战记：被遗忘的国家的故事
 status:
   - 考虑制作补丁
 gameMetadata:
@@ -21,7 +21,7 @@ gameMetadata:
     - cover
   originalName: 망국전기
   releaseDate: 1995-02-05
-  title: 망국전기
+  title: '망국전기: 잊혀진 나라의 이야기'
 manual:
   availabilityStatus: physical-only
 ---

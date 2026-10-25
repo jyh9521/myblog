@@ -149,24 +149,78 @@
       "id": "first",
       "title": "泽贝斯初次任务",
       "calendar": "相对任务顺序",
-      "note": "初代与《零点任务》共享同一次行动；追加段落明确标注版本。"
+      "note": "初代与《零点任务》共享同一次行动；追加段落明确标注版本。",
+      "image": {
+        "src": "/uploads/cms/b9f9d95c46e993e3efd356b3dcb8ee2ddf92823a61dd1d03df93cd4464fe0a3a/metroid-history-1-artwork_1.jpg",
+        "alt": "《密特罗德》初代中的萨姆斯官方插画",
+        "caption": "《密特罗德》初代官方角色插画，呈现这一时期的装甲造型。",
+        "credit": "任天堂 · 官方插画",
+        "sourceUrl": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+        "width": 962,
+        "height": 768,
+        "works": [
+          "zero"
+        ],
+        "spoilerWorks": []
+      }
     },
     {
       "id": "phazon",
       "title": "究极系列：费原子事件与联邦行动",
       "calendar": "相对任务顺序",
-      "note": "《究极》→《猎人》→《究极2》→《究极3》→《联邦力量》；此前几作位于初代与Ⅱ之间，不将这一旧概括套用到《究极4》。"
+      "note": "《究极》→《猎人》→《究极2》→《究极3》→《联邦力量》；此前几作位于初代与Ⅱ之间，不将这一旧概括套用到《究极4》。",
+      "image": {
+        "src": "/uploads/cms/5b62eacf4706a051cfc6c1694bcbd681d6d086eaabb1ae5f70b054e0ea064341/metroid-planet.png",
+        "alt": "萨姆斯降落在泰隆Ⅳ的森林中",
+        "caption": "《究极 复刻版》官方探索画面；此图对应泰隆Ⅳ，不代表整个究极系列的所有星球。",
+        "credit": "任天堂 · 官方游戏画面",
+        "sourceUrl": "https://www.nintendo.com/hk/switch/a3sda/",
+        "width": 531,
+        "height": 271,
+        "works": [
+          "prime"
+        ],
+        "spoilerWorks": [
+          "prime"
+        ]
+      }
     },
     {
       "id": "sr388",
       "title": "SR388歼灭任务与幼体",
       "calendar": "相对任务顺序",
-      "note": "《Ⅱ》与《萨姆斯归来》同一任务；追加利德雷战和X片尾只属于重制版。"
+      "note": "《Ⅱ》与《萨姆斯归来》同一任务；追加利德雷战和X片尾只属于重制版。",
+      "image": {
+        "src": "/uploads/cms/87d5f49155b84f045427b3a4b0aa963f1f6a3b8e31180b1d0d56aaec2b801c60/metroid-history-2-artwork_1.jpg",
+        "alt": "《密特罗德Ⅱ》中的萨姆斯官方插画",
+        "caption": "《密特罗德Ⅱ》官方角色插画，呈现这一时期的装甲造型。",
+        "credit": "任天堂 · 官方插画",
+        "sourceUrl": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+        "width": 962,
+        "height": 768,
+        "works": [
+          "returns"
+        ],
+        "spoilerWorks": []
+      }
     },
     {
       "id": "zebes",
       "title": "重返泽贝斯",
-      "calendar": "相对任务顺序"
+      "calendar": "相对任务顺序",
+      "image": {
+        "src": "/uploads/cms/127dedd7bb0947cff57b16265a5d844e4934ce9415dcf9deed864c2779734480/metroid-history-3-artwork_1.jpg",
+        "alt": "《超级密特罗德》中的萨姆斯官方插画",
+        "caption": "《超级密特罗德》官方角色插画，呈现这一时期的装甲造型。",
+        "credit": "任天堂 · 官方插画",
+        "sourceUrl": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+        "width": 962,
+        "height": 768,
+        "works": [
+          "super"
+        ],
+        "spoilerWorks": []
+      }
     },
     {
       "id": "post-super",
@@ -177,7 +231,20 @@
     {
       "id": "x",
       "title": "X寄生生物与B.S.L.研究站",
-      "calendar": "相对任务顺序"
+      "calendar": "相对任务顺序",
+      "image": {
+        "src": "/uploads/cms/0b9ba8523f1bb2525b08e8497ea41a985d1b69c78ec6cc0333e56cd6bf40912f/metroid-history-4-artwork_1.jpg",
+        "alt": "《密特罗德 融合》中的萨姆斯官方插画",
+        "caption": "《密特罗德 融合》官方角色插画，呈现这一时期的装甲造型。",
+        "credit": "任天堂 · 官方插画",
+        "sourceUrl": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+        "width": 962,
+        "height": 768,
+        "works": [
+          "fusion"
+        ],
+        "spoilerWorks": []
+      }
     },
     {
       "id": "zdr",
@@ -1083,7 +1150,24 @@
         }
       ],
       "keywords": [],
-      "note": "早期北美版部分海盗日志与后期版本有改写，本表采用后期叙述，不把矛盾文本串成连续事实。"
+      "note": "早期北美版部分海盗日志与后期版本有改写，本表采用后期叙述，不把矛盾文本串成连续事实。",
+      "images": [
+        {
+          "src": "/uploads/cms/032d9e2456498985bf614f7a153aa8791be9b767e1832f1fd5478fec0361809e/metroid-ruins.png",
+          "alt": "萨姆斯以面罩视角探索泰隆Ⅳ的鸟人遗迹",
+          "caption": "泰隆Ⅳ的鸟人遗迹，采用《究极 复刻版》官方探索画面。",
+          "credit": "任天堂 · 官方游戏画面",
+          "sourceUrl": "https://www.nintendo.com/hk/switch/a3sda/",
+          "width": 531,
+          "height": 271,
+          "works": [
+            "prime"
+          ],
+          "spoilerWorks": [
+            "prime"
+          ]
+        }
+      ]
     },
     {
       "id": "metroid-prime-experiments",
@@ -4378,5 +4462,19 @@
       ],
       "note": "采用现行官方中文系列名；银河战士是旧称，不当作萨姆斯的正式姓名。"
     }
-  ]
+  ],
+  "excerpt": "从泽贝斯初次任务、费原子危机到《生存恐惧》，兼收猎人、联邦部队、另一个M与《究极4 穿越未知》。",
+  "cover": {
+    "src": "/uploads/cms/c040141e8bb038eefc028677d82818fc465051664fe9da4a0475e772c5daf8a8/metroid-cover.jpg",
+    "alt": "萨姆斯与追踪机器人组成的《生存恐惧》官方主视觉",
+    "caption": "《生存恐惧》官方宣传图，作为系列入口配图；各时期的装备以相应作品为准。",
+    "credit": "任天堂 · 官方宣传图",
+    "sourceUrl": "https://www.nintendo.com/hk/switch/ayl8a/",
+    "width": 3840,
+    "height": 1950,
+    "works": [
+      "dread"
+    ],
+    "spoilerWorks": []
+  }
 }

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import type { Chronology as ChronologyData } from '../../lib/chronology-types';
-import { filterChronology, readableEvents } from '../../lib/chronology';
+import { filterChronology, readableEvents, readableImage } from '../../lib/chronology';
+import ChronologyFigure from './chronology-figure';
 
 const evidenceLabels = { compiled: '资料整理', game: '游戏内记载', manual: '手册记载', inferred: '推断', disputed: '存在争议' };
 const verificationLabels = { crosschecked: '剧情已对照', 'single-source': '剧情单源', conflict: '资料有分歧', corrected: '已据原作订正' };
@@ -56,8 +57,9 @@ export default function Chronology({ data }: { data: ChronologyData }) {
       const entries = visible.filter(event => event.era === era.id);
       if (!entries.length) return null;
       const years = [...new Set(entries.map(event => event.year))];
-      return <section key={era.id} id={targetId('era-' + era.id)} className="chronology-era"><header><small>{era.calendar}</small><h2>{era.title}</h2>{era.note && <p>{era.note}</p>}</header>{years.map(year => <section key={year} className="chronology-year"><h3>{year}</h3><ol>{entries.filter(event => event.year === year).map(event => <li id={targetId('event-' + event.id)} key={event.id}>
+      return <section key={era.id} id={targetId('era-' + era.id)} className="chronology-era"><header><small>{era.calendar}</small><h2>{era.title}</h2>{era.note && <p>{era.note}</p>}</header>{readableImage(era.image, allowed, works) && <ChronologyFigure key={era.image.src} image={era.image} variant="era" />}{years.map(year => <section key={year} className="chronology-year"><h3>{year}</h3><ol>{entries.filter(event => event.year === year).map(event => <li id={targetId('event-' + event.id)} key={event.id}>
         {event.day && <span className="chronology-day">{event.day}</span>}<h4>{event.title}</h4><p>{event.summary}</p><div className="chronology-tags">{event.works.map(id => <span key={id}>{data.works.find(work => work.id === id)?.title}</span>)}{event.verification && <span className={'verification-' + event.verification}>{verificationLabels[event.verification]}</span>}{event.dateStatus && <span>{dateLabels[event.dateStatus]}</span>}</div>
+        {!!event.images?.length && <div className="chronology-event-images">{event.images.filter(image => readableImage(image, allowed, works)).map(image => <ChronologyFigure key={image.src} image={image} />)}</div>}
         <details key={event.id + '-' + allowed.join('-')}><summary>事件资料与核对依据 <span>{evidenceLabels[event.evidence]}</span></summary>{event.detail && <p className="chronology-text">{event.detail}</p>}{event.note && <aside className="chronology-text">{event.note}</aside>}<ul>{event.citations?.length ? event.citations.map((citation, index) => { const source = data.sources.find(item => item.id === citation.source)!; return <li key={index}><span className="chronology-citation-kind">{supportLabels[citation.supports]}</span>{citation.medium && <span className="chronology-citation-kind">{mediumLabels[citation.medium]}</span>} <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a><p>{citation.locator}{citation.note ? ' · ' + citation.note : ''}</p></li>; }) : event.sources.map(id => { const source = data.sources.find(item => item.id === id)!; return <li key={id}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a></li>; })}</ul>{linkedEvents(event.related).length > 0 && <nav aria-label="关联事件">关联事件：{linkedEvents(event.related).map(related => <a key={related.id} href={'#' + targetId('event-' + related.id)}>{related.title}</a>)}</nav>}<button className="chronology-event-share" type="button" onClick={() => share(event.id)}>复制此事件链接</button></details>
       </li>)}</ol></section>)}</section>;
     })}</div></div> : <p className="chronology-empty">{catalogOnly ? '所选作品目前仅有上方的剧情收录说明；未取得足以逐条核实的故事材料，不将玩法或角色上架当作剧情事件。' : '没有匹配事件。可清除搜索词、切换作品，或在剧透设置中允许显示剧情。'}</p>}

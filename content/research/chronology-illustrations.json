@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "note": "配图与剧情引证分开；保留原图，未以重制画面替代旧版剧情证据。截图仅选择少量画面，二进制保存在共享 R2。",
+  "images": [
+    {
+      "series": "genesis",
+      "location": "cover",
+      "path": "/uploads/cms/b6a73a5a731d3b4a9101fb38ae8110354c8da7765e6988c5d583aa4297a4ded8/genesis-publisher-bg.jpg",
+      "sourcePage": "https://www.line.games/game/G2R?system_lang=ko_KR",
+      "originalAssetUrl": "https://static.line.games/official/202312/game/game_1703652326909.jpg",
+      "sha256": "b6a73a5a731d3b4a9101fb38ae8110354c8da7765e6988c5d583aa4297a4ded8",
+      "bytes": 665995,
+      "width": 1920,
+      "height": 606,
+      "spoilerWorks": []
+    },
+    {
+      "series": "genesis",
+      "location": "era:zephyr-era",
+      "path": "/uploads/cms/170c2c614a7213160da156156008d6bafff556b0e2a6e272006f06a6473c7edb/genesis3-6.png",
+      "sourcePage": "https://knowing-passion.tistory.com/113",
+      "originalAssetUrl": "https://blog.kakaocdn.net/dna/butNoK/btrx9AoLWjE/AAAAAAAAAAAAAAAAAAAAANbiSf63dADhQ1-1ffCP_tYxrDMT_r0Vn_c0E3iUQsW_/img.png",
+      "sha256": "170c2c614a7213160da156156008d6bafff556b0e2a6e272006f06a6473c7edb",
+      "bytes": 184039,
+      "width": 404,
+      "height": 309,
+      "spoilerWorks": [
+        "zephyr"
+      ]
+    },
+    {
+      "series": "genesis",
+      "location": "era:tempest-era",
+      "path": "/uploads/cms/39955d7c5517ed4c95d680326137aa6f7759e0850e2198b905688c7f0f35c9d4/genesis2-3.png",
+      "sourcePage": "https://knowing-passion.tistory.com/249",
+      "originalAssetUrl": "https://blog.kakaocdn.net/dna/y8YVR/btrEvnjlPIK/AAAAAAAAAAAAAAAAAAAAAEsPi9D3USt9ts4Y6yY7oYV853fJcoef_Ou1zk2Nk1bH/img.png",
+      "sha256": "39955d7c5517ed4c95d680326137aa6f7759e0850e2198b905688c7f0f35c9d4",
+      "bytes": 235504,
+      "width": 515,
+      "height": 385,
+      "spoilerWorks": [
+        "tempest"
+      ]
+    },
+    {
+      "series": "genesis",
+      "location": "era:part-two",
+      "path": "/uploads/cms/cdef80aa80fa4acf70554a9767a89b15ede1e15e1c6d46688e4b4bdda39fb4ce/genesis3p2-1.jpg",
+      "sourcePage": "https://knowing-passion.tistory.com/768",
+      "originalAssetUrl": "https://blog.kakaocdn.net/dna/nR3wR/btseQDRHZgy/AAAAAAAAAAAAAAAAAAAAALxLHeXJQe9cTNgQ_w6yAsSLOGWypcPA6aq4beBUELDj/img.jpg",
+      "sha256": "cdef80aa80fa4acf70554a9767a89b15ede1e15e1c6d46688e4b4bdda39fb4ce",
+      "bytes": 148593,
+      "width": 1191,
+      "height": 944,
+      "spoilerWorks": [
+        "genesis-3-p2"
+      ]
+    },
+    {
+      "series": "genesis",
+      "location": "event:gray-02",
+      "path": "/uploads/cms/e0639b9ba6e01d82dd2017533840fb8acf90f590b954e1628ad857158c98a53c/genesis-publisher-cover.jpg",
+      "sourcePage": "https://www.line.games/game/G2R?system_lang=ko_KR",
+      "originalAssetUrl": "https://static.line.games/official/202312/game/game_1703652337537.jpg",
+      "sha256": "e0639b9ba6e01d82dd2017533840fb8acf90f590b954e1628ad857158c98a53c",
+      "bytes": 347558,
+      "width": 720,
+      "height": 495,
+      "spoilerWorks": [
+        "gray-remnant"
+      ]
+    },
+    {
+      "series": "metroid",
+      "location": "cover",
+      "path": "/uploads/cms/c040141e8bb038eefc028677d82818fc465051664fe9da4a0475e772c5daf8a8/metroid-cover.jpg",
+      "sourcePage": "https://www.nintendo.com/hk/switch/ayl8a/",
+      "originalAssetUrl": "https://www.nintendo.com/hk/switch/ayl8a/assets/img/top/mv.jpg",
+      "sha256": "c040141e8bb038eefc028677d82818fc465051664fe9da4a0475e772c5daf8a8",
+      "bytes": 580418,
+      "width": 3840,
+      "height": 1950,
+      "spoilerWorks": []
+    },
+    {
+      "series": "metroid",
+      "location": "era:first",
+      "path": "/uploads/cms/b9f9d95c46e993e3efd356b3dcb8ee2ddf92823a61dd1d03df93cd4464fe0a3a/metroid-history-1-artwork_1.jpg",
+      "sourcePage": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+      "originalAssetUrl": "https://www.nintendo.com/hk/switch/ayl8a/assets/img/report/vol4/img_section_001_artwork_1.jpg",
+      "sha256": "b9f9d95c46e993e3efd356b3dcb8ee2ddf92823a61dd1d03df93cd4464fe0a3a",
+      "bytes": 81677,
+      "width": 962,
+      "height": 768,
+      "spoilerWorks": []
+    },
+    {
+      "series": "metroid",
+      "location": "era:phazon",
+      "path": "/uploads/cms/5b62eacf4706a051cfc6c1694bcbd681d6d086eaabb1ae5f70b054e0ea064341/metroid-planet.png",
+      "sourcePage": "https://www.nintendo.com/hk/switch/a3sda/",
+      "originalAssetUrl": "https://www.nintendo.com/hk/switch/a3sda/assets/img/top/slide_exploration_1.png",
+      "sha256": "5b62eacf4706a051cfc6c1694bcbd681d6d086eaabb1ae5f70b054e0ea064341",
+      "bytes": 61835,
+      "width": 531,
+      "height": 271,
+      "spoilerWorks": [
+        "prime"
+      ]
+    },
+    {
+      "series": "metroid",
+      "location": "era:sr388",
+      "path": "/uploads/cms/87d5f49155b84f045427b3a4b0aa963f1f6a3b8e31180b1d0d56aaec2b801c60/metroid-history-2-artwork_1.jpg",
+      "sourcePage": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+      "originalAssetUrl": "https://www.nintendo.com/hk/switch/ayl8a/assets/img/report/vol4/img_section_002_artwork_1.jpg",
+      "sha256": "87d5f49155b84f045427b3a4b0aa963f1f6a3b8e31180b1d0d56aaec2b801c60",
+      "bytes": 83451,
+      "width": 962,
+      "height": 768,
+      "spoilerWorks": []
+    },
+    {
+      "series": "metroid",
+      "location": "era:zebes",
+      "path": "/uploads/cms/127dedd7bb0947cff57b16265a5d844e4934ce9415dcf9deed864c2779734480/metroid-history-3-artwork_1.jpg",
+      "sourcePage": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+      "originalAssetUrl": "https://www.nintendo.com/hk/switch/ayl8a/assets/img/report/vol4/img_section_003_artwork_1.jpg",
+      "sha256": "127dedd7bb0947cff57b16265a5d844e4934ce9415dcf9deed864c2779734480",
+      "bytes": 72598,
+      "width": 962,
+      "height": 768,
+      "spoilerWorks": []
+    },
+    {
+      "series": "metroid",
+      "location": "era:x",
+      "path": "/uploads/cms/0b9ba8523f1bb2525b08e8497ea41a985d1b69c78ec6cc0333e56cd6bf40912f/metroid-history-4-artwork_1.jpg",
+      "sourcePage": "https://www.nintendo.com/hk/switch/ayl8a/report/vol4/index.html",
+      "originalAssetUrl": "https://www.nintendo.com/hk/switch/ayl8a/assets/img/report/vol4/img_section_004_artwork_1.jpg",
+      "sha256": "0b9ba8523f1bb2525b08e8497ea41a985d1b69c78ec6cc0333e56cd6bf40912f",
+      "bytes": 51206,
+      "width": 962,
+      "height": 768,
+      "spoilerWorks": []
+    },
+    {
+      "series": "metroid",
+      "location": "event:metroid-prime-chozo",
+      "path": "/uploads/cms/032d9e2456498985bf614f7a153aa8791be9b767e1832f1fd5478fec0361809e/metroid-ruins.png",
+      "sourcePage": "https://www.nintendo.com/hk/switch/a3sda/",
+      "originalAssetUrl": "https://www.nintendo.com/hk/switch/a3sda/assets/img/top/slide_exploration_2.png",
+      "sha256": "032d9e2456498985bf614f7a153aa8791be9b767e1832f1fd5478fec0361809e",
+      "bytes": 81971,
+      "width": 531,
+      "height": 271,
+      "spoilerWorks": [
+        "prime"
+      ]
+    }
+  ]
+}

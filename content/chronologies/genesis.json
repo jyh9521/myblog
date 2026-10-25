@@ -229,7 +229,22 @@
     {
       "id": "zephyr-era",
       "title": "西风狂诗曲时期",
-      "calendar": "埃斯格尔历"
+      "calendar": "埃斯格尔历",
+      "image": {
+        "src": "/uploads/cms/170c2c614a7213160da156156008d6bafff556b0e2a6e272006f06a6473c7edb/genesis3-6.png",
+        "alt": "西拉诺在原版《西风狂诗曲》中的对话立绘",
+        "caption": "《西风狂诗曲》原版对话画面，保留原图比例。",
+        "credit": "原作游戏画面 · 热忱记录攻略",
+        "sourceUrl": "https://knowing-passion.tistory.com/113",
+        "width": 404,
+        "height": 309,
+        "works": [
+          "zephyr"
+        ],
+        "spoilerWorks": [
+          "zephyr"
+        ]
+      }
     },
     {
       "id": "succession",
@@ -239,7 +254,22 @@
     {
       "id": "tempest-era",
       "title": "暴风雨时期",
-      "calendar": "埃斯格尔历"
+      "calendar": "埃斯格尔历",
+      "image": {
+        "src": "/uploads/cms/39955d7c5517ed4c95d680326137aa6f7759e0850e2198b905688c7f0f35c9d4/genesis2-3.png",
+        "alt": "原版《暴风雨》的角色对话画面",
+        "caption": "《暴风雨》原版流程画面；与后来的改编故事分线阅读。",
+        "credit": "原作游戏画面 · 热忱记录攻略",
+        "sourceUrl": "https://knowing-passion.tistory.com/249",
+        "width": 515,
+        "height": 385,
+        "works": [
+          "tempest"
+        ],
+        "spoilerWorks": [
+          "tempest"
+        ]
+      }
     },
     {
       "id": "aftermath",
@@ -260,7 +290,22 @@
       "id": "part-two",
       "title": "创世纪战Ⅲ：第二篇章",
       "calendar": "阿尔克历",
-      "note": "本区年份沿用底本编排，不表示所有细节均有第二日期来源；结局时间循环不与前面纪年直接相减。"
+      "note": "本区年份沿用底本编排，不表示所有细节均有第二日期来源；结局时间循环不与前面纪年直接相减。",
+      "image": {
+        "src": "/uploads/cms/cdef80aa80fa4acf70554a9767a89b15ede1e15e1c6d46688e4b4bdda39fb4ce/genesis3p2-1.jpg",
+        "alt": "《创世纪战Ⅲ：第二篇章》的原版战斗场景",
+        "caption": "《创世纪战Ⅲ：第二篇章》原版战斗画面；保留攻略作者的圈注。",
+        "credit": "原作游戏画面 · 热忱记录攻略",
+        "sourceUrl": "https://knowing-passion.tistory.com/768",
+        "width": 1191,
+        "height": 944,
+        "works": [
+          "genesis-3-p2"
+        ],
+        "spoilerWorks": [
+          "genesis-3-p2"
+        ]
+      }
     },
     {
       "id": "gray-remnant",
@@ -20116,6 +20161,23 @@
       "keywords": [
         "克罗",
         "伊欧琳"
+      ],
+      "images": [
+        {
+          "src": "/uploads/cms/e0639b9ba6e01d82dd2017533840fb8acf90f590b954e1628ad857158c98a53c/genesis-publisher-cover.jpg",
+          "alt": "《灰色的残影》官方人物插画",
+          "caption": "《灰色的残影》官方人物宣传插画，仅作重制分线配图，不充当原版实机或该事件的逐镜头证据。",
+          "credit": "发行商官方宣传图",
+          "sourceUrl": "https://www.line.games/game/G2R?system_lang=ko_KR",
+          "width": 720,
+          "height": 495,
+          "works": [
+            "gray-remnant"
+          ],
+          "spoilerWorks": [
+            "gray-remnant"
+          ]
+        }
       ]
     },
     {
@@ -22316,5 +22378,19 @@
         "克罗"
       ]
     }
-  ]
+  ],
+  "excerpt": "从创世神话、安塔利亚战争到宇宙时代，串联原作六部曲，并单独梳理重制、手机外传与平行故事。",
+  "cover": {
+    "src": "/uploads/cms/b6a73a5a731d3b4a9101fb38ae8110354c8da7765e6988c5d583aa4297a4ded8/genesis-publisher-bg.jpg",
+    "alt": "《灰色的残影》官方人物宣传插画",
+    "caption": "《灰色的残影》官方宣传插画，作为系列入口配图；并非早期作品实机画面。",
+    "credit": "发行商官方宣传图",
+    "sourceUrl": "https://www.line.games/game/G2R?system_lang=ko_KR",
+    "width": 1920,
+    "height": 606,
+    "works": [
+      "gray-remnant"
+    ],
+    "spoilerWorks": []
+  }
 }

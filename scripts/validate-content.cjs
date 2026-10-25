@@ -13,7 +13,7 @@ async function validateRepository(root = process.cwd()) {
   const errors = [], warnings = [], remote = new Set();
   const postsDir = path.join(root, 'content/posts'), gamesDir = path.join(root, 'content/games');
   const posts = filesIn(postsDir), games = new Set(filesIn(gamesDir).map(file => file.slice(0, -3)));
-  const routes = new Set(['/', '/posts/', '/games/', '/about/', '/ns/', '/sveltia/', '/feed.xml', '/game-dossiers.json',
+  const routes = new Set(['/', '/posts/', '/games/', '/games/timelines/', '/about/', '/ns/', '/sveltia/', '/feed.xml', '/game-dossiers.json',
     ...posts.map(file => `/posts/${file.slice(0, -3)}/`), ...[...games].map(slug => `/games/${slug}/`)]);
   const error = (file, text) => errors.push(`${file}: ${text}`);
   const chronologies = new Map();
@@ -88,6 +88,13 @@ async function validateRepository(root = process.cwd()) {
     const asset = path.resolve(root, 'public', `.${pathname}`);
     if (!asset.startsWith(path.resolve(root, 'public') + path.sep) || !fs.existsSync(asset) || fs.statSync(asset).isDirectory()) error(file, `${kind}不存在：${value}`);
   };
+  for (const [id, data] of chronologies) {
+    const file = `content/chronologies/${id}.json`, base = `/chronicles/${id}/`;
+    for (const image of [data.cover, ...data.eras.map(era => era.image), ...data.events.flatMap(event => event.images || [])].filter(Boolean)) {
+      checkUrl(image.src, file, base, '时间线插图');
+      if (image.sourceUrl) checkUrl(image.sourceUrl, file, base, '插图出处');
+    }
+  }
   const entries = [...posts.map(file => ['posts', file]), ...filesIn(gamesDir).map(file => ['games', file]), ...filesIn(path.join(root, 'content')).map(file => ['', file])];
   for (const [folder, name] of entries) {
     const filename = `content/${folder ? folder + '/' : ''}${name}`, full = path.join(root, filename);

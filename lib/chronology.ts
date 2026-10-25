@@ -1,4 +1,9 @@
-import type { Chronology, ChronologyEvent } from './chronology-types';
+import type { Chronology, ChronologyEvent, ChronologyImage } from './chronology-types';
+
+export function readableImage(image: ChronologyImage | undefined, allowed: string[], works: string[]): image is ChronologyImage {
+  return !!image && image.spoilerWorks.every(work => allowed.includes(work)) &&
+    (!works.length || image.works.some(work => works.includes(work)));
+}
 
 export function readableEvents(data: Chronology, allowed: string[]): ChronologyEvent[] {
   // A reading aid, not access control: the underlying timeline is public data.

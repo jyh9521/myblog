@@ -19,10 +19,11 @@ async function buildAssetIndex(root = process.cwd()) {
   const { unified } = await import('unified');
   const { default: remarkParse } = await import('remark-parse');
   const parser = unified().use(remarkParse), references = new Map();
-  for (const file of walk(path.join(root, 'content')).filter(file => file.endsWith('.md'))) {
+  for (const file of walk(path.join(root, 'content')).filter(file => /\.(md|json)$/.test(file) && (!file.endsWith('.json') || path.dirname(file) === path.join(root, 'content/chronologies')))) {
     const relative = path.relative(root, file).replaceAll('\\', '/');
-    const { data, content } = matter(fs.readFileSync(file, 'utf8'));
-    const slug = path.basename(file, '.md'), type = relative.includes('/posts/') ? 'posts' : relative.includes('/games/') ? 'games' : '';
+    const json = file.endsWith('.json'), raw = fs.readFileSync(file, 'utf8');
+    const { data, content } = json ? { data: JSON.parse(raw), content: '' } : matter(raw);
+    const slug = path.basename(file, path.extname(file)), type = json ? 'chronicles' : relative.includes('/posts/') ? 'posts' : relative.includes('/games/') ? 'games' : '';
     const route = type ? `/${type}/${slug}/` : `/${slug}/`;
     const ref = type === 'posts' && (data.access?.mode === 'unlisted' || /^\s*<!-- blfy-access:unlisted -->/.test(content)) ? { file: '(unlisted article)', title: '未列出文章资源', url: '/sveltia/' } : { file: relative, title: String(data.title || slug), url: route };
     const collect = value => { const key = typeof value === 'string' ? assetPath(value, route) : null; if (key) { if (!references.has(key)) references.set(key, new Map()); references.get(key).set(relative, ref); } };

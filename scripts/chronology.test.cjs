@@ -7,7 +7,7 @@ const {validateChronology}=require('../lib/chronology-schema.cjs');
 const data=require('../content/chronologies/genesis.json');
 const coverage=require('../content/research/genesis-coverage.json');
 function load(file,overrides={}){
- const context={exports:{},process,URL,URLSearchParams,Response,require:name=>overrides[name]||(name.startsWith('.')?name.endsWith('.cjs')?require(path.resolve(path.dirname(file),name)):load(path.resolve(path.dirname(file),name)+'.ts'):require(name))};
+ const context={exports:{},process,URL,URLSearchParams,Response,require:name=>overrides[name]||(name.startsWith('.')?name.endsWith('.cjs')?require(path.resolve(path.dirname(file),name)):load(path.resolve(path.dirname(file),name)+(fs.existsSync(path.resolve(path.dirname(file),name)+'.ts')?'.ts':'.tsx'),overrides):require(name))};
  vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText,context);return context.exports;
 }
 const logic=load('lib/chronology.ts'),Component=load('app/chronicles/chronology.tsx').default;

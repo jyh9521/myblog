@@ -116,7 +116,7 @@ collections:
 
 
   - name: chronologies
-    label: 独立系列时间线
+    label: 游戏时间线（游戏档案子板块）
     label_singular: 年表资料
     folder: /content/chronologies
     extension: json
@@ -130,6 +130,22 @@ collections:
       - { name: id, label: 年表 ID（与文件名一致）, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', '使用小写英文、数字和连字符'] }
       - { name: title, label: 标题, widget: string }
       - { name: description, label: 简介与整理范围, widget: text }
+      - { name: excerpt, label: 板块卡片简介（无剧透）, widget: text, required: false, hint: '最多 160 字；留空使用完整简介。' }
+      - name: cover
+        label: 板块封面与详情头图（仅放无剧透宣传图）
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: src, label: 图片（共用资源库）, widget: r2-image }
+          - { name: alt, label: 替代说明, widget: string, hint: '用中文描述画面；不把额外剧透写进公开封面。' }
+          - { name: caption, label: 图注与版本说明, widget: text, required: false }
+          - { name: credit, label: 图片署名, widget: string, required: false }
+          - { name: sourceUrl, label: 图片出处页面, widget: string, required: false, hint: '填写 HTTPS 来源页，并保留署名；图像仅作配图，不替代剧情引证。' }
+          - { name: width, label: 原图宽度（像素）, widget: number, value_type: int, min: 1, max: 50000 }
+          - { name: height, label: 原图高度（像素）, widget: number, value_type: int, min: 1, max: 50000 }
+          - { name: works, label: 配图对应作品 ID, widget: list, min: 1 }
+          - { name: spoilerWorks, label: 图片需要允许剧透的作品 ID, widget: list, min: 0, default: [], hint: '须明确填写；不含剧透用空列表。头图必须为空；分段图和事件图会跟随作品筛选、剧透设置隐藏。' }
       - { name: calendarNote, label: 纪年说明, widget: text }
       - { name: terminologyNote, label: 译名规范说明, widget: text, required: false }
       - name: terms
@@ -162,6 +178,21 @@ collections:
           - { name: calendar, label: 所属纪年, widget: string }
           - { name: note, label: 分段说明（仅放非剧透信息）, widget: text, required: false }
           - { name: works, label: 分线限定作品 ID, widget: list, required: false, hint: '重制或平行故事须限定作品，避免混入旧作历史。' }
+          - name: image
+            label: 时代分隔插图
+            widget: object
+            required: false
+            collapsed: true
+            fields:
+              - { name: src, label: 图片（共用资源库）, widget: r2-image }
+              - { name: alt, label: 替代说明, widget: string, hint: '用中文描述画面；不把额外剧透写进公开封面。' }
+              - { name: caption, label: 图注与版本说明, widget: text, required: false }
+              - { name: credit, label: 图片署名, widget: string, required: false }
+              - { name: sourceUrl, label: 图片出处页面, widget: string, required: false, hint: '填写 HTTPS 来源页，并保留署名；图像仅作配图，不替代剧情引证。' }
+              - { name: width, label: 原图宽度（像素）, widget: number, value_type: int, min: 1, max: 50000 }
+              - { name: height, label: 原图高度（像素）, widget: number, value_type: int, min: 1, max: 50000 }
+              - { name: works, label: 配图对应作品 ID, widget: list, min: 1 }
+              - { name: spoilerWorks, label: 图片需要允许剧透的作品 ID, widget: list, min: 0, default: [], hint: '须明确填写；不含剧透用空列表。头图必须为空；分段图和事件图会跟随作品筛选、剧透设置隐藏。' }
       - name: sources
         label: 资料来源
         widget: list
@@ -189,6 +220,23 @@ collections:
           - { name: detail, label: 详细经过, widget: text, required: false }
           - { name: note, label: 版本差异与考据说明, widget: text, required: false }
           - { name: keywords, label: 人物原名、别名与地点检索词, widget: list, required: false }
+          - name: images
+            label: 事件插图（最多四张）
+            widget: list
+            required: false
+            min: 1
+            max: 4
+            summary: '{{fields.caption}}'
+            fields:
+              - { name: src, label: 图片（共用资源库）, widget: r2-image }
+              - { name: alt, label: 替代说明, widget: string, hint: '用中文描述画面；不把额外剧透写进公开封面。' }
+              - { name: caption, label: 图注与版本说明, widget: text, required: false }
+              - { name: credit, label: 图片署名, widget: string, required: false }
+              - { name: sourceUrl, label: 图片出处页面, widget: string, required: false, hint: '填写 HTTPS 来源页，并保留署名；图像仅作配图，不替代剧情引证。' }
+              - { name: width, label: 原图宽度（像素）, widget: number, value_type: int, min: 1, max: 50000 }
+              - { name: height, label: 原图高度（像素）, widget: number, value_type: int, min: 1, max: 50000 }
+              - { name: works, label: 配图对应作品 ID, widget: list, min: 1 }
+              - { name: spoilerWorks, label: 图片需要允许剧透的作品 ID, widget: list, min: 0, default: [], hint: '须明确填写；不含剧透用空列表。头图必须为空；分段图和事件图会跟随作品筛选、剧透设置隐藏。' }
           - { name: works, label: 关联作品 ID 列表, widget: list, min: 1 }
           - { name: spoilerWorks, label: 需要允许剧透的作品 ID 列表, widget: list, required: true, min: 0, default: [], hint: '必须明确填写。无剧透可设空列表；涉及多个作品揭秘时填写全部作品 ID。不要只按事件发生年代判断。' }
           - name: evidence

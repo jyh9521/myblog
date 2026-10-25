@@ -1,0 +1,241 @@
+{
+  "id": "metroid",
+  "checkedAt": "2026-10-25",
+  "scope": "12组有独立叙事的作品；原版、重制与片尾差异合并注明。覆盖开篇、主要转折和结局，不把收集奖励拆成平行历史。",
+  "works": [
+    {
+      "id": "zero",
+      "opening": [
+        "metroid-001"
+      ],
+      "development": [
+        "metroid-zero-guardians",
+        "metroid-zero-shotdown",
+        "metroid-003",
+        "metroid-zero-trial",
+        "metroid-zero-mecha"
+      ],
+      "ending": [
+        "metroid-002",
+        "metroid-zero-final"
+      ],
+      "epilogue": [
+        "metroid-zero-credits"
+      ]
+    },
+    {
+      "id": "prime",
+      "opening": [
+        "metroid-004"
+      ],
+      "development": [
+        "metroid-prime-chozo",
+        "metroid-prime-experiments",
+        "metroid-prime-omega",
+        "metroid-prime-artifacts"
+      ],
+      "ending": [
+        "metroid-prime-final-boss",
+        "metroid-prime-ending"
+      ],
+      "epilogue": [
+        "metroid-prime-stinger"
+      ]
+    },
+    {
+      "id": "hunters",
+      "opening": [
+        "metroid-005"
+      ],
+      "development": [
+        "metroid-hunters-octoliths",
+        "metroid-hunters-seal",
+        "metroid-hunters-oubliette"
+      ],
+      "ending": [
+        "metroid-hunters-short-ending",
+        "metroid-hunters-omega",
+        "metroid-hunters-final"
+      ],
+      "epilogue": []
+    },
+    {
+      "id": "echoes",
+      "opening": [
+        "metroid-006"
+      ],
+      "development": [
+        "metroid-007",
+        "metroid-echoes-transfer",
+        "metroid-echoes-dark-samus",
+        "metroid-echoes-regions"
+      ],
+      "ending": [
+        "metroid-echoes-emperor",
+        "metroid-echoes-final"
+      ],
+      "epilogue": [
+        "metroid-echoes-stinger"
+      ]
+    },
+    {
+      "id": "corruption",
+      "opening": [
+        "metroid-008"
+      ],
+      "development": [
+        "metroid-corruption-norion",
+        "metroid-corruption-ped",
+        "metroid-corruption-hunters",
+        "metroid-corruption-seeds",
+        "metroid-corruption-valhalla"
+      ],
+      "ending": [
+        "metroid-corruption-final-boss",
+        "metroid-corruption-ending"
+      ],
+      "epilogue": [
+        "metroid-corruption-stinger"
+      ]
+    },
+    {
+      "id": "force",
+      "opening": [
+        "metroid-009"
+      ],
+      "development": [
+        "metroid-force-weapon",
+        "metroid-force-samus"
+      ],
+      "ending": [
+        "metroid-force-doomseye",
+        "metroid-force-ending"
+      ],
+      "epilogue": [
+        "metroid-force-stinger"
+      ]
+    },
+    {
+      "id": "returns",
+      "opening": [
+        "metroid-010"
+      ],
+      "development": [
+        "metroid-returns-evolution",
+        "metroid-011",
+        "metroid-012"
+      ],
+      "ending": [
+        "metroid-returns-original-end",
+        "metroid-returns-proteus"
+      ],
+      "epilogue": [
+        "metroid-returns-x-stinger",
+        "metroid-returns-memory"
+      ]
+    },
+    {
+      "id": "super",
+      "opening": [
+        "metroid-013"
+      ],
+      "development": [
+        "metroid-super-four",
+        "metroid-super-giant",
+        "metroid-super-mother",
+        "metroid-014"
+      ],
+      "ending": [
+        "metroid-015"
+      ],
+      "epilogue": [
+        "metroid-super-animals"
+      ]
+    },
+    {
+      "id": "other",
+      "opening": [
+        "metroid-016"
+      ],
+      "development": [
+        "metroid-other-bioweapons",
+        "metroid-other-ridley",
+        "metroid-other-mb-lie",
+        "metroid-other-adam",
+        "metroid-other-deleter",
+        "metroid-other-queen",
+        "metroid-other-truth"
+      ],
+      "ending": [
+        "metroid-other-main-ending",
+        "metroid-other-helmet"
+      ],
+      "epilogue": []
+    },
+    {
+      "id": "beyond",
+      "opening": [
+        "metroid-023"
+      ],
+      "development": [
+        "metroid-024",
+        "metroid-beyond-lamorn",
+        "metroid-beyond-team",
+        "metroid-beyond-civilization",
+        "metroid-beyond-sylux",
+        "metroid-beyond-tower"
+      ],
+      "ending": [
+        "metroid-beyond-final-fight",
+        "metroid-beyond-farewell",
+        "metroid-beyond-memory-tree"
+      ],
+      "epilogue": [
+        "metroid-beyond-extra"
+      ]
+    },
+    {
+      "id": "fusion",
+      "opening": [
+        "metroid-017"
+      ],
+      "development": [
+        "metroid-018",
+        "metroid-fusion-station",
+        "metroid-019",
+        "metroid-fusion-reactor",
+        "metroid-fusion-lab",
+        "metroid-fusion-federation",
+        "metroid-fusion-adam"
+      ],
+      "ending": [
+        "metroid-fusion-final-boss",
+        "metroid-020"
+      ],
+      "epilogue": []
+    },
+    {
+      "id": "dread",
+      "opening": [
+        "metroid-021"
+      ],
+      "development": [
+        "metroid-022",
+        "metroid-dread-quiet-robe",
+        "metroid-dread-elun-open",
+        "metroid-dread-freeze",
+        "metroid-dread-false-adam",
+        "metroid-dread-donor"
+      ],
+      "ending": [
+        "metroid-dread-awakening",
+        "metroid-dread-raven-x",
+        "metroid-dread-escape"
+      ],
+      "epilogue": [
+        "metroid-dread-gallery"
+      ]
+    }
+  ],
+  "events": 106
+}

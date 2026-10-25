@@ -1,119 +1,188 @@
 {
   "id": "metroid",
   "title": "密特罗德系列时间线",
-  "description": "按世界内剧情整理萨姆斯的主要任务：泽贝斯、究极系列、SR388、超级密特罗德、另一个M、融合与生存恐惧。覆盖12组作品、24个剧情节点，每条附官方来源；原版与重制合并对应，究极4单独说明。当前为主干版，不宣称逐关卡或全结局覆盖。",
-  "calendarNote": "系列没有可直接套用的统一绝对年表。本表使用相对任务顺序，年代未详不代表同一年，间距不按时间比例。究极分支的具体插入点及《究极4》的二维主线位置，需区分官方明确叙述与常见整理；最后的独立分区不表示发生在《生存恐惧》之后。剧情单源表示本条依一份官方材料整理，不代表独立交叉验证。",
-  "terminologyNote": "系列统一称“密特罗德”，角色使用“萨姆斯”。旧作中文副标题采用便于检索的译写，英文原题保留在作品资料；“银河战士”“银河战士Prime”等旧称不代表另一个系列。",
+  "description": "按游戏世界内的剧情顺序整理12组作品、106个事件，覆盖各作开篇、主要转折、最终战与结局，并区分重制追加、隐藏片尾及收集奖励。包括究极系列、另一个M、融合与生存恐惧；每条提供场景或攻略页码。《究极4》已据开发者原始访谈放在《超级》之后、《融合》之前。",
+  "calendarNote": "年代未详不代表事件发生在同一年，间距不按时间比例。初代与《零点任务》、《Ⅱ》与《萨姆斯归来》为同次任务的不同版本，不重复计数。《另一个M》和《究极4》均在《超级》之后、《融合》之前，二者相互先后未明；该区间按作品分组的排版不是时间判定。布洛斯的跨时空设定不用于换算银河年日。剧情、相对时序与绝对日期分别引证；同一游戏、同一访谈的转载或翻译不算独立交叉来源。",
+  "terminologyNote": "优先采用现有官方中文：密特罗德、萨姆斯·亚兰、费原子（Phazon）、《究极 复刻版》与《究极4 穿越未知》。未有可核官方中文的旧作副标题和专名采用统一译写，并保留原文检索；不把旧译或自译标作官方名。",
   "works": [
     {
       "id": "zero",
       "title": "密特罗德／零点任务",
-      "originalTitle": "Metroid / Metroid: Zero Mission"
+      "originalTitle": "Metroid / Metroid: Zero Mission",
+      "continuity": "二维主线·第1次泽贝斯任务",
+      "synopsis": "萨姆斯受命阻止宇宙海盗利用密特罗德。",
+      "coverageNote": "初代与重制版共用主线；无装甲潜行、遗迹试炼及母舰脱出另标重制追加。",
+      "sources": [
+        "saga"
+      ]
     },
     {
       "id": "prime",
-      "title": "密特罗德 究极／究极 重制版",
-      "originalTitle": "Metroid Prime / Metroid Prime Remastered"
+      "title": "密特罗德 究极／究极 复刻版",
+      "originalTitle": "Metroid Prime / Metroid Prime Remastered",
+      "continuity": "究极系列·泰隆Ⅳ",
+      "synopsis": "萨姆斯追踪宇宙海盗，调查泰隆Ⅳ的污染。",
+      "coverageNote": "含母脑任务之后的冒险、主要日志背景、最终战与条件片尾；复刻版和弹珠台形式不另造一次泰隆Ⅳ历史。",
+      "sources": [
+        "prime-cn"
+      ]
     },
     {
       "id": "hunters",
       "title": "密特罗德 究极 猎人",
-      "originalTitle": "Metroid Prime Hunters"
+      "originalTitle": "Metroid Prime Hunters",
+      "continuity": "究极系列·猎人之间的竞争",
+      "synopsis": "终极力量的传讯引来多名赏金猎人。",
+      "coverageNote": "含奥克托利斯、戈利亚与最终对决；普通终战与满足条件的追加阶段分别说明。",
+      "sources": [
+        "hunters"
+      ]
     },
     {
       "id": "echoes",
       "title": "密特罗德 究极2 回响",
-      "originalTitle": "Metroid Prime 2: Echoes"
+      "originalTitle": "Metroid Prime 2: Echoes",
+      "continuity": "究极系列·以太星",
+      "synopsis": "联邦部队失联，调查指向发生异常的以太星。",
+      "coverageNote": "含光暗世界、能量回收、黑暗萨姆斯与最终脱出及条件片尾。",
+      "sources": [
+        "trilogy"
+      ]
     },
     {
       "id": "corruption",
       "title": "密特罗德 究极3 腐蚀",
-      "originalTitle": "Metroid Prime 3: Corruption"
+      "originalTitle": "Metroid Prime 3: Corruption",
+      "continuity": "究极系列·费原子危机",
+      "synopsis": "萨姆斯与联邦及其他赏金猎人参与共同任务。",
+      "coverageNote": "含腐蚀、种子作战、法兹终战及片尾线索；不把全收集奖励当成新的一场战争。",
+      "sources": [
+        "trilogy"
+      ]
     },
     {
       "id": "force",
       "title": "密特罗德 究极 联邦力量",
-      "originalTitle": "Metroid Prime: Federation Force"
+      "originalTitle": "Metroid Prime: Federation Force",
+      "continuity": "究极系列·联邦军行动",
+      "synopsis": "联邦军驾驶机甲对抗宇宙海盗的兵器计划。",
+      "coverageNote": "含被俘萨姆斯、最终兵器与盗取幼体片尾；《爆破球》是训练竞技，不编成独立历史战役。",
+      "sources": [
+        "force"
+      ]
     },
     {
       "id": "returns",
       "title": "密特罗德Ⅱ／萨姆斯归来",
-      "originalTitle": "Metroid II: Return of Samus / Metroid: Samus Returns"
+      "originalTitle": "Metroid II: Return of Samus / Metroid: Samus Returns",
+      "continuity": "二维主线·SR388歼灭任务",
+      "synopsis": "萨姆斯受命前往密特罗德的故乡SR388。",
+      "coverageNote": "原版与重制共享女王、幼体与返程；追加利德雷战、X片尾及鸟人记忆明确区分。",
+      "sources": [
+        "saga"
+      ]
     },
     {
       "id": "super",
       "title": "超级密特罗德",
-      "originalTitle": "Super Metroid"
+      "originalTitle": "Super Metroid",
+      "continuity": "二维主线·重返泽贝斯",
+      "synopsis": "幼体遭劫后，萨姆斯再次追踪利德雷。",
+      "coverageNote": "含泰利昂、幼体与母脑终战、泽贝斯脱出和可选动物救援。",
+      "sources": [
+        "saga"
+      ]
     },
     {
       "id": "other",
       "title": "密特罗德 另一个M",
-      "originalTitle": "Metroid: Other M"
+      "originalTitle": "Metroid: Other M",
+      "continuity": "《超级》后—《融合》前·瓶子船任务",
+      "synopsis": "求救信号让萨姆斯再次与联邦军旧识并肩调查。",
+      "coverageNote": "含生物兵器计划、亚当、MB与职员表后的最终登船；与布洛斯任务先后未明。",
+      "sources": [
+        "other"
+      ]
+    },
+    {
+      "id": "beyond",
+      "title": "密特罗德 究极4 穿越未知",
+      "originalTitle": "Metroid Prime 4: Beyond",
+      "continuity": "《超级》后—《融合》前·布洛斯任务",
+      "synopsis": "研究设施的事故把萨姆斯与联邦士兵送往未知行星。",
+      "coverageNote": "含五钥匙、同行者、时光之塔最终战、离别、种树片尾及收集追加；与瓶子船任务先后未明。",
+      "sources": [
+        "beyond-cn"
+      ]
     },
     {
       "id": "fusion",
       "title": "密特罗德 融合",
-      "originalTitle": "Metroid Fusion"
+      "originalTitle": "Metroid Fusion",
+      "continuity": "二维主线·X寄生生物事件",
+      "synopsis": "萨姆斯感染X后，前往B.S.L.研究站调查异常。",
+      "coverageNote": "含SA-X、隐秘实验室、亚当电脑、欧米伽终战与SR388结局。",
+      "sources": [
+        "fusion"
+      ]
     },
     {
       "id": "dread",
       "title": "密特罗德 生存恐惧",
-      "originalTitle": "Metroid Dread"
-    },
-    {
-      "id": "beyond",
-      "title": "密特罗德 究极4 超越",
-      "originalTitle": "Metroid Prime 4: Beyond"
+      "originalTitle": "Metroid Dread",
+      "continuity": "二维主线·ZDR调查",
+      "synopsis": "一份关于X的线索使萨姆斯来到ZDR。",
+      "coverageNote": "含魁特罗布、艾路恩、网络站真相、最后决战与完整脱出；画廊解锁不另设历史分支。",
+      "sources": [
+        "dread"
+      ]
     }
   ],
   "eras": [
     {
+      "id": "background",
+      "title": "任务之前：鸟人族与密特罗德",
+      "calendar": "早期历史",
+      "note": "这些往事在后作才揭露；显示时须同时允许对应作品剧透，不根据回忆插画反推绝对年份。"
+    },
+    {
       "id": "first",
       "title": "泽贝斯初次任务",
-      "calendar": "相对剧情阶段",
-      "note": "使用任务先后，不换算绝对年份。"
+      "calendar": "相对任务顺序",
+      "note": "初代与《零点任务》共享同一次行动；追加段落明确标注版本。"
     },
     {
       "id": "phazon",
-      "title": "究极系列：菲增强物质事件",
-      "calendar": "相对剧情阶段",
-      "note": "使用任务先后，不换算绝对年份。"
+      "title": "究极系列：费原子事件与联邦行动",
+      "calendar": "相对任务顺序",
+      "note": "《究极》→《猎人》→《究极2》→《究极3》→《联邦力量》；此前几作位于初代与Ⅱ之间，不将这一旧概括套用到《究极4》。"
     },
     {
       "id": "sr388",
-      "title": "SR388任务与幼体",
-      "calendar": "相对剧情阶段",
-      "note": "使用任务先后，不换算绝对年份。"
+      "title": "SR388歼灭任务与幼体",
+      "calendar": "相对任务顺序",
+      "note": "《Ⅱ》与《萨姆斯归来》同一任务；追加利德雷战和X片尾只属于重制版。"
     },
     {
       "id": "zebes",
       "title": "重返泽贝斯",
-      "calendar": "相对剧情阶段",
-      "note": "使用任务先后，不换算绝对年份。"
+      "calendar": "相对任务顺序"
     },
     {
-      "id": "bottle",
-      "title": "瓶子船调查",
-      "calendar": "相对剧情阶段",
-      "note": "使用任务先后，不换算绝对年份。"
+      "id": "post-super",
+      "title": "《超级》之后—《融合》之前",
+      "calendar": "两次任务的共同区间",
+      "note": "《另一个M》与《究极4 穿越未知》的相互先后未明确。下列按作品分组呈现，组间排版顺序不是剧情先后；开发团队已明确《究极4》位于《超级》之后、《融合》之前。"
     },
     {
       "id": "x",
-      "title": "X寄生生物事件",
-      "calendar": "相对剧情阶段",
-      "note": "使用任务先后，不换算绝对年份。"
+      "title": "X寄生生物与B.S.L.研究站",
+      "calendar": "相对任务顺序"
     },
     {
       "id": "zdr",
-      "title": "ZDR调查",
-      "calendar": "相对剧情阶段",
-      "note": "使用任务先后，不换算绝对年份。"
-    },
-    {
-      "id": "beyond",
-      "title": "究极4：时点单独说明",
-      "calendar": "相对剧情阶段",
-      "note": "本区独立展示，不表示发生在《生存恐惧》之后；公开介绍未给出精确插入点。"
+      "title": "ZDR调查与命运的收束",
+      "calendar": "相对任务顺序"
     }
   ],
   "sources": [
@@ -135,9 +204,9 @@
     },
     {
       "id": "prime",
-      "title": "任天堂：《究极 重制版》官方网站",
+      "title": "任天堂：《究极 复刻版》官方网站",
       "url": "https://www.nintendo.com/jp/switch/a3sda/index.html",
-      "scope": "塔隆Ⅳ冒险前提；重制版不是另一场历史事件。",
+      "scope": "泰隆Ⅳ冒险前提；重制版不是另一场历史事件。",
       "kind": "官方资料",
       "family": "nintendo"
     },
@@ -196,9 +265,484 @@
       "scope": "究极4的研究设施、传送事故与未知星球故事前提；没有明确二维主线插入点。",
       "kind": "官方资料",
       "family": "nintendo"
+    },
+    {
+      "id": "zero-guide",
+      "title": "任天堂：《零点任务》官方攻略扫描",
+      "url": "https://www.metroiddatabase.com/wp-content/uploads/Guides/MZM_ONPG.pdf",
+      "scope": "印刷页码；母脑战、无装甲潜行、鸟人试炼及机械利德雷脱出。扫描由 Metroid Database 托管，不是该站原创剧情。",
+      "kind": "任天堂官方攻略扫描",
+      "family": "zero-official-guide"
+    },
+    {
+      "id": "zero-escape",
+      "title": "Metroid Recon：《零点任务》亲历流程第12章",
+      "url": "https://metroid.retropixel.net/games/metroidzm/walkthrough/12.php",
+      "scope": "最终战、夺船脱出与片尾幼年萨姆斯壁画；攻略作者直接游玩记录。",
+      "kind": "原作者实机攻略",
+      "family": "recon-zero"
+    },
+    {
+      "id": "zero-endings",
+      "title": "Metroid Recon：《零点任务》结算画面",
+      "url": "https://metroid.retropixel.net/games/metroidzm/endings.php",
+      "scope": "难度、时间与收集率对应的插画条件，不是不同任务结局。",
+      "kind": "原作者实机攻略",
+      "family": "recon-zero"
+    },
+    {
+      "id": "returns-guide",
+      "title": "Prima：《萨姆斯归来》任天堂授权官方攻略扫描",
+      "url": "https://www.metroiddatabase.com/wp-content/uploads/Metroid-Samus-Returns/Metroid_Samus_Returns_OfficialPrimaGuide.pdf",
+      "scope": "印刷页200—213：女王、幼体及追加利德雷战；早期背景说明不用于取代《生存恐惧》对鸟人族历史的揭露。",
+      "kind": "授权官方攻略扫描",
+      "family": "returns-prima"
+    },
+    {
+      "id": "returns-memories",
+      "title": "Omega Metroid：《萨姆斯归来》鸟人记忆画廊",
+      "url": "https://omegametroid.com/metroid-samus-returns-walkthrough/chozo-memories/",
+      "scope": "展示原作解锁图像；与《生存恐惧》说明对读时，后作揭露须独立标剧透。",
+      "kind": "原作画廊与实机攻略",
+      "family": "omega-returns"
+    },
+    {
+      "id": "returns-last",
+      "title": "Omega Metroid：《萨姆斯归来》最后的密特罗德",
+      "url": "https://omegametroid.com/metroid-samus-returns-walkthrough/the-last-metroid/",
+      "scope": "末段女王、幼体、地表追加战及离开SR388的亲历流程。",
+      "kind": "原作者实机攻略",
+      "family": "omega-returns"
+    },
+    {
+      "id": "returns-stinger",
+      "title": "Omega Metroid：《萨姆斯归来》结局与片尾",
+      "url": "https://omegametroid.com/metroid-samus-returns-walkthrough/endings/",
+      "scope": "结算画面条件与片尾SR388生态变化；不把隐藏插画视为另一次任务。",
+      "kind": "原作者实机攻略",
+      "family": "omega-returns"
+    },
+    {
+      "id": "super-route",
+      "title": "Omega Metroid：《超级密特罗德》最终战流程",
+      "url": "https://omegametroid.com/super-metroid-walkthrough/the-final-battle/",
+      "scope": "泰利昂、巨大幼体、母脑战及倒计时脱出；作者的直接流程记录。",
+      "kind": "原作者实机攻略",
+      "family": "omega-super"
+    },
+    {
+      "id": "super-hunt",
+      "title": "Omega Metroid：《超级密特罗德》追踪利德雷",
+      "url": "https://omegametroid.com/super-metroid-walkthrough/the-hunt-for-ridley/",
+      "scope": "利德雷巢穴与空培养皿的流程定位。",
+      "kind": "原作者实机攻略",
+      "family": "omega-super"
+    },
+    {
+      "id": "super-endings",
+      "title": "Omega Metroid：《超级密特罗德》结局",
+      "url": "https://omegametroid.com/super-metroid-walkthrough/endings/",
+      "scope": "计时结算画面，不改变母脑战主线结果。",
+      "kind": "原作者实机攻略",
+      "family": "omega-super"
+    },
+    {
+      "id": "other-transcript",
+      "title": "Metroid Recon：《另一个M》原作对白及事件记录转录",
+      "url": "https://metroid.retropixel.net/games/metroidom/transcript.php",
+      "scope": "章节对应原作剧场模式，包含故事/人物菜单转录；站点的场景括注与游戏对白分开引用。",
+      "kind": "原版对白转录",
+      "family": "other-m-game"
+    },
+    {
+      "id": "other-guide",
+      "title": "Prima：《另一个M》授权官方攻略",
+      "url": "https://www.metroiddatabase.com/wp-content/uploads/Metroid-Other-M/Metroid_Other_M_Prima_Guide.pdf",
+      "scope": "印刷页133—144：女王战与片尾重返瓶子船、幻影及最终脱出。",
+      "kind": "授权官方攻略扫描",
+      "family": "other-m-prima"
+    },
+    {
+      "id": "fusion-transcript",
+      "title": "Metroid Recon：《融合》原版对白转录",
+      "url": "https://metroid.retropixel.net/games/metroid4/transcript.php",
+      "scope": "序章与第1—16章的原作对白、导航指令及终幕；场景括注为整理者记录。",
+      "kind": "原版对白转录",
+      "family": "fusion-game"
+    },
+    {
+      "id": "dread-quiet",
+      "title": "Omega Metroid：《生存恐惧》魁特罗布会面流程",
+      "url": "https://omegametroid.com/metroid-dread-walkthrough/quiet-robe/",
+      "scope": "魁特罗布过场：苏哈、麦欧金、密特罗德与X的历史，以及魁特罗布遇害。",
+      "kind": "原作者实机攻略",
+      "family": "omega-dread"
+    },
+    {
+      "id": "dread-elun",
+      "title": "Omega Metroid：《生存恐惧》艾路恩调查",
+      "url": "https://omegametroid.com/metroid-dread-walkthrough/the-mystery-of-elun/",
+      "scope": "艾路恩封锁区域、X逃逸与感染扩散的流程。",
+      "kind": "原作者实机攻略",
+      "family": "omega-dread"
+    },
+    {
+      "id": "dread-frozen",
+      "title": "Omega Metroid：《生存恐惧》冻结的星球",
+      "url": "https://omegametroid.com/metroid-dread-walkthrough/frozen-planet/",
+      "scope": "熔岩循环停止、实验体Z-57及恢复供热。",
+      "kind": "原作者实机攻略",
+      "family": "omega-dread"
+    },
+    {
+      "id": "dread-final",
+      "title": "Omega Metroid：《生存恐惧》雷文毕克战与逃离",
+      "url": "https://omegametroid.com/metroid-dread-walkthrough/raven-beak/",
+      "scope": "最终网络站揭露、三阶段战斗、密特罗德觉醒、雷文毕克X及魁特罗布X帮助脱出；不将作者对角色动机的理解当作明确对白。",
+      "kind": "原作者实机攻略",
+      "family": "omega-dread"
+    },
+    {
+      "id": "dread-endings",
+      "title": "任天堂：《生存恐惧》报告第11期",
+      "url": "https://metroid.nintendo.com/dread/news/metroid-dread-report-vol-11/",
+      "scope": "通关时间与画廊解锁机制；不支持另有隐藏剧情结局的说法。",
+      "kind": "官方资料",
+      "family": "nintendo-dread-report"
+    },
+    {
+      "id": "beyond-timeline",
+      "title": "Fami通：任天堂开发团队原始访谈（2025年12月29日）",
+      "url": "https://www.famitsu.com/article/202512/60211?page=1",
+      "scope": "“思考并寻找答案”段第一问明确《超级》后、《融合》前；答者为开发团队，未说明相对《另一个M》的先后。",
+      "kind": "开发者访谈",
+      "family": "beyond-famitsu-1929"
+    },
+    {
+      "id": "beyond-dream",
+      "title": "Nintendo DREAM：开发人员原始访谈（2026年2月21日）",
+      "url": "https://www.ndw.jp/metroidprime-interview-260211/",
+      "scope": "末尾剧透问答解释拉蒙文明、治疗舱、钥匙守护者失控与心灵共鸣；正文说明萨姆斯与赛拉克斯的恩怨尚未完结。",
+      "kind": "开发者访谈",
+      "family": "beyond-ndream-202603"
+    },
+    {
+      "id": "beyond-cn",
+      "title": "任天堂：《究极4 穿越未知》简体中文官网",
+      "url": "https://www.nintendo.com/zh-hans-hk/games/switch2/bgw5a/",
+      "scope": "直接核对正式中文游戏名、萨姆斯·亚兰、赛拉克斯及布洛斯行星；宣传前提不能充当结局引证。",
+      "kind": "官方中文资料",
+      "family": "nintendo-beyond-cn"
+    },
+    {
+      "id": "prime-cn",
+      "title": "任天堂：《究极 复刻版》商品信息",
+      "url": "https://www.nintendo.com/hk/switch/a3sda/products/soft.html",
+      "scope": "正式中文名称“密特罗德 究极 复刻版”；不是“重制版”。",
+      "kind": "官方中文资料",
+      "family": "nintendo-prime-cn"
+    },
+    {
+      "id": "phazon-cn",
+      "title": "《究极 复刻版》中文日志逐项转录",
+      "url": "https://www.bilibili.com/read/cv18885332/",
+      "scope": "开篇标明翻译源自复刻版，逐项列出费原子分析、费原子计划与费原子服；玩家托管的原作转录，不冒称任天堂网页或已目读截图。",
+      "kind": "原版中文日志转录",
+      "family": "prime-remastered-cn"
+    },
+    {
+      "id": "beyond-fury",
+      "title": "Nintendo Life：《究极4》狂怒丛林实机流程",
+      "url": "https://www.nintendolife.com/guides/metroid-prime-4-beyond-fury-green-guide",
+      "scope": "开篇、古文明委托、念动能力与五钥匙任务；作者亲历流程。",
+      "kind": "原作者实机攻略",
+      "family": "nlife-beyond"
+    },
+    {
+      "id": "beyond-tower",
+      "title": "Nintendo Life：《究极4》时光之塔实机流程",
+      "url": "https://www.nintendolife.com/guides/metroid-prime-4-beyond-chrono-tower-guide",
+      "scope": "修复机甲、突破塔的力场、最终过场与传送器脱出。",
+      "kind": "原作者实机攻略",
+      "family": "nlife-beyond"
+    },
+    {
+      "id": "beyond-boss",
+      "title": "Nintendo Life：《究极4》最终头目实机攻略",
+      "url": "https://www.nintendolife.com/guides/metroid-prime-4-beyond-how-to-beat-the-final-boss",
+      "scope": "触肢、超空间、平台与锁颚形态三阶段；击倒不等于永久死亡。",
+      "kind": "原作者实机攻略",
+      "family": "nlife-beyond"
+    },
+    {
+      "id": "beyond-ending",
+      "title": "Nintendo Life：《究极4》普通结局与追加画面",
+      "url": "https://www.nintendolife.com/guides/metroid-prime-4-beyond-secret-ending-and-how-to-get-it",
+      "scope": "告别、种下记忆果实、托卡毕护符及100%追加内容。",
+      "kind": "原作者实机攻略",
+      "family": "nlife-beyond"
+    },
+    {
+      "id": "beyond-vgc",
+      "title": "VGC：《究极4》结局亲历指南",
+      "url": "https://www.videogameschronicle.com/guide/metroid-prime-4-secret-ending-guide/",
+      "scope": "结局游戏截图与100%条件、完整回忆影片的区别。",
+      "kind": "原作者实机攻略",
+      "family": "vgc-beyond"
+    },
+    {
+      "id": "prime-guide",
+      "title": "任天堂：《究极》官方攻略扫描",
+      "url": "https://www.metroiddatabase.com/wp-content/uploads/Guides/MP_ONPG.pdf",
+      "scope": "印刷页112、116—124：欧米伽海盗、鸟人遗物、利德雷及究极密特罗德双阶段战。",
+      "kind": "任天堂官方攻略扫描",
+      "family": "prime-official-guide"
+    },
+    {
+      "id": "prime-pirate-transcript",
+      "title": "《究极》海盗扫描日志转录",
+      "url": "https://www.metroidwiki.org/wiki/Pirate_Data",
+      "scope": "只引用逐条原作扫描文本；原版北美日志与后续版本有修订，不把社区说明当作游戏对白。",
+      "kind": "原版扫描日志转录",
+      "family": "prime-game"
+    },
+    {
+      "id": "prime-chozo-transcript",
+      "title": "《究极》鸟人日志转录",
+      "url": "https://www.metroidwiki.org/wiki/Chozo_Lore",
+      "scope": "陨石与污染、封印相关原作日志，采用后期PAL/三部曲叙述；预言不用于推定绝对年月。",
+      "kind": "原版扫描日志转录",
+      "family": "prime-game"
+    },
+    {
+      "id": "prime-ending-capture",
+      "title": "Metroid Recon：《究极》结局及片尾截图",
+      "url": "https://metroid.retropixel.net/games/mprime/endings.php",
+      "scope": "展示100%片尾原作画面：蓝色物质伸出装甲手臂；附解锁条件。",
+      "kind": "原作截图与实机攻略",
+      "family": "recon-prime"
+    },
+    {
+      "id": "hunters-designer",
+      "title": "Shinesparkers：原剧情设计师Richard Vorodi访谈",
+      "url": "https://shinesparkers.net/interviews/richard-vorodi/",
+      "scope": "直接采访原单人模式与剧情设计师；说明终极力量骗局及《究极》《究极2》间的时序，不说明精确间隔。",
+      "kind": "开发者访谈",
+      "family": "hunters-vorodi"
+    },
+    {
+      "id": "hunters-guide",
+      "title": "任天堂：《究极 猎人》官方攻略扫描",
+      "url": "https://www.metroiddatabase.com/wp-content/uploads/Guides/MPH_ONPG.pdf",
+      "scope": "印刷页65—67：八块奥克托利斯、大炮、监狱、六色装置与欧米伽加农炮。",
+      "kind": "任天堂官方攻略扫描",
+      "family": "hunters-official-guide"
+    },
+    {
+      "id": "hunters-ending-guide",
+      "title": "Metroid Recon：《究极 猎人》两种结局",
+      "url": "https://metroid.retropixel.net/games/mphunters/endings.php",
+      "scope": "未完成第二阶段时只展示爆炸，完成后展示萨姆斯、猎人脱出与阿林比克长老致谢。",
+      "kind": "原作者实机攻略",
+      "family": "recon-hunters"
+    },
+    {
+      "id": "echoes-guide",
+      "title": "任天堂：《究极2 回响》官方攻略扫描",
+      "url": "https://www.metroiddatabase.com/wp-content/uploads/Guides/MP2E_ONPG.pdf",
+      "scope": "印刷页99—102及128：英格皇帝、黑暗萨姆斯终战、卢米诺斯获救及100%片尾。",
+      "kind": "任天堂官方攻略扫描",
+      "family": "echoes-official-guide"
+    },
+    {
+      "id": "echoes-log-transcript",
+      "title": "《究极2》原作日志转录",
+      "url": "https://www.metroidwiki.org/wiki/Metroid_Prime_2:_Echoes_Logbook",
+      "scope": "卢米诺斯历史与黑暗萨姆斯1—4次扫描；只把原作词条作直接转录，编者概述不等于原作对白。",
+      "kind": "原版扫描日志转录",
+      "family": "echoes-game"
+    },
+    {
+      "id": "echoes-ending-capture",
+      "title": "Metroid Recon：《究极2》结局及片尾截图",
+      "url": "https://metroid.retropixel.net/games/mprime2/endings.php",
+      "scope": "100%原作画面显示黑暗萨姆斯在太空重组，不是整个黑暗以太星存活。",
+      "kind": "原作截图与实机攻略",
+      "family": "recon-echoes"
+    },
+    {
+      "id": "corruption-guide",
+      "title": "Prima：《究极3 腐蚀》官方攻略扫描",
+      "url": "https://www.metroiddatabase.com/wp-content/uploads/Guides/mp3_primaguide.pdf",
+      "scope": "行星任务、三名猎人与最终战；印刷页208—211已核对黑暗萨姆斯、313号极光单元、法兹毁灭与返航。",
+      "kind": "授权官方攻略扫描",
+      "family": "corruption-prima"
+    },
+    {
+      "id": "corruption-transmissions",
+      "title": "《究极3》原作通信转录",
+      "url": "https://metroid.fandom.com/wiki/List_of_transmissions_in_Metroid_Prime_3:_Corruption",
+      "scope": "仅采用正式使用的传讯文本；未使用台词、社区解释不加入已发生剧情。",
+      "kind": "原版通信转录",
+      "family": "corruption-game"
+    },
+    {
+      "id": "corruption-ending-capture",
+      "title": "Metroid Recon：《究极3》片尾及原作截图",
+      "url": "https://metroid.retropixel.net/games/mprime3/endings.php",
+      "scope": "纪念同伴与神秘飞船尾随的原作片尾；该画面本身不报出飞船驾驶者姓名。",
+      "kind": "原作截图与实机攻略",
+      "family": "recon-corruption"
+    },
+    {
+      "id": "force-official-story",
+      "title": "任天堂英国：《联邦力量》故事介绍",
+      "url": "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Metroid-Prime-Federation-Force-1025884.html",
+      "scope": "Story/A historic victory：法兹事件后的宇宙历20X6、机甲部队与百慕大星系；旧官网故事分栏需展开阅读。",
+      "kind": "官方资料",
+      "family": "nintendo-force-story"
+    },
+    {
+      "id": "force-m22-transcript",
+      "title": "《联邦力量》任务22：汇合——简报及对白转录",
+      "url": "https://metroid.fandom.com/wiki/M22:_Convergence",
+      "scope": "引用Mission briefing、Dialogue与Post-mission里的原作文字；百科正文不是原版对白。",
+      "kind": "原版任务简报及对白转录",
+      "family": "force-game"
+    },
+    {
+      "id": "force-stinger",
+      "title": "《联邦力量》秘密片尾原作实录",
+      "url": "https://www.youtube.com/watch?v=-goCv7zyBWU",
+      "scope": "BeardBear上传的秘密片尾；任务17额外目标的回收卵衔接孵化，不是100%全收集奖励。",
+      "kind": "原作片尾实录",
+      "family": "force-game"
+    },
+    {
+      "id": "force-artist",
+      "title": "Shinesparkers：场景设计者对秘密片尾角色的确认",
+      "url": "https://shinesparkers.net/metroid-prime-federation-force-artist-confirms-sylux-is-in-the-ending/",
+      "scope": "2017年保存原场景作者Logan Foster的作品链接与身份说明；这是转述，按二手资料标识，不冒充当前可读的作者原帖。",
+      "kind": "二手资料（原作者说明的同期转述）",
+      "family": "foster-force-ending"
+    },
+    {
+      "id": "beyond-sylux",
+      "title": "Nintendo Life：赛拉克斯原作剧情与完整回忆",
+      "url": "https://www.nintendolife.com/guides/metroid-prime-4-beyond-who-is-sylux",
+      "scope": "SPOILERS段说明最终再袭、同伴掩护与双方命运未定，并记录画廊回忆中的旧日联邦小队事件。",
+      "kind": "原作者实机剧情记录",
+      "family": "nlife-beyond"
+    },
+    {
+      "id": "other-timeline",
+      "title": "任天堂：坂本贺勇GDC演讲原文",
+      "url": "https://www.nintendo.com/en-gb/Iwata-Asks/Iwata-Asks-Metroid-Other-M/Keynote-from-Metroid-creator-Yoshio-Sakamoto/Page-5/Page-5-203822.html",
+      "scope": "坂本在介绍本作时直接说明《另一个M》发生于《超级》与《融合》之间；不比较《究极4》。",
+      "kind": "开发者演讲",
+      "family": "sakamoto-gdc2010"
+    },
+    {
+      "id": "dread-cn-terms",
+      "title": "系列原作官方中文译名逐词转录",
+      "url": "https://www.weibo.com/ttarticle/p/show?id=2309404874028501565747",
+      "scope": "人物、组织与地点对照：雷文毕克、魁特罗布、苏哈族、麦欧金族、泰隆Ⅳ与泰利昂；社区托管原作对照，不冒称任天堂官网。",
+      "kind": "原版中文术语转录",
+      "family": "metroid-cn-glossary"
+    },
+    {
+      "id": "beyond-cn-story",
+      "title": "任天堂：《穿越未知》简体中文故事页",
+      "url": "https://www.nintendo.com/zh-hans-hk/games/switch2/bgw5a/story/",
+      "scope": "宇宙历20X9年、塔纳玛尔UTO研究所、赛拉克斯与其密特罗德；只确认开端年代，不换算布洛斯当地时间。",
+      "kind": "官方中文资料",
+      "family": "nintendo-beyond-cn"
+    },
+    {
+      "id": "beyond-cn-team",
+      "title": "任天堂：《穿越未知》简体中文同伴页",
+      "url": "https://www.nintendo.com/zh-hans-hk/games/switch2/bgw5a/troopers/",
+      "scope": "直接核对麦肯齐、托卡毕、杜克、阿姆斯壮、VUE995的中文名与职责。",
+      "kind": "官方中文资料",
+      "family": "nintendo-beyond-cn"
+    },
+    {
+      "id": "beyond-cn-powers",
+      "title": "任天堂：《穿越未知》简体中文能力页",
+      "url": "https://www.nintendo.com/zh-hans-hk/games/switch2/bgw5a/abilities/",
+      "scope": "念动能力、薇奥拉、烈阳沙漠、拉蒙族与绿能量水晶。",
+      "kind": "官方中文资料",
+      "family": "nintendo-beyond-cn"
     }
   ],
   "events": [
+    {
+      "id": "metroid-chozo-creation",
+      "era": "background",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "苏哈制造密特罗德",
+      "summary": "苏哈族为抑制SR388的X寄生生物，创造了密特罗德。",
+      "detail": "密特罗德是X的天敌，却会在SR388环境中演化，鸟人族不得不封锁危险区域。此处按历史发生顺序呈现，不按玩家获知信息的作品年份排列。",
+      "works": [
+        "returns",
+        "dread"
+      ],
+      "spoilerWorks": [
+        "returns",
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-quiet"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-quiet",
+          "medium": "firsthand-guide",
+          "locator": "魁特罗布过场：苏哈、SR388与密特罗德的起源",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "《萨姆斯归来》的鸟人记忆先展示背景，《生存恐惧》再说明两支族群与动机。"
+    },
+    {
+      "id": "metroid-chozo-massacre",
+      "era": "background",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "麦欧金夺取密特罗德计划",
+      "summary": "雷文毕克拒绝苏哈毁灭SR388的方案，屠杀苏哈族人，仅留下魁特罗布。",
+      "detail": "雷文毕克需要苏哈控制密特罗德的能力；他把魁特罗布带回ZDR，而一名遭X感染的士兵也把灾祸带回母星。",
+      "works": [
+        "returns",
+        "dread"
+      ],
+      "spoilerWorks": [
+        "returns",
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-quiet"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-quiet",
+          "medium": "firsthand-guide",
+          "locator": "魁特罗布过场：雷文毕克的夺取计划与返回ZDR",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
     {
       "id": "metroid-001",
       "era": "first",
@@ -206,8 +750,8 @@
       "yearOrder": 1,
       "order": 1,
       "title": "密特罗德样本遭劫",
-      "summary": "联邦发现SR388的密特罗德，宇宙海盗夺取样本并企图将其武器化。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "summary": "宇宙海盗夺走联邦从SR388取得的密特罗德样本，准备将它们武器化。",
+      "detail": "联邦把摧毁泽贝斯地下要塞及母脑的任务交给萨姆斯。危险不只在样本本身，也在海盗企图繁殖并运用吸取生命能量的能力。",
       "works": [
         "zero"
       ],
@@ -225,17 +769,49 @@
           "locator": "初代：赏金猎人登场",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-zero-guardians",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "突破克雷德与利德雷的防线",
+      "summary": "萨姆斯探索泽贝斯，击败克雷德和利德雷，打开通往核心区域的道路。",
+      "detail": "冒险通过取回鸟人能力逐步推进；两名首领的先后可随路线变化，不把某条攻略路线写成唯一历史。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "zero-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "zero-guide",
+          "medium": "firsthand-guide",
+          "locator": "官方攻略：克雷德、利德雷与泰利昂区域",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-002",
       "era": "first",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 2,
-      "title": "萨姆斯潜入泽贝斯",
-      "summary": "萨姆斯受联邦委托，摧毁母脑及海盗地下要塞。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 3,
+      "title": "母脑战与要塞脱出",
+      "summary": "萨姆斯击败母脑，在自毁倒计时中离开地下要塞。",
+      "detail": "初代的任务在逃出要塞后收束。毁坏的是要塞而非整个泽贝斯星球，因此之后的故事仍能重返泽贝斯。",
       "works": [
         "zero"
       ],
@@ -252,20 +828,53 @@
         {
           "source": "saga",
           "medium": "official-publication",
-          "locator": "初代：赏金猎人登场",
+          "locator": "初代：地下要塞与母脑",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-zero-shotdown",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 4,
+      "title": "《零点任务》追加：离星时遭击落",
+      "summary": "萨姆斯离开要塞后受到海盗飞船追击，座舰被击落回泽贝斯。",
+      "detail": "她失去座舰与动力装甲，不能沿用刚才的正面火力，只能持手枪潜入海盗母舰及相连的鸟人遗迹。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "zero-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "zero-guide",
+          "medium": "firsthand-guide",
+          "locator": "官方攻略：母舰潜入篇，印刷页77—81",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "本段与之后的鸟人试炼、机械利德雷属于重制版追加，不是初代后另一次任务。"
     },
     {
       "id": "metroid-003",
       "era": "first",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 3,
-      "title": "零点任务的追加脱出段落",
-      "summary": "重制版补写萨姆斯失去动力装甲后，躲避宇宙海盗的潜行过程。",
-      "note": "此段为《零点任务》追加内容，不当作初代之后的第二次独立任务。",
+      "order": 5,
+      "title": "《零点任务》追加：无装甲潜行",
+      "summary": "萨姆斯躲避搜查与警报，穿过母舰进入鸟人遗迹。",
+      "detail": "手枪只能暂时阻止追兵，她靠隐蔽、绕行和短暂脱离视线继续前进，最终回到幼年曾与鸟人长者到访的地方。",
       "works": [
         "zero"
       ],
@@ -274,18 +883,144 @@
       ],
       "evidence": "compiled",
       "sources": [
-        "saga"
+        "zero-guide"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "saga",
-          "medium": "official-publication",
-          "locator": "初代：开发团队寄语",
+          "source": "zero-guide",
+          "medium": "firsthand-guide",
+          "locator": "官方攻略：潜行与遗迹，印刷页79—81",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-zero-trial",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 6,
+      "title": "鸟人试炼唤醒完整装甲",
+      "summary": "萨姆斯通过遗迹试炼，重新获得完整动力装甲。",
+      "detail": "此前暂时不能使用的未知装备随装甲恢复而启用；潜行逃亡转为反攻，萨姆斯重返母舰寻找离星手段。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "zero-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "zero-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页81：遗迹启示与完整动力装甲",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-zero-mecha",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "机械利德雷的最后阻击",
+      "summary": "母舰深处的机械利德雷向萨姆斯发动最后攻击。",
+      "detail": "萨姆斯摧毁机器，随即面对母舰自毁程序；这场机械首领战与此前的生物利德雷战不是同一事件。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "zero-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "zero-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页97：机械利德雷",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-zero-final",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 8,
+      "title": "《零点任务》结局：夺船离开母舰",
+      "summary": "萨姆斯冲回机库，夺取海盗飞船，在母舰爆炸前离开泽贝斯。",
+      "detail": "初次任务至此真正结束。她依然活着，海盗母舰已毁，而泽贝斯仍然存在。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "zero-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "zero-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页98：自毁脱出路线与夺船",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-zero-credits",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 9,
+      "title": "《零点任务》片尾：童年壁画",
+      "summary": "片尾回到遗迹，展示幼年萨姆斯与鸟人长者的壁画。",
+      "detail": "这幅画回扣遗迹试炼和她的成长经历；难度、时间、收集率另会影响结算插画，不改变夺船脱出的结果。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "zero-escape"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "zero-escape",
+          "medium": "firsthand-guide",
+          "locator": "Finale：鸟人战士房间与壁画",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "结算奖励是呈现差异，不是另一套银河历史。"
     },
     {
       "id": "metroid-004",
@@ -293,93 +1028,494 @@
       "year": "年代未详",
       "yearOrder": 1,
       "order": 1,
-      "title": "追踪至塔隆Ⅳ",
-      "summary": "萨姆斯在塔隆Ⅳ展开探索，调查宇宙海盗与星球上的异常。",
-      "note": "《究极 重制版》重现同一任务，不另增一次历史事件。",
+      "title": "护卫舰事故把追踪引向泰隆Ⅳ",
+      "summary": "萨姆斯接近海盗护卫舰，调查实验事故与求救信号。",
+      "detail": "她击败寄生女王，逃离失控反应堆；撤退中装备用途受损，随后追踪机械改造的利德雷到泰隆Ⅳ地表。",
       "works": [
         "prime"
       ],
-      "spoilerWorks": [],
+      "spoilerWorks": [
+        "prime"
+      ],
       "evidence": "compiled",
       "sources": [
-        "prime"
+        "prime-guide"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "prime",
-          "medium": "official-publication",
-          "locator": "官网：故事与探索介绍",
+          "source": "prime-guide",
+          "medium": "firsthand-guide",
+          "locator": "序章：护卫舰与地表追踪",
           "supports": "event"
         }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-prime-chozo",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "鸟人遗迹记录陨石污染",
+      "summary": "泰隆Ⅳ的鸟人记录揭示，一次陨石撞击带来足以腐化星球的污染。",
+      "detail": "鸟人以封印限制灾害，海盗却把污染源视作强化兵器的机会；两种对待力量的选择成为萨姆斯探索的背景。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [
+        "prime"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "prime-chozo-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime-chozo-transcript",
+          "medium": "game-transcript",
+          "locator": "后期版本：Meteor Strike、Contain",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "早期北美版部分海盗日志与后期版本有改写，本表采用后期叙述，不把矛盾文本串成连续事实。"
+    },
+    {
+      "id": "metroid-prime-experiments",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "海盗以费原子强化生物兵器",
+      "summary": "萨姆斯在实验设施与矿场发现，海盗正用费原子改造生物、培育密特罗德。",
+      "detail": "强化伴随严重变异和失控风险。扫描日志让她逐步拼出海盗行动，而不是只看到星球上的零散怪物。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [
+        "prime"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "prime-pirate-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime-pirate-transcript",
+          "medium": "game-transcript",
+          "locator": "Phazon Analysis、Phazon Program、Metroid Forces",
+          "supports": "event"
+        }
+      ],
+      "keywords": [
+        "Phazon",
+        "费原子矿场"
       ]
+    },
+    {
+      "id": "metroid-prime-omega",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 4,
+      "title": "欧米伽海盗与费原子服",
+      "summary": "萨姆斯击败欧米伽海盗，取得能够承受特定费原子环境的装甲。",
+      "detail": "这使她得以继续接近污染更深的区域；获得装甲不代表所有种类的费原子都从此无害。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [
+        "prime"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "prime-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页112：A New Suit",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-prime-artifacts",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 5,
+      "title": "鸟人遗物打开陨石坑封印",
+      "summary": "萨姆斯集齐十二件鸟人遗物，在神殿迎战机械利德雷。",
+      "detail": "击败阻击者后，她沿开启的通道进入撞击坑，直面封印内部的灾厄。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [
+        "prime"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "prime-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页116—118：遗物神殿与利德雷",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-prime-final-boss",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 6,
+      "title": "究极密特罗德露出核心",
+      "summary": "萨姆斯先击破究极密特罗德外壳，再借助费原子能量攻击核心。",
+      "detail": "常规火力与核心阶段的攻击方式不同，终盘战斗由装甲、扫描所得信息及现场能量共同构成。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [
+        "prime"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "prime-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页122—123：究极密特罗德两阶段",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-prime-ending",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "《究极》结局：撤离崩溃的陨石坑",
+      "summary": "究极密特罗德在崩溃时夺去萨姆斯的费原子装甲，萨姆斯逃离坍塌区域。",
+      "detail": "她回到座舰并离开泰隆Ⅳ。毁坏的是污染源所在区域，泰隆Ⅳ没有整体毁灭。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [
+        "prime"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "prime-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页123—124：核心战之后与结局",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-prime-stinger",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 8,
+      "title": "100%片尾：蓝色物质中的装甲手臂",
+      "summary": "满足物品收集条件后，片尾展示蓝色物质中伸出的装甲手臂与眼睛。",
+      "detail": "《究极2》的扫描进一步把黑暗萨姆斯与萨姆斯的遗传物质、费原子联系起来，这个伏笔并非胜利后又发生的一次完整战役。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [
+        "prime",
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "prime-ending-capture",
+        "echoes-log-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime-ending-capture",
+          "medium": "game-capture",
+          "locator": "100%结尾画面：装甲手臂与眼睛",
+          "supports": "event"
+        },
+        {
+          "source": "echoes-log-transcript",
+          "medium": "game-transcript",
+          "locator": "Dark Samus 1：遗传物质与费原子",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "本条联动后作身份揭露，因此需要同时允许《究极》与《究极2》剧透。"
     },
     {
       "id": "metroid-005",
       "era": "phazon",
       "year": "年代未详",
-      "yearOrder": 1,
-      "order": 2,
-      "title": "终极力量的传讯",
-      "summary": "神秘传讯把萨姆斯和其他赏金猎人引向阿林比克文明遗迹。",
-      "note": "通常整理在《究极》与《究极2》之间；本条官方手册支持任务前提，不独立证明该插入点。",
+      "yearOrder": 2,
+      "order": 9,
+      "title": "“终极力量”召来七位猎人",
+      "summary": "阿林比克星团的传讯宣称藏有终极力量，萨姆斯与六位猎人前往调查。",
+      "detail": "其中包括赛拉克斯。猎人之间的竞争使任务同时面对遗迹危险与彼此的武力冲突。",
       "works": [
         "hunters"
       ],
       "spoilerWorks": [],
       "evidence": "compiled",
       "sources": [
-        "hunters"
+        "hunters",
+        "hunters-designer"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
           "source": "hunters",
-          "medium": "official-publication",
-          "locator": "说明书：Story",
+          "medium": "manual-scan",
+          "locator": "说明书Story：阿林比克星团与传讯",
           "supports": "event"
+        },
+        {
+          "source": "hunters-designer",
+          "medium": "creator-interview",
+          "locator": "访谈：两作之间的时间跨度问答",
+          "supports": "date",
+          "note": "位于《究极》与《究极2》之间，具体间隔未公开。"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
-      "id": "metroid-006",
+      "id": "metroid-hunters-octoliths",
       "era": "phazon",
       "year": "年代未详",
-      "yearOrder": 1,
-      "order": 3,
-      "title": "失联调查指向以太星",
-      "summary": "萨姆斯追查失联的联邦部队，进入以太星。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "yearOrder": 2,
+      "order": 10,
+      "title": "遗迹争夺围绕八块奥克托利斯展开",
+      "summary": "萨姆斯穿行四处遗迹，收集八块奥克托利斯，并与其他猎人交锋。",
+      "detail": "分散的钥石使不同地点的探索汇合到同一个目标：打开阿林比克文明最后的封锁。",
       "works": [
-        "echoes"
+        "hunters"
       ],
-      "spoilerWorks": [],
+      "spoilerWorks": [
+        "hunters"
+      ],
       "evidence": "compiled",
       "sources": [
-        "trilogy"
+        "hunters-guide"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "trilogy",
-          "medium": "official-publication",
-          "locator": "说明书：METROID PRIME 2: ECHOES 故事",
+          "source": "hunters-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页65：八块钥石与大炮",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
-      "id": "metroid-007",
+      "id": "metroid-hunters-seal",
       "era": "phazon",
       "year": "年代未详",
-      "yearOrder": 1,
-      "order": 4,
-      "title": "光暗世界的危机",
-      "summary": "以太星的光暗冲突，使萨姆斯卷入当地文明的生存之战。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "yearOrder": 2,
+      "order": 11,
+      "title": "终极力量其实是戈利亚的诱饵",
+      "summary": "传讯并非文明留给胜者的奖励，而是戈利亚吸引强者解开监禁的骗局。",
+      "detail": "戈利亚用追逐力量的欲望诱使猎人为它解除封锁，所谓奖赏实际使他们成为灾厄重获自由的工具。",
+      "works": [
+        "hunters"
+      ],
+      "spoilerWorks": [
+        "hunters"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "hunters-designer"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "hunters-designer",
+          "medium": "creator-interview",
+          "locator": "原剧情设计师：Ultimate Power问答",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-hunters-oubliette",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 2,
+      "order": 12,
+      "title": "大炮开启异空间监狱",
+      "summary": "八块奥克托利斯使遗迹大炮启动，萨姆斯得以进入异空间监狱。",
+      "detail": "戈利亚苏醒并夺取猎人的力量，萨姆斯必须独自与这个被封印的敌人交战。",
+      "works": [
+        "hunters"
+      ],
+      "spoilerWorks": [
+        "hunters"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "hunters-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "hunters-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页65—66：大炮、监狱与戈利亚",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-hunters-short-ending",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 2,
+      "order": 13,
+      "title": "未解开装置时的短结局",
+      "summary": "若未在战斗中满足彩色装置条件，流程在第一阶段之后结束，监狱爆炸。",
+      "detail": "短结局没有展示萨姆斯与戈利亚的最终命运；它与完成第二阶段后的明确胜利应分别注明。",
+      "works": [
+        "hunters"
+      ],
+      "spoilerWorks": [
+        "hunters"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "hunters-ending-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "hunters-ending-guide",
+          "medium": "firsthand-guide",
+          "locator": "Only defeating Gorea phase 1",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "画面没有确认萨姆斯死亡，不把短结局的留白补写为已见尸体或确定阵亡。"
+    },
+    {
+      "id": "metroid-hunters-omega",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 2,
+      "order": 14,
+      "title": "欧米伽加农炮击败戈利亚",
+      "summary": "按正确顺序激活六色装置后，萨姆斯进入第二阶段并取得欧米伽加农炮。",
+      "detail": "她以这件武器击败戈利亚，完成解除封印之后真正的危机处理，而非在第一阶段获胜后停下。",
+      "works": [
+        "hunters"
+      ],
+      "spoilerWorks": [
+        "hunters"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "hunters-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "hunters-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页67：六色条件、第二阶段与欧米伽加农炮",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-hunters-final",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 2,
+      "order": 15,
+      "title": "《猎人》完整结局：脱出与长老致谢",
+      "summary": "萨姆斯与其他猎人逃离将毁的监狱，阿林比克长老向她致谢。",
+      "detail": "她随后登船离开星团。通关所需的是第二阶段的战斗条件，不是把所有物品收满才会出现这次胜利。",
+      "works": [
+        "hunters"
+      ],
+      "spoilerWorks": [
+        "hunters"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "hunters-ending-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "hunters-ending-guide",
+          "medium": "firsthand-guide",
+          "locator": "Defeating Gorea phase 2",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-006",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 16,
+      "title": "联邦部队失联，以太星等待调查",
+      "summary": "萨姆斯追查失联部队，来到受异常风暴包围的以太星。",
+      "detail": "当地部队已经覆灭，她在探索中遭到英格袭击并失去部分装备，只能重新收集能力继续行动。",
       "works": [
         "echoes"
       ],
@@ -395,21 +1531,239 @@
       "citations": [
         {
           "source": "trilogy",
-          "medium": "official-publication",
-          "locator": "说明书：究极2的以太星与卢米诺斯背景",
+          "medium": "manual-scan",
+          "locator": "说明书：METROID PRIME 2: ECHOES故事",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-007",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 17,
+      "title": "两个世界争夺同一颗行星的能量",
+      "summary": "乌莫斯说明，光明与黑暗以太星的冲突已令卢米诺斯接近灭绝。",
+      "detail": "族人大多进入休眠，只有守护者继续支撑。萨姆斯得到回收行星能量的任务，不能只以消灭海盗理解这次行动。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "echoes-log-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "echoes-log-transcript",
+          "medium": "game-transcript",
+          "locator": "Luminoth Lore：Twilight、Shattered Hope",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-echoes-transfer",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 18,
+      "title": "回收能量转移模块",
+      "summary": "萨姆斯从英格手中取回能量转移模块，获得夺回行星能量的手段。",
+      "detail": "这项能力把她穿梭两个世界的探索，转变为逐区改变战争局面的行动。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "echoes-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "echoes-guide",
+          "medium": "firsthand-guide",
+          "locator": "开篇：乌莫斯、模块与行星能量",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-echoes-dark-samus",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 19,
+      "title": "黑暗萨姆斯在费原子中进化",
+      "summary": "萨姆斯多次遇到黑暗萨姆斯，对方不断吸收费原子并变得更强。",
+      "detail": "扫描确认她兼具费原子与萨姆斯的遗传特征；她既不是普通海盗，也不是萨姆斯本人被直接分成两半。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "echoes-log-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "echoes-log-transcript",
+          "medium": "game-transcript",
+          "locator": "Dark Samus 1—4扫描",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-echoes-regions",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 20,
+      "title": "夺回三个地区失落的能量",
+      "summary": "萨姆斯在阿贡、托尔乌斯与圣域的光暗两面行动，逐步把能量送回光明世界。",
+      "detail": "她取得进入天空神殿的钥匙，使最后的争夺集中到英格统治者所在的核心。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "echoes-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "echoes-guide",
+          "medium": "firsthand-guide",
+          "locator": "阿贡、托尔乌斯、圣域与天空神殿钥匙流程",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-echoes-emperor",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 21,
+      "title": "英格皇帝战与最终能量回收",
+      "summary": "萨姆斯进入天空神殿，击败三阶段形态的英格皇帝。",
+      "detail": "最后能量的回收启动崩溃倒计时，她必须在黑暗世界消失前返回光明世界。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "echoes-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "echoes-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页99—101：英格皇帝",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-echoes-final",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 22,
+      "title": "《究极2》结局：以太星重归光明",
+      "summary": "黑暗萨姆斯阻挡撤退，萨姆斯打破拦截后穿过传送门。",
+      "detail": "黑暗以太星覆灭，卢米诺斯从休眠中醒来，萨姆斯在族人的致意中离开以太星。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "echoes-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "echoes-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页102：黑暗萨姆斯终战与尾声",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-echoes-stinger",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 3,
+      "order": 23,
+      "title": "100%片尾：黑暗萨姆斯在太空重组",
+      "summary": "全物品收集后的片尾显示，黑暗萨姆斯在太空中重新凝聚。",
+      "detail": "她的存续为下一作留下伏笔，但不推翻光明以太星获救的结局，也不是黑暗世界整体复活。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "echoes-ending-capture"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "echoes-ending-capture",
+          "medium": "game-capture",
+          "locator": "100%片尾原作截图",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-008",
       "era": "phazon",
       "year": "年代未详",
-      "yearOrder": 1,
-      "order": 5,
-      "title": "腐蚀危机扩大",
-      "summary": "萨姆斯参与联邦行动，对抗与菲增强物质有关的危机。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "yearOrder": 4,
+      "order": 24,
+      "title": "极光网络危机召集赏金猎人",
+      "summary": "极光网络遭到攻击，联邦召集萨姆斯、伦达斯、戈尔与甘德蕾达执行任务。",
+      "detail": "海盗突袭诺瑞昂，并让巨大的种子撞向星球；萨姆斯与同伴必须先恢复防御系统。",
       "works": [
         "corruption"
       ],
@@ -423,39 +1777,460 @@
       "citations": [
         {
           "source": "trilogy",
-          "medium": "official-publication",
-          "locator": "说明书：METROID PRIME 3: CORRUPTION 故事",
+          "medium": "manual-scan",
+          "locator": "说明书：METROID PRIME 3: CORRUPTION故事",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-norion",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 25,
+      "title": "黑暗萨姆斯让四位猎人遭到腐蚀",
+      "summary": "诺瑞昂作战中，黑暗萨姆斯击倒四位猎人，把费原子注入他们体内。",
+      "detail": "萨姆斯在重创后仍完成防御系统启动，随后接受治疗；这次腐蚀成为整部作品持续升级的威胁。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-guide",
+          "medium": "firsthand-guide",
+          "locator": "诺瑞昂篇：控制塔与黑暗萨姆斯",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-ped",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 26,
+      "title": "利用PED换取力量，也承担腐蚀风险",
+      "summary": "联邦为萨姆斯配备费原子增强装置PED，使她能把体内能量用于战斗。",
+      "detail": "装置的强化能力并未消除腐蚀。其他三位猎人接连失联，萨姆斯接替任务并追查他们的下落。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-guide",
+          "medium": "firsthand-guide",
+          "locator": "开篇：医疗设施、PED测试与行星任务",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-hunters",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 27,
+      "title": "昔日同伴相继成为敌人",
+      "summary": "伦达斯、戈尔与甘德蕾达相继失去自我，萨姆斯被迫逐个与他们战斗。",
+      "detail": "她从战斗中取得新的能力，却未能挽回同伴。腐蚀不是一种毫无代价的升级。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-guide",
+          "medium": "firsthand-guide",
+          "locator": "布里奥、艾莉西亚与海盗母星：三名猎人战",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-seeds",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 28,
+      "title": "摧毁种子，进攻海盗母星",
+      "summary": "萨姆斯破坏布里奥、艾莉西亚与海盗母星上的巨型种子，阻止污染继续扎根。",
+      "detail": "她与联邦联合推进，逐步获得接近源头星球的手段；行星任务与海盗母星突击在此汇合。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-guide",
+          "medium": "firsthand-guide",
+          "locator": "各行星种子与Pirate Homeworld Assault",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-valhalla",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 29,
+      "title": "失踪舰与313号极光单元的线索",
+      "summary": "萨姆斯登上失踪的瓦尔哈拉号，追查被夺走的313号极光单元。",
+      "detail": "情报和航路把联邦行动指向法兹——费原子的源头。萨姆斯随远征进入高度危险的污染环境。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-guide",
+          "medium": "firsthand-guide",
+          "locator": "瓦尔哈拉号与法兹进攻路线章节",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-final-boss",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 30,
+      "title": "最后决战：黑暗萨姆斯与313号",
+      "summary": "萨姆斯在法兹击败黑暗萨姆斯，随后迎战吸收她的313号极光单元。",
+      "detail": "极光单元与星球系统相连，最后的战斗由黑暗萨姆斯转为对313号本体的破坏。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页208—210：黑暗萨姆斯与313号极光单元",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-ending",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 31,
+      "title": "《究极3》结局：费原子危机结束",
+      "summary": "313号极光单元被毁，法兹崩溃，萨姆斯体内的费原子也随之消退。",
+      "detail": "她在爆炸前离开并平安归来。三部曲围绕费原子的战争结束，已经牺牲的三位猎人并未因此复活。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页210—211：黑暗萨姆斯崩解、法兹毁灭与返航",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-corruption-stinger",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 4,
+      "order": 32,
+      "title": "追加片尾：纪念同伴与神秘追踪者",
+      "summary": "较高收集率的片尾展示萨姆斯追忆同伴；全收集追加一艘飞船尾随她离去。",
+      "detail": "镜头本身只给出追踪者的飞船，不当场报出驾驶者名字；后续作品才继续展开这一线索。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [
+        "corruption"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "corruption-ending-capture"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "corruption-ending-capture",
+          "medium": "firsthand-guide",
+          "locator": "75%与100%片尾及飞船截图",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "收集奖励补充离去后的镜头，不改变法兹毁灭与萨姆斯生还的结果。"
     },
     {
       "id": "metroid-009",
       "era": "phazon",
-      "year": "年代未详",
-      "yearOrder": 1,
-      "order": 6,
-      "title": "联邦军投入机甲作战",
-      "summary": "联邦军士兵驾驶机甲，执行针对宇宙海盗的各项任务。",
-      "note": "本表把它作为究极系列后续任务展示；具体间隔不详，未据此给二维主线安排年份。《爆破球》是训练项目，不单立一场银河历史事件。",
+      "year": "宇宙历20X6年",
+      "yearOrder": 5,
+      "order": 33,
+      "title": "费原子战后，联邦机甲部队出动",
+      "summary": "《究极3》事件之后，联邦仍须处理宇宙海盗威胁，机甲部队前往百慕大星系调查。",
+      "detail": "官方故事页记作《究极3》事件数年后。联邦启动机甲兵器计划，派精锐部队前往百慕大星系，萨姆斯也参与相关行动。原作保留的20X6不换算为现实年份。",
       "works": [
         "force"
       ],
       "spoilerWorks": [],
       "evidence": "compiled",
       "sources": [
+        "force-official-story"
+      ],
+      "verification": "single-source",
+      "dateStatus": "single-source",
+      "citations": [
+        {
+          "source": "force-official-story",
+          "medium": "official-publication",
+          "locator": "Story：A historic victory与机甲部队",
+          "supports": "event"
+        },
+        {
+          "source": "force-official-story",
+          "medium": "official-publication",
+          "locator": "Story / A historic victory：20X6，前次大战数年后",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-force-weapon",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 5,
+      "order": 34,
+      "title": "海盗超级战舰迫使联邦改变战术",
+      "summary": "调查指向海盗战舰“末日之眼”，大型舰队在其攻击与护盾面前遭受重创。",
+      "detail": "联邦转而派机甲小队渗透战舰，从内部关闭护盾，让剩余舰队有机会发动有效攻击。",
+      "works": [
         "force"
+      ],
+      "spoilerWorks": [
+        "force"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "force-m22-transcript"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "force",
-          "medium": "official-publication",
-          "locator": "官网：游戏介绍",
+          "source": "force-m22-transcript",
+          "medium": "game-transcript",
+          "locator": "任务22简报：舰队损失与潜入任务",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-force-samus",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 5,
+      "order": 35,
+      "title": "被控制的萨姆斯遭到巨大化",
+      "summary": "海盗启动增幅光线，把受控的萨姆斯变成阻挡小队的巨大威胁。",
+      "detail": "机甲部队不得不与她作战，最终打倒受控状态的萨姆斯；这不是联邦正式把她认定为敌人的战争。",
+      "works": [
+        "force"
+      ],
+      "spoilerWorks": [
+        "force"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "force-m22-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "force-m22-transcript",
+          "medium": "game-transcript",
+          "locator": "任务22Dialogue：增幅光线、目标萨姆斯与击败警告",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-force-doomseye",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 5,
+      "order": 36,
+      "title": "主脑被破坏，“末日之眼”崩溃",
+      "summary": "小队摧毁作为护盾发生器的主脑，使护盾失效，剩余舰队随即对战舰开火。",
+      "detail": "通信中战舰完整度逐步降至临界，最终兵器被摧毁；机甲部队必须在舰体毁灭前撤出。主脑（Master Brain）是本作最后的控制核心，不是泽贝斯的母脑（Mother Brain）。",
+      "works": [
+        "force"
+      ],
+      "spoilerWorks": [
+        "force"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "force-m22-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "force-m22-transcript",
+          "medium": "game-transcript",
+          "locator": "任务22最终首领、护盾发生器与Dialogue：完整度75%至临界",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-force-ending",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 5,
+      "order": 37,
+      "title": "《联邦力量》结局：任务成功与萨姆斯致意",
+      "summary": "小队脱离战舰灾难，萨姆斯向完成任务的士兵表示敬意。",
+      "detail": "机甲部队以拯救行动和摧毁最终兵器的功绩归航；萨姆斯从被迫交战的对象重新成为援助者。",
+      "works": [
+        "force"
+      ],
+      "spoilerWorks": [
+        "force"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "force-m22-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "force-m22-transcript",
+          "medium": "game-transcript",
+          "locator": "任务22Post-mission：任务成功、英雄评价与萨姆斯致意",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-force-stinger",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 5,
+      "order": 38,
+      "title": "秘密片尾：研究站里的密特罗德卵",
+      "summary": "任务中回收的卵送入联邦研究设施后，一名装甲人物进入并使卵孵化。",
+      "detail": "场景设计者对该人物的同期说明指向赛拉克斯，这一线索继续通往《穿越未知》中他的密特罗德利用计划。",
+      "works": [
+        "force"
+      ],
+      "spoilerWorks": [
+        "force"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "force-artist",
+        "force-stinger"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "force-artist",
+          "medium": "secondary",
+          "locator": "原场景作者对角色及研究站孵化场景的同期说明转述",
+          "supports": "event"
+        },
+        {
+          "source": "force-stinger",
+          "medium": "game-capture",
+          "locator": "原作秘密片尾实录：研究设施与卵孵化",
+          "supports": "context",
+          "note": "实录用于定位场景；本次身份判断据同期作者说明转述，不标作独立交叉核验。"
+        }
+      ],
+      "keywords": [],
+      "note": "触发与任务17回收卵的额外目标有关，不是全物品100%条件；本段不虚构镜头没有展示的搬运过程。"
     },
     {
       "id": "metroid-010",
@@ -463,9 +2238,9 @@
       "year": "年代未详",
       "yearOrder": 1,
       "order": 1,
-      "title": "调查队与救援队失联",
-      "summary": "联邦派往SR388的调查与救援行动相继中断。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "title": "SR388调查行动失联",
+      "summary": "联邦调查队与救援部队先后失联，萨姆斯受命歼灭SR388上的密特罗德。",
+      "detail": "泽贝斯事件使联邦认定密特罗德一旦被武器化就会威胁银河；这次任务由追缴样本升级为消灭整个种群。",
       "works": [
         "returns"
       ],
@@ -480,20 +2255,52 @@
         {
           "source": "saga",
           "medium": "official-publication",
-          "locator": "Ⅱ：消灭密特罗德的紧急任务",
+          "locator": "Ⅱ：歼灭任务前提",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-returns-evolution",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "深入遗迹，面对连续演化",
+      "summary": "萨姆斯穿过鸟人遗迹，遭遇阿尔法、伽马、泽塔和欧米伽等演化形态。",
+      "detail": "探索不断深入巢穴。重制版以密特罗德DNA开启鸟人封印，并追加机器人等阻碍；这些流程变化不表示萨姆斯执行了两次歼灭任务。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [
+        "returns"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "returns-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "returns-guide",
+          "medium": "firsthand-guide",
+          "locator": "官方攻略：各区域密特罗德与封印；印刷页149、199",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-011",
       "era": "sr388",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 2,
-      "title": "萨姆斯执行歼灭任务",
-      "summary": "萨姆斯深入SR388，逐步消灭密特罗德并击败女王。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 3,
+      "title": "击败密特罗德女王",
+      "summary": "萨姆斯抵达最深处巢穴，击败密特罗德女王。",
+      "detail": "清除女王后，歼灭任务看似已完成；紧接着孵化的幼体却让萨姆斯改变了最后的决定。",
       "works": [
         "returns"
       ],
@@ -510,20 +2317,21 @@
         {
           "source": "saga",
           "medium": "official-publication",
-          "locator": "Ⅱ：消灭密特罗德的紧急任务",
+          "locator": "Ⅱ：女王与幼体",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-012",
       "era": "sr388",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 3,
-      "title": "幼体将萨姆斯认作母亲",
-      "summary": "新生幼体认萨姆斯为母；她留下幼体并带回研究机构。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 4,
+      "title": "幼体认母，歼灭任务出现例外",
+      "summary": "幼体把最先看见的萨姆斯当作母亲，她最终选择留下它。",
+      "detail": "幼体一路相随并帮助开路。萨姆斯没有处决最后这只密特罗德，而把它带向地表。",
       "works": [
         "returns"
       ],
@@ -540,10 +2348,138 @@
         {
           "source": "saga",
           "medium": "official-publication",
-          "locator": "Ⅱ：幼体孵化",
+          "locator": "Ⅱ：幼体孵化与返程",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-returns-original-end",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 5,
+      "title": "《Ⅱ》结局：携幼体离开SR388",
+      "summary": "萨姆斯带着幼体返回座舰，离开SR388并将其交给研究机构。",
+      "detail": "原版的返程以这对特殊同伴为中心，没有重制版追加的地表利德雷战；两版共享留下幼体的决定。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [
+        "returns"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "Ⅱ：带回宇宙科学研究机构",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-returns-proteus",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 6,
+      "title": "重制版追加：利德雷抢夺幼体",
+      "summary": "萨姆斯即将登船时，经过机械改造的利德雷袭来，企图抢走幼体。",
+      "detail": "幼体在战斗中从利德雷身上吸取能量、回补萨姆斯；萨姆斯击退利德雷后，才带着幼体离开。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [
+        "returns"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "returns-guide"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "returns-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页211—213：追加利德雷战及幼体援助",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "本段只属于《萨姆斯归来》。这里击退利德雷并未取消后续《超级密特罗德》的袭击。"
+    },
+    {
+      "id": "metroid-returns-x-stinger",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "重制版片尾：失去天敌的SR388",
+      "summary": "片尾的SR388地表出现X，感染并复制一只当地生物。",
+      "detail": "密特罗德的消失并不等于生态恢复安全。这个画面衔接《融合》的X危机，但没有给出两作之间的准确间隔。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [
+        "returns"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "returns-stinger"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "returns-stinger",
+          "medium": "firsthand-guide",
+          "locator": "片尾：利德雷遗留机械部件旁的生物被X感染",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "这是《萨姆斯归来》新增片尾；不反写成Game Boy原版已经展示的画面。"
+    },
+    {
+      "id": "metroid-returns-memory",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 8,
+      "title": "鸟人记忆补述SR388往事",
+      "summary": "重制版的鸟人记忆展示研究、封印与族群冲突留下的线索。",
+      "detail": "画廊以解锁图像补叙主角到访前的历史；其中人物身份和两支族群动机在《生存恐惧》才被明确说明。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [
+        "returns"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "returns-memories"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "returns-memories",
+          "medium": "firsthand-guide",
+          "locator": "鸟人记忆画廊与最终隐藏画面",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "本条不提前把《生存恐惧》的身份揭秘写进仅允许《萨姆斯归来》剧透的正文。"
     },
     {
       "id": "metroid-013",
@@ -551,9 +2487,9 @@
       "year": "年代未详",
       "yearOrder": 1,
       "order": 1,
-      "title": "利德雷夺走幼体",
-      "summary": "利德雷袭击研究机构，抢走幼体，萨姆斯再次前往泽贝斯。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "title": "研究站遇袭，幼体再次被夺",
+      "summary": "利德雷袭击Ceres宇宙科学研究站，带走萨姆斯刚交付研究的幼体。",
+      "detail": "萨姆斯收到求救信号后折返，未能阻止利德雷脱逃，只能再次追到泽贝斯；研究站在她撤离时自毁。",
       "works": [
         "super"
       ],
@@ -567,21 +2503,115 @@
       "citations": [
         {
           "source": "other",
-          "medium": "official-publication",
-          "locator": "说明书：Story，研究机构受袭回顾",
+          "medium": "manual-scan",
+          "locator": "说明书Story：幼体被夺的回顾",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-super-four",
+      "era": "zebes",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "四名守卫封锁泰利昂",
+      "summary": "萨姆斯重返泽贝斯，逐步击败克雷德、幻影、德雷贡与利德雷。",
+      "detail": "旧要塞已被海盗重建，四名首领构成通往泰利昂的关卡。萨姆斯击败利德雷后，只找到空的幼体培养皿。",
+      "works": [
+        "super"
+      ],
+      "spoilerWorks": [
+        "super"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "super-hunt"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "super-hunt",
+          "medium": "firsthand-guide",
+          "locator": "追踪利德雷篇：巢穴、首领与空培养皿",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-super-giant",
+      "era": "zebes",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "巨大的幼体重新认出萨姆斯",
+      "summary": "萨姆斯在泰利昂遭遇已变得巨大的幼体，被吸走几乎全部能量。",
+      "detail": "幼体在最后关头认出她，停止攻击并离开；萨姆斯继续深入母脑所在的核心。",
+      "works": [
+        "super"
+      ],
+      "spoilerWorks": [
+        "super"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "super-route"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "super-route",
+          "medium": "firsthand-guide",
+          "locator": "The Final Battle：巨大幼体与泰利昂",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-super-mother",
+      "era": "zebes",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 4,
+      "title": "母脑展露真正战斗形态",
+      "summary": "萨姆斯摧毁母脑的容器后，母脑以巨大的战斗形态继续攻击。",
+      "detail": "母脑的压倒性攻击使萨姆斯濒死，单凭此时的火力已难逆转战局。",
+      "works": [
+        "super"
+      ],
+      "spoilerWorks": [
+        "super"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "super-route"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "super-route",
+          "medium": "firsthand-guide",
+          "locator": "The Final Battle：母脑第二阶段",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-014",
       "era": "zebes",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 2,
-      "title": "幼体保护萨姆斯",
-      "summary": "母脑令萨姆斯陷入绝境，幼体救助她并在攻击中牺牲。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 5,
+      "title": "幼体牺牲，萨姆斯得到反击力量",
+      "summary": "幼体赶回并为萨姆斯补充能量，却被母脑杀死。",
+      "detail": "萨姆斯获得足以穿透母脑防线的强力光束。这次救援回报了她在SR388留下幼体的决定。",
       "works": [
         "super"
       ],
@@ -597,21 +2627,22 @@
       "citations": [
         {
           "source": "other",
-          "medium": "official-publication",
-          "locator": "说明书：Story，母脑战回顾",
+          "medium": "manual-scan",
+          "locator": "说明书Story：幼体救助与牺牲",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-015",
       "era": "zebes",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 3,
-      "title": "泽贝斯毁灭",
-      "summary": "萨姆斯击败母脑并离开即将毁灭的泽贝斯。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 6,
+      "title": "《超级》结局：泽贝斯毁灭",
+      "summary": "萨姆斯击败母脑，在倒计时内逃离即将毁灭的泽贝斯。",
+      "detail": "与初代仅摧毁地下要塞不同，这次毁灭的是整颗星球，泽贝斯上的海盗基地随之消失。",
       "works": [
         "super"
       ],
@@ -620,46 +2651,980 @@
       ],
       "evidence": "compiled",
       "sources": [
-        "other"
+        "saga"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "other",
+          "source": "saga",
           "medium": "official-publication",
-          "locator": "说明书：Story，泽贝斯事件结局",
+          "locator": "超级密特罗德：母脑战与星球毁灭",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-super-animals",
+      "era": "zebes",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "可选尾声：救出帮助过自己的生物",
+      "summary": "脱出途中，萨姆斯可以返回旧区域，为达秋拉和艾特库恩打开逃生通道。",
+      "detail": "救援不是通关必经步骤；成功救援会在星球爆炸画面出现额外离星光点，不改变萨姆斯击败母脑并逃生的主线结果。",
+      "works": [
+        "super"
+      ],
+      "spoilerWorks": [
+        "super"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "super-route"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "super-route",
+          "medium": "firsthand-guide",
+          "locator": "The Final Battle：倒计时期间的可选动物救援",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "后续作品再见这些生物，不代表玩家必须在本作采用唯一固定救援路线。"
     },
     {
       "id": "metroid-016",
-      "era": "bottle",
-      "year": "年代未详",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
       "yearOrder": 1,
       "order": 1,
-      "title": "婴儿啼哭求救信号",
-      "summary": "泽贝斯事件后，萨姆斯收到名为“婴儿啼哭”的求救信号，改变航向前往信号来源。",
-      "note": "说明书以泽贝斯事件后的回忆接续求救信号；不把作品发行年份写成剧情年份。本版仅收录可直接核实的开篇。",
+      "title": "“婴儿啼哭”引向瓶子船",
+      "summary": "泽贝斯事件后，萨姆斯收到求救信号，来到瓶子船并与旧日长官亚当会合。",
+      "detail": "萨姆斯同意配合第07小队行动；任务一面推进设施调查，一面揭开她与亚当在联邦军时期的关系。",
       "works": [
         "other"
       ],
       "spoilerWorks": [],
       "evidence": "compiled",
       "sources": [
-        "other"
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "other",
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "剧场第1—3章：求救信号与第07小队",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-bioweapons",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "研究设施背后的生物兵器计划",
+      "summary": "调查发现人工生态区、强化海盗与异常生物，队员也开始接连死亡。",
+      "detail": "瓶子船不是普通废弃设施。萨姆斯既要处理失控实验生物，也要防备一名暗中清除证据和见证者的队内杀手。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "第7—12章：恢复研究数据、队员遇害与清除者",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-ridley",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "幼小实验体长成利德雷",
+      "summary": "此前看似无害的小型生物不断蜕变，最终以利德雷的形态出现。",
+      "detail": "这只实验体来自瓶子船的克隆计划，不是萨姆斯已经在泽贝斯消灭的利德雷简单复活。安东尼掩护萨姆斯，并在战斗中坠向熔岩。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "第14—16章：地热发电所与利德雷",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-mb-lie",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 4,
+      "title": "幸存者告发零区计划",
+      "summary": "自称玛德琳的女性告诉萨姆斯，设施正在克隆密特罗德，并以名为MB的人工智能控制它们。",
+      "detail": "她把关键责任指向亚当，诱导萨姆斯进入零区。此时的指控尚不是最终真相，后续会被推翻。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "第17—18章：生物兵器研究中心对话",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-adam",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 5,
+      "title": "亚当牺牲，零区脱离自毁",
+      "summary": "亚当识破基因改造密特罗德失去冰冻弱点的危险，独自进入零区。",
+      "detail": "他触发区域脱离与自毁，阻止密特罗德被继续利用，并把保护幸存者和完成调查的任务留给萨姆斯。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "第19—20章：零区与亚当最后的命令",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-deleter",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 6,
+      "title": "清除者已死，利德雷也被吸干",
+      "summary": "萨姆斯在研究中心发现詹姆斯的尸体，随后又见到干瘪的利德雷。",
+      "detail": "清除者线在此以尸体与此前行动线索收束；利德雷异常的死状则提示船上仍有密特罗德。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "第21—22章：研究中心与MW房间",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": [],
+      "note": "不把镜头之外的具体杀人过程补写成已展示场景。"
+    },
+    {
+      "id": "metroid-other-queen",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "女王战揭开克隆实验残余",
+      "summary": "萨姆斯遭遇密特罗德女王，在其体内使用威力炸弹结束战斗。",
+      "detail": "零区的毁灭并未清除这只未被同样改造的对照样本；女王在零区以外，因而活到了此时。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-guide",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页133—135：Meet the Queen",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-truth",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 8,
+      "title": "真正的玛德琳与MB身份揭晓",
+      "summary": "真正的玛德琳说明，另一位女性其实是拥有母脑思维资料的人形人工智能MB。",
+      "detail": "MB以人形与幼体建立关系，却在研究人员试图重置她时反抗；船上的灾难与生物兵器计划由此连在一起。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "第24章：玛德琳说明MB与梅丽莎",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-main-ending",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 9,
+      "title": "主线结局：MB死亡，见证者离船",
+      "summary": "MB再度指挥实验生物袭击众人，玛德琳将她冻结，增援士兵随后开火将她杀死。",
+      "detail": "安东尼生还并援引原任务命令，帮助萨姆斯带走玛德琳。两名见证者与萨姆斯离开瓶子船，MB事件结束。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-transcript",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-transcript",
+          "medium": "game-transcript",
+          "locator": "第24—25章：MB最后失控与安东尼归来",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-other-helmet",
+      "era": "post-super",
+      "year": "瓶子船任务（与布洛斯任务先后未明）",
+      "yearOrder": 1,
+      "order": 10,
+      "title": "片尾任务：取回亚当的头盔",
+      "summary": "联邦决定销毁瓶子船，萨姆斯再次登船，击败幻影并找回亚当的头盔。",
+      "detail": "她在船体崩毁前带着遗物脱出。这是职员表之后可玩的终章，不应只以MB死亡作为全作的最后一个场景。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [
+        "other"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other-guide",
+        "beyond-timeline",
+        "other-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other-guide",
+          "medium": "firsthand-guide",
+          "locator": "印刷页136—144：The Final Chapter，幻影战与最后脱出",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "这份访谈只为共同区间中的《究极4》定界；《另一个M》的衔接另见其序章。"
+        },
+        {
+          "source": "other-timeline",
+          "medium": "creator-interview",
+          "locator": "演讲第5页开篇：本作的时序位置",
+          "supports": "date"
+        }
+      ],
+      "keywords": [],
+      "note": "取回的是亚当留下的头盔，不是复活亚当。"
+    },
+    {
+      "id": "metroid-023",
+      "era": "post-super",
+      "year": "宇宙历20X9年",
+      "yearOrder": 2,
+      "order": 11,
+      "title": "联邦研究设施遭赛拉克斯袭击",
+      "summary": "萨姆斯前往联邦研究设施支援，在战斗中遭遇赛拉克斯。",
+      "detail": "研究设施冲突引发异常事故；这是《超级》之后、《融合》之前的另一次任务，不再沿用“究极4尚无时序位置”的旧说明。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-cn",
+        "beyond-timeline",
+        "beyond-cn-story"
+      ],
+      "verification": "single-source",
+      "dateStatus": "single-source",
+      "citations": [
+        {
+          "source": "beyond-cn",
           "medium": "official-publication",
-          "locator": "说明书：Story，Baby’s Cry",
+          "locator": "中文官网：故事前提",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        },
+        {
+          "source": "beyond-cn-story",
+          "medium": "official-publication",
+          "locator": "故事开篇：20X9年，塔纳玛尔UTO研究所遭袭",
+          "supports": "date"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-024",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 12,
+      "title": "事故把萨姆斯送往布洛斯",
+      "summary": "萨姆斯与联邦士兵被传送至未知的布洛斯行星，必须寻找回到原世界的办法。",
+      "detail": "不同环境散布在广阔区域之间，她得到新的念动能力，探索遗留设施并逐步与同伴会合。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-cn",
+        "beyond-timeline",
+        "beyond-cn-powers"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-cn",
+          "medium": "official-publication",
+          "locator": "中文官网：布洛斯、念动能力与归途",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        },
+        {
+          "source": "beyond-cn-powers",
+          "medium": "official-publication",
+          "locator": "念动能力与薇奥拉",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-beyond-lamorn",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 13,
+      "title": "拉蒙文明托付记忆与归途",
+      "summary": "萨姆斯接受古文明遗留的委托，搜集五把钥匙，准备开启主传送器。",
+      "detail": "念动能力把萨姆斯与文明遗迹及机关连接起来。她必须探索不同区域，为开启主传送器寻找五把钥匙；保存文明记忆的托付则会在后续旅途中继续展开。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-fury",
+        "beyond-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-fury",
+          "medium": "firsthand-guide",
+          "locator": "狂怒丛林：委托、钥匙与念动能力",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-beyond-team",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 14,
+      "title": "五名联邦成员成为同行者",
+      "summary": "萨姆斯陆续与麦肯齐、托卡毕、杜克、阿姆斯壮和机器人VUE995组成临时队伍。",
+      "detail": "每个人以自身专长协助探索；新的载具帮助萨姆斯穿过荒漠，行动则围绕钥匙与回到原世界的共同目标推进。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-cn-team",
+        "beyond-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-cn-team",
+          "medium": "official-publication",
+          "locator": "与同伴并肩奋战：五名联邦成员",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：超级后、融合前",
+          "supports": "date"
+        }
+      ],
+      "keywords": [],
+      "note": "这里列出同行者不是保证故事结束时全员已获救。"
+    },
+    {
+      "id": "metroid-beyond-civilization",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 15,
+      "title": "结晶移植实验导致文明覆灭",
+      "summary": "拉蒙族试图向族人移植结晶、赋予念动能力，受术者却变成失控生物。",
+      "detail": "遗迹的衰败不是一次普通外敌入侵。开发者对实验失败的说明，解释了萨姆斯在不同区域遇见的文明残骸与异变。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-dream",
+        "beyond-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-dream",
+          "medium": "creator-interview",
+          "locator": "剧透问答：拉蒙族外形与设定",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-beyond-sylux",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 16,
+      "title": "治疗舱中的赛拉克斯继续干预",
+      "summary": "赛拉克斯进入时光之塔的治疗舱，试图操控持有钥匙的守护者。",
+      "detail": "他的干涉使融合生物失控；萨姆斯看见的记忆片段与两人之间的心灵共鸣相连，并非他已经被彻底消灭后的回忆。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-dream",
+        "beyond-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-dream",
+          "medium": "creator-interview",
+          "locator": "剧透问答：赛拉克斯的行动、同伴与心灵共鸣",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-beyond-tower",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 17,
+      "title": "机甲突破时光之塔的防护",
+      "summary": "取得钥匙并准备好机甲后，萨姆斯与队伍突破时光之塔力场。",
+      "detail": "众人向主传送器前进。共同协作的探索任务在塔内转为对赛拉克斯的最终交锋。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-tower",
+        "beyond-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-tower",
+          "medium": "firsthand-guide",
+          "locator": "机甲零件、营地出发与时光之塔入口",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-beyond-final-fight",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 18,
+      "title": "最终战从队伍协作转入超空间",
+      "summary": "萨姆斯先与同伴共同对抗赛拉克斯，战斗随后进入超空间与悬空平台。",
+      "detail": "赛拉克斯运用LockJaw等形态进攻；萨姆斯击倒他并返回塔顶，但这一轮胜利没有终结他的全部行动。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-boss",
+        "beyond-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-boss",
+          "medium": "firsthand-guide",
+          "locator": "最终头目三阶段：Phase One—Three",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-beyond-farewell",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 19,
+      "title": "同伴掩护萨姆斯通过传送器",
+      "summary": "赛拉克斯再次袭来并击中萨姆斯，队伍合力阻挡他，掩护萨姆斯独自通过主传送器。",
+      "detail": "共同寻找归途的行动以离别收束，镜头没有展示所有同行者一起回到原世界。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-tower",
+        "beyond-timeline",
+        "beyond-sylux",
+        "beyond-dream"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-tower",
+          "medium": "firsthand-guide",
+          "locator": "主传送器终盘与最后两段过场",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        },
+        {
+          "source": "beyond-sylux",
+          "medium": "firsthand-guide",
+          "locator": "Metroid Prime 4 (SPOILERS)末两段：赛拉克斯返回与同伴掩护",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-dream",
+          "medium": "creator-interview",
+          "locator": "正文：两位宿敌的恩怨尚未了结",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "结局未确认全部同伴最终死亡，也没有确认全员随后获救。开发者明确两位宿敌的恩怨尚未完结，不能写成赛拉克斯已被永久杀死。"
+    },
+    {
+      "id": "metroid-beyond-memory-tree",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 20,
+      "title": "片尾：种下文明的记忆",
+      "summary": "萨姆斯在另一片土地种下记忆果实，把托卡毕留下的护符挂在新树上。",
+      "detail": "装甲恢复原来的外观，她独自离去。文明的托付与同行者留下的纪念成为这次冒险的最后一幕。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-ending",
+        "beyond-timeline"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-ending",
+          "medium": "firsthand-guide",
+          "locator": "What Happens：记忆果实、护符与离去",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-beyond-extra",
+      "era": "post-super",
+      "year": "布洛斯任务（与瓶子船任务先后未明）",
+      "yearOrder": 2,
+      "order": 21,
+      "title": "100%追加：摘盔与完整回忆影片",
+      "summary": "完成收集与扫描会追加摘盔画面，并开放更完整的赛拉克斯回忆。",
+      "detail": "完整版回忆揭示赛拉克斯曾率联邦小队，违抗等待萨姆斯的命令去夺武器；爆炸导致小队覆灭，他拒绝萨姆斯的救助并把仇恨指向她。对应amiibo也能解锁回忆影片，但不等于自动完成游戏或救回同行者。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [
+        "beyond"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "beyond-vgc",
+        "beyond-timeline",
+        "beyond-ending",
+        "beyond-sylux"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond-vgc",
+          "medium": "firsthand-guide",
+          "locator": "100%结局条件与Gallery影片",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-timeline",
+          "medium": "creator-interview",
+          "locator": "时序问答：《超级密特罗德》之后、《融合》之前；未比较《另一个M》",
+          "supports": "date",
+          "note": "明确任务的外部时序范围，不给布洛斯历法换算。"
+        },
+        {
+          "source": "beyond-ending",
+          "medium": "firsthand-guide",
+          "locator": "Secret Ending：amiibo解锁影片与100%追加的区别",
+          "supports": "event"
+        },
+        {
+          "source": "beyond-sylux",
+          "medium": "firsthand-guide",
+          "locator": "Metroid Prime 4 (SPOILERS)：完整版回忆的联邦小队往事",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "这是画面与资料解锁差异，不是救回全员的新结局；没有由此追加一条互斥历史。"
     },
     {
       "id": "metroid-017",
@@ -667,27 +3632,28 @@
       "year": "年代未详",
       "yearOrder": 1,
       "order": 1,
-      "title": "SR388调查中的感染",
-      "summary": "萨姆斯护送研究队时感染X，随后生命垂危。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "title": "SR388调查中感染X",
+      "summary": "萨姆斯护送研究队时感染X，随后失去意识，座舰坠毁。",
+      "detail": "救援人员回收逃生舱，手术切除大量受感染装甲；已经侵入神经系统的X仍使她濒死。",
       "works": [
         "fusion"
       ],
       "spoilerWorks": [],
       "evidence": "compiled",
       "sources": [
-        "fusion"
+        "fusion-transcript"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "fusion",
-          "medium": "official-publication",
-          "locator": "公告：故事介绍",
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "Prologue：SR388调查、失去意识与手术",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-018",
@@ -695,9 +3661,9 @@
       "year": "年代未详",
       "yearOrder": 1,
       "order": 2,
-      "title": "疫苗改变身体",
-      "summary": "密特罗德DNA制成的疫苗救回萨姆斯，也改变了她与X的关系。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "title": "密特罗德疫苗救回萨姆斯",
+      "summary": "由最后幼体细胞制成的疫苗清除萨姆斯体内的X。",
+      "detail": "她获得吸收X的能力，也继承了密特罗德怕冷的弱点；与幼体的联系在幼体死亡后仍然影响着她。",
       "works": [
         "fusion"
       ],
@@ -714,20 +3680,52 @@
         {
           "source": "fusion",
           "medium": "official-publication",
-          "locator": "公告：疫苗与身体变化",
+          "locator": "官方公告：密特罗德DNA疫苗",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-fusion-station",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "研究站爆炸与失控感染",
+      "summary": "萨姆斯前往B.S.L.研究站调查爆炸，在导航电脑引导下恢复系统。",
+      "detail": "从她身上切除的感染装甲被送到这里，X已在研究站扩散，复制工作人员、生物和机械有机组件。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "fusion-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第1—2章：研究站爆炸与感染来源",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-019",
       "era": "x",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 3,
-      "title": "研究站出现SA-X",
-      "summary": "萨姆斯在研究站遭遇模仿自己全盛期装甲形态的SA-X。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 4,
+      "title": "SA-X以全盛期萨姆斯的姿态追猎",
+      "summary": "X从感染装甲中复制出SA-X，其火力远强于此时的萨姆斯。",
+      "detail": "萨姆斯不得不躲避追猎，同时通过吸收强敌的核心X恢复能力；电脑警告，研究站里并不一定只有一个SA-X。",
       "works": [
         "fusion"
       ],
@@ -736,28 +3734,185 @@
       ],
       "evidence": "compiled",
       "sources": [
-        "saga"
+        "fusion-transcript"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "saga",
-          "medium": "official-publication",
-          "locator": "融合：X寄生生物的袭击",
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第2章SA-X说明；第14章复制数量说明",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-fusion-reactor",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 5,
+      "title": "研究站危机不止于追猎者",
+      "summary": "X不断破坏设施，试图让反应堆过热，随后又导致动力异常。",
+      "detail": "萨姆斯恢复冷却、解决反应堆危机，并在栖息区发现幸存的达秋拉与艾特库恩；她也从梦魇等实验体身上取回关键能力。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "fusion-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第9章Race Against Time；第11—12章动力恢复与梦魇",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-fusion-lab",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 6,
+      "title": "隐藏实验室仍在繁殖密特罗德",
+      "summary": "萨姆斯闯入禁区，发现研究站秘密保存并繁殖密特罗德。",
+      "detail": "SA-X袭击实验室后被幼体围攻，实验区脱离研究站并爆炸。联邦方面的研究意图与萨姆斯的灭除目标开始明显冲突。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "fusion-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第14章Restricted Secrets：禁区与实验室脱离",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-fusion-federation",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "拒绝把SA-X交给研究人员",
+      "summary": "导航电脑透露，联邦仍想捕获并研究X及SA-X，甚至限制过萨姆斯的装备支援。",
+      "detail": "萨姆斯判断，来访人员一旦被X复制，灾祸就会越过研究站。她决定在舰队抵达前结束感染源。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "fusion-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第15章Final Showdown：舰队、限制支援与自毁争论",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "不同语种对责任主体的措辞有差别；不把此段扩写成萨姆斯已被整个联邦永久通缉。"
+    },
+    {
+      "id": "metroid-fusion-adam",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 8,
+      "title": "电脑中的亚当给出活下去的方案",
+      "summary": "萨姆斯在争论中叫出亚当的名字，电脑随后以她熟悉的方式回应。",
+      "detail": "电脑提出改变研究站轨道，撞向SR388后引爆，使感染源一起被毁，同时命令萨姆斯回到座舰逃生。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "fusion-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第15章：亚当的最后任务与轨道改变",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-fusion-final-boss",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 9,
+      "title": "SA-X与欧米伽密特罗德的终局",
+      "summary": "萨姆斯击败SA-X并启动推进程序，却在机库遭遇欧米伽密特罗德。",
+      "detail": "SA-X随后攻击密特罗德并被击散；萨姆斯吸收其核心，恢复冰冻光束，最终击败欧米伽密特罗德。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "fusion-transcript"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第15章：行动室、机库与冰冻光束恢复",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-020",
       "era": "x",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 4,
-      "title": "研究站与SR388毁灭",
-      "summary": "萨姆斯的行动最终使研究站与SR388一同毁灭。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 10,
+      "title": "《融合》结局：研究站撞毁SR388",
+      "summary": "座舰接走萨姆斯，B.S.L.研究站与SR388在碰撞爆炸中毁灭。",
+      "detail": "逃生船上还载有研究站里的达秋拉与艾特库恩；萨姆斯与亚当预见调查和问责，却坚持自己阻止了更大的灾难。",
       "works": [
         "fusion"
       ],
@@ -766,18 +3921,20 @@
       ],
       "evidence": "compiled",
       "sources": [
-        "saga"
+        "fusion-transcript"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "saga",
-          "medium": "official-publication",
-          "locator": "融合：结局回顾",
+          "source": "fusion-transcript",
+          "medium": "game-transcript",
+          "locator": "第16章Finale：撞击、逃生与船内终幕",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": [],
+      "note": "这里终结的是当时已知的SR388感染源；后来的ZDR线索推翻“银河从此绝无X”的假定。"
     },
     {
       "id": "metroid-021",
@@ -785,9 +3942,9 @@
       "year": "年代未详",
       "yearOrder": 1,
       "order": 1,
-      "title": "ZDR传来X目击线索",
-      "summary": "融合事件后，关于X的线索把萨姆斯引向ZDR。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "title": "ZDR的X线索引来调查",
+      "summary": "联邦收到ZDR上存在X的影像，先派出的E.M.M.I.调查机器人却全部失联。",
+      "detail": "萨姆斯因具有抗X能力而前往ZDR；这次任务发生在《融合》之后，开端即以可能残留的感染源为核心。",
       "works": [
         "dread"
       ],
@@ -802,10 +3959,11 @@
         {
           "source": "dread",
           "medium": "official-publication",
-          "locator": "故事介绍：任务前提",
+          "locator": "官方故事介绍：调查前提",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
       "id": "metroid-022",
@@ -813,13 +3971,15 @@
       "year": "年代未详",
       "yearOrder": 1,
       "order": 2,
-      "title": "调查转为求生",
-      "summary": "萨姆斯深入星球，在危险环境与追踪威胁中寻找出路。",
-      "note": "本版只收录官方公开前提；最终身份、鸟人族内幕与结局尚未逐场引证，不以推测补齐。",
+      "title": "深处败北，求生路线向上展开",
+      "summary": "萨姆斯在地下遭遇强大的鸟人战士，战败醒来后失去大量能力。",
+      "detail": "她以返回地表座舰为目标，却受到原本用于调查的E.M.M.I.追猎；接入网络站成为取得指引的主要方式。",
       "works": [
         "dread"
       ],
-      "spoilerWorks": [],
+      "spoilerWorks": [
+        "dread"
+      ],
       "evidence": "compiled",
       "sources": [
         "dread"
@@ -830,66 +3990,393 @@
         {
           "source": "dread",
           "medium": "official-publication",
-          "locator": "故事介绍：ZDR探索",
+          "locator": "官方故事介绍：地下苏醒与E.M.M.I.追踪",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
-      "id": "metroid-023",
-      "era": "beyond",
+      "id": "metroid-dread-quiet-robe",
+      "era": "zdr",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 1,
-      "title": "联邦研究设施遭遇战",
-      "summary": "萨姆斯在联邦研究设施与赛拉克斯相遇。",
-      "note": "官方资料未给出本事件的确切年月。",
+      "order": 3,
+      "title": "魁特罗布揭露雷文毕克的真正目的",
+      "summary": "魁特罗布让部分E.M.M.I.停止行动，并告诉萨姆斯，雷文毕克要夺取她体内的密特罗德DNA。",
+      "detail": "魁特罗布说明SR388旧事、ZDR遭X侵袭及雷文毕克失去原定兵器的经过，随后为萨姆斯打开道路，却被机器人杀害。",
       "works": [
-        "beyond"
+        "dread"
       ],
-      "spoilerWorks": [],
+      "spoilerWorks": [
+        "dread"
+      ],
       "evidence": "compiled",
       "sources": [
-        "beyond"
+        "dread-quiet"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "beyond",
-          "medium": "official-publication",
-          "locator": "玩家指南：物语",
+          "source": "dread-quiet",
+          "medium": "firsthand-guide",
+          "locator": "魁特罗布说明与遇害过场",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
     },
     {
-      "id": "metroid-024",
-      "era": "beyond",
+      "id": "metroid-dread-elun-open",
+      "era": "zdr",
       "year": "年代未详",
       "yearOrder": 1,
-      "order": 2,
-      "title": "事故传送至未知星球",
-      "summary": "意外把萨姆斯送往未知星球，她与同样受困的联邦士兵合作寻找归途。",
-      "note": "此处单独列出《究极4》，不沿用“所有究极作品均发生在初代和Ⅱ之间”的旧概括。精确插入点待直接官方时序资料核对。",
+      "order": 4,
+      "title": "艾路恩解封，X再度扩散",
+      "summary": "萨姆斯进入封锁区域艾路恩，发现X并未在SR388毁灭时彻底消失。",
+      "detail": "离开后，X从隔离区域扩散至ZDR其他地区，原有生物与鸟人士兵都出现感染形态；魁特罗布的身体也被X复制。 魁特罗布的X复制体重新启动先前停止的E.M.M.I.，追猎也再次开始。",
       "works": [
-        "beyond"
+        "dread"
       ],
-      "spoilerWorks": [],
+      "spoilerWorks": [
+        "dread"
+      ],
       "evidence": "compiled",
       "sources": [
-        "beyond"
+        "dread-elun"
       ],
       "verification": "single-source",
       "dateStatus": "undated",
       "citations": [
         {
-          "source": "beyond",
-          "medium": "official-publication",
-          "locator": "玩家指南：物语、与同伴一起",
+          "source": "dread-elun",
+          "medium": "firsthand-guide",
+          "locator": "The Mystery of Elun：封锁区与X逃逸",
           "supports": "event"
         }
-      ]
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-dread-freeze",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 5,
+      "title": "熔岩停流使区域急冻",
+      "summary": "遭感染的实验体阻断熔岩循环，萨姆斯返回的区域陷入严寒。",
+      "detail": "她击败实验体Z-57，恢复供热并继续向地表前进；与X、鸟人士兵及E.M.M.I.的战斗逐步显露她吸收能量的异常能力。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-frozen"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-frozen",
+          "medium": "firsthand-guide",
+          "locator": "Frozen ZDR与Experiment Z-57",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-dread-false-adam",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 6,
+      "title": "最后的“亚当”原来是雷文毕克",
+      "summary": "最终网络站里的声音要求萨姆斯服从，萨姆斯开火揭穿伪装。",
+      "detail": "雷文毕克利用网络站冒充亚当，并把整段试炼用于刺激她的密特罗德能力；座舰中的真正亚当与这个冒名者不同。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-final"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-final",
+          "medium": "firsthand-guide",
+          "locator": "Revelations：最终网络站",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-dread-donor",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 7,
+      "title": "雷文毕克企图复制萨姆斯",
+      "summary": "雷文毕克揭露，他是萨姆斯体内麦欧金DNA的供体，想用觉醒后的她制造服从自己的军队。",
+      "detail": "他把供体关系称作父女关系，却不是在证明自己是萨姆斯的人类生父；两人随即展开最后决战。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-final"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-final",
+          "medium": "firsthand-guide",
+          "locator": "Revelations：供体与克隆计划",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-dread-awakening",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 8,
+      "title": "密特罗德之力完全觉醒",
+      "summary": "雷文毕克在最后关头再次扼住萨姆斯，萨姆斯反过来吸取他的能量。",
+      "detail": "她的装甲转为密特罗德形态，空中要塞坠落；雷文毕克随即遭X感染并形成巨大的复合怪物。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-final"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-final",
+          "medium": "firsthand-guide",
+          "locator": "Escape：扼喉、觉醒与要塞坠落",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-dread-raven-x",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 9,
+      "title": "摧毁雷文毕克X，冲向座舰",
+      "summary": "萨姆斯用强力光束摧毁雷文毕克X，并穿过不断崩毁的区域。",
+      "detail": "这次最终攻击结束了雷文毕克当场的威胁，但她吸取能量的能力也可能抽干座舰，令脱出受阻。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-final"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-final",
+          "medium": "firsthand-guide",
+          "locator": "Escape：雷文毕克X与逃生路线",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    },
+    {
+      "id": "metroid-dread-escape",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 10,
+      "title": "《生存恐惧》结局：魁特罗布X与最后脱出",
+      "summary": "魁特罗布X在座舰中现身，化回X并被萨姆斯吸收，使她恢复能操纵座舰的状态。",
+      "detail": "萨姆斯随即起飞，在ZDR爆炸前离开；她与密特罗德、鸟人族及X交织的这一段故事由此收束。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-final"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-final",
+          "medium": "firsthand-guide",
+          "locator": "Escape：魁特罗布X、装甲恢复与ZDR毁灭",
+          "supports": "event"
+        }
+      ],
+      "keywords": [],
+      "note": "画面没有完整解释魁特罗布X为何采取这一行为，不断言魁特罗布已复活、X变善或萨姆斯已经永久失去全部密特罗德DNA。"
+    },
+    {
+      "id": "metroid-dread-gallery",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 11,
+      "title": "通关奖励补叙，不改写结局",
+      "summary": "通关时间与难度解锁历代冒险插画，区域收集率则解锁鸟人档案。",
+      "detail": "奖励补充ZDR旧事与角色关系，不存在因收集率不同就把雷文毕克战和星球脱出改成另一条结局的机制。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [
+        "dread"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "dread-endings"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread-endings",
+          "medium": "official-publication",
+          "locator": "官方报告第11期：通关奖励与鸟人档案",
+          "supports": "event"
+        }
+      ],
+      "keywords": []
+    }
+  ],
+  "terms": [
+    {
+      "id": "phazon",
+      "title": "费原子（Phazon）",
+      "kind": "原作中文专名",
+      "aliases": [
+        "Phazon"
+      ],
+      "note": "采用《究极 复刻版》中文日志转录中的“费原子分析”“费原子计划”“费原子服”；“费原子物质”可作句子描述，但“物质”不是专名的固定组成。转录来源见资料目录，不冒称已读取官方网页中的该词。"
+    },
+    {
+      "id": "samus",
+      "title": "萨姆斯·亚兰",
+      "kind": "角色",
+      "aliases": [
+        "Samus Aran"
+      ],
+      "note": "采用任天堂简体中文官网；正文简写为萨姆斯。“银河战士”是系列旧称，不是此角色姓名。"
+    },
+    {
+      "id": "prime-remastered",
+      "title": "密特罗德 究极 复刻版",
+      "kind": "官方作品名",
+      "aliases": [
+        "Metroid Prime Remastered"
+      ],
+      "note": "按任天堂中文商品页名称记录；与原版《究极》共享同一剧情事件。"
+    },
+    {
+      "id": "beyond",
+      "title": "密特罗德 究极4 穿越未知",
+      "kind": "官方作品名",
+      "aliases": [
+        "Metroid Prime 4: Beyond"
+      ],
+      "note": "采用任天堂简体中文官网；不再使用自译副标题。"
+    },
+    {
+      "id": "sylux",
+      "title": "赛拉克斯",
+      "kind": "角色",
+      "aliases": [
+        "Sylux"
+      ],
+      "note": "采用《穿越未知》官方简体中文名称；在较早作品事件中也统一同名。"
+    },
+    {
+      "id": "viewros",
+      "title": "布洛斯行星",
+      "kind": "地点",
+      "aliases": [
+        "Viewros"
+      ],
+      "note": "采用《穿越未知》官方简体中文名称；不据此推定它与主宇宙具有可换算的历法。"
+    },
+    {
+      "id": "raven-beak",
+      "title": "雷文毕克",
+      "kind": "原作中文专名",
+      "aliases": [
+        "Raven Beak"
+      ],
+      "note": "按系列中文原作术语对照采用，转录载体见资料目录；不再直译英文名或另作音译。"
+    },
+    {
+      "id": "quiet-robe",
+      "title": "魁特罗布",
+      "kind": "原作中文专名",
+      "aliases": [
+        "Quiet Robe"
+      ],
+      "note": "按系列中文原作术语对照采用，转录载体见资料目录；不再直译英文名或另作音译。"
+    },
+    {
+      "id": "thoha",
+      "title": "苏哈族",
+      "kind": "原作中文专名",
+      "aliases": [
+        "Thoha"
+      ],
+      "note": "按系列中文原作术语对照采用，转录载体见资料目录；不再直译英文名或另作音译。"
+    },
+    {
+      "id": "mawkin",
+      "title": "麦欧金族",
+      "kind": "原作中文专名",
+      "aliases": [
+        "Mawkin"
+      ],
+      "note": "按系列中文原作术语对照采用，转录载体见资料目录；不再直译英文名或另作音译。"
+    },
+    {
+      "id": "series",
+      "title": "密特罗德",
+      "kind": "系列名称",
+      "aliases": [
+        "Metroid",
+        "银河战士"
+      ],
+      "note": "采用现行官方中文系列名；银河战士是旧称，不当作萨姆斯的正式姓名。"
     }
   ]
 }

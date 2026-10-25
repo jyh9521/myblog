@@ -1,0 +1,895 @@
+{
+  "id": "metroid",
+  "title": "密特罗德系列时间线",
+  "description": "按世界内剧情整理萨姆斯的主要任务：泽贝斯、究极系列、SR388、超级密特罗德、另一个M、融合与生存恐惧。覆盖12组作品、24个剧情节点，每条附官方来源；原版与重制合并对应，究极4单独说明。当前为主干版，不宣称逐关卡或全结局覆盖。",
+  "calendarNote": "系列没有可直接套用的统一绝对年表。本表使用相对任务顺序，年代未详不代表同一年，间距不按时间比例。究极分支的具体插入点及《究极4》的二维主线位置，需区分官方明确叙述与常见整理；最后的独立分区不表示发生在《生存恐惧》之后。剧情单源表示本条依一份官方材料整理，不代表独立交叉验证。",
+  "terminologyNote": "系列统一称“密特罗德”，角色使用“萨姆斯”。旧作中文副标题采用便于检索的译写，英文原题保留在作品资料；“银河战士”“银河战士Prime”等旧称不代表另一个系列。",
+  "works": [
+    {
+      "id": "zero",
+      "title": "密特罗德／零点任务",
+      "originalTitle": "Metroid / Metroid: Zero Mission"
+    },
+    {
+      "id": "prime",
+      "title": "密特罗德 究极／究极 重制版",
+      "originalTitle": "Metroid Prime / Metroid Prime Remastered"
+    },
+    {
+      "id": "hunters",
+      "title": "密特罗德 究极 猎人",
+      "originalTitle": "Metroid Prime Hunters"
+    },
+    {
+      "id": "echoes",
+      "title": "密特罗德 究极2 回响",
+      "originalTitle": "Metroid Prime 2: Echoes"
+    },
+    {
+      "id": "corruption",
+      "title": "密特罗德 究极3 腐蚀",
+      "originalTitle": "Metroid Prime 3: Corruption"
+    },
+    {
+      "id": "force",
+      "title": "密特罗德 究极 联邦力量",
+      "originalTitle": "Metroid Prime: Federation Force"
+    },
+    {
+      "id": "returns",
+      "title": "密特罗德Ⅱ／萨姆斯归来",
+      "originalTitle": "Metroid II: Return of Samus / Metroid: Samus Returns"
+    },
+    {
+      "id": "super",
+      "title": "超级密特罗德",
+      "originalTitle": "Super Metroid"
+    },
+    {
+      "id": "other",
+      "title": "密特罗德 另一个M",
+      "originalTitle": "Metroid: Other M"
+    },
+    {
+      "id": "fusion",
+      "title": "密特罗德 融合",
+      "originalTitle": "Metroid Fusion"
+    },
+    {
+      "id": "dread",
+      "title": "密特罗德 生存恐惧",
+      "originalTitle": "Metroid Dread"
+    },
+    {
+      "id": "beyond",
+      "title": "密特罗德 究极4 超越",
+      "originalTitle": "Metroid Prime 4: Beyond"
+    }
+  ],
+  "eras": [
+    {
+      "id": "first",
+      "title": "泽贝斯初次任务",
+      "calendar": "相对剧情阶段",
+      "note": "使用任务先后，不换算绝对年份。"
+    },
+    {
+      "id": "phazon",
+      "title": "究极系列：菲增强物质事件",
+      "calendar": "相对剧情阶段",
+      "note": "使用任务先后，不换算绝对年份。"
+    },
+    {
+      "id": "sr388",
+      "title": "SR388任务与幼体",
+      "calendar": "相对剧情阶段",
+      "note": "使用任务先后，不换算绝对年份。"
+    },
+    {
+      "id": "zebes",
+      "title": "重返泽贝斯",
+      "calendar": "相对剧情阶段",
+      "note": "使用任务先后，不换算绝对年份。"
+    },
+    {
+      "id": "bottle",
+      "title": "瓶子船调查",
+      "calendar": "相对剧情阶段",
+      "note": "使用任务先后，不换算绝对年份。"
+    },
+    {
+      "id": "x",
+      "title": "X寄生生物事件",
+      "calendar": "相对剧情阶段",
+      "note": "使用任务先后，不换算绝对年份。"
+    },
+    {
+      "id": "zdr",
+      "title": "ZDR调查",
+      "calendar": "相对剧情阶段",
+      "note": "使用任务先后，不换算绝对年份。"
+    },
+    {
+      "id": "beyond",
+      "title": "究极4：时点单独说明",
+      "calendar": "相对剧情阶段",
+      "note": "本区独立展示，不表示发生在《生存恐惧》之后；公开介绍未给出精确插入点。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "saga",
+      "title": "任天堂：《生存恐惧》报告第4期——系列剧情回顾",
+      "url": "https://www.nintendo.com/au/news-and-articles/metroid-dread-report-vol-4-unravelling-a-saga-35-years-in-the-making/",
+      "scope": "初代、Ⅱ、超级、融合的剧情；不提供事件间隔年数。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "remakes",
+      "title": "任天堂：《生存恐惧》报告第3期——二维系列",
+      "url": "https://metroid.nintendo.com/dread/news/metroid-dread-report-vol-3/",
+      "scope": "二维作品顺序与重制对应关系。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "prime",
+      "title": "任天堂：《究极 重制版》官方网站",
+      "url": "https://www.nintendo.com/jp/switch/a3sda/index.html",
+      "scope": "塔隆Ⅳ冒险前提；重制版不是另一场历史事件。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "trilogy",
+      "title": "任天堂：《究极三部曲》说明书",
+      "url": "https://csassets.nintendo.com/noaext/image/private/t_KA_PDF/Wii_Metroid_Prime_Trilogy?_a=DATC1RAAZAA0",
+      "scope": "三部曲各作故事章节；不用于推定精确年份。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "hunters",
+      "title": "任天堂：《究极 猎人》说明书",
+      "url": "https://www.nintendo.com/eu/media/downloads/games_8/emanuals/nintendo_ds_21/Manual_NintendoDS_MetroidPrimeHunters_EN.pdf",
+      "scope": "故事章节：阿林比克文明、终极力量传讯与猎人；与究极Ⅱ的先后在本表保留整理性质。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "force",
+      "title": "任天堂：《究极 联邦力量》官方网站",
+      "url": "https://www.nintendo.co.jp/3ds/bcaj/index.html",
+      "scope": "联邦军驾驶机甲对抗宇宙海盗的任务前提。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "other",
+      "title": "任天堂：《另一个M》日文说明书",
+      "url": "https://m1.nintendo.net/docvc/RVL/JPN/R3OJ/R3OJ_J.pdf",
+      "scope": "故事章节回顾幼体与泽贝斯事件，并叙述求救信号。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "fusion",
+      "title": "任天堂：《融合》加入会员游戏库公告",
+      "url": "https://www.nintendo.com/en-ca/whatsnew/metroid-fusion-is-now-available-for-nintendo-switch-online-expansion-pack-members/",
+      "scope": "X感染、密特罗德疫苗与研究站任务。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "dread",
+      "title": "任天堂：《生存恐惧》故事介绍",
+      "url": "https://metroid.nintendo.com/dread/story/",
+      "scope": "融合后故事与ZDR调查前提；本表暂不展开最终身份揭秘。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    },
+    {
+      "id": "beyond",
+      "title": "任天堂：初次接触究极系列的玩家指南",
+      "url": "https://www.nintendo.com/jp/topics/article/ed98179e-b57e-4ae8-8ac5-3cdc5d721661",
+      "scope": "究极4的研究设施、传送事故与未知星球故事前提；没有明确二维主线插入点。",
+      "kind": "官方资料",
+      "family": "nintendo"
+    }
+  ],
+  "events": [
+    {
+      "id": "metroid-001",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "密特罗德样本遭劫",
+      "summary": "联邦发现SR388的密特罗德，宇宙海盗夺取样本并企图将其武器化。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "初代：赏金猎人登场",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-002",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "萨姆斯潜入泽贝斯",
+      "summary": "萨姆斯受联邦委托，摧毁母脑及海盗地下要塞。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "初代：赏金猎人登场",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-003",
+      "era": "first",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "零点任务的追加脱出段落",
+      "summary": "重制版补写萨姆斯失去动力装甲后，躲避宇宙海盗的潜行过程。",
+      "note": "此段为《零点任务》追加内容，不当作初代之后的第二次独立任务。",
+      "works": [
+        "zero"
+      ],
+      "spoilerWorks": [
+        "zero"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "初代：开发团队寄语",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-004",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "追踪至塔隆Ⅳ",
+      "summary": "萨姆斯在塔隆Ⅳ展开探索，调查宇宙海盗与星球上的异常。",
+      "note": "《究极 重制版》重现同一任务，不另增一次历史事件。",
+      "works": [
+        "prime"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "prime"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "prime",
+          "medium": "official-publication",
+          "locator": "官网：故事与探索介绍",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-005",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "终极力量的传讯",
+      "summary": "神秘传讯把萨姆斯和其他赏金猎人引向阿林比克文明遗迹。",
+      "note": "通常整理在《究极》与《究极2》之间；本条官方手册支持任务前提，不独立证明该插入点。",
+      "works": [
+        "hunters"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "hunters"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "hunters",
+          "medium": "official-publication",
+          "locator": "说明书：Story",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-006",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "失联调查指向以太星",
+      "summary": "萨姆斯追查失联的联邦部队，进入以太星。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "trilogy"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "trilogy",
+          "medium": "official-publication",
+          "locator": "说明书：METROID PRIME 2: ECHOES 故事",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-007",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 4,
+      "title": "光暗世界的危机",
+      "summary": "以太星的光暗冲突，使萨姆斯卷入当地文明的生存之战。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "echoes"
+      ],
+      "spoilerWorks": [
+        "echoes"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "trilogy"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "trilogy",
+          "medium": "official-publication",
+          "locator": "说明书：究极2的以太星与卢米诺斯背景",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-008",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 5,
+      "title": "腐蚀危机扩大",
+      "summary": "萨姆斯参与联邦行动，对抗与菲增强物质有关的危机。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "corruption"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "trilogy"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "trilogy",
+          "medium": "official-publication",
+          "locator": "说明书：METROID PRIME 3: CORRUPTION 故事",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-009",
+      "era": "phazon",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 6,
+      "title": "联邦军投入机甲作战",
+      "summary": "联邦军士兵驾驶机甲，执行针对宇宙海盗的各项任务。",
+      "note": "本表把它作为究极系列后续任务展示；具体间隔不详，未据此给二维主线安排年份。《爆破球》是训练项目，不单立一场银河历史事件。",
+      "works": [
+        "force"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "force"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "force",
+          "medium": "official-publication",
+          "locator": "官网：游戏介绍",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-010",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "调查队与救援队失联",
+      "summary": "联邦派往SR388的调查与救援行动相继中断。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "Ⅱ：消灭密特罗德的紧急任务",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-011",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "萨姆斯执行歼灭任务",
+      "summary": "萨姆斯深入SR388，逐步消灭密特罗德并击败女王。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [
+        "returns"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "Ⅱ：消灭密特罗德的紧急任务",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-012",
+      "era": "sr388",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "幼体将萨姆斯认作母亲",
+      "summary": "新生幼体认萨姆斯为母；她留下幼体并带回研究机构。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "returns"
+      ],
+      "spoilerWorks": [
+        "returns"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "Ⅱ：幼体孵化",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-013",
+      "era": "zebes",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "利德雷夺走幼体",
+      "summary": "利德雷袭击研究机构，抢走幼体，萨姆斯再次前往泽贝斯。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "super"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "other"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other",
+          "medium": "official-publication",
+          "locator": "说明书：Story，研究机构受袭回顾",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-014",
+      "era": "zebes",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "幼体保护萨姆斯",
+      "summary": "母脑令萨姆斯陷入绝境，幼体救助她并在攻击中牺牲。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "super"
+      ],
+      "spoilerWorks": [
+        "super"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other",
+          "medium": "official-publication",
+          "locator": "说明书：Story，母脑战回顾",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-015",
+      "era": "zebes",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "泽贝斯毁灭",
+      "summary": "萨姆斯击败母脑并离开即将毁灭的泽贝斯。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "super"
+      ],
+      "spoilerWorks": [
+        "super"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "other"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other",
+          "medium": "official-publication",
+          "locator": "说明书：Story，泽贝斯事件结局",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-016",
+      "era": "bottle",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "婴儿啼哭求救信号",
+      "summary": "泽贝斯事件后，萨姆斯收到名为“婴儿啼哭”的求救信号，改变航向前往信号来源。",
+      "note": "说明书以泽贝斯事件后的回忆接续求救信号；不把作品发行年份写成剧情年份。本版仅收录可直接核实的开篇。",
+      "works": [
+        "other"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "other"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "other",
+          "medium": "official-publication",
+          "locator": "说明书：Story，Baby’s Cry",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-017",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "SR388调查中的感染",
+      "summary": "萨姆斯护送研究队时感染X，随后生命垂危。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "fusion"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion",
+          "medium": "official-publication",
+          "locator": "公告：故事介绍",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-018",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "疫苗改变身体",
+      "summary": "密特罗德DNA制成的疫苗救回萨姆斯，也改变了她与X的关系。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "fusion"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "fusion",
+          "medium": "official-publication",
+          "locator": "公告：疫苗与身体变化",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-019",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 3,
+      "title": "研究站出现SA-X",
+      "summary": "萨姆斯在研究站遭遇模仿自己全盛期装甲形态的SA-X。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "融合：X寄生生物的袭击",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-020",
+      "era": "x",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 4,
+      "title": "研究站与SR388毁灭",
+      "summary": "萨姆斯的行动最终使研究站与SR388一同毁灭。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "fusion"
+      ],
+      "spoilerWorks": [
+        "fusion"
+      ],
+      "evidence": "compiled",
+      "sources": [
+        "saga"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "saga",
+          "medium": "official-publication",
+          "locator": "融合：结局回顾",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-021",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "ZDR传来X目击线索",
+      "summary": "融合事件后，关于X的线索把萨姆斯引向ZDR。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "dread"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread",
+          "medium": "official-publication",
+          "locator": "故事介绍：任务前提",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-022",
+      "era": "zdr",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "调查转为求生",
+      "summary": "萨姆斯深入星球，在危险环境与追踪威胁中寻找出路。",
+      "note": "本版只收录官方公开前提；最终身份、鸟人族内幕与结局尚未逐场引证，不以推测补齐。",
+      "works": [
+        "dread"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "dread"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "dread",
+          "medium": "official-publication",
+          "locator": "故事介绍：ZDR探索",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-023",
+      "era": "beyond",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 1,
+      "title": "联邦研究设施遭遇战",
+      "summary": "萨姆斯在联邦研究设施与赛拉克斯相遇。",
+      "note": "官方资料未给出本事件的确切年月。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "beyond"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond",
+          "medium": "official-publication",
+          "locator": "玩家指南：物语",
+          "supports": "event"
+        }
+      ]
+    },
+    {
+      "id": "metroid-024",
+      "era": "beyond",
+      "year": "年代未详",
+      "yearOrder": 1,
+      "order": 2,
+      "title": "事故传送至未知星球",
+      "summary": "意外把萨姆斯送往未知星球，她与同样受困的联邦士兵合作寻找归途。",
+      "note": "此处单独列出《究极4》，不沿用“所有究极作品均发生在初代和Ⅱ之间”的旧概括。精确插入点待直接官方时序资料核对。",
+      "works": [
+        "beyond"
+      ],
+      "spoilerWorks": [],
+      "evidence": "compiled",
+      "sources": [
+        "beyond"
+      ],
+      "verification": "single-source",
+      "dateStatus": "undated",
+      "citations": [
+        {
+          "source": "beyond",
+          "medium": "official-publication",
+          "locator": "玩家指南：物语、与同伴一起",
+          "supports": "event"
+        }
+      ]
+    }
+  ]
+}

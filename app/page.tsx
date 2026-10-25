@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { getAllPosts, hasLocalAsset } from '../lib/posts';
 import { DailyPick } from './site-enhancements';
-import Achievements from './achievements';
 
 export default function Home() {
   const posts = getAllPosts();
@@ -44,6 +43,5 @@ export default function Home() {
         </article>
       )}</div> : <p className="empty-posts">文章即将发布。</p>}
     </section>
-    <Achievements />
   </main>;
 }

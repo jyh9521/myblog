@@ -1,5 +1,5 @@
 ---
-title: 《真名法典：冰之魅影》简体中文汉化 + 现代化补丁
+title: 《真名法典：冰之魅影》简体中文汉化 + 全面增强补丁
 date: 2026-10-26
 description: |-
   > Magna Carta: The Phantom of Avalanche Simplified Chinese Localization & Enhancement Patch

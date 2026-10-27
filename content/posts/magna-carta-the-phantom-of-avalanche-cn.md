@@ -407,6 +407,8 @@ gameSlug: magna-carta-the-phantom-of-avalanche
 
 如果遇到问题，欢迎在 [GitHub Issues](https://github.com/jyh9521/Magna-Carta-The-Phantom-of-Avalanche-CN/issues) 中提交反馈，最好附上游戏版本、出问题的场景、具体复现步骤、截图以及运行日志。
 
+但是我不一定会修（
+
 
 
 ---

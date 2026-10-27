@@ -330,7 +330,7 @@ gameSlug: magna-carta-the-phantom-of-avalanche
 
 ## 七、游戏截图
 
-![主菜单](/uploads/cms/96d6ce27a70cd61447bd027c4bbe5ef0512f99366a29aa552235fb8bac2b8503/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)
+![主菜单](/uploads/cms/95039479e40199cab5f066410e7370a77b8e7dc983de68a60ec98762017979e2/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)
 
 ![文本框+高清字体](/uploads/cms/a7c863f568d4bdcdc1407dcfeb48a8b91e9d694868318aabbd9e8ef9a63204c9/%E5%AF%B9%E8%AF%9D%E6%A1%86.png)
 

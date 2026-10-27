@@ -10,6 +10,7 @@ tags:
   - 游戏
   - 真名法典
 pinned: false
+gameSlug: magna-carta-the-phantom-of-avalanche
 ---
 
 ## 一、关于游戏
@@ -36,7 +37,7 @@ pinned: false
 
 ## 二、项目背景
 
-我一直在做《真名法典》系列的汉化，包括目前已经发布的 PS2 《真名法典：真红的圣痕》简体中文汉化版，以及正在制作的 Xbox 360 《真名法典2》。
+我最近在做《真名法典》系列的汉化，包括目前已经发布的 PS2 《真名法典：真红的圣痕》简体中文汉化版，以及正在制作的 Xbox 360 《真名法典2》。
 
 既然都已经开始研究这个系列了，作为起点的 PC 初代自然也不能落下。
 
@@ -153,6 +154,10 @@ pinned: false
 
 
 
+---
+
+
+
 ## 五、原版程序缺陷与修复工程
 
 如果说汉化是为了让玩家读懂游戏，那么另一项重要工作，就是尽可能让这款二十多年前的游戏能够正常运行和游玩。
@@ -247,6 +252,10 @@ pinned: false
 
 
 
+---
+
+
+
 ## 六、地图、战斗辅助与游戏体验改进
 
 除了底层程序修复，本次还加入了几项原版没有的辅助功能。
@@ -307,6 +316,8 @@ pinned: false
 - Configure.exe：图形化设置、恢复默认、检查入口和启动游戏。
 - Game.exe：直接启动游戏，并提供安装校验及原版资源恢复等功能。
 
+![配置工具界面](/uploads/cms/32e99b8df9e972e020fcceade641d26d58b0c5d0fc6192154664a7200e018cc5/%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%95%8C%E9%9D%A2.png)
+
 配置工具可以调整分辨率、显示模式和帧率，不需要玩家手动修改复杂的配置文件。
 
 个人设置保存在游戏目录的 `enhancements.json` 中，覆盖升级时会保留已有设置及存档。
@@ -317,7 +328,27 @@ pinned: false
 
 
 
-## 七、安装与使用方法
+## 七、游戏截图
+
+![主菜单](/uploads/cms/96d6ce27a70cd61447bd027c4bbe5ef0512f99366a29aa552235fb8bac2b8503/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)
+
+![文本框+高清字体](/uploads/cms/a7c863f568d4bdcdc1407dcfeb48a8b91e9d694868318aabbd9e8ef9a63204c9/%E5%AF%B9%E8%AF%9D%E6%A1%86.png)
+
+![战斗界面](/uploads/cms/0b952fcd4421c2d5b98cd5dda388b5fa5a257c58332abf3217883a4f2340d431/%E6%88%98%E6%96%97%E7%95%8C%E9%9D%A2.png)
+
+![存档界面](/uploads/cms/a564f0f7993bdcd02f1c7072350cde04b3bbc1eb8128f722b8d429cf52ec8a33/%E5%AD%98%E6%A1%A3%E7%95%8C%E9%9D%A2.png)
+
+![小地图](/uploads/cms/5edc7af9180d1e8eeee33ea8a35981d0cf1c41ac27c4b1fbb588cc70a285e0ba/%E5%B0%8F%E5%9C%B0%E5%9B%BE.png)
+
+![大地图](/uploads/cms/945bc5b76215679242df91cf01cf0d86f114271c4cbb610c0ff9ddfbae1a1b64/%E5%A4%A7%E5%9C%B0%E5%9B%BE.png)
+
+
+
+---
+
+
+
+## 八、安装与使用方法
 
 本次发布的是 v1.0 完整补丁，已经整合了汉化和增强功能。
 
@@ -364,7 +395,7 @@ pinned: false
 
 
 
-## 八、测试情况与已知问题
+## 九、测试情况与已知问题
 
 目前主要需要注意以下问题：
 
@@ -382,7 +413,7 @@ pinned: false
 
 
 
-## 九、下载地址
+## 十、下载地址
 
 [GitHub](https://github.com/jyh9521/Magna-Carta-The-Phantom-of-Avalanche-CN/releases/)
 
@@ -402,7 +433,7 @@ pinned: false
 
 
 
-## 十、最后
+## 十一、最后
 
 作为《真名法典》系列的起点，也是 SOFTMAX 当年投入大量资源开发的 3D 角色扮演游戏，我觉得本作还是值得被重新整理和体验的。
 

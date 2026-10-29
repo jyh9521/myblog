@@ -10,11 +10,10 @@ tags:
   - 游戏
   - 病房
 pinned: false
-updatedAt: 2026-10-24
+updatedAt: 2026-10-29
 updateNote: |-
-  更新v1.1.2：
+  更新v1.1.3：
   适配游戏最新版本；
-  修复“行走晃动”选项的错误翻译。
 gameSlug: dementium-2
 ---
 

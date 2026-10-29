@@ -10,9 +10,9 @@ tags:
   - 游戏
   - 病房
 pinned: false
-updatedAt: 2026-10-29
+updatedAt: 2026-10-30
 updateNote: |-
-  更新v1.1.3：
+  更新v1.1.4：
   适配游戏最新版本；
 gameSlug: dementium-2
 ---

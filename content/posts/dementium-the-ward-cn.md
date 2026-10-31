@@ -5,6 +5,10 @@ description: |-
   > Dementium: The Ward Simplified Chinese Patch
   > 《病房：封闭病区》简体中文汉化补丁
 cover: /uploads/cms/4817014a2105edc21319d668d494ab1ad94e11b8aae9bab57129d72ab5d7aa01/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
+tags:
+  - 游戏
+  - 汉化
+  - 病房
 pinned: false
 gameSlug: dementium-the-ward
 ---

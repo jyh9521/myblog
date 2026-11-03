@@ -12,11 +12,12 @@ GitHub Pages 提供 `/sveltia/accounts.html` 管理页和 `/games/` 展示页。
 
 ## 管理员
 
-后台右下角“游戏平台账号”打开独立账号管理页。首次使用自己的 GitHub Token
-验证账号 `jyh9521`；服务器只请求 GitHub `/user`，不保存该 Token。登录成功后
+后台右下角“游戏平台账号”打开独立账号管理页，自动复用编辑后台的登录身份，
+不需要另外填写 Token。服务器仍通过 GitHub `/user` 验证账号 `jyh9521`，不保存该 Token。登录成功后
 使用 8 小时的加密 HttpOnly、Secure、SameSite=Lax、host-only Cookie。
 登录每 IP 每分钟最多 10 次，所有修改要求同源 Origin 和自定义请求头。
-不读取 CMS 私有存储、不把平台凭证放 localStorage。
+只有共用认证适配层读取 CMS 已有的登录缓存，不新增 Token 存储副本，不把平台凭证放 localStorage。
+会话过期时自动续接，CMS 登录失效后返回编辑后台重新登录。详见[后台统一登录](admin-session.md)。
 
 ## 平台连接与当前数据范围
 

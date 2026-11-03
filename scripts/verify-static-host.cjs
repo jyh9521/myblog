@@ -26,7 +26,7 @@ async function verify(site, release, { fetcher = fetch, sleep = ms => new Promis
   assert.equal(marker.headers.get('x-blog-hosting'), 'workers-static-assets');
   const manifest = await marker.json();
   assert.equal(manifest.release, release);
-  const paths = ['index.html', 'sveltia/index.html', 'sveltia/resources.html', 'sveltia/r2-media.js'];
+  const paths = ['index.html', 'sveltia/index.html', 'sveltia/resources.html', 'sveltia/r2-media.js', 'sveltia/admin-auth.js', 'sveltia/accounts.html', 'sveltia/accounts.js', 'sveltia/article-access.js'];
   for (const suffix of ['.css', '.js']) {
     const asset = manifest.files.find(f => f.path.startsWith('_next/static/') && f.path.endsWith(suffix));
     assert.ok(asset, 'Missing fingerprinted ' + suffix); paths.push(asset.path);

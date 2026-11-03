@@ -5,7 +5,7 @@ const { verify } = require('./verify-static-host.cjs');
 test('publication verification retries individual stale edges, not only the manifest', async () => {
   const release = 'a'.repeat(40), body = 'current export';
   const sha256 = createHash('sha256').update(body).digest('hex');
-  const files = ['index.html','sveltia/index.html','sveltia/resources.html','sveltia/r2-media.js','_next/static/a.css','_next/static/a.js'].map(path=>({path,sha256}));
+  const files = ['index.html','sveltia/index.html','sveltia/resources.html','sveltia/r2-media.js', 'sveltia/admin-auth.js', 'sveltia/accounts.html', 'sveltia/accounts.js', 'sveltia/article-access.js','_next/static/a.css','_next/static/a.js'].map(path=>({path,sha256}));
   let rootCalls = 0, sleeps = 0;
   await verify('https://fixture.test', release, {
     sleep: async () => { sleeps++; },

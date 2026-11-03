@@ -4,14 +4,14 @@
   const marker=id=>`<!-- blfy-access:password:${id} -->`;
   const errors={ADMIN_LOGIN_REQUIRED:'请先连接博客后台。',WRONG_PASSWORD:'密码错误。',INVALID_PASSWORD:'密码需要 6–128 个字符；已有密码留空可保留。',INVALID_BODY:'私密正文不能为空，最大 512 KB。',EDIT_CONFLICT:'正文已在其他窗口修改，请重新载入后再编辑。',INPUT_TOO_LARGE:'文件最大 5 MB。',INVALID_FILE_TYPE:'仅支持 PDF、PNG、JPEG、GIF、WebP。',SAVE_POST_FIRST:'请先保存私密正文，再上传文件。'};
   async function api(path,options={}) {
-    const r=await fetch(ROOT+path,{credentials:'same-origin',cache:'no-store',...options,headers:{'X-Gaming-Admin':'1',...(options.body instanceof FormData?{}:{'Content-Type':'application/json'}),...options.headers}});
+    const r=await window.BlogAdminAuth.request(ROOT+path,{credentials:'same-origin',cache:'no-store',...options,headers:{'X-Gaming-Admin':'1',...(options.body instanceof FormData?{}:{'Content-Type':'application/json'}),...options.headers}});
     const result=await r.json();if(!r.ok)throw Error(errors[result.error]||'操作失败，请稍后重试。');return result;
   }
   const register=()=>{
     if(!window.CMS?.registerFieldType||!window.createClass||!window.h)return false;
     const h=window.h, style={width:'100%',padding:'8px 10px',border:'1px solid #68707a',borderRadius:'8px',background:'transparent',color:'inherit'};
     const Control=window.createClass({
-      getInitialState(){return {body:'',password:'',token:'',loaded:false,dirty:false,revision:undefined,busy:false,message:'',assets:[]};},
+      getInitialState(){return {body:'',password:'',loaded:false,dirty:false,revision:undefined,busy:false,message:'',assets:[]};},
       componentDidMount(){this.track();},
       componentDidUpdate(previous){this.track();if(previous.value?.privateId!==this.props.value?.privateId){this.setState({body:'',password:'',loaded:false,dirty:false,revision:undefined,assets:[],message:''});}},
       componentWillUnmount(){if(this.trackedId&&editors.get(this.trackedId)===this)editors.delete(this.trackedId);},
@@ -36,8 +36,7 @@
           h('p',null,'私密图片 / PDF：最大 5 MB，不上传到公共资源库。'),
           h('input',{type:'file',accept:'.pdf,.png,.jpg,.jpeg,.gif,.webp',disabled:this.state.busy,onChange:e=>{const file=e.target.files[0];e.target.value='';if(!file)return;this.action(async()=>{const form=new FormData();form.append('file',file);const result=await api('/admin/'+access.privateId+'/assets',{method:'POST',body:form});this.insert(result);await this.assets();});}}),
           h('button',{type:'button',disabled:this.state.busy,onClick:()=>this.action(()=>this.assets())},'刷新私密资源'),
-          ...this.state.assets.map(asset=>h('div',{key:asset.id},h('span',null,asset.name+' '),h('button',{type:'button',onClick:()=>this.insert(asset)},'插入'),h('button',{type:'button',onClick:()=>{if(window.confirm('删除此私密资源？引用它的图片或 PDF 将失效。'))this.action(async()=>{await api('/admin/'+access.privateId+'/assets/'+asset.id,{method:'DELETE'});await this.assets();});}},'删除'))),
-          h('details',null,h('summary',null,'连接后台（会话未登录时使用）'),h('p',null,'使用自己的 GitHub token 验证博客管理员身份；不写入文章、不保存在浏览器。'),h('input',{type:'password',autoComplete:'off',value:this.state.token,style,onChange:e=>this.setState({token:e.target.value})}),h('button',{type:'button',disabled:this.state.busy,onClick:()=>this.action(async()=>{const r=await fetch('/ns/api/accounts/session',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-Gaming-Admin':'1'},body:JSON.stringify({token:this.state.token})});this.setState({token:''});if(!r.ok)throw Error('后台登录失败，请检查 token。');this.setState({message:'后台已连接。'});})},'连接后台'))),
+          ...this.state.assets.map(asset=>h('div',{key:asset.id},h('span',null,asset.name+' '),h('button',{type:'button',onClick:()=>this.insert(asset)},'插入'),h('button',{type:'button',onClick:()=>{if(window.confirm('删除此私密资源？引用它的图片或 PDF 将失效。'))this.action(async()=>{await api('/admin/'+access.privateId+'/assets/'+asset.id,{method:'DELETE'});await this.assets();});}},'删除')))),
         h('p',{role:'status','aria-live':'polite'},this.state.busy?'正在处理…':this.state.message));}
     });
     window.CMS.registerFieldType('article-access',Control);

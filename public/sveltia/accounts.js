@@ -7,7 +7,7 @@
   const stages={NINTENDO_SESSION:'Nintendo 会话交换',NINTENDO_TOKEN:'Nintendo 令牌交换',NINTENDO_PROFILE:'Nintendo 资料',NINTENDO_HISTORY:'Nintendo 游玩记录',XBOX_TOKEN:'Microsoft 令牌交换',XBOX_USER_AUTH:'Xbox 用户授权',XBOX_XSTS:'Xbox XSTS 授权',XBOX_HISTORY:'Xbox 游戏记录',XBOX_PROFILE:'Xbox 资料',PSN_AUTHORIZE:'PS NPSSO 授权',PSN_TOKEN:'PS 令牌交换',PSN_HISTORY:'PS 游戏记录',PSN_PROFILE:'PS 资料',PSN_IDENTITY:'PS 身份'};
   const explain=code=>errors[code]||Object.entries(stages).filter(([key])=>String(code).startsWith(key+'_')).map(([key,label])=>label+'失败（'+String(code).slice(key.length+1)+'）。'+(/^(PSN|XBOX|NINTENDO)_(HISTORY|PROFILE)$/.test(key)?'若账号已显示绑定时间，可关闭弹窗后点击“立即同步”，无需重复登录。':'请重新开始连接。'))[0]||(/^UPSTREAM_HTTP_\d+$/.test(code)?`平台接口返回 HTTP ${code.split('_').pop()}。`:code||'');
   const date=value=>value?new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Tokyo'}):'尚无记录';
-  async function api(path='',method='GET',body){const r=await fetch(ROOT+path,{method,credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json','X-Gaming-Admin':'1'},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(180000)});const d=await r.json();if(!r.ok)throw Error(explain(d.error));return d;}
+  async function api(path='',method='GET',body){const r=await window.BlogAdminAuth.request(ROOT+path,{method,credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json','X-Gaming-Admin':'1'},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(180000)});const d=await r.json();if(!r.ok)throw Error(explain(d.error));return d;}
   function message(text){$('message').textContent=text;if($('connect-dialog').open)$('connect-message').textContent=text;}
   function overview(){
     const methods={nintendo:['Nintendo','官方账号登录 + 返回链接'],psn:['PlayStation','官方账号登录 + NPSSO'],xbox:['Xbox','Microsoft 个人账号授权'],steam:['Steam','官方 OpenID 登录'],gog:['GOG','官方账号登录 + 返回链接'],epic:['Epic Games','官方账号登录 + Authorization Code']};
@@ -33,7 +33,7 @@
       }
       $('history-panel').hidden=false;$('history').replaceChildren(...d.history.map(h=>node('p',`${h.platform} · ${date(h.started_at)} · ${h.status==='success'?'同步成功':explain(h.error_code)||h.status}${h.games!==null?` · ${h.games} 款`:''}`)));
       if(d.accounts.some(a=>a.status==='syncing'))poll=setTimeout(refresh,3000);
-    }catch(e){message(e.message);if(e.message===errors.ADMIN_LOGIN_REQUIRED){$('login').hidden=false;overview();$('history-panel').hidden=true;}}
+    }catch(e){message(e.message);if(e.message===errors.ADMIN_LOGIN_REQUIRED||['CMS_LOGIN_REQUIRED','ADMIN_LOGIN_FAILED','ADMIN_ONLY','CMS_LOGIN_CHANGED'].includes(e.code)){$('login').hidden=false;overview();$('history-panel').hidden=true;}}
   }
   async function storeLinks(platform){
     const dialog=$('store-dialog');$('store-message').textContent='加载中…';$('store-games').replaceChildren();
@@ -56,12 +56,11 @@
       $('connect-guide').textContent=guides[a.platform];$('input-label').textContent=result.input==='npsso'?'NPSSO':result.input==='callback'?'完整返回链接':'Authorization Code';$('connect-input').value='';if(!$('connect-dialog').open)$('connect-dialog').showModal();
     }catch(e){message(e.message);}finally{busy=false;}
   }
-  $('login-form').onsubmit=async e=>{e.preventDefault();const token=$('github-token').value;$('github-token').value='';const button=e.target.querySelector('button');button.disabled=true;try{await api('/session','POST',{token});message('管理员验证成功。');await refresh();}catch(e){message(e.message);}finally{button.disabled=false;}};
   $('refresh').onclick=refresh;
   $('cancel-steam').onclick=()=>$('steam-dialog').close();
   $('steam-dialog').addEventListener('close',()=>{$('steam-key').value='';});
   $('steam-form').onsubmit=async e=>{e.preventDefault();const apiKey=$('steam-key').value;$('steam-key').value='';const button=e.target.querySelector('button');button.disabled=true;try{await api('/configuration/steam','POST',{apiKey});$('steam-dialog').close();message('Steam 接口已配置，可以连接账号。');await refresh();}catch(error){message(error.message);}finally{button.disabled=false;}};
-  $('logout').onclick=async()=>{try{await api('/session','DELETE');location.reload();}catch(e){message(e.message);}};
+  $('logout').onclick=async()=>{try{await window.BlogAdminAuth.signOut();location.assign('/sveltia/');}catch(e){message(e.message);}};
   $('cancel-connect').onclick=()=>$('connect-dialog').close();
   $('connect-dialog').addEventListener('close',()=>{pending=null;$('connect-input').value='';});
   $('connect-dialog').addEventListener('cancel',e=>{if(busy)e.preventDefault();});

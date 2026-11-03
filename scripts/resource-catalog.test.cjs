@@ -20,7 +20,7 @@ test('CMS preSave replaces native blob drafts with R2 aliases and leaves private
    if(url.startsWith('blob:'))return {blob:async()=>new Blob(['test'],{type:'image/png'})};
    uploads++;assert.equal(options.method,'PUT');assert.ok(options.body instanceof File);return {ok:true,json:async()=>({path:'/uploads/cms/fixture/upload.png'})};
  }};
- vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../public/sveltia/r2-media.js'),'utf8'),context);
+ context.window.BlogAdminAuth={request:context.fetch};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../public/sveltia/r2-media.js'),'utf8'),context);
  assert.deepEqual(fields,['r2-image','r2-file']);
  const make=data=>({get:key=>key==='data'?{toJS:()=>data}:undefined,getIn:keys=>keys.reduce((v,k)=>v?.[k],{data}),setIn:keys=>{throw Error('unexpected');}});
  const data={body:'![image](blob:https://blog.blfy.cc/fixture)',cover:'blob:https://blog.blfy.cc/fixture'};const entry=make(data);entry.setIn=(keys,value)=>{data[keys[1]]=value;return entry;};

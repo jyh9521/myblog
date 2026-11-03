@@ -93,9 +93,12 @@ if(mode!=='--cms-only') {
   await check('account admin browser login and callback return UI',async()=>{
     const ctx=await browser.newContext({viewport:{width:1440,height:1000},locale:'zh-CN'});const page=await ctx.newPage();
     try {
-      await page.goto(site+'/sveltia/accounts.html',{waitUntil:'networkidle'});await page.getByLabel('GitHub Token',{exact:true}).fill(githubToken());
-      await page.getByRole('button',{name:'验证管理员',exact:true}).click();
-      await page.getByRole('button',{name:'退出管理员登录',exact:true}).waitFor();assert.equal(await page.locator('#github-token').inputValue(),'');
+      await page.goto(site+'/sveltia/',{waitUntil:'networkidle'});
+      await page.getByRole('button',{name:'使用访问令牌登录',exact:true}).click();
+      await page.locator('input').first().fill(githubToken());await page.getByRole('button',{name:'登录',exact:true}).click();
+      await page.waitForFunction(()=>JSON.parse(localStorage.getItem('sveltia-cms.user')||'null')?.backendName==='github');
+      await page.goto(site+'/sveltia/accounts.html',{waitUntil:'networkidle'});
+      await page.getByRole('button',{name:'退出管理员登录',exact:true}).waitFor();assert.equal(await page.locator('#github-token').count(),0);
       await page.goto(site+'/api/auth/steam/callback?state=invalid',{waitUntil:'domcontentloaded'});
       // accounts.js deliberately removes callback query parameters after displaying them.
       await page.getByText('登录结果无效或已过期，请重新连接。',{exact:true}).waitFor();

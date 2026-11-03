@@ -31,7 +31,7 @@ access:
 
 ## 模拟器设置
 
-请使用最新版本的 [Xenia Canary](https://github.com/xenia-canary/xenia-canary/releases/latest/download/xenia_canary_windows.7z)，打不开的话请自己寻找科学的上网方式，不要问我为什么下载不了，我**不会回答**任何相关问题。
+请使用最新版本的 [Xenia Canary](https://github.com/xenia-canary/xenia-canary/releases/latest/download/xenia_canary_windows.7z)，打不开的话请自己寻找科学的上网方式，不要问我为什么下载不了，我<span data-text-color="#dc2626" data-text-size="18">不会回答</span>任何相关问题。
 
 下载以后，将模拟器解压至一个没有中文的目录中，双击运行`xenia_canary.exe`后，目录根目录会生成一个`xenia-canary.config.toml`文件，关闭模拟器，打开此文件。
 
@@ -45,7 +45,7 @@ access:
 
 两项修改完毕后，保存，关闭此文件即可。
 
-其他相关问题，如创建 Profile、修改分辨率等，请问 AI，不要问我，我**不会回答**任何相关问题。
+其他相关问题，如创建 Profile、修改分辨率等，请问 AI，不要问我，我<span data-text-color="#dc2626" data-text-size="18">不会回答</span>任何相关问题。
 
 
 

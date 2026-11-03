@@ -28,4 +28,90 @@ access:
 
 
 
+## 模拟器设置
+
+请使用最新版本的 [Xenia Canary](https://github.com/xenia-canary/xenia-canary/releases/latest/download/xenia_canary_windows.7z)，打不开的话请自己寻找科学的上网方式，不要问我为什么下载不了，我**不会回答**任何相关问题。
+
+下载以后，将模拟器解压至一个没有中文的目录中，双击运行`xenia_canary.exe`后，目录根目录会生成一个`xenia-canary.config.toml`文件，关闭模拟器，打开此文件。
+
+搜索`gpu = `，在后面的冒号内输入`d3d12`，如图所示：
+
+![GPU 设置](/uploads/cms/e43d8088411cf29f56872cc13a9df0cd752eed3ef4b6923e863aac2ff80605cd/QQ20261103-143833.png)
+
+随后搜索`render_target_path_d3d12 = `，在后面的冒号内输入`rov`，如图所示：
+
+![rov](/uploads/cms/f2410c91e1ffefaab125a71dffb0c776577f26ca5fb8371f2931b71f92658997/render%E8%AE%BE%E7%BD%AE.png)
+
+两项修改完毕后，保存，关闭此文件即可。
+
+其他相关问题，如创建 Profile、修改分辨率等，请问 AI，不要问我，我**不会回答**任何相关问题。
+
+
+
+---
+
+
+
 ## 截图
+
+![主界面](/uploads/cms/2b4a7fd3cb67e47453fa044aea83f34f1f4df8601cd9b8eaf700e21772671371/%E4%B8%BB%E7%95%8C%E9%9D%A2.png)
+
+![读档界面](/uploads/cms/83760e0ba7f1a8fb69b2fdf5f1325c9094f2a296a1a9e0e03e9b088e01cacdc4/%E8%AF%BB%E6%A1%A3%E7%95%8C%E9%9D%A2.png)
+
+![游戏选项](/uploads/cms/1551de984bb2b2fe0727fa12324022474b4218059e0dcebcdf0390fdba2bf655/%E6%B8%B8%E6%88%8F%E9%80%89%E9%A1%B9.png)
+
+![按键设置](/uploads/cms/194ae3864bb00e97880f1ad61a6596a772bcd9160715e853cae4f94e50f4423b/%E6%8C%89%E9%94%AE%E8%AE%BE%E7%BD%AE.png)
+
+![DLC 界面](/uploads/cms/ea2edb89000cc163467fa3d5eb95b1339bfcab584119eb61302efd065aa0f384/DLC%E7%95%8C%E9%9D%A2.png)
+
+![过场动画字幕 1](/uploads/cms/4f1a5d2a5dc2881fd3b7eda9fcf991529c900ed0d84ced84b948acafce0cb5e9/%E8%BF%87%E5%9C%BA%E5%8A%A8%E7%94%BB%E5%AD%97%E5%B9%951.png)
+
+![载入界面之一](/uploads/cms/218c6a9580022d085f267de5867dd900a3a6c2544ac9593c9b5b40fd72470690/%E8%BD%BD%E5%85%A5%E7%95%8C%E9%9D%A2%E4%B9%8B%E4%B8%80.png)
+
+![过场动画字幕 2](/uploads/cms/16e9860d2e9e4732d6df8626f1136fa2cf221628a7823fd3133048e6569694d1/%E8%BF%87%E5%9C%BA%E5%8A%A8%E7%94%BB%E5%AD%97%E5%B9%952.png)
+
+![人物对话](/uploads/cms/2814c8995257d600ba89f4c4a3fa5915a5e7b6812c2ce249080b492a5b0ef85b/%E4%BA%BA%E7%89%A9%E5%AF%B9%E8%AF%9D.png)
+
+![教程界面](/uploads/cms/a033031dab055d894274785d924987504f0d8db030365a3f6cff03848f03fe6a/%E6%95%99%E7%A8%8B%E7%95%8C%E9%9D%A2.png)
+
+![游戏画面](/uploads/cms/03fcf0fb40ea744129532f4593189a6a31f11c89ab8bbbb4df4ea947cd0b32b7/%E6%B8%B8%E6%88%8F%E7%94%BB%E9%9D%A2.png)
+
+![地图界面](/uploads/cms/0c426cd3625e47bcfa8bcdf1ede28d2bb06868302a20227c1b1b8e7ce4236679/%E5%9C%B0%E5%9B%BE%E7%95%8C%E9%9D%A2.png)
+
+![主菜单](/uploads/cms/ea4c1cd00a0b36852922095fea2f5b0eba8331a02ebc29dfc242ce6b91368804/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)
+
+![编队界面](/uploads/cms/47f845572b1df6368443ddbdb679ec1959cc9774d1f58fdc5e2e9737df0ddd33/%E7%BC%96%E9%98%9F%E7%95%8C%E9%9D%A2.png)
+
+![道具界面](/uploads/cms/8511502c6167f1786a98b30fc8d288330526fb727a54bd435bdb05c17c550c26/%E9%81%93%E5%85%B7%E7%95%8C%E9%9D%A2.png)
+
+![装备界面](/uploads/cms/3bc66b234e3aa48498e2e99b781ef8e1bc7b37b305f6ad4656eea767b6605683/%E8%A3%85%E5%A4%87%E7%95%8C%E9%9D%A2.png)
+
+![NPC 对话](/uploads/cms/e699de24cbc281b4d13db3b62614d8eaf5f3d62b00d5a1613020567a1a6bb902/NPC%E5%AF%B9%E8%AF%9D.png)
+
+![任务说明](/uploads/cms/5df7af6ca87d27530cc17e413163bd3bff02190b98c65babc23c3e21ba652b1e/%E4%BB%BB%E5%8A%A1%E8%AF%B4%E6%98%8E.png)
+
+![任务图片](/uploads/cms/a39ce12b3950517df0da74b588e5ecab1a78cb03547ec0fa34b2d3e09babd365/%E4%BB%BB%E5%8A%A1%E5%9B%BE%E7%89%87.png)
+
+![存档界面](/uploads/cms/06b17ad418a2b31164d4b4034b09c4df6d059e5f8bf777bc81e58d05257dce00/%E5%AD%98%E6%A1%A3%E7%95%8C%E9%9D%A2.png)
+
+![战斗模式](/uploads/cms/239a4f74cd997f9bb06f0f8688a86624f60b3e11da4323e8faf8e40f8cbae797/%E6%88%98%E6%96%97%E6%A8%A1%E5%BC%8F.png)
+
+![提交任务界面](/uploads/cms/f9692a49e86c3bf8e49d93393775661c4a9f2da5f51d8023e550b3f7997ab331/%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1.png)
+
+![升级界面](/uploads/cms/8f3a44d0fd3122af84589b39fa50a2a71342963f28993c42e48e8f11d912d6fb/%E5%8D%87%E7%BA%A7%E7%95%8C%E9%9D%A2.png)
+
+
+
+---
+
+
+
+## 下载地址
+
+GitHub
+
+[Google Drive](https://drive.google.com/drive/folders/1pI9oXo5wawn_nHbvsPYA0Nk_LoblOdjT?usp=sharing)
+
+[百度网盘](https://pan.baidu.com/s/1mXQ12OxhCnkfilNeeq4TkQ?pwd=blfy) 提取码: blfy
+
+[夸克网盘](https://pan.quark.cn/s/4b4a32fea5ee) 提取码：ANbA

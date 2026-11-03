@@ -1,6 +1,7 @@
 ---
 title: XBOX 360《真名法典2》简体中文汉化补丁
 date: 2026-11-03
+cover: /uploads/cms/79fe9d9befa72d0e284c9c244c3b2f9f1705f078b50220c36245e00c79afbbe8/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 游戏
   - 汉化

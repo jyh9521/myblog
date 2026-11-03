@@ -5,7 +5,10 @@ export type ArticleImage = { src: string; alt: string; caption: string; group?: 
 
 function plainHeading(value: string) {
   return value.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/`([^`]*)`/g, '$1')
-    .replace(/[*_~]/g, '').replace(/<[^>]*>/g, '').trim();
+    .replace(/[*_~]/g, '').replace(/<[^>]*>/g, '').replace(/&#(\d{1,7});/g, (entity, code) => {
+      const n = Number(code);
+      return n > 0 && n <= 0x10ffff && !(n >= 0xd800 && n <= 0xdfff) ? String.fromCodePoint(n) : entity;
+    }).trim();
 }
 
 function makeSlug(value: string) {
@@ -78,6 +81,32 @@ export const remarkHeadingIds: Plugin = () => (tree: any) => {
       }
       visit(child);
     }
+  };
+  visit(tree);
+};
+
+// Recognize only the editor's exact inline contract, not arbitrary raw HTML or
+// CSS. Unknown HTML retains ReactMarkdown's existing escaped-text behavior.
+export const remarkTextStyles: Plugin = () => (tree: any) => {
+  const opening = /^<span data-text-color="(#[\da-fA-F]{6}|)" data-text-size="(12|14|16|18|20|24|28|32|40|48|)">$/;
+  const visit = (node: any) => {
+    if (!Array.isArray(node.children)) return;
+    const next: any[] = [];
+    for (let i = 0; i < node.children.length; i += 1) {
+      const child = node.children[i];
+      const match = child.type === 'html' ? child.value.match(opening) : null;
+      if (match) {
+        let end = i + 1;
+        while (end < node.children.length && node.children[end].type !== 'html') end += 1;
+        if (node.children[end]?.value === '</span>') {
+          const style = [match[1] && `color:${match[1].toLowerCase()}`, match[2] && `font-size:${match[2]}px`].filter(Boolean).join(';');
+          const span = { type: 'textStyle', children: node.children.slice(i + 1, end), data: { hName: 'span', hProperties: style ? { style } : {} } };
+          visit(span); next.push(span); i = end; continue;
+        }
+      }
+      visit(child); next.push(child);
+    }
+    node.children = next;
   };
   visit(tree);
 };

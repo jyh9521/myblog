@@ -8,6 +8,8 @@
 
 编辑器配置位于 `public/sveltia/config.yml`。访问令牌请只输入后台登录页面，勿写入仓库或文章。
 
+正文支持设置文字颜色和大小：选中文字，在「插入」菜单选择「文字颜色与大小」，点选颜色和字号后应用。支持自定义色值、实时预览及恢复默认；点击已设置的文字可再次编辑。详见 [正文文字颜色与大小](docs/text-styles.md)。
+
 ## 游戏资料数据库
 
 游戏搜索通过 Cloudflare Worker 的 `GameMetadataProvider` 层调用 RAWG 与 ScreenScraper，不要求 Twitch / IGDB 凭据。后台数据源可选自动、RAWG 或 ScreenScraper。每条记录保存在 `content/games/<slug>.md`：`gameMetadata` 只保存外部资料，顶层 `manual` 单独保存官方售卖渠道、获取状态和人工备注。文章游戏卡片用本地档案 slug 引用，因此页面构建和阅读不需要访问第三方 API。

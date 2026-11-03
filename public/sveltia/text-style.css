@@ -1,0 +1,24 @@
+.text-style-dialog { color-scheme: light dark; width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); box-sizing: border-box; overflow: auto; padding: 24px; border: 1px solid #b7bcc5; border-radius: 18px; background: light-dark(#fff, #20232b); color: light-dark(#20252b, #f3f4f6); box-shadow: 0 18px 70px #0004; font: 14px/1.6 system-ui, sans-serif; }
+.text-style-dialog::backdrop { background: #0007; }
+.text-style-dialog h2 { margin: 0; font-size: 22px; }
+.text-style-hint { margin: 6px 0 18px; opacity: .75; }
+.text-style-dialog label { display: flex; flex-direction: column; gap: 5px; }
+.text-style-dialog input, .text-style-dialog textarea { box-sizing: border-box; border: 1px solid #9299a6; border-radius: 8px; padding: 8px 10px; color: inherit; background: light-dark(#fff, #16191f); font: inherit; }
+.text-style-dialog textarea { width: 100%; resize: vertical; min-height: 68px; }
+.text-style-dialog fieldset { border: 0; margin: 18px 0; padding: 0; min-width: 0; }
+.text-style-dialog legend { margin-bottom: 8px; font-weight: 600; }
+.text-style-options { display: flex; flex-wrap: wrap; gap: 7px; }
+.text-style-dialog button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid #9299a6; border-radius: 8px; padding: 7px 11px; color: inherit; background: light-dark(#f8f9fb, #292e38); font: inherit; cursor: pointer; }
+.text-style-dialog button[aria-pressed="true"] { border-color: #dc2649; box-shadow: inset 0 0 0 1px #dc2649; background: light-dark(#fff0f3, #482731); }
+.text-style-dialog :focus-visible { outline: 3px solid #3087df; outline-offset: 2px; }
+.text-style-swatch { width: 13px; height: 13px; border: 1px solid #9299a6; border-radius: 50%; order: -1; }
+.text-style-custom { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; align-items: end; }
+.text-style-dialog input[type="color"] { width: 74px; height: 39px; padding: 3px; }
+.text-style-dialog input[name="color"] { width: 150px; }
+.text-style-sample { overflow-wrap: anywhere; min-height: 70px; padding: 14px; border: 1px dashed #9299a6; border-radius: 10px; background: light-dark(#fafbfc, #16191f); }
+.text-style-error { color: light-dark(#b91c1c, #fca5a5); margin: 8px 0; }
+.text-style-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+.text-style-actions > :first-child { margin-right: auto; }
+.text-style-dialog .text-style-apply { background: #be123c; border-color: #be123c; color: white; }
+.text-style-dialog button:disabled { opacity: .5; cursor: default; }
+@media (max-width: 480px) { .text-style-dialog { padding: 18px; } .text-style-dialog button { min-height: 40px; } }

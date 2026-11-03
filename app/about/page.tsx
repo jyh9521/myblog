@@ -3,6 +3,7 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { remarkTextStyles } from '../posts/markdown-utils';
 import GitHubContributionCalendar from './github-calendar';
 import SocialWall from './social-wall';
 import GiscusComments from '../comments/giscus-comments';
@@ -19,7 +20,7 @@ export default function About() {
         <img className="about-avatar" src="/avatar.jpg" alt="伯翎飞云的头像" />
         <div><span className="section-kicker">ABOUT ME</span><h1>{String(data.title || '关于我')}</h1><p>{String(data.intro || '')}</p></div>
       </div>
-      <div className="article-content"><div className="body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: ({ href, children, title }) => <a href={href} title={title} {...externalLinkProps(href)}>{children}</a> }}>{content}</ReactMarkdown></div></div>
+      <div className="article-content"><div className="body"><ReactMarkdown remarkPlugins={[remarkGfm, remarkTextStyles]} components={{ a: ({ href, children, title }) => <a href={href} title={title} {...externalLinkProps(href)}>{children}</a> }}>{content}</ReactMarkdown></div></div>
       <SocialWall links={data.socialLinks} />
       <GitHubContributionCalendar />
       <GiscusComments />

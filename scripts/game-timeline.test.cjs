@@ -41,12 +41,14 @@ test('shared article renderer supports compact timeline formats, line breaks and
     return context.exports;
   };
   const Content = load('app/posts/post-content.tsx').default;
-  const body = '## 标题\n\n**粗体** *斜体*\n换行\n\n1. 第一步\n2. 第二步\n\n> 引用\n\n|列|值|\n|-|-|\n|一|二|\n\n![截图](/uploads/test.png "图片说明")\n\n[外链](https://example.com)\n\n<script>alert(1)</script>';
+  const body = '## 标题\n\n**粗体** *斜体*\n换行\n\n1. 第一步\n2. 第二步\n\n> 引用\n\n|列|值|\n|-|-|\n|一|二|\n\n![截图](/uploads/test.png "图片说明")\n\n[外链](https://example.com)\n\n<span data-text-color="#dc2626" data-text-size="24">重点文字</span>\n\n<script>alert(1)</script>';
   const props = { body, title: '事件', headings: [], images: [{src:'/uploads/test.png', alt:'截图',caption:'图片说明'}], games: [] };
   const html = renderToStaticMarkup(React.createElement(Content, {...props, compact:true}));
   for (const part of ['<h2>标题</h2>', '<strong>粗体</strong>', '<em>斜体</em>', '<br/>', '<ol>', '<li>第一步</li>', '<blockquote>', '<table>', 'src="/uploads/test.png"', '图片说明', 'target="_blank"']) assert.ok(html.includes(part), part);
   assert.doesNotMatch(html, /<progress|article-actions|post-toc|<script>/);
-  assert.match(renderToStaticMarkup(React.createElement(Content,props)), /article-actions/);
+  const full = renderToStaticMarkup(React.createElement(Content,props));
+  assert.match(full, /article-actions/);
+  for (const rendered of [html, full]) assert.match(rendered, /<span style="color:#dc2626;font-size:24px">重点文字<\/span>/);
   const css = fs.readFileSync('app/style.css','utf8');
   assert.doesNotMatch(css, /\.game-timeline (?:ol|li|strong|h2)[{:]/);
 });
@@ -56,7 +58,7 @@ test('timeline Markdown assets are tracked and validated, including reference im
   try {
     for (const dir of ['content/games', 'public/uploads', 'public/sveltia']) fs.mkdirSync(path.join(root,dir),{recursive:true});
     fs.copyFileSync('public/sveltia/config.yml',path.join(root,'public/sveltia/config.yml'));
-    for(const file of ['custom.js','r2-media.js','article-access.js','hltb.js','social-icons.js']) fs.copyFileSync('public/sveltia/'+file,path.join(root,'public/sveltia/'+file));
+    for(const file of ['custom.js','r2-media.js','article-access.js','hltb.js','social-icons.js','text-style.js']) fs.copyFileSync('public/sveltia/'+file,path.join(root,'public/sveltia/'+file));
     const note = '![截图][shot]\n\n[shot]: /uploads/test.png\n\n[手册](/uploads/manual.pdf "pdf-embed")\n\n[compare]/uploads/before.png|/uploads/after.png|之前|之后[/compare]';
     const write = (text,title='通关游戏') => fs.writeFileSync(path.join(root,'content/games/test.md'),'---\n'+yaml.dump({ title:'测试游戏', events:[{title,note:text}] })+'---\n');
     for(const file of ['test.png','manual.pdf','before.png','after.png']) fs.writeFileSync(path.join(root,'public/uploads',file),'fixture');

@@ -31,7 +31,7 @@ async function validateRepository(root = process.cwd()) {
   let config;
   try { config = yaml.load(fs.readFileSync(path.join(root, 'public/sveltia/config.yml'), 'utf8')); }
   catch (e) { error('CMS config', `YAML 格式错误：${e.message}`); }
-  const custom = ['custom.js', 'hltb.js', 'article-access.js', 'r2-media.js', 'social-icons.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
+  const custom = ['custom.js', 'hltb.js', 'article-access.js', 'r2-media.js', 'social-icons.js', 'text-style.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
   if (config) {
     if (config.backend?.name !== 'github' || !config.backend.repo || !config.backend.branch) error('CMS config', 'GitHub backend 配置不完整');
     if (!Array.isArray(config.collections)) error('CMS config', 'collections 必须为数组');

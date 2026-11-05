@@ -29,7 +29,9 @@ access:
 
 
 
-## 模拟器设置
+## 模拟器设置 + 补丁
+
+### 模拟器设置
 
 请使用最新版本的 [Xenia Canary](https://github.com/xenia-canary/xenia-canary/releases/latest/download/xenia_canary_windows.7z)，打不开的话请自己寻找科学的上网方式，不要问我为什么下载不了，我<span data-text-color="#dc2626" data-text-size="18">不会回答</span>任何相关问题。
 
@@ -37,15 +39,119 @@ access:
 
 搜索`gpu = `，在后面的冒号内输入`d3d12`，如图所示：
 
-![GPU 设置](/uploads/cms/e43d8088411cf29f56872cc13a9df0cd752eed3ef4b6923e863aac2ff80605cd/QQ20261103-143833.png)
+![GPU 设置](/uploads/cms/b54acddc6c84681b968326d9daeb6449f5bf0723bfb4bc63f5eb45ddcee05918/d3d12.png)
 
-随后搜索`render_target_path_d3d12 = `，在后面的冒号内输入`rov`，如图所示：
+随后搜索`render_target_path_d3d12 = `，在后面的冒号内输入`rtv`，如图所示：
 
-![rov](/uploads/cms/f2410c91e1ffefaab125a71dffb0c776577f26ca5fb8371f2931b71f92658997/render%E8%AE%BE%E7%BD%AE.png)
+![rtv](/uploads/cms/cdf9f7ca69c9af0764d683193e97eafb36150ba61e6bf8d681a186a91b9d6c46/rtv.png)
 
-两项修改完毕后，保存，关闭此文件即可。
+### 如果想要提高画面分辨率
 
-其他相关问题，如创建 Profile、修改分辨率等，请问 AI，不要问我，我<span data-text-color="#dc2626" data-text-size="18">不会回答</span>任何相关问题。
+搜索`draw_resolution_scale`，找到下面两项，将后面的数字修改为对应数字即可。
+
+实测，修改为`2`已经足够清晰，也可以`2`和`1`混搭，或者自己使用更高的数字。
+
+![分辨率设置](/uploads/cms/4b4c5a74827041b1ab25c62d4f0096c1961ba2171e6be9855c11c65557aa8ba6/%E5%88%86%E8%BE%A8%E7%8E%87.png)
+
+修改完毕后，保存，关闭此文件即可。
+
+其他相关问题，如创建 Profile、Console settings等，请问 AI，不要问我，我<span data-text-color="#dc2626" data-text-size="18">不会回答</span>任何相关问题。
+
+### 补丁
+
+补丁目前实现60帧、MSAA 阴影渲染错误和后处理，稳定性有待测试，默认关闭，如有需要请参考下文使用。
+
+在模拟器文件夹的根目录，新建一个文件夹，重命名为`patches`，如图所示：
+
+![patches 文件夹](/uploads/cms/a558c27ba9c055ae5dc1987fcc49f9a5a47907cac81317622057a435f06ed1dd/patches.png)
+
+打开 patches 文件夹，新建一个文件，重命名为`4E4D0811 - Magna Carta II KOR Graphics Candidates.patch.toml`，如图所示：
+
+![补丁文件](/uploads/cms/93a71d08647f26d68e8e72566b84a44fb47cd7616e4f12a5131a6f6704c8507a/%E8%A1%A5%E4%B8%81%E6%96%87%E4%BB%B6.png)
+
+用任意文本编辑器打开此文件，将下面的代码粘贴进去，保存。
+
+`# 《真名法典2》韩版图形补丁：true 为启用对应补丁，false 为关闭，各项可分别选择。`
+
+`# 版本匹配字段和写入地址／数值保持原样；运行时补丁不改写原版 XEX 或 ISO。`
+
+`title_name = "Magna Carta II KOR Graphics Candidates"`
+
+`title_id = "4E4D0811"`
+
+`hash = "0FAA852250B131D1"`
+
+`# 作用：把双刷新间隔改为单刷新间隔，60Hz下目标为60帧。`
+
+`# 验证：用户已反馈60帧有效；本轮没有启动游戏。`
+
+`[[patch]]`
+
+`name = "60帧"`
+
+`desc = "将双刷新间隔改为单刷新间隔；60Hz下目标为60帧。长时间游玩的时序与稳定性仍需实测。"`
+
+`is_enabled = true`
+
+`author = "boma（原60帧与分块渲染修复思路）；伯翎飞云"`
+
+`[[patch.be32]]`
+
+`address = 0x8237c264`
+
+`value = 0x39600001`
+
+`# 类型：兼容性修复，针对动态光照和阴影的错误黑影／着色，不是画质增强。`
+
+`# 做法：同时关闭分块渲染路径并重置模式；mode=0本身不代表关闭抗锯齿。`
+
+`[[patch]]`
+
+`name = "光照／阴影异常修复"`
+
+`desc = "兼容性修复，针对动态光照和阴影的异常黑影／错误着色，绕过MSAA分块渲染路径。"`
+
+`is_enabled = true`
+
+`author = "boma（原60帧与分块渲染修复思路）；伯翎飞云"`
+
+`[[patch.be32]]`
+
+`address = 0x8320ad30`
+
+`value = 0x00000000`
+
+`[[patch.be32]]`
+
+`address = 0x8320ad98`
+
+`value = 0x00000000`
+
+`# 类型：关闭后处理链的独立实验方案，不是增加后处理效果。`
+
+`# 做法：跳过每个视图的后处理代理构建，使用原有空链出口。`
+
+`# 边界：不等于关闭所有GPU效果；与美版原分支的等价性仍未证实。`
+
+`[[patch]]`
+
+`name = "关闭后处理链（实验）"`
+
+`desc = "跳过每个视图的后处理代理构建，使用原有空链出口；这是韩版独立实验实现，未证明与美版原分支完全等价，画面与稳定性待实测。"`
+
+`is_enabled = true`
+
+`author = "伯翎飞云"`
+
+`[[patch.be32]]`
+
+`address = 0x8249b3c4`
+
+`value = 0x480001bc`
+
+![补丁内容](/uploads/cms/9fde5f36b4b051982db28268f6a5c249db7a915925b79c778723c002e1010455/%E8%A1%A5%E4%B8%81%E5%86%85%E5%AE%B9.png)
+
+在需要开启的补丁下方，找到`is_enabled =` ，将对应的`false`改为`true`，保存，再次启动游戏，即可让补丁生效。
 
 
 

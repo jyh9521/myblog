@@ -355,6 +355,34 @@
       toPreview: ({ title = 'PDF 文档' }) => 'PDF 内嵌阅读：' + String(title).replace(/[<>&"']/g, ''),
     });
     window.CMS.registerEditorComponent({
+      id: 'multiline-code-block', label: '插入代码块', tooltip: '一次粘贴整段代码，保留空行与缩进', icon: 'code_blocks', trigger: 'button',
+      fields: [
+        { name: 'language', label: '语言（可选）', widget: 'string', required: false, hint: '例如 toml、json、bash；留空为纯文本。' },
+        { name: 'code', label: '整段代码', widget: 'text', required: true, hint: '把全部代码一次粘贴在这里；换行、空行、缩进和引号原样保留。' },
+      ],
+      // Standard fenced Markdown keeps the public renderer/copy button reusable.
+      // Match one whole block, not individual paragraphs or neighbouring blocks.
+      pattern: /^(`{3,}|~{3,})([\w+.#-]*)[ \t]*\r?\n([\s\S]*?)\r?\n\1[ \t]*$/m,
+      fromBlock: match => ({ language: match[2], code: match[3].replace(/\r\n?/g, '\n') }),
+      toBlock: ({ code = '', language = '' } = {}) => {
+        code = String(code).replace(/\r\n?/g, '\n');
+        if (!code) return '';
+        language = String(language).trim();
+        if (!/^[\w+.#-]{0,40}$/.test(language)) language = '';
+        // A pasted Markdown example may itself contain fences. Use a longer
+        // delimiter, and never trim the code or convert straight quotes.
+        const length = (code.match(/`+/g) || []).reduce((size, run) => Math.max(size, run.length + 1), 3);
+        const fence = '`'.repeat(length);
+        return fence + language + '\n' + code + '\n' + fence;
+      },
+      toPreview: ({ code = '' } = {}) => {
+        const pre = document.createElement('pre');
+        pre.textContent = String(code);
+        pre.style.whiteSpace = 'pre'; pre.style.overflow = 'auto'; pre.style.maxHeight = '28rem';
+        return pre;
+      },
+    });
+    window.CMS.registerEditorComponent({
       id: 'horizontal-rule', label: '插入分隔线', tooltip: '插入分隔线', icon: 'horizontal_rule', trigger: 'button',
       fields: [], collapsed: true,
       pattern: /^---$/m,

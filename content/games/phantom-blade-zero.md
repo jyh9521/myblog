@@ -1,7 +1,7 @@
 ---
 title: 影之刃零
 status:
-  - 正在玩
+  - 已通关
 playTime:
   hours: 35.32
 personalRating: 8.7

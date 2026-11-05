@@ -76,7 +76,34 @@
     });
     window.CMS.registerFieldType('r2-image',Control);
     window.CMS.registerFieldType('r2-file',Control);
-    window.CMS.registerEditorComponent({id:'r2-image',label:'插入图片',icon:'image',trigger:'button',fields:[{name:'src',label:'图片资源',widget:'r2-image',required:true},{name:'alt',label:'图片描述',widget:'string',required:false}],pattern:/^!\[([^\]\n]*)\]\((\/uploads\/[^\s)]+)\)$/,fromBlock:m=>({alt:m[1],src:decodeURI(m[2])}),toBlock:({src='',alt=''})=>{if(!src.startsWith('/uploads/'))return '';const url=src.split('/').map(p=>encodeURIComponent(decodeURIComponent(p))).join('/');return `![${String(alt).replace(/[\[\]\r\n]/g,' ')}](${url})`;},toPreview:({src='',alt=''})=>h('img',{src,alt})});
+    // Match images within paragraph/list text too. Anchoring this pattern to
+    // the whole text node makes Lexical import ![alt](url) as ! + a link.
+    const unescapeMarkup=value=>String(value||'').replace(/\\([!-/:-@[-`{-~])/g,'$1');
+    const escapeLabel=value=>String(value||'').replace(/\r?\n/g,' ').replace(/[\\`*_{}\[\]()#+\-.!>|]/g,'\\$&');
+    const escapeTitle=value=>String(value||'').replace(/\r?\n/g,' ').replace(/[\\"]/g,'\\$&');
+    const imageURL=value=>{
+      const src=String(value||'').trim();
+      try {
+        if(src.startsWith('/uploads/'))return src.split('/').map(part=>encodeURIComponent(decodeURIComponent(part)).replace(/[!'()*]/g,char=>'%'+char.charCodeAt(0).toString(16).toUpperCase())).join('/');
+        if(/^blob:https?:\/\/[^\s"'<>]+$/.test(src))return src;
+        if(/^https?:\/\//.test(src))return new URL(src).href.replace(/[()'"]/g,char=>'%'+char.charCodeAt(0).toString(16).toUpperCase());
+      }catch{/* Keep malformed input from interrupting editor mode changes. */}
+      return '';
+    };
+    window.CMS.registerEditorComponent({
+      id:'r2-image',label:'插入图片',icon:'image',trigger:'button',
+      fields:[{name:'src',label:'图片资源',widget:'r2-image',required:true},{name:'alt',label:'图片描述',widget:'string',required:false},{name:'title',label:'图片标题（可选）',widget:'string',required:false}],
+      pattern:/!\[((?:\\[^\r\n]|[^\]\\\r\n])*)\]\(((?:\/uploads\/|https?:\/\/|blob:https?:\/\/)(?:[^\s()\\]|\\[^\r\n]|\([^()\r\n]*\))+)(?:[ \t]+"((?:\\[^\r\n]|[^"\\\r\n])*)")?\)/,
+      fromBlock:match=>{
+        let src=unescapeMarkup(match[2]);try{src=decodeURI(src);}catch{}
+        return {alt:unescapeMarkup(match[1]),src,title:unescapeMarkup(match[3])};
+      },
+      toBlock:({src='',alt='',title=''}={})=>{
+        const url=imageURL(src);if(!url)return '';
+        return '!['+escapeLabel(alt)+']('+url+(title?' "'+escapeTitle(title)+'"':'')+')';
+      },
+      toPreview:({src='',alt='',title=''}={})=>h('img',{src,alt,title}),
+    });
     // Native rich-text drag/drop may still create temporary blobs. Move them to R2
     // before save; Sveltia discards draft files no longer referenced by blob URL.
     window.CMS.registerEventListener({name:'preSave',handler:async({entry})=>{

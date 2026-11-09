@@ -4,15 +4,10 @@ status:
   - AFK
 gameMetadata:
   platforms:
-    - Xbox One
     - PC
-    - Nintendo Switch
-    - PlayStation 4
   selectedPlatforms:
     - PC
   localizedName: 信使
-  developers:
-    - Sabotage
   screenshots:
     - https://media.rawg.io/media/screenshots/a66/a6636b53f9f51b390c03f2dfb2717325.jpg
     - https://media.rawg.io/media/screenshots/cf2/cf21b710ac8b2a1cd4a0f9dd47f42c3f.jpg
@@ -20,45 +15,45 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/08d/08dee02cffcf8d02a758dc15ddda3429.jpg
     - https://media.rawg.io/media/screenshots/693/69387ae21b5369e486c0e9d75963540c.jpg
     - https://media.rawg.io/media/screenshots/70f/70f5094d1fbdf17be9b83eeb6589af2a.jpg
-  updatedAt: 2026-10-08T10:41:56.311Z
+  updatedAt: 2026-11-09T04:42:25.835Z
   genres:
     - Action
-    - Adventure
-    - RPG
-    - Indie
-    - Platformer
+    - Platform
   releaseDate: 2018-08-30
-  publishers:
-    - Devolver Digital
   cover: https://cdn2.steamgriddb.com/grid/c695eff33a12dad5d029f6c36a63fc78.jpg
   title: The Messenger
   sources:
-    rawg:
-      id: '52384'
-      slug: the-messenger-2018
-      url: https://rawg.io/games/52384
-  website: http://sabotagestudio.com/
-  id: rawg:52384
+    thegamesdb:
+      id: '66673'
+      url: https://thegamesdb.net/game.php?id=66673
+  id: thegamesdb:66673
   alternativeNames: []
   description: The game moves between 8-bit and 16-bit art styles, allowing the player to move between the two by going forward or backwards in time. As a demon army besieges his village, a young ninja ventures through a cursed world, to deliver a scroll paramount to his clan’s survival. What begins as a classic action platformer soon unravels into an expansive time-traveling adventure full of thrills, surprises, and humor.
   originalName: The Messenger
   fieldSources:
-    platforms: rawg
+    platforms: thegamesdb
     selectedPlatforms: manual
     localizedName: manual
-    developers: rawg
-    genres: rawg
-    releaseDate: rawg
-    publishers: rawg
+    genres: thegamesdb
+    releaseDate: thegamesdb
     cover: steamgriddb
-    title: rawg
-    website: rawg
+    title: thegamesdb
     description: rawg
-    originalName: rawg
+    originalName: thegamesdb
   manualFields:
     - selectedPlatforms
     - cover
     - localizedName
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'thegamesdb:66673:'
+    kind: overview
+    label: TheGamesDB
+    language: en
+    url: https://thegamesdb.net/game.php?id=66673
+  text: 恶魔大军围困村庄之际，年轻的忍者踏上穿梭于诅咒世界的旅程，为家族的存亡送出一份至关重要的卷轴。《信使》将玩家的预期作为核心设计元素，游戏伊始呈现为一款有着简单剧情的 8 位元动作平台游戏，随后逐渐展开为一则宏大的时空旅行故事，并最终蜕变出一款融合了极高重玩价值与冷幽默的 16 位元银河恶魔城游戏。
 manual:
   availabilityStatus: available
   officialStores:

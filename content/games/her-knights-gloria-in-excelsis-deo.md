@@ -16,7 +16,7 @@ gameMetadata:
   publishers:
     - Synogram
   cover: https://images.openai.com/static-rsc-4/zQLWtbTsWHr3GI0oiRc6BEwpGg_9WCst-YgClu78DU1CirriRdHFm6DVm-CBCno2RNaaG920keMSIVYEabHAT6MjGczvb8nJYLxEZxP09tPk9IpeBMOGQlFFpuBXn-kSs4CEsZzif7RGSQbL8EiIDR4Za2UQdW22MLLwfaK3HRDcG57IOhOBAaqhxoSKbOq4?purpose=fullsize
-  title: 她的骑士团：荣耀归于至高之神
+  title: '그녀의 기사단: Gloria in excelsis deo'
   originalName: '그녀의 기사단: Gloria in excelsis deo'
   fieldSources:
     platforms: manual

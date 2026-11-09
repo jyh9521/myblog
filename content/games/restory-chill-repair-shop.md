@@ -2,20 +2,6 @@
 title: 维修物语
 status:
   - AFK
-playTime:
-  hours: 11.6
-personalRating: 6.5
-hltb:
-  auto: true
-  id: 179171
-  snapshot:
-    completionist: 26.56
-    extras: 15.06
-    id: 179171
-    main: 11.43
-    updatedAt: 2026-11-09T01:51:53.609Z
-  title: 'ReStory: Chill Electronics Repairs'
-  url: https://howlongtobeat.com/game/179171
 gameMetadata:
   platforms:
     - PC
@@ -53,6 +39,16 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'thegamesdb:139595:'
+    kind: overview
+    label: TheGamesDB
+    language: en
+    url: https://thegamesdb.net/game.php?id=139595
+  text: 这是一款以2000年代中期东京电子商店为背景的轻松修理游戏：修复游戏机、手机和音乐播放器，并聆听顾客们的故事。
 manual:
   availabilityStatus: available
   officialStores:
@@ -60,6 +56,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/3812600/
+playTime:
+  hours: 11.6
+personalRating: 6.5
+hltb:
+  auto: true
+  id: 179171
+  snapshot:
+    completionist: 26.56
+    extras: 15.06
+    id: 179171
+    main: 11.43
+    updatedAt: 2026-11-09T01:51:53.609Z
+  title: 'ReStory: Chill Electronics Repairs'
+  url: https://howlongtobeat.com/game/179171
 events:
   - date: 2026-11-02
     title: 开始游戏

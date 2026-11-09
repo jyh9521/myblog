@@ -39,7 +39,7 @@ gameMetadata:
   releaseDate: 2026-10-29
   publishers:
     - S-Game
-  cover: https://media.rawg.io/media/games/25f/25f536a977488f12ef8a6d013e50fda1.jpg
+  cover: https://cdn2.steamgriddb.com/grid/e1600ca3892e2d6f80a180e429ec0119.jpg
   title: Phantom Blade Zero
   sources:
     rawg:
@@ -57,13 +57,14 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
     - title
+    - cover
 manual:
   availabilityStatus: available
   officialStores:

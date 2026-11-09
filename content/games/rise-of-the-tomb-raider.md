@@ -44,7 +44,7 @@ gameMetadata:
     - Square Enix
     - Microsoft Studios
     - Feral Interactive
-  cover: https://media.rawg.io/media/games/b45/b45575f34285f2c4479c9a5f719d972e.jpg
+  cover: https://cdn2.steamgriddb.com/grid/1980515e2a40690448065e854fe5f6d6.png
   title: Rise of the Tomb Raider
   sources:
     rawg:
@@ -71,13 +71,14 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
 manual:
   availabilityStatus: available
   officialStores:

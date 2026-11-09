@@ -103,7 +103,14 @@ textarea.dossier-input { resize: vertical; line-height: 1.6; }
 .dossier-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(174px, 100%), 1fr)); gap: 10px; }
 .dossier-form-grid > * { min-width: 0; overflow-wrap: anywhere; }
 .dossier-kicker, .dossier-stack small { color: var(--dossier-muted); font-size: .86em; }
-.dossier-candidates { max-height: min(380px, 54vh); overflow-y: auto; gap: 6px; padding: 3px; }
+.dossier-candidates {
+  /* Scroll the list, not the contents of individual multi-line rows. */
+  grid-auto-rows: max-content;
+  max-height: min(380px, 54vh);
+  overflow-y: auto;
+  gap: 6px;
+  padding: 3px;
+}
 .dossier-candidate {
   display: flex;
   align-items: center;

@@ -5,6 +5,7 @@ import { readFile, mkdir } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { chromium } from 'playwright';
+import { assertCandidateLayout, measureCandidateLayout } from './game-candidate-layout.mjs';
 import { detailTheGamesDB, searchDossierEditions } from '../../ns-counter/src/archive-routes.js';
 import { dossierBriefRoute } from '../../ns-counter/src/dossier-brief-route.js';
 
@@ -14,6 +15,9 @@ const bundleUrl = 'https://unpkg.com/@sveltia/cms@0.256.1/dist/sveltia-cms.js';
 const bundle = process.env.SVELTIA_BUNDLE ? await readFile(process.env.SVELTIA_BUNDLE) : await (await fetch(bundleUrl)).text();
 const out = process.env.DOSSIER_SCREENSHOTS;
 const baseline = process.argv.includes('--baseline');
+const candidatesOnly = process.argv.includes('--candidates-only');
+const viewport = { width: Number(process.env.DOSSIER_TEST_WIDTH || 1440), height: Number(process.env.DOSSIER_TEST_HEIGHT || 1000) };
+const colorScheme = process.env.DOSSIER_TEST_THEME || 'light';
 if (out) await mkdir(out, { recursive: true });
 const seed = [
   '---', 'title: 旧档案', 'status: [想玩]', 'summary: 已有手写简介。', 'playTime: {hours: 3.8}',
@@ -24,6 +28,11 @@ const original = 'In Harbor, you follow the clues left by a missing crew and wor
 const draft = '在《港湾手记》中，你将循着失踪船员留下的线索走访岛上的居民。调查途中，你要收集修理船只所需的零件，并和居民协作修复船体。寻找船员与修复船只构成故事的两条线索，随着调查与修理的推进逐渐交织。';
 const oldGame = { id: 35, game_title: 'Harbor', release_date: '2004-04-19', platform: 24, developers: [12], overview: original };
 const newGame = { ...oldGame, id: 36, release_date: '2023-01-03', platform: 25, developers: [13] };
+const extraGames = Array.from({ length: 14 }, (_, index) => ({
+  ...oldGame, id: 100 + index, platform: index % 2 ? 24 : 25,
+  game_title: 'Harbor — ' + (index % 3 ? '移植版和扩充发行资料 ' + (index + 1) : 'International Special Release With a Long Title ' + (index + 1)),
+  release_date: (1990 + index) + '-04-19',
+}));
 const gamePlatforms = { 24: { id: 24, name: 'PlayStation 2' }, 25: { id: 25, name: 'PlayStation 5' } };
 const env = { THEGAMESDB_API_KEY: 'local-fixture', GEMINI_API_KEY: 'local-fixture',
   GAME_ADMIN: { fetch: async () => new Response('') },
@@ -41,7 +50,7 @@ async function provider(url, options) {
   if (endpoint === 'Developers') return Response.json({ code: 200, data: { developers: {
     12: { id: 12, name: 'Original Studio' }, 13: { id: 13, name: 'New Studio' },
   } } });
-  const games = endpoint === 'ByGameID' ? [oldGame, newGame].filter(game => String(game.id) === url.searchParams.get('id')) : [oldGame, newGame];
+  const games = endpoint === 'ByGameID' ? [oldGame, newGame].filter(game => String(game.id) === url.searchParams.get('id')) : [oldGame, newGame, ...extraGames];
   return Response.json({ code: 200, data: { games }, include: { platform: gamePlatforms } });
 }
 const server = createServer(async (req, res) => {
@@ -81,11 +90,37 @@ const server = createServer(async (req, res) => {
   } catch (error) { console.error(error.message); res.statusCode = 404; res.end(); }
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+async function useFixtureLogin(page) {
+  return page.evaluate(() => {
+    const old = localStorage.getItem('sveltia-cms.user');
+    localStorage.setItem('sveltia-cms.user', JSON.stringify({ backendName: 'github', token: 'not-a-real-token-local-fixture' }));
+    return old;
+  });
+}
+
+async function checkCandidateFixture(page) {
+  await page.getByLabel('游戏原名或别名').fill('Harbor');
+  await page.getByText('按年份、平台或开发商筛选').click();
+  await page.getByLabel('发行年份', { exact: true }).fill('2023');
+  await page.getByLabel('平台', { exact: true }).fill('PS5');
+  await page.getByRole('button', { name: '查找版本', exact: true }).click();
+  await page.getByRole('button', { name: /Harbor.*2023.*TheGamesDB #36.*较高匹配/ }).waitFor();
+
+  const list = page.locator('.dossier-candidates');
+  await page.waitForFunction(() => document.querySelectorAll('.dossier-candidates > button').length === 16);
+  await page.waitForFunction(theme => document.documentElement.dataset.theme === theme, colorScheme);
+  const metrics = await measureCandidateLayout(list);
+  const label = colorScheme + '-' + viewport.width;
+  console.log('CANDIDATES ' + label + ' ' + JSON.stringify(metrics));
+  if (out) await list.screenshot({ path: resolve(out, 'candidate-' + label + '.png'), animations: 'disabled' });
+  assertCandidateLayout(metrics, 16, label);
+}
+
 const origin = 'http://127.0.0.1:' + server.address().port;
 let browser;
 try {
   browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || 'msedge', headless: true });
-  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, locale: 'zh-CN' });
+  const context = await browser.newContext({ viewport, colorScheme, locale: 'zh-CN' });
   const page = await context.newPage();
   page.setDefaultTimeout(12000);
   const errors = [];
@@ -108,6 +143,11 @@ try {
     assert.equal(await page.getByRole('navigation', { name: '游戏档案编辑分区' }).count(), 0);
     await screenshot('baseline-desktop');
     console.log('BASELINE_UI search=visible hltb=visible dossier-tabs=0');
+  } else if (candidatesOnly) {
+    await page.getByRole('navigation', { name: '游戏档案编辑分区' }).waitFor();
+    await useFixtureLogin(page);
+    await checkCandidateFixture(page);
+    assert.equal(dataRequests.filter(request => request.pathname.endsWith('/detail')).length, 0);
   } else {
     const nav = page.getByRole('navigation', { name: '游戏档案编辑分区' });
     const section = view => nav.getByRole('button', { name: view, exact: true });
@@ -145,17 +185,8 @@ try {
     assert.equal(await field('events').isVisible(), true);
 
     await section('档案与简介').click();
-    const loginBefore = await page.evaluate(() => {
-      const old = localStorage.getItem('sveltia-cms.user');
-      localStorage.setItem('sveltia-cms.user', JSON.stringify({ backendName: 'github', token: 'not-a-real-token-local-fixture' }));
-      return old;
-    });
-    await page.getByLabel('游戏原名或别名').fill('Harbor');
-    await page.getByText('按年份、平台或开发商筛选').click();
-    await page.getByLabel('发行年份', { exact: true }).fill('2023');
-    await page.getByLabel('平台', { exact: true }).fill('PS5');
-    await page.getByRole('button', { name: '查找版本', exact: true }).click();
-    await page.getByRole('button', { name: /Harbor.*2023.*TheGamesDB #36.*较高匹配/ }).waitFor();
+    const loginBefore = await useFixtureLogin(page);
+    await checkCandidateFixture(page);
     assert.equal(dataRequests.filter(request => request.pathname.endsWith('/detail')).length, 0);
     assert.equal(await page.getByRole('button', { name: /Harbor.*2004.*TheGamesDB #35.*不同/ }).count(), 1);
     await page.getByRole('button', { name: /Harbor.*2023.*TheGamesDB #36.*较高匹配/ }).click();

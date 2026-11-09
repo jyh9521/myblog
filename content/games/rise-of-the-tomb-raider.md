@@ -2,6 +2,77 @@
 title: 古墓丽影：崛起
 status:
   - 已通关
+gameMetadata:
+  platforms:
+    - PC
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Crystal Dynamics, Inc.
+  screenshots:
+    - https://media.rawg.io/media/screenshots/fbf/fbff1fe1f3cbe33dec8b2fc98bbad4a4.jpg
+    - https://media.rawg.io/media/screenshots/c18/c187789c40eea061a44c3fb497059c01.jpg
+    - https://media.rawg.io/media/screenshots/256/256472a369b9f52cfe0b8e85eb49ef19.jpg
+    - https://media.rawg.io/media/screenshots/38a/38a67aab95a0a5f9fe1a40821a63f0c6.jpg
+    - https://media.rawg.io/media/screenshots/a1f/a1f2d03a0d0f70f4aed355f6e138f2a4.jpg
+    - https://media.rawg.io/media/screenshots/03d/03df750d5d64eb8bf0121e92e1f701e0.jpg
+  updatedAt: 2026-11-09T04:48:23.573Z
+  genres:
+    - Action
+    - Adventure
+  releaseDate: 2016-01-28
+  publishers:
+    - Square Enix
+  cover: https://cdn2.steamgriddb.com/grid/1980515e2a40690448065e854fe5f6d6.png
+  title: Rise of the Tomb Raider
+  sources:
+    thegamesdb:
+      id: '34835'
+      url: https://thegamesdb.net/game.php?id=34835
+  id: thegamesdb:34835
+  alternativeNames: []
+  description: "Rise of the Tomb Raider is the eleventh entry in the franchise, being a sequel to its predecessor, Tomb Raider, a reboot of the franchise. This story follows Lara Croft, one year after battling her supernatural experiences in Yamatai. This time she is trying to find the legendary city of Kitezh in Siberia, Russia. The legend behind the city begins in the 12th century and still comes nowadays, that this ancient city grants with a promise of immortality. While Lara tries to solve the mystery of Siberia, she encounters an organisation called Trinity. They want to retrieve this gift to themselves. Following the notes of her father, Lara tries to discover the secrets of the ancient city and stop Trinity in doing so.\r
+
+    \r
+
+    Exploring the Soviet motive, even more, the game has the DLC's - Baba Yaga, the Temple of the Witch, which follows Lara in the Soviet mine and confronting the legendary witch of Russian folk-tales, Cold Darkness Awakened, the story about a secret biological weapon and Blood Ties and Lara's Nightmare - a fight for ownership of the Croft estate. \r
+
+    \r
+
+    Besides craftmanship and exploring, the game focuses on a very progressive combat system giving a player a wide variety of strategic options. There is a way to evade your opponents in the bushes; stealth kills with bow and arrows or open combat with firearms like shotguns, pistols and other guns. WIth earning experience, you can give Lara new ways of encountering her enemies by three different specialisations - Hunter, Survivor or Brawler. Each skill tree offers various options of combat, for example using Lara's surroundings and fauna, traps or better aim. With these options, you can choose how to guide Lara Croft in her adventures."
+  originalName: Rise of the Tomb Raider
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    description: rawg
+    originalName: thegamesdb
+  manualFields:
+    - selectedPlatforms
+    - cover
+summary:
+  method: summarize
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'thegamesdb:34835:'
+    kind: overview
+    label: TheGamesDB
+    language: en
+    url: https://thegamesdb.net/game.php?id=34835
+  text: 在《古墓丽影：崛起》中，劳拉·克劳馥揭开了一个远古谜团，踏上了她首次古墓探险之旅。为了赶在冷酷无情的组织“圣三一”之前找到永生之秘，劳拉必须前往西伯利亚最险恶、最偏远的地区。在这款生存动作游戏中，玩家将体验高潮迭起的动作场面，征服美丽而残酷的恶劣环境，展开残酷的游击战，并探索令人叹为观止的致命古墓。劳拉需要利用智慧与生存技能，结交新的盟友，并最终接受她作为“古墓丽影”的命运。
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: Steam
+      note: ''
+      region: ''
+      url: https://store.steampowered.com/app/391220/
 playTime:
   hours: 37.7
 personalRating: 8.5
@@ -16,76 +87,6 @@ hltb:
     updatedAt: 2026-10-23T04:51:00.988Z
   title: Rise of the Tomb Raider
   url: https://howlongtobeat.com/game/19266
-gameMetadata:
-  platforms:
-    - Xbox One
-    - PC
-    - macOS
-    - PlayStation 4
-  selectedPlatforms:
-    - PC
-  localizedName: ''
-  developers:
-    - Feral Interactive
-    - Crystal Dynamics
-    - Nixxes
-  screenshots:
-    - https://media.rawg.io/media/screenshots/fbf/fbff1fe1f3cbe33dec8b2fc98bbad4a4.jpg
-    - https://media.rawg.io/media/screenshots/c18/c187789c40eea061a44c3fb497059c01.jpg
-    - https://media.rawg.io/media/screenshots/256/256472a369b9f52cfe0b8e85eb49ef19.jpg
-    - https://media.rawg.io/media/screenshots/38a/38a67aab95a0a5f9fe1a40821a63f0c6.jpg
-    - https://media.rawg.io/media/screenshots/a1f/a1f2d03a0d0f70f4aed355f6e138f2a4.jpg
-    - https://media.rawg.io/media/screenshots/03d/03df750d5d64eb8bf0121e92e1f701e0.jpg
-  updatedAt: 2026-10-23T04:50:51.372Z
-  genres:
-    - Action
-  releaseDate: 2015-11-10
-  publishers:
-    - Square Enix
-    - Microsoft Studios
-    - Feral Interactive
-  cover: https://cdn2.steamgriddb.com/grid/1980515e2a40690448065e854fe5f6d6.png
-  title: Rise of the Tomb Raider
-  sources:
-    rawg:
-      id: '7689'
-      slug: rise-of-the-tomb-raider
-      url: https://rawg.io/games/7689
-  website: http://www.tombraider.com/us/
-  id: rawg:7689
-  alternativeNames: []
-  description: "Rise of the Tomb Raider is the eleventh entry in the franchise, being a sequel to its predecessor, Tomb Raider, a reboot of the franchise. This story follows Lara Croft, one year after battling her supernatural experiences in Yamatai. This time she is trying to find the legendary city of Kitezh in Siberia, Russia. The legend behind the city begins in the 12th century and still comes nowadays, that this ancient city grants with a promise of immortality. While Lara tries to solve the mystery of Siberia, she encounters an organisation called Trinity. They want to retrieve this gift to themselves. Following the notes of her father, Lara tries to discover the secrets of the ancient city and stop Trinity in doing so.\r
-
-    \r
-
-    Exploring the Soviet motive, even more, the game has the DLC's - Baba Yaga, the Temple of the Witch, which follows Lara in the Soviet mine and confronting the legendary witch of Russian folk-tales, Cold Darkness Awakened, the story about a secret biological weapon and Blood Ties and Lara's Nightmare - a fight for ownership of the Croft estate. \r
-
-    \r
-
-    Besides craftmanship and exploring, the game focuses on a very progressive combat system giving a player a wide variety of strategic options. There is a way to evade your opponents in the bushes; stealth kills with bow and arrows or open combat with firearms like shotguns, pistols and other guns. WIth earning experience, you can give Lara new ways of encountering her enemies by three different specialisations - Hunter, Survivor or Brawler. Each skill tree offers various options of combat, for example using Lara's surroundings and fauna, traps or better aim. With these options, you can choose how to guide Lara Croft in her adventures."
-  originalName: Rise of the Tomb Raider
-  fieldSources:
-    platforms: rawg
-    selectedPlatforms: manual
-    developers: rawg
-    genres: rawg
-    releaseDate: rawg
-    publishers: rawg
-    cover: steamgriddb
-    title: rawg
-    website: rawg
-    description: rawg
-    originalName: rawg
-  manualFields:
-    - selectedPlatforms
-    - cover
-manual:
-  availabilityStatus: available
-  officialStores:
-    - name: Steam
-      note: ''
-      region: ''
-      url: https://store.steampowered.com/app/391220/
 events:
   - title: 开始游戏
   - date: 2017-05-01

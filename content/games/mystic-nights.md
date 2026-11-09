@@ -22,6 +22,7 @@ gameMetadata:
     - Adventure
   releaseDate: 2005-01-01
   publishers: []
+  cover: https://cdn2.steamgriddb.com/grid/a95b3d890942d047ad27c88655c4319a.png
   title: Mystic Nights
   sources:
     thegamesdb:
@@ -34,16 +35,18 @@ gameMetadata:
   description: Mystic Nights (미스틱 나이츠) is a Survival Horror video game published by Game Infinity released on September 29th, 2005 for the PlayStation 2.
   originalName: Mystic Nights
   fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
     alternativeNames: thegamesdb
     description: rawg
-    genres: thegamesdb
     originalName: thegamesdb
-    platforms: thegamesdb
-    releaseDate: thegamesdb
-    selectedPlatforms: manual
-    title: thegamesdb
   manualFields:
     - selectedPlatforms
+    - cover
 summary:
   method: translate
   model: gemini-3.5-flash-lite

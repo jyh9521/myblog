@@ -2,20 +2,6 @@
 title: 信使
 status:
   - AFK
-playTime:
-  hours: 10.9
-personalRating: 8
-hltb:
-  auto: true
-  id: 60176
-  snapshot:
-    completionist: 16.15
-    extras: 14.48
-    id: 60176
-    main: 12.04
-    updatedAt: 2026-10-08T10:42:42.360Z
-  title: The Messenger
-  url: https://howlongtobeat.com/game/60176
 gameMetadata:
   platforms:
     - Xbox One
@@ -24,7 +10,7 @@ gameMetadata:
     - PlayStation 4
   selectedPlatforms:
     - PC
-  localizedName: ''
+  localizedName: 信使
   developers:
     - Sabotage
   screenshots:
@@ -44,7 +30,7 @@ gameMetadata:
   releaseDate: 2018-08-30
   publishers:
     - Devolver Digital
-  cover: https://cdn2.steamgriddb.com/grid/cdeb903207013df679ffea81e9c3c126.jpg
+  cover: https://cdn2.steamgriddb.com/grid/c695eff33a12dad5d029f6c36a63fc78.jpg
   title: The Messenger
   sources:
     rawg:
@@ -59,6 +45,7 @@ gameMetadata:
   fieldSources:
     platforms: rawg
     selectedPlatforms: manual
+    localizedName: manual
     developers: rawg
     genres: rawg
     releaseDate: rawg
@@ -71,6 +58,7 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - cover
+    - localizedName
 manual:
   availabilityStatus: available
   officialStores:
@@ -78,6 +66,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/764790/
+playTime:
+  hours: 10.9
+personalRating: 8
+hltb:
+  auto: true
+  id: 60176
+  snapshot:
+    completionist: 16.15
+    extras: 14.48
+    id: 60176
+    main: 12.04
+    updatedAt: 2026-10-08T10:42:42.360Z
+  title: The Messenger
+  url: https://howlongtobeat.com/game/60176
 events:
   - date: 2020-04-30
     title: 开始游戏

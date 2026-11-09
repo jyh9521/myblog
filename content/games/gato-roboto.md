@@ -2,20 +2,6 @@
 title: 猫咪机器人
 status:
   - 已通关
-playTime:
-  hours: 3
-personalRating: 7.5
-hltb:
-  auto: true
-  id: 67569
-  snapshot:
-    completionist: 4.43
-    extras: 3.9
-    id: 67569
-    main: 3.38
-    updatedAt: 2026-10-08T10:40:04.177Z
-  title: Gato Roboto
-  url: https://howlongtobeat.com/game/67569
 gameMetadata:
   platforms:
     - Xbox One
@@ -41,7 +27,7 @@ gameMetadata:
   releaseDate: 2019-05-29
   publishers:
     - Devolver Digital
-  cover: https://media.rawg.io/media/screenshots/266/2667b0dc1a9766cfc767172edc1255c5.jpg
+  cover: https://cdn2.steamgriddb.com/grid/dbc1166fb84c2727dc4ffdf6ef112ff5.jpg
   title: Gato Roboto
   sources:
     rawg:
@@ -65,13 +51,30 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:301576:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/301576
+  text: |-
+    钻进你那舒适的重甲机甲，踏上一场充满危险的地下世界之旅。这里满是暴躁的生物和险恶的障碍，而你正英勇地试图拯救受困的舰长和他坠毁的飞船。小心翼翼地离开这台科技结晶的庇护，凭着猫科动物的直觉穿梭于狭窄的隧道和神秘的水道之间，搜寻新的武器与装备。在《Gato Roboto》中，冒险正等待着最好奇的猫咪！
+
+    * 探索深空哨站的地下迷宫，揭开在你抵达之前发生的卑劣罪行。
+    * 驾驶灵活的机甲，在敌人和障碍中轰出一条血路，迎战驻守在基地各处的危险守护者。
+    * 谨慎地离开机甲，冒着九条命的风险去探索笨重机械装甲无法进入的区域。
+    * 发现丰富的秘密，收集新的武器和道具，在数十个精心设计的环境中开启全新的区域。
 manual:
   availabilityStatus: available
   officialStores:
@@ -79,6 +82,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/916730/
+playTime:
+  hours: 3
+personalRating: 7.5
+hltb:
+  auto: true
+  id: 67569
+  snapshot:
+    completionist: 4.43
+    extras: 3.9
+    id: 67569
+    main: 3.38
+    updatedAt: 2026-10-08T10:40:04.177Z
+  title: Gato Roboto
+  url: https://howlongtobeat.com/game/67569
 events:
   - date: 2020-03-18
     title: 开始游戏

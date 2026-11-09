@@ -2,20 +2,6 @@
 title: 喷射侠
 status:
   - 已通关
-playTime:
-  hours: 5
-personalRating: 7
-hltb:
-  auto: true
-  id: 43741
-  snapshot:
-    completionist: 8.19
-    extras: 7.34
-    id: 43741
-    main: 5.27
-    updatedAt: 2026-10-08T23:40:36.495Z
-  title: Splasher
-  url: https://howlongtobeat.com/game/43741
 gameMetadata:
   platforms:
     - Nintendo Switch
@@ -48,7 +34,7 @@ gameMetadata:
     - Plug In Digital
     - Playdius
     - The Sidekicks
-  cover: https://media.rawg.io/media/screenshots/942/942c57fe3a5a0edc24ac61869214a2e7.jpg
+  cover: https://cdn2.steamgriddb.com/grid/1d73625b36cb68adcd747cbf9fb34818.png
   title: Splasher
   sources:
     rawg:
@@ -77,7 +63,7 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: manual
@@ -86,6 +72,27 @@ gameMetadata:
     - selectedPlatforms
     - description
     - originalName
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: |-
+    喷射侠是一款融合了独特街机与动作玩法2D平台跳跃游戏。它为玩家带来极具挑战性的体验，需要敏捷的身手、极速的反应和迅捷的判断，游戏背景设定在一个疯狂的卡通世界中。
+
+    喷射侠们正处于巨大的危险之中！Inkorp那些安静祥和的工人们正被贪婪的博士——这家颜料工厂的邪恶老板一步步逼向绝境。
+
+    一位年轻的英雄挺身而出，为正义而战。他手持一把喷漆炮，发起反击，旨在拯救喷射侠们并对抗这位独裁者。他神奇的颜料炮赋予了他色彩超能力。
+
+    满手的颜料
+    使用不同的颜料颜色来黏附在墙壁和天花板上、在空中高高弹起，并智胜你的对手。
+
+    征服高难度关卡
+    勇敢面对陷阱，击败巨大工厂的安全防御装置。从失败中汲取教训，寻找最佳路线，刷出最佳通关时间以达到完美通关。
+
+    竞速模式与速通
+    用你的最佳成绩向全球玩家发起挑战，并在排行榜上分享你的分数。
+
+    《Splasher》是 Romain Claude 的最新力作，他曾担任育碧的游戏设计师和关卡设计师（代表作有《雷曼：起源》、《雷曼：传奇》）。他集结了一支才华横溢的小型团队，其中包括艺术总监 Richard Vatinel（又名 Gromy），以及作曲家兼声音设计师 Aymeric Schwartz（代表作有《师父》、《雷曼：起源》或《勇敢的心》），共同打造了这款游戏。该游戏还与多位知名的速通玩家合作开发。
 manual:
   availabilityStatus: available
   notes: ''
@@ -94,6 +101,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/446840/
+playTime:
+  hours: 5
+personalRating: 7
+hltb:
+  auto: true
+  id: 43741
+  snapshot:
+    completionist: 8.19
+    extras: 7.34
+    id: 43741
+    main: 5.27
+    updatedAt: 2026-10-08T23:40:36.495Z
+  title: Splasher
+  url: https://howlongtobeat.com/game/43741
 events:
   - date: 2020-07-03
     title: 开始游戏

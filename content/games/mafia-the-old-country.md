@@ -35,7 +35,7 @@ gameMetadata:
   releaseDate: 2025-08-08
   publishers:
     - 2K Games
-  cover: https://media.rawg.io/media/games/e0f/e0fc6554b6c0b5cd95037858898a1cc8.jpg
+  cover: https://cdn2.steamgriddb.com/grid/802bb5d12a44ebb63c0a48a5bf9ba380.png
   title: 'Mafia: The Old Country'
   sources:
     rawg:
@@ -57,13 +57,14 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
 manual:
   availabilityStatus: available
   officialStores:

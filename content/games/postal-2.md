@@ -2,6 +2,75 @@
 title: 夺命邮差2
 status:
   - 已通关
+gameMetadata:
+  platforms:
+    - PC
+  selectedPlatforms:
+    - PC
+  localizedName: 夺命邮差2
+  developers:
+    - RWS, Inc.
+  screenshots:
+    - https://media.rawg.io/media/screenshots/701/70134386143cb9aca600045d6475480d.jpg
+    - https://media.rawg.io/media/screenshots/204/204d5f6e57ef463a15cfb94402bf4a71.jpg
+    - https://media.rawg.io/media/screenshots/95c/95cb3dc24f3470a09296455b848347f0.jpg
+    - https://media.rawg.io/media/screenshots/780/780e9e877ab700d57c56d6997b5dba2c.jpg
+    - https://media.rawg.io/media/screenshots/5de/5de4a1dcecd56c2c95d032f07d6e9f82.jpg
+    - https://media.rawg.io/media/screenshots/caf/caf1a3c736e477e4b7c5cbe63c5a485f.jpg
+  updatedAt: 2026-11-09T07:07:07.568Z
+  genres:
+    - Action
+    - Adventure
+  releaseDate: 2003-04-14
+  publishers:
+    - Whiptail Interactive
+  cover: https://cdn2.steamgriddb.com/grid/e568b8f6bbb04a676a4f9f7dd79dc79f.jpg
+  title: Postal 2
+  sources:
+    thegamesdb:
+      id: '9262'
+      url: https://thegamesdb.net/game.php?id=9262
+  id: thegamesdb:9262
+  alternativeNames:
+    - Postal2
+    - Postal 2 Complete
+    - 喋血街头2
+  description: |-
+    Like original Postal, its sequel was specifically intended to spark controversy. The game is full of gross violence, black humor, obscenities, and biting satire of American life. The plot follows Postal Dude, a typical "white trash" and a small town trailer-park dweller, as he is given menial daily tasks, such as buying milk. The way he completes them, however, is what makes Postal 2 one of the most censored and offensive games ever. At the various points of the game, the player may piss over his opponents, use cats as gun silencers (by literally showing your gun up the cat's anus), burn dogs alive, blow up cars (but not drive them, in Postal 2 cars are simply four-wheeled explosives), shoot people and flip them a bird. The game, however, is just as violent as the player wants it to be. Most missions can be accomplished without killing, though it would have spoiled all the fun.
+    The gameplay has changed since the previous part. Isometric view from the original was replaced with the first-person view. The world around Postal Dude is living by itself, regardless of the player’s presence, much like in Grand Theft Auto series. All the town inhabitants are programmed to walk, chat and even fight each other as if they were real people.
+  originalName: Postal 2
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    localizedName: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    alternativeNames: manual
+    description: rawg
+    originalName: thegamesdb
+  manualFields:
+    - selectedPlatforms
+    - cover
+    - alternativeNames
+    - localizedName
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: |-
+    如同初代《夺命邮差》一样，其续作同样旨在引发争议。游戏中充斥着极端的暴力、黑色幽默、粗言秽语，以及对美国生活的辛辣讽刺。剧情围绕着主角“邮差小子”（Postal Dude）展开，他是一个典型的美国底层白人（white trash），住在小镇的拖车公园里。日常生活中，他会接到一些琐碎的差事，比如买牛奶。然而，他完成这些任务的方式，却让《夺命邮差2》成为了有史以来遭到最多审查、最具冒犯性的游戏之一。在游戏的各个阶段，玩家可以向对手撒尿、把猫当成枪械消音器（字面意思，将枪管塞进猫的肛门里）、活活烧死狗、炸毁汽车（但在《夺命邮差2》中不能驾驶汽车，它们只是四个轮子的炸药包）、射杀路人并向他们比中指。不过，游戏的暴力程度完全取决于玩家的选择。大多数任务其实都可以不通过杀戮来完成，尽管那样会少掉很多乐趣。
+
+    本作的玩法相比前作有所改变。原版的等距视角被第一人称视角所取代。邮差小子周围的世界在独立运转，无需玩家在场，这很像《侠盗猎车手》（Grand Theft Auto）系列。镇上的所有居民都经过编程，会像真人一样行走、聊天，甚至互相打斗。
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: Steam
+      note: ''
+      region: ''
+      url: https://store.steampowered.com/app/223470/
 playTime:
   hours: 15.6
 personalRating: 10
@@ -16,67 +85,6 @@ hltb:
     updatedAt: 2026-10-23T04:40:22.241Z
   title: Postal 2
   url: https://howlongtobeat.com/game/7240
-gameMetadata:
-  platforms:
-    - macOS
-    - PC
-    - Linux
-  selectedPlatforms:
-    - PC
-  localizedName: ''
-  developers:
-    - Running With Scissors
-  screenshots:
-    - https://media.rawg.io/media/screenshots/701/70134386143cb9aca600045d6475480d.jpg
-    - https://media.rawg.io/media/screenshots/204/204d5f6e57ef463a15cfb94402bf4a71.jpg
-    - https://media.rawg.io/media/screenshots/95c/95cb3dc24f3470a09296455b848347f0.jpg
-    - https://media.rawg.io/media/screenshots/780/780e9e877ab700d57c56d6997b5dba2c.jpg
-    - https://media.rawg.io/media/screenshots/5de/5de4a1dcecd56c2c95d032f07d6e9f82.jpg
-    - https://media.rawg.io/media/screenshots/caf/caf1a3c736e477e4b7c5cbe63c5a485f.jpg
-  updatedAt: 2026-10-23T04:40:57.218Z
-  genres:
-    - Action
-    - Shooter
-    - Adventure
-    - Indie
-  releaseDate: 2003-04-13
-  publishers:
-    - Running With Scissors
-  cover: https://media.rawg.io/media/games/2a2/2a2f9a0035544500e59a171c7038ec3a.jpg
-  title: POSTAL 2
-  sources:
-    rawg:
-      id: '11686'
-      slug: postal-2
-      url: https://rawg.io/games/11686
-  website: http://www.runningwithscissors.com
-  id: rawg:11686
-  alternativeNames: []
-  description: |-
-    Like original Postal, its sequel was specifically intended to spark controversy. The game is full of gross violence, black humor, obscenities, and biting satire of American life. The plot follows Postal Dude, a typical "white trash" and a small town trailer-park dweller, as he is given menial daily tasks, such as buying milk. The way he completes them, however, is what makes Postal 2 one of the most censored and offensive games ever. At the various points of the game, the player may piss over his opponents, use cats as gun silencers (by literally showing your gun up the cat's anus), burn dogs alive, blow up cars (but not drive them, in Postal 2 cars are simply four-wheeled explosives), shoot people and flip them a bird. The game, however, is just as violent as the player wants it to be. Most missions can be accomplished without killing, though it would have spoiled all the fun.
-    The gameplay has changed since the previous part. Isometric view from the original was replaced with the first-person view. The world around Postal Dude is living by itself, regardless of the player’s presence, much like in Grand Theft Auto series. All the town inhabitants are programmed to walk, chat and even fight each other as if they were real people.
-  originalName: POSTAL 2
-  fieldSources:
-    platforms: rawg
-    selectedPlatforms: manual
-    developers: rawg
-    genres: rawg
-    releaseDate: rawg
-    publishers: rawg
-    cover: rawg
-    title: rawg
-    website: rawg
-    description: rawg
-    originalName: rawg
-  manualFields:
-    - selectedPlatforms
-manual:
-  availabilityStatus: available
-  officialStores:
-    - name: Steam
-      note: ''
-      region: ''
-      url: https://store.steampowered.com/app/223470/
 events:
   - date: 2014-12-26
     title: 开始游戏

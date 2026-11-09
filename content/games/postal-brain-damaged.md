@@ -14,8 +14,38 @@ hltb:
   title: 'Postal: Brain Damaged'
   url: https://howlongtobeat.com/game/98503
 gameMetadata:
+  platforms:
+    - PlayStation 4
+    - Linux
+    - PC
+    - Xbox One
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - CreativeForge Games
+    - Hyperstrange
+  screenshots:
+    - https://media.rawg.io/media/screenshots/a14/a143e4b8ffa850803c016107ea0c1309.jpg
+    - https://media.rawg.io/media/screenshots/3ff/3ff1451629af7bb7ba30361d8925df8d.jpg
+    - https://media.rawg.io/media/screenshots/ade/ade7a4979017d0ccc418177139856d51.jpg
+    - https://media.rawg.io/media/screenshots/8b5/8b549ae028c707fc97ad28696d8a02b7.jpg
+    - https://media.rawg.io/media/screenshots/7cc/7cce006bc04e358ba7d0066871f5d132.jpg
+  updatedAt: 2026-10-02T04:53:59.974Z
+  genres:
+    - Action
+  releaseDate: 2022-06-09
+  publishers:
+    - Running With Scissors
+    - Hyperstrange
+  cover: https://cdn2.steamgriddb.com/grid/a857ff5359cbc948ae2b81468839d718.jpg
+  title: 'Postal: Brain Damaged'
+  sources:
+    rawg:
+      id: '489294'
+  website: ''
+  id: rawg:489294
   alternativeNames: []
-  cover: https://media.rawg.io/media/games/8d8/8d89895e3c3926c4e3f1a9c58aecf9d7.jpg
   description: |-
     POSTAL: Brain Damaged is a new, action-oriented take on the Running With Scissors’ cult game series with throwback graphics, and fast-paced, modern gameplay. Take a wild roller coaster ride through the twisted wonderland encased in the POSTAL DUDE’S messed-up mind.
     Get ready to experience POSTAL from a brand-new perspective! This boomer-shooter spin-off of the fan-beloved Running With Scissors’ franchise will take you further down the rabbit hole than any previous game of the series. You’re not in Paradise anymore, and things are about to get weird, as POSTAL: Brain Damaged happens within the twisted psyche of the POSTAL DUDE, himself!
@@ -31,50 +61,21 @@ gameMetadata:
     It’s a mad game for the mad times, kids! From the studio that brought you ELDERBORN and Blood West, comes the first-person shooter you didn't know you need in your life - POSTAL: Brain Damaged.
     Wishlist now, or else!
     This game is a boomer shooter, so it will involve a lot of shooting of enemies, they will gib. This game is also a part of the POSTAL franchise, so expect a lot of crude humor and profanity. Also low-res cartoon people in lingerie or bathing suits.
-  developers:
-    - CreativeForge Games
-    - Hyperstrange
+  originalName: 'Postal: Brain Damaged'
   fieldSources:
-    cover: rawg
-    description: rawg
+    platforms: rawg
+    selectedPlatforms: manual
     developers: rawg
     genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
     releaseDate: rawg
+    publishers: rawg
+    cover: steamgriddb
     title: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-  id: rawg:489294
-  localizedName: ''
+    description: rawg
+    originalName: rawg
   manualFields:
     - selectedPlatforms
-  originalName: 'Postal: Brain Damaged'
-  platforms:
-    - PlayStation 4
-    - Linux
-    - PC
-    - Xbox One
-  publishers:
-    - Running With Scissors
-    - Hyperstrange
-  releaseDate: 2022-06-09
-  screenshots:
-    - https://media.rawg.io/media/screenshots/a14/a143e4b8ffa850803c016107ea0c1309.jpg
-    - https://media.rawg.io/media/screenshots/3ff/3ff1451629af7bb7ba30361d8925df8d.jpg
-    - https://media.rawg.io/media/screenshots/ade/ade7a4979017d0ccc418177139856d51.jpg
-    - https://media.rawg.io/media/screenshots/8b5/8b549ae028c707fc97ad28696d8a02b7.jpg
-    - https://media.rawg.io/media/screenshots/7cc/7cce006bc04e358ba7d0066871f5d132.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '489294'
-  title: 'Postal: Brain Damaged'
-  updatedAt: 2026-10-02T04:53:59.974Z
-  website: ''
+    - cover
 manual:
   availabilityStatus: available
   officialStores:

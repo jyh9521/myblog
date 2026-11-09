@@ -2,17 +2,6 @@
 title: 深空当铺：可能是偷的
 status:
   - 正在玩
-hltb:
-  auto: true
-  id: 191879
-  snapshot:
-    completionist: null
-    extras: null
-    id: 191879
-    main: 19.8
-    updatedAt: 2026-11-09T01:54:52.135Z
-  title: Probably Stolen - Cyberpunk Shopkeeper Sim
-  url: https://howlongtobeat.com/game/191879
 gameMetadata:
   platforms:
     - PC
@@ -49,6 +38,16 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'thegamesdb:140704:'
+    kind: overview
+    label: TheGamesDB
+    language: en
+    url: https://thegamesdb.net/game.php?id=140704
+  text: 这是一款以太空站为背景的赛博朋克风店铺经营模拟游戏：在这里制作、交易并走私可疑货物，在各大势力间周旋，赚取足够的资金买下你的店铺。
 manual:
   availabilityStatus: available
   officialStores:
@@ -56,4 +55,15 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/4348910/
+hltb:
+  auto: true
+  id: 191879
+  snapshot:
+    completionist: null
+    extras: null
+    id: 191879
+    main: 19.8
+    updatedAt: 2026-11-09T01:54:52.135Z
+  title: Probably Stolen - Cyberpunk Shopkeeper Sim
+  url: https://howlongtobeat.com/game/191879
 ---

@@ -1,7 +1,7 @@
 ---
 title: 深空当铺：可能是偷的
 status:
-  - 正在玩
+  - AFK
 gameMetadata:
   platforms:
     - PC
@@ -55,6 +55,10 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/4348910/
+playTime:
+  hours: 1
+  minutes: 51
+personalRating: 8.6
 hltb:
   auto: true
   id: 191879
@@ -66,4 +70,10 @@ hltb:
     updatedAt: 2026-11-09T01:54:52.135Z
   title: Probably Stolen - Cyberpunk Shopkeeper Sim
   url: https://howlongtobeat.com/game/191879
+events:
+  - date: 2026-11-09
+    title: 开始游戏
+  - date: 2026-11-09
+    title: AFK
+    note: 有意思，但是越往后越复杂，不是很适合我。
 ---

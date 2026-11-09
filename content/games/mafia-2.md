@@ -1,7 +1,77 @@
 ---
-title: 黑手党2
+title: 四海兄弟2
 status:
   - 已通关
+gameMetadata:
+  platforms:
+    - PC
+  selectedPlatforms:
+    - PC
+  localizedName: 四海兄弟2
+  developers:
+    - 2K Czech
+  screenshots:
+    - https://media.rawg.io/media/screenshots/fc7/fc7af04e8ec2245f6520eea80a07f27b.jpg
+    - https://media.rawg.io/media/screenshots/609/609942d823b3f143bd740422e89bc957.jpg
+    - https://media.rawg.io/media/screenshots/884/88470240b56fe7e5b26e90855be8549c.jpg
+    - https://media.rawg.io/media/screenshots/c24/c24c38a52e37585e09e4d901f20e86dd.jpg
+    - https://media.rawg.io/media/screenshots/fa0/fa0b8f4a7479123c33ed9928a82c49e7.jpg
+    - https://media.rawg.io/media/screenshots/c9a/c9a3142299ef94565cfc72136ef58e4c.jpg
+  updatedAt: 2026-11-09T07:05:40.392Z
+  genres:
+    - Action
+    - Adventure
+    - Shooter
+  releaseDate: 2010-08-23
+  publishers:
+    - 2K Games
+  cover: https://cdn2.steamgriddb.com/grid/1bd8f48cf9cc75a4134aebbb83de3bac.jpg
+  title: Mafia II
+  sources:
+    thegamesdb:
+      id: '932'
+      url: https://thegamesdb.net/game.php?id=932
+  id: thegamesdb:932
+  alternativeNames:
+    - 黑手党2
+  description: "Mafia II is the second game in the franchise about Italian mafia operating in America after World War II. Vito Scalleta returns from the war in Italy being wounded. As he returns and reunites with his friend Joe, he and Henry Tomassino convince Vito to be apart of an Italian mafia in fictional city Empire Bay. Starting to work for Alberto Clemente, Vito must go through every aspect of being a part of the family and become a big thing in it.\r
+
+    \r
+
+    Even though the game has an open world mechanic, you won't probably explore it. Travelling to missions give an opportunity to listen to music of this time in America - Chuck Berry, Muddy Waters, Dean Martin and others, providing the game with a great atmosphere of the USA in its 50s. The gameplay has a variety of missions to offer, in which you can confront your enemies in melee combat, shoot them with different guns like M1911 or Thompson, or stealthily engaging your opponents. The game is pretty strict to the player reaching highest of empathy with Vito and every situation he's in."
+  originalName: Mafia II
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    localizedName: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    alternativeNames: manual
+    description: rawg
+    originalName: thegamesdb
+  manualFields:
+    - selectedPlatforms
+    - localizedName
+    - alternativeNames
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: |-
+    四海兄弟2是该系列的第二部作品，讲述了第二次世界大战后在美洲活动的意大利黑手党的故事。维托·斯卡莱塔在意大利战场受伤后退伍返乡。回到家乡并与好友乔重聚后，乔和亨利·托马西诺说服维托加入虚构城市帝国湾的意大利黑手党。开始为阿尔贝托·克莱门特效力后，维托必须经历黑手党家族生活的方方面面，并在其中崭露头角。
+
+    尽管游戏拥有开放世界机制，但你大概不会去刻意探索它。前往任务地点的旅程为你提供了聆听美国那个时代音乐的机会——查克·贝瑞、马迪·沃特斯、迪恩·马丁等人的金曲，为游戏营造出浓郁的20世纪50年代美国风情。游戏提供了丰富多样的任务，你可以通过近战与敌人对抗，使用M1911或汤姆逊等各种枪械射击，或是潜行消灭对手。游戏对玩家要求颇为严格，旨在让玩家对维托及其所处的每一种境况产生强烈的共情。
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: Steam
+      note: ''
+      region: ''
+      url: https://store.steampowered.com/app/50130/
 playTime:
   hours: 15
 personalRating: 7.2
@@ -16,73 +86,6 @@ hltb:
     updatedAt: 2026-10-23T04:42:40.893Z
   title: Mafia II
   url: https://howlongtobeat.com/game/5513
-gameMetadata:
-  platforms:
-    - PC
-    - PlayStation 3
-    - Xbox 360
-    - Xbox One
-  selectedPlatforms:
-    - PC
-  localizedName: ''
-  developers:
-    - 2K Czech
-  screenshots:
-    - https://media.rawg.io/media/screenshots/fc7/fc7af04e8ec2245f6520eea80a07f27b.jpg
-    - https://media.rawg.io/media/screenshots/609/609942d823b3f143bd740422e89bc957.jpg
-    - https://media.rawg.io/media/screenshots/884/88470240b56fe7e5b26e90855be8549c.jpg
-    - https://media.rawg.io/media/screenshots/c24/c24c38a52e37585e09e4d901f20e86dd.jpg
-    - https://media.rawg.io/media/screenshots/fa0/fa0b8f4a7479123c33ed9928a82c49e7.jpg
-    - https://media.rawg.io/media/screenshots/c9a/c9a3142299ef94565cfc72136ef58e4c.jpg
-  updatedAt: 2026-10-23T04:43:14.198Z
-  genres:
-    - Action
-    - Shooter
-  releaseDate: 2010-08-24
-  publishers:
-    - 2K Games
-    - 1C-SoftClub
-  cover: https://media.rawg.io/media/games/9e5/9e5b274c7e3aa5e30beba31b834b0e7e.jpg
-  title: Mafia II
-  sources:
-    rawg:
-      id: '1416'
-      slug: mafia-ii
-      url: https://rawg.io/games/1416
-  website: http://www.mafia2game.com
-  id: rawg:1416
-  alternativeNames:
-    - Mafia 2
-    - Mafia 2 (Classic)
-    - Mafia II (Classic)
-  description: "Mafia II is the second game in the franchise about Italian mafia operating in America after World War II. Vito Scalleta returns from the war in Italy being wounded. As he returns and reunites with his friend Joe, he and Henry Tomassino convince Vito to be apart of an Italian mafia in fictional city Empire Bay. Starting to work for Alberto Clemente, Vito must go through every aspect of being a part of the family and become a big thing in it.\r
-
-    \r
-
-    Even though the game has an open world mechanic, you won't probably explore it. Travelling to missions give an opportunity to listen to music of this time in America - Chuck Berry, Muddy Waters, Dean Martin and others, providing the game with a great atmosphere of the USA in its 50s. The gameplay has a variety of missions to offer, in which you can confront your enemies in melee combat, shoot them with different guns like M1911 or Thompson, or stealthily engaging your opponents. The game is pretty strict to the player reaching highest of empathy with Vito and every situation he's in."
-  originalName: Mafia II
-  fieldSources:
-    platforms: rawg
-    selectedPlatforms: manual
-    developers: rawg
-    genres: rawg
-    releaseDate: rawg
-    publishers: rawg
-    cover: rawg
-    title: rawg
-    website: rawg
-    alternativeNames: rawg
-    description: rawg
-    originalName: rawg
-  manualFields:
-    - selectedPlatforms
-manual:
-  availabilityStatus: available
-  officialStores:
-    - name: Steam
-      note: ''
-      region: ''
-      url: https://store.steampowered.com/app/50130/
 events:
   - title: 开始游戏
   - date: 2015-01-05

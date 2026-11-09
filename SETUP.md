@@ -12,7 +12,7 @@
 
 ## 游戏资料数据库
 
-游戏搜索通过 Cloudflare Worker 的 `GameMetadataProvider` 层调用 RAWG、ScreenScraper 与 TheGamesDB，不要求 Twitch / IGDB 凭据。自动模式仍使用 RAWG / ScreenScraper；TheGamesDB 在数据源下拉框单独选择，只导入游戏字段。SteamGridDB 只在「封面图片 URL」旁提供图片搜索。每条记录保存在 `content/games/<slug>.md`；顶层 `manual` 独立保存官方售卖渠道、获取状态和人工备注。文章游戏卡片用本地档案 slug 引用，页面构建与阅读不查询第三方资料 API。
+游戏资料由 Cloudflare Worker 查询 RAWG、TheGamesDB、ScreenScraper。默认同时查询 RAWG 和 TheGamesDB，按名称、年份、平台、开发商排序，由编辑确认版本后按 ID 读取。SteamGridDB 单独用于封面。每条记录保存在 `content/games/<slug>.md`；`manual` 继续保存正版渠道与备注。已审核的中文简介随档案保存，前台不请求第三方 API。
 
 复制根目录 `.env.example` 中的变量到 `workers/ns-counter/.dev.vars` 用于本地 Worker 调试；生产环境在 Cloudflare Worker 的 Secrets 中设置同名变量。`.dev.vars` 和 `.env` 已被 Git 忽略，不要提交密钥。
 
@@ -21,11 +21,12 @@
 - `RAWG_API_KEY`：RAWG API key。申请入口：[RAWG API Docs](https://rawg.io/apidocs)。
 - `THEGAMESDB_API_KEY`：TheGamesDB 资料检索与刷新。参见 [TheGamesDB API](https://api.thegamesdb.net/)。
 - `STEAMGRIDDB_API_KEY`：SteamGridDB 游戏与竖版封面检索。参见 [SteamGridDB API v2](https://www.steamgriddb.com/api/v2)。
+- `GEMINI_API_KEY`：仅在 Worker 的 Secret 中配置。用于简体中文简介翻译、摘要与改写。默认模型为 `gemini-3.5-flash-lite`，可通过可选环境变量 `GEMINI_MODEL` 修改。没有配置时仍可使用来源预览和手写简介。
 - `SCREENSCRAPER_DEV_ID` / `SCREENSCRAPER_DEV_PASSWORD`：ScreenScraper API 开发者凭据。
 - `SCREENSCRAPER_SOFTNAME`：ScreenScraper 登记/确认的客户端名称；若申请信息未另行指定，可填 `blfy-blog`。
 - `SCREENSCRAPER_USER_ID` / `SCREENSCRAPER_USER_PASSWORD`：可选的 ScreenScraper 用户账号凭据。
 
-RAWG 与 ScreenScraper 凭据均可单独缺省；未配置或上游不可用时，Worker 会尝试另一个数据源，再返回可用缓存或空候选，已保存的游戏档案及静态页面继续正常工作。ScreenScraper 开发者凭据和 softname 按其官方 WebAPI 申请流程获取。
+RAWG 与 TheGamesDB 凭据可单独缺省；默认搜索会显示可用的来源和提示。ScreenScraper 可在筛选中单独选择，开发者凭据和 softname 按其官方 WebAPI 申请流程获取。
 
 RAWG 的 API 文档提供个人/爱好项目申请入口；其免费方案限制为非商业项目，并要求在使用数据的页面链接回 RAWG。本站游戏卡片会显示来源链接。ScreenScraper 需先注册账号，再通过官方论坛联系团队介绍应用并申请开发者 ID、密码和登记的 `softname`；官方说明 API 面向免费分发的软件，其他用途需事先取得许可。
 
@@ -51,9 +52,9 @@ npx wrangler d1 migrations apply ns-counter --remote
 npx wrangler deploy
 ```
 
-后台操作：进入「游戏档案 → 游戏资料」。选择 **TheGamesDB** 并搜索，在候选中核对名称、年份和平台，点选后填入名称、简介、发售日期、平台、开发商、发行商和类型等可用字段。已手动编辑的字段保留，TheGamesDB 不导入封面或截图；后续「刷新游戏资料」按已保存的 TheGamesDB ID 查询。
+后台操作：在「档案与简介」核对版本并准备中文简介。简体短简介默认不调用 AI；Gemini 草稿由编辑审核并采用后再保存。详见 [简介工作流](docs/game-summary.md)。
 
-在「封面图片 URL」下点击「搜索 SteamGridDB 封面」，按游戏名搜索、选定游戏版本，再从缩略图选择封面。只回填原图 URL 并记录封面来源；不会上传图片、修改其他游戏字段或自动保存。该封面会保留在资料刷新前后，也可继续手填或替换 URL。两个新来源使用现有博客后台登录；未配置或服务出错时，手动编辑及已有档案仍可用。
+在「资料与渠道 → 封面与截图」中点击「搜索 SteamGridDB 封面」，按游戏名搜索、选定游戏版本，再从缩略图选择封面。只回填原图 URL 并记录封面来源；不会上传图片、修改其他游戏字段或自动保存。该封面会保留在资料刷新前后，也可继续手填或替换 URL。版本搜索、简介工具和封面搜索使用现有博客后台登录；未配置或服务出错时，手动编辑及已有档案仍可用。
 
 文章编辑器统一使用「添加游戏」入口。点击后默认显示下拉框，展开后输入名称筛选已有游戏档案，选项优先显示顶层 `title`（手动名称覆盖），支持按该名称、资料库名称、原名或 slug 搜索。保存的是档案 slug，而非名称快照；前台强制使用档案最新的手动覆盖名称，本文状态覆盖仍可选填。新卡片格式为 `[gframe]档案slug||[/gframe]`，平台与按钮颜色取自该档案首个已选平台；旧的 `pframe/nframe/xframe/sframe` 卡片继续正常显示和编辑，保留原平台。
 
@@ -67,7 +68,7 @@ RAWG / ScreenScraper / TheGamesDB 是资料来源；Steam、GOG、Nintendo eShop
 
 - 发布前依次执行 `npm test`、`npm run check`、`npm run validate` 和构建。内容检查会阻止不存在的游戏关联、卡片引用、站内图片/附件/链接及 CMS 配置错误，并把具体文件和原因写入 GitHub Actions 日志与 `content-validation` 附件。
 - `npm run audit:links` 在线检查外链，404/410 会提示失效；超时、反爬和限流标记为“未确认”，不阻断正常发布。ScreenScraper 动态图片不在每次发布时批量抓取，以免消耗 API 配额。
-- 「游戏档案 → 游戏资料 → 刷新游戏资料」现在先展示旧值/新值。勾选字段并确认后才填入表单，最后仍需保存。取消或不勾选任何字段不会修改资料，手动编辑字段不覆盖。直接搜索并导入新游戏的流程保留。
+- 「游戏档案 → 资料与渠道 → 刷新外部资料」现在先展示旧值/新值。勾选字段并确认后才填入表单，最后仍需保存。取消或不勾选任何字段不会修改资料，手动编辑字段不覆盖。直接搜索并导入新游戏的流程保留。
 - 游戏档案支持按资料更新时间、名称、发售年份排序；筛选与排序写入网址，可分享该网址。在同一浏览器标签页从详情返回时会恢复上一次筛选；“重置筛选与排序”清空记忆。
 - 独立标签页及顶部/底部导航入口已移除；文章标签和文章列表中的标签筛选保留。没有新增历史网址跳转功能。
 
@@ -79,7 +80,7 @@ RAWG / ScreenScraper / TheGamesDB 是资料来源；Steam、GOG、Nintendo eShop
 
 ### ScreenScraper 接入与导入
 
-在游戏档案编辑器的「游戏资料」选择 **ScreenScraper**，输入名称并点击「搜索游戏」。
+在「档案与简介 → 搜索并确认游戏版本 → 按年份、平台或开发商筛选」的资料库选择 **ScreenScraper**，输入名称并点击「查找版本」。
 上游检索可能较慢，单次最多等待 75 秒；候选会显示名称及具体平台，需选中正确版本后再导入。
 导入后勾选要展示的平台、填写手动覆盖名称，再保存档案；部署后本地游戏选择器和前台读取已保存的档案。
 封面和截图经本站 `/ns/api/games/media` 图片代理读取，开发者密码仅在 Worker 中使用，不写入文章、档案或浏览器响应。

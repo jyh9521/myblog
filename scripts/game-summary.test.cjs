@@ -55,3 +55,23 @@ test('game summary renders real Markdown and HTML with sanitized attributes', as
   assert.match(render('`<em>原样</em>`'), /<code>&lt;em&gt;原样&lt;\/em&gt;<\/code>/);
   console.log(baseline ? 'SUMMARY_BASELINE: Markdown rendered; HTML escaped' : 'SUMMARY_MODIFIED: Markdown + HTML rendered; unsafe markup removed');
 });
+
+test('reviewed summary and provenance round-trip without changing legacy strings or exposing unsafe URLs', () => {
+  const context = { exports: {}, URL, process, require: name => name.startsWith('./') || name.startsWith('../public/') ? {} : require(name) };
+  vm.runInNewContext(ts.transpileModule(fs.readFileSync('lib/games.ts', 'utf8'), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, esModuleInterop: true },
+  }).outputText, context);
+  const { readGameSummary } = context.exports;
+  assert.equal(readGameSummary(' **原有**简介 ', '旧资料').summary, '**原有**简介');
+  assert.equal(readGameSummary(undefined, '旧资料').summary, '旧资料');
+  const text = '审核后的简体中文简介。';
+  const source = { url: 'https://store.steampowered.com/app/620/?l=schinese', label: '任意输入不能改掉来源名称' };
+  const matter = require('gray-matter');
+  const saved = matter(matter.stringify('', { summary: { text, source, method: 'rewrite' } })).data.summary;
+  assert.equal(readGameSummary(saved, '旧资料').summary, text);
+  assert.equal(readGameSummary(saved, '旧资料').summarySource.label, 'Steam');
+  for (const url of ['javascript:alert(1)', 'https://store.steampowered.com.fake/app/620/', 'https://token@store.steampowered.com/app/620/']) {
+    assert.equal(readGameSummary({ text, source: { url } }, '').summarySource, undefined);
+  }
+  assert.doesNotMatch(fs.readFileSync('app/games/[slug]/page.tsx', 'utf8'), /summarySource.*dangerouslySetInnerHTML/);
+});

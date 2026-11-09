@@ -1,0 +1,134 @@
+
+/* Scope to direct siblings of the dossier navigation field in the pinned editor. Rows remain mounted and validated. */
+div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="core"]) > :is([data-key-path="manual"],[data-key-path="playTime"],[data-key-path="personalRating"],[data-key-path="hltb"],[data-key-path="events"],[data-key-path="projects"]):not(:has([aria-invalid="true"],.field-error)),
+div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="details"]) > :is([data-key-path="title"],[data-key-path="status"],[data-key-path="summary"],[data-key-path="playTime"],[data-key-path="personalRating"],[data-key-path="hltb"],[data-key-path="events"],[data-key-path="projects"]):not(:has([aria-invalid="true"],.field-error)),
+div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="activity"]) > :is([data-key-path="title"],[data-key-path="status"],[data-key-path="summary"],[data-key-path="gameMetadata"],[data-key-path="manual"]):not(:has([aria-invalid="true"],.field-error)),
+div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="core"]) [data-dossier-pane="details"],
+div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="details"]) [data-dossier-pane="core"] { display: none; }
+
+[data-mode="edit"] [data-field-type="game-dossier-nav"] > header { display: none; }
+[data-mode="edit"] [data-field-type="game-dossier-nav"] {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding-block: 6px;
+  background: var(--sui-primary-background-color, Canvas);
+}
+[data-field-type="game-dossier-nav"]:not([aria-label]) { display: none; }
+/* The dashboard launchers obscure controls on small screens. They remain in
+   the library; the editor's own R2 controls remain available. */
+body:has([data-mode="edit"] [data-field-type="game-dossier-nav"] .dossier-tabs) > .blog-admin-launcher { display: none; }
+
+.dossier-stack, .dossier-tabs {
+  --dossier-line: color-mix(in srgb, currentColor 25%, transparent);
+  --dossier-muted: color-mix(in srgb, currentColor 78%, transparent);
+  --dossier-tint: color-mix(in srgb, #386bd5 8%, Canvas);
+  --dossier-accent: #234fa5;
+  --dossier-on-accent: #fff;
+  --dossier-error: #a02819;
+}
+html[data-theme="dark"] :is(.dossier-stack, .dossier-tabs) {
+  color-scheme: dark;
+  --dossier-tint: color-mix(in srgb, #a9c3ff 12%, Canvas);
+  --dossier-accent: #b6ceff;
+  --dossier-on-accent: #102247;
+  --dossier-error: #ffb4a9;
+}
+.dossier-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  border: 1px solid var(--dossier-line);
+  border-radius: 12px;
+  padding: 4px;
+  background: var(--dossier-tint);
+}
+.dossier-tabs button, .dossier-button, .dossier-candidate {
+  box-sizing: border-box;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  min-height: 40px;
+  padding: 7px 11px;
+  white-space: normal;
+}
+.dossier-tabs button { font-weight: 650; min-height: 44px; padding-inline: 4px; }
+.dossier-tabs button[aria-pressed="true"], .dossier-primary {
+  background: var(--dossier-accent);
+  color: var(--dossier-on-accent);
+}
+.dossier-secondary { border-color: var(--dossier-line); }
+.dossier-secondary:hover, .dossier-tabs button:not([aria-pressed="true"]):hover { background: var(--dossier-tint); }
+.dossier-button:disabled, .dossier-candidate:disabled { opacity: .55; cursor: default; }
+:is(.dossier-stack, .dossier-tabs) :is(input,select,textarea,button,summary,a):focus-visible {
+  outline: 2px solid var(--dossier-accent);
+  outline-offset: 2px;
+}
+.dossier-stack, .dossier-label, .dossier-candidates, .dossier-identity > div, .dossier-candidate > span:first-child { display: grid; min-width: 0; }
+.dossier-stack { gap: 12px; }
+.dossier-label, .dossier-identity > div, .dossier-candidate > span:first-child { gap: 5px; }
+.dossier-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 7px 10px;
+  border: 1px solid var(--dossier-line);
+  border-radius: 8px;
+  background: Canvas;
+  color: CanvasText;
+  font: inherit;
+}
+textarea.dossier-input { resize: vertical; line-height: 1.6; }
+.dossier-card, .dossier-disclosure, .dossier-review {
+  border: 1px solid var(--dossier-line);
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 0;
+}
+.dossier-card, .dossier-review { background: var(--dossier-tint); }
+.dossier-disclosure > summary { cursor: pointer; font-weight: 600; padding-block: 3px; }
+.dossier-disclosure[open] > summary { margin-bottom: 10px; }
+.dossier-identity, .dossier-caption, .dossier-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dossier-identity, .dossier-caption { justify-content: space-between; }
+.dossier-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 8px; }
+.dossier-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(174px, 100%), 1fr)); gap: 10px; }
+.dossier-form-grid > * { min-width: 0; overflow-wrap: anywhere; }
+.dossier-kicker, .dossier-stack small { color: var(--dossier-muted); font-size: .86em; }
+.dossier-candidates { max-height: min(380px, 54vh); overflow-y: auto; gap: 6px; padding: 3px; }
+.dossier-candidate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  text-align: start;
+  border-color: var(--dossier-line);
+}
+.dossier-candidate:hover { background: var(--dossier-tint); border-color: var(--dossier-accent); }
+.dossier-badge { border: 1px solid var(--dossier-line); border-radius: 99px; padding: 3px 8px; font-size: .8em; }
+.dossier-stack :is(p, small, strong, a) { overflow-wrap: anywhere; }
+.dossier-stack :is(.dossier-message, .dossier-note, .dossier-reference, .dossier-change p) { margin: 0; }
+.dossier-stack .dossier-message {
+  border-inline-start: 3px solid var(--dossier-accent);
+  background: var(--dossier-tint);
+  padding: 6px 10px;
+}
+.dossier-stack .dossier-error { color: var(--dossier-error); border-color: var(--dossier-error); }
+.dossier-reference { white-space: pre-wrap; max-height: 14rem; overflow-y: auto; }
+.dossier-brief-preview { white-space: pre-wrap; }
+.dossier-change { padding-block: 8px; border-bottom: 1px solid var(--dossier-line); }
+.dossier-change label { font-weight: 600; }
+@media (max-width: 520px) {
+  .dossier-candidate { align-items: start; flex-direction: column; }
+  .dossier-row { grid-template-columns: minmax(0, 1fr); }
+  .dossier-row .dossier-button { justify-self: start; }
+}

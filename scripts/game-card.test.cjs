@@ -138,7 +138,7 @@ test('local picker opens a filterable dropdown, matches original names and saves
   assert.equal(saved, 'onimusha');
   assert.equal(picker.state.open, false);
   assert.ok(requests.every(([url]) => url === '/game-dossiers.json')); // Never searches RAWG or ScreenScraper.
-  assert.ok(components.fieldTypes['game-metadata'].searchGames);
+  assert.ok(!components.fieldTypes['game-metadata'], 'dossier editing is registered separately from the article picker');
 });
 
 test('local picker errors preserve selection and offer retry', async () => {

@@ -31,7 +31,7 @@ async function validateRepository(root = process.cwd()) {
   let config;
   try { config = yaml.load(fs.readFileSync(path.join(root, 'public/sveltia/config.yml'), 'utf8')); }
   catch (e) { error('CMS config', `YAML 格式错误：${e.message}`); }
-  const custom = ['custom.js', 'hltb.js', 'article-access.js', 'r2-media.js', 'social-icons.js', 'text-style.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
+  const custom = ['custom.js', 'game-dossier.js', 'hltb.js', 'article-access.js', 'r2-media.js', 'social-icons.js', 'text-style.js'].map(file => fs.existsSync(path.join(root, 'public/sveltia', file)) ? fs.readFileSync(path.join(root, 'public/sveltia', file), 'utf8') : '').join('\n');
   if (config) {
     if (config.backend?.name !== 'github' || !config.backend.repo || !config.backend.branch) error('CMS config', 'GitHub backend 配置不完整');
     if (!Array.isArray(config.collections)) error('CMS config', 'collections 必须为数组');
@@ -140,6 +140,10 @@ async function validateRepository(root = process.cwd()) {
     }
     for (const key of ['cover', 'audio', 'video', 'attachment']) checkUrl(data[key], filename, base, key);
     if (folder === 'games') {
+      if (data.summary != null && typeof data.summary !== 'string') {
+        if (typeof data.summary?.text !== 'string' || !data.summary.text.trim()) error(filename, '简介须为正文字符串，或含 text 的简介对象');
+        else checkUrl(data.summary.source?.url, filename, base, '简介来源');
+      }
       const allowedEvents = config?.collections?.find(item => item.name === 'games')?.fields?.find(item => item.name === 'events')?.fields?.find(item => item.name === 'title')?.options || [];
       for (const event of data.events || []) if (!allowedEvents.includes(event.title)) error(filename, `时间线事件无效：${event.title}`);
     }

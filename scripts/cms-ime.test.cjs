@@ -6,7 +6,7 @@ function setup(name, value = {}) {
   const fields = {};
   const window = { h: (type, props, ...children) => ({ type, props: props || {}, children }), createClass: spec => spec,
     CMS: { getFieldType: () => ({ control() {} }), registerEditorComponent() {}, registerFieldType: (name, spec) => fields[name] = spec } };
-  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js', 'utf8'), { window });
+  vm.runInNewContext(fs.readFileSync('public/sveltia/game-dossier.js', 'utf8'), { window });
   const changes = [];
   const field = { ...fields[name], props: { value, onChange(next) { changes.push(next); field.props.value = next; } }, setState(next) { Object.assign(this.state, next); } };
   field.state = field.getInitialState();
@@ -66,11 +66,12 @@ test('comma separated aliases retain editing draft while saving parsed Chinese n
   assert.equal(control.render().props.value, '中文，别名，');
 });
 test('ordinary typing, Chinese paste and external resets remain editable', () => {
-  const { input, changes } = setup('game-metadata');
+  const { field, input, changes } = setup('game-metadata');
   const control = input('中文本地化名称');
   control.render().props.onChange(event('中文'));
   assert.equal(changes[0].localizedName, '中文');
   const previous = control.props;
+  field.props.value = { ...field.props.value, localizedName: '刷新名称' };
   control.props = { ...previous, value: '刷新名称' };
   control.componentDidUpdate(previous);
   assert.equal(control.render().props.value, '刷新名称');
@@ -102,7 +103,7 @@ test('real React rerenders preserve the IME draft and commit across CMS prop upd
     }
     return Control;
   }, CMS: { getFieldType: () => ({ control() { return null; } }), registerEditorComponent() {}, registerFieldType: (name, type) => fields[name] = type } };
-  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js', 'utf8'), { window });
+  vm.runInNewContext(fs.readFileSync('public/sveltia/game-dossier.js', 'utf8'), { window });
   const changes = [];
   function Editor() {
     const [value, setValue] = React.useState({});

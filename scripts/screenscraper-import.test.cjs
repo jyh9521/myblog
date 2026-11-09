@@ -15,7 +15,7 @@ test('CMS ScreenScraper search, import and Markdown round-trip preserve manual f
     getFieldType: () => ({ control: () => null }), registerFieldType: (name, field) => { fields[name] = field; }, registerEditorComponent: () => {},
   } };
   const calls = [];
-  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js', 'utf8'), { window, fetch: async (url, options) => {
+  vm.runInNewContext(fs.readFileSync('public/sveltia/game-dossier.js', 'utf8'), { window, fetch: async (url, options) => {
     calls.push([url, options]);
     return Response.json(options ? metadata : { results: [metadata], warnings: [] });
   } });

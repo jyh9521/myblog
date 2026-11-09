@@ -18,7 +18,7 @@ function cms(value, request) {
     GamePlatforms: require('../public/sveltia/game-platforms.js'), BlogAdminAuth: { request },
     CMS: { registerEditorComponent() {}, getFieldType: () => ({ control: () => null }), registerFieldType: (name, spec) => { fields[name] = spec; } },
   };
-  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js', 'utf8'), { window, fetch() { assert.fail('new sources use the CMS admin session'); } });
+  vm.runInNewContext(fs.readFileSync('public/sveltia/game-dossier.js', 'utf8'), { window, fetch() { assert.fail('new sources use the CMS admin session'); } });
   let updates = 0;
   const field = instance(fields['game-metadata'], { value, onChange(next) { field.props.value = next; updates++; } });
   const nodes = descendants(field.render());
@@ -37,8 +37,8 @@ const game = { id: 'thegamesdb:35', title: 'Fixture Quest', originalName: 'Fixtu
 test('CMS entry loads the versioned cover styles and updated admin/field scripts', () => {
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);
-  assert.match(html, /admin-auth\.js\?v=game-sources-20261109/);
-  assert.match(html, /custom\.js\?v=game-sources-20261109/);
+  assert.match(html, /admin-auth\.js\?v=game-brief-20261109/);
+  assert.match(html, /game-dossier\.js\?v=brief-20261109/);
 });
 
 test('TheGamesDB option imports and refreshes game fields only, including after reopening', async () => {
@@ -69,7 +69,7 @@ test('TheGamesDB option imports and refreshes game fields only, including after 
   const reopened = cms(matter(matter.stringify('', { gameMetadata: JSON.parse(JSON.stringify(data)) })).data.gameMetadata, request);
   await reopened.field.selectGame({ title: data.title, sources: data.sources }, true);
   assert.equal(calls[2].body.dataSource, 'thegamesdb', 'refresh follows the saved source, not the default dropdown');
-  assert.deepEqual(Array.from(reopened.field.state.pendingRefresh.changes, x => x.key), ['description', 'releaseDate']);
+  assert.deepEqual(Array.from(reopened.field.state.pendingRefresh.changes, x => x.key), ['releaseDate']);
   reopened.field.applyRefresh();
   assert.equal(reopened.field.props.value.releaseDate, '2011-04-20');
   assert.equal(reopened.field.props.value.cover, originalCover);

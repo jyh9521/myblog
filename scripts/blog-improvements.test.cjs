@@ -17,7 +17,7 @@ function cms(value, game) {
   const fields = {};
   const window = { h: (type, props, ...children) => ({ type, props: props || {}, children }), createClass: x => x,
     GamePlatforms: require('../public/sveltia/game-platforms.js'), CMS: { getFieldType: () => ({ control: () => null }), registerEditorComponent: () => {}, registerFieldType: (name, field) => { fields[name] = field; } } };
-  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js', 'utf8'), { window, fetch: async () => Response.json(game) });
+  vm.runInNewContext(fs.readFileSync('public/sveltia/game-dossier.js', 'utf8'), { window, fetch: async () => Response.json(game) });
   let changes = 0;
   const field = fields['game-metadata'];
   const instance = { ...field, state: field.getInitialState(), props: { value, onChange: next => { instance.props.value = next; changes++; } }, setState(next) { Object.assign(this.state, next); } };
@@ -31,7 +31,7 @@ test('refresh requires confirmation, applies only selected fields and preserves 
   await instance.selectGame({ title: 'Example' }, true);
   assert.equal(changes(), 0);
   assert.equal(instance.props.value.cover, 'old-cover');
-  assert.ok(instance.state.pendingRefresh.changes.find(x => x.key === 'description').locked);
+  assert.ok(!instance.state.pendingRefresh.changes.some(x => x.key === 'description'));
   instance.state.pendingRefresh.changes.find(x => x.key === 'releaseDate').selected = false;
   assert.ok(instance.render());
   instance.applyRefresh();
@@ -47,7 +47,7 @@ test('refresh requires confirmation, applies only selected fields and preserves 
 });
 
 test('canceling preview or selecting no changes leaves original data untouched', async () => {
-  const old = { id: 'rawg:1', sources: {}, title: 'Old', platforms: [] };
+  const old = { id: 'rawg:1', sources: { rawg: { id: '1' } }, title: 'Old', platforms: [] };
   const { instance, changes } = cms(old, { ...old, title: 'New' });
   await instance.selectGame({ title: 'Example' }, true);
   instance.state.pendingRefresh.changes.forEach(x => { x.selected = false; });

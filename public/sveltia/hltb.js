@@ -64,19 +64,28 @@
       },
       render() {
         const value = this.props.value || {};
-        return h('div', { style: { display: 'grid', gap: '12px' } },
+        return h('div', { className: 'dossier-stack' },
+          (value.id || value.url) && h('strong', null, '已关联：' + (value.title || 'HLTB 游戏') + (value.id ? ' #' + value.id : '')),
+          value.snapshot && h('small', null, `参考快照：主线 ${value.snapshot.main ?? '—'} / 主线＋支线 ${value.snapshot.extras ?? '—'} / 全收集 ${value.snapshot.completionist ?? '—'} 小时`),
+          h('details', { className: 'dossier-disclosure' },
+            h('summary', null, value.url || value.id ? '管理关联与参考时间' : '关联 HLTB 或手填参考时间'),
+            h('div', { className: 'dossier-stack' },
           h('label', null, '搜索 HLTB 游戏（支持名称片段、商店名称）', h('input', { style: inputStyle, value: this.state.query, onChange: e => this.setState({ query: e.target.value }), onKeyDown: e => { if (e.key === 'Enter' && !e.nativeEvent?.isComposing && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); this.search(); } } })),
           h('button', { type: 'button', disabled: this.state.busy, onClick: () => this.search() }, this.state.busy ? '正在查询…' : '搜索并选择 HLTB 游戏'),
           this.state.busy && h('button', { type: 'button', onClick: () => this.controller?.abort() }, '取消查询'),
           h('div', { style: { display: 'grid', gap: '6px' } }, ...this.state.results.map(game => h('button', { key: game.id, type: 'button', disabled: this.state.busy, onClick: () => this.select(game), style: { ...inputStyle, textAlign: 'left' } }, `${game.title} · ID ${game.id} · ${game.type} · ${game.platforms}`))),
           h('p', { role: 'status', 'aria-live': 'polite' }, this.state.message),
-          value.id && h('strong', null, `已关联：${value.title || 'HLTB 游戏'}（ID ${value.id}）`),
           h('label', null, 'HLTB 游戏链接', h('input', { type: 'url', style: inputStyle, value: value.url || '', onChange: e => this.link(e.target.value) })),
           h('label', null, h('input', { type: 'checkbox', checked: value.auto !== false, onChange: e => this.change({ auto: e.target.checked }) }), ' 自动读取 D1 缓存参考时间（14 天更新；失败保留旧数据）'),
-          value.snapshot && h('small', null, `已保存参考快照：主线 ${value.snapshot.main ?? '—'} / 主线＋支线 ${value.snapshot.extras ?? '—'} / 全收集 ${value.snapshot.completionist ?? '—'} 小时；${value.snapshot.updatedAt || ''}`),
-          ...[['main', '主线'], ['extras', '主线＋支线'], ['completionist', '全收集']].map(([key, label]) => h('label', { key }, `${label}手动覆盖（小时）`, h('input', { type: 'number', min: 0, step: 'any', style: inputStyle, value: value[key] ?? '', onChange: e => this.change({ [key]: e.target.value === '' ? undefined : Number(e.target.value) }) }))),
-          h('small', null, '留空使用自动数据；手动填写优先。个人累计游玩时长独立保存。只有明确关联后前台才读取 ID，不按名称重新搜索。'),
-          h('button', { type: 'button', onClick: () => { this.controller?.abort(); this.props.onChange({}); this.setState({ results: [], message: '已取消关联。' }); } }, '取消 HLTB 关联'));
+          h('details', { className: 'dossier-disclosure' }, h('summary', null, '手动覆盖参考时间'),
+          h('div', { className: 'dossier-form-grid' }, ...[['main', '主线'], ['extras', '主线＋支线'], ['completionist', '全收集']].map(([key, label]) => h('label', { key }, `${label}手动覆盖（小时）`, h('input', { type: 'number', min: 0, step: 'any', style: inputStyle, value: value[key] ?? '', onChange: e => this.change({ [key]: e.target.value === '' ? undefined : Number(e.target.value) }) }))))),
+          h('small', null, '手填参考时间优先，不影响个人游玩时长。'),
+          (value.id || value.url) && h('button', { className: 'dossier-button dossier-secondary', type: 'button', onClick: () => {
+            this.controller?.abort();
+            const { id, url, title, snapshot, auto, ...manual } = this.props.value || {};
+            this.props.onChange(manual);
+            this.setState({ results: [], message: '已取消关联，保留手填时间。' });
+          } }, '取消 HLTB 关联'))));
       },
     });
     window.CMS.registerFieldType('hltb-game', Hltb);

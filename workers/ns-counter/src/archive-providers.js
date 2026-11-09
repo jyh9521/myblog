@@ -1,5 +1,6 @@
 import gamePlatforms from '../../../public/sveltia/game-platforms.js';
 import { GameMetadataProvider } from './game-providers.js';
+import { boundedText } from './bounded-body.js';
 import { cachedMetadata } from './metadata-cache.js';
 
 const DAY = 86400000;
@@ -24,23 +25,7 @@ async function upstreamJson(fetcher, url, provider, headers = {}) {
       if (response.status === 401 || response.status === 403) throw new ArchiveProviderError(`${provider} 拒绝了请求，请检查 Worker 密钥及 API 额度。`);
       throw new Error('unexpected response');
     }
-    // Bound even chunked responses; lookup catalogs are larger than search results.
-    const reader = response.body.getReader();
-    const chunks = [];
-    let size = 0;
-    try {
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        size += value.byteLength;
-        if (size > MAX_RESPONSE) { await reader.cancel(); throw new Error('response too large'); }
-        chunks.push(value);
-      }
-    } finally { reader.releaseLock(); }
-    const bytes = new Uint8Array(size);
-    let offset = 0;
-    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
-    return JSON.parse(new TextDecoder().decode(bytes));
+    return JSON.parse(await boundedText(response, MAX_RESPONSE));
   } catch (error) {
     if (error instanceof ArchiveProviderError) throw error;
     // Fetch/JSON errors can contain a URL with the provider's secret query parameter.
@@ -118,7 +103,7 @@ export class TheGamesDBProvider extends GameMetadataProvider {
   }
 
   async search(query) {
-    const payload = await this.request('Games/ByGameName', { name: query, fields: TG_FIELDS, include: 'platform' });
+    const payload = await this.request('Games/ByGameName', { name: query, fields: 'genres,publishers,alternates', include: 'platform' });
     if (!Array.isArray(payload.data.games)) throw new ArchiveProviderError('TheGamesDB 搜索结果格式异常。');
     const games = payload.data.games.filter(game => externalId(game?.id) && text(game?.game_title)).slice(0, 20);
     return this.normalizeResponse(payload, games);

@@ -20,7 +20,7 @@ test('browser catalog uses the same canonical names as server/provider imports',
   assert.equal(browser.GamePlatforms.normalizePlatform('PC Windows'), 'PC');
   assert.equal(browser.GamePlatforms.normalizePlatform('Super Nintendo'), 'SNES');
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
-  assert.ok(html.indexOf('game-platforms.js') < html.indexOf('custom.js'));
+  assert.ok(html.indexOf('game-platforms.js') < html.indexOf('game-dossier.js'));
 });
 
 test('saved legacy dossier platforms normalize and deduplicate without rewriting source files', () => {
@@ -47,12 +47,12 @@ test('CMS refresh preserves a legacy platform selection when a provider returns 
   const window = { GamePlatforms: platforms, h: () => null, createClass: x => x, CMS: {
     getFieldType: () => ({ control: () => null }), registerEditorComponent: () => {}, registerFieldType: (name, field) => { fields[name] = field; },
   } };
-  vm.runInNewContext(fs.readFileSync('public/sveltia/custom.js', 'utf8'), { window, fetch: async () => Response.json({
+  vm.runInNewContext(fs.readFileSync('public/sveltia/game-dossier.js', 'utf8'), { window, fetch: async () => Response.json({
     id: 'screenscraper:1', title: 'Example', platforms: ['PC'], sources: { screenscraper: { id: '1', systemId: '135' } },
   }) });
   let changed;
   const field = fields['game-metadata'];
-  const instance = { ...field, state: field.getInitialState(), props: { value: { id: 'old', platforms: ['PC Windows'], selectedPlatforms: ['PC Windows'], sources: {} }, onChange: x => { changed = x; } }, setState(x) { Object.assign(this.state, x); } };
+  const instance = { ...field, state: field.getInitialState(), props: { value: { id: 'old', platforms: ['PC Windows'], selectedPlatforms: ['PC Windows'], sources: { screenscraper: { id: '1', systemId: '135' } } }, onChange: x => { changed = x; } }, setState(x) { Object.assign(this.state, x); } };
   await instance.selectGame({ title: 'Example' }, true);
   assert.equal(changed, undefined);
   instance.applyRefresh();

@@ -80,8 +80,8 @@ test('ScreenScraper search accepts its wrapped JSON list response', async () => 
 });
 
 test('RAWG and ScreenScraper use canonical platform names before matching and merging', () => {
-  const rawg = normalizeRawgGame({ id: 1, name: 'Example', platforms: [{ platform: { name: 'PC' } }] });
-  const ss = normalizeScreenScraperGame({ id: '2', nom: 'Example', systeme: { id: '135', text: 'PC Windows' } });
+  const rawg = normalizeRawgGame({ id: 1, name: 'Example', released: '2002-01-01', platforms: [{ platform: { name: 'PC' } }] });
+  const ss = normalizeScreenScraperGame({ id: '2', nom: 'Example', dates: { us: '2002-06-07' }, systeme: { id: '135', text: 'PC Windows' } });
   assert.deepEqual(rawg.platforms, ['PC']);
   assert.deepEqual(ss.platforms, ['PC']);
   const candidates = combineCandidates([rawg], [ss]);
@@ -121,7 +121,7 @@ test('ScreenScraper live array fields yield names, platform, synopsis and privat
 
 test('ScreenScraper request uses server credentials, longer timeout and sanitized errors', async () => {
   const originalFetch = globalThis.fetch, originalTimeout = AbortSignal.timeout;
-  const provider = new ScreenScraperProvider({ SCREENSCRAPER_DEV_ID: 'fixture', SCREENSCRAPER_DEV_PASSWORD: 'PRIVATE' });
+  const provider = new ScreenScraperProvider({ SCREENSCRAPER_DEV_ID: 'fixture', SCREENSCRAPER_DEV_PASSWORD: 'PRIVATE' }, (...args) => globalThis.fetch(...args));
   try {
     AbortSignal.timeout = ms => { assert.equal(ms, 75000); return new AbortController().signal; };
     globalThis.fetch = async url => {

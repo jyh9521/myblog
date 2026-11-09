@@ -1,15 +1,9 @@
 import gamePlatforms from '../../../public/sveltia/game-platforms.js';
+import { editionEvidence, releaseYear } from './game-identity.js';
+import { boundedText } from './bounded-body.js';
+
 const clean = value => String(value ?? '').trim();
 const list = value => (Array.isArray(value) ? value : value ? [value] : []).map(item => clean(item?.name ?? item)).filter(Boolean);
-const yearOf = value => {
-  const match = clean(value).match(/(?:19|20)\d{2}/);
-  return match ? Number(match[0]) : null;
-};
-const normalizeTitle = value => clean(value).normalize('NFKC').toLocaleLowerCase()
-  .replace(/\([^)]*\)|（[^）]*）|\[[^\]]*\]/g, ' ')
-  .replace(/\b(remake|remaster|definitive edition|goty edition)\b/g, ' ')
-  .replace(/バイオハザード/g, 'resident evil').replace(/biohazard/g, 'resident evil')
-  .replace(/[^\p{L}\p{N}]+/gu, '');
 const hasJapaneseScript = value => /[\u3040-\u30ff]/.test(clean(value));
 const sourceFields = (source, fields) => Object.fromEntries(fields.filter(([key, value]) => Array.isArray(value) ? value.length > 0 : Boolean(clean(value))).map(([key]) => [key, source]));
 const unwrapGames = value => {
@@ -37,6 +31,10 @@ export function normalizeRawgGame(game) {
     id: `rawg:${game.id}`, title, localizedName: '', originalName, alternativeNames: aliases,
     description: clean(game.description_raw || game.description), releaseDate: clean(game.released),
     developers, publishers, platforms, genres: list(game.genres),
+    platformReleaseDates: Object.fromEntries((game.platforms || []).flatMap(item => {
+      const platform = gamePlatforms.normalizePlatform(item.platform?.name || item.name), date = clean(item.released_at);
+      return platform && /^\d{4}-\d{2}-\d{2}$/.test(date) ? [[platform, date]] : [];
+    })),
     cover: clean(game.background_image || game.background_image_additional),
     screenshots: (Array.isArray(game.short_screenshots) ? game.short_screenshots : [])
       .map(item => clean(item?.image)).filter(Boolean),
@@ -139,32 +137,21 @@ export function mergeMetadata(primary, secondary) {
   return merged;
 }
 
-export function areSameGame(a, b) {
-  const aTitles = new Set([a.title, a.originalName, ...(a.alternativeNames || [])].map(normalizeTitle).filter(Boolean));
-  const bTitles = [b.title, b.originalName, ...(b.alternativeNames || [])].map(normalizeTitle).filter(Boolean);
-  if (!bTitles.some(title => aTitles.has(title))) return false;
-  const ay = yearOf(a.releaseDate), by = yearOf(b.releaseDate);
-  if (ay && by && Math.abs(ay - by) > 1) return false;
-  const ap = new Set((a.platforms || []).map(normalizeTitle));
-  const bp = (b.platforms || []).map(normalizeTitle);
-  if (ap.size && bp.length && !bp.some(platform => ap.has(platform))) {
-    // Region/provider platform catalogs use different labels; let developer/year evidence still link them.
-    const ad = new Set((a.developers || []).map(normalizeTitle));
-    if (!(ay && by && Math.abs(ay - by) <= 1 && (b.developers || []).some(name => ad.has(normalizeTitle(name))))) return false;
-  }
-  return true;
-}
+export const areSameGame = (a, b) => editionEvidence(a, b).strong;
 
 export function combineCandidates(rawg, screenscraper) {
-  const results = rawg.map(game => ({ ...game, sources: { ...game.sources } }));
-  for (const secondary of screenscraper) {
-    // A ScreenScraper ID identifies a specific system/version. Do not replace
-    // an already-selected system's ID when a second same-title version appears.
-    const match = results.find(candidate => candidate.sources?.rawg && !candidate.sources?.screenscraper && areSameGame(candidate, secondary));
-    if (match) Object.assign(match, mergeMetadata(match, secondary));
-    else results.push(secondary);
-  }
-  return results.map(game => ({ ...game, year: yearOf(game.releaseDate) || '' }));
+  // Require an unambiguous match in both directions. A provider game ID can
+  // represent an entire release; a ScreenScraper ID is tied to a system.
+  const used = new Set();
+  const results = rawg.map(game => {
+    const matches = screenscraper.filter(candidate => areSameGame(game, candidate));
+    const match = matches.length === 1 && rawg.filter(candidate => areSameGame(candidate, matches[0])).length === 1
+      ? matches[0] : null;
+    if (match) used.add(match);
+    return match ? mergeMetadata(game, match) : game;
+  });
+  return [...results, ...screenscraper.filter(game => !used.has(game))]
+    .map(game => ({ ...game, year: Number(releaseYear(game.releaseDate)) || '' }));
 }
 
 export class GameMetadataProvider {
@@ -173,25 +160,39 @@ export class GameMetadataProvider {
 }
 
 export class RAWGProvider extends GameMetadataProvider {
-  constructor(env) { super(); this.env = env; }
+  constructor(env, fetcher = fetch) { super(); this.env = env; this.fetcher = fetcher; }
   async request(path, params = {}) {
     if (!this.env.RAWG_API_KEY) throw new Error('RAWG_API_KEY 未配置');
     const url = new URL(`https://api.rawg.io/api/${path}`);
     url.searchParams.set('key', this.env.RAWG_API_KEY);
     for (const [key, value] of Object.entries(params)) url.searchParams.set(key, String(value));
-    const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!response.ok) throw new Error(`RAWG 请求失败（${response.status}）`);
-    return response.json();
+    try {
+      const response = await this.fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(10000) });
+      if (!response.ok) { await response.body?.cancel(); throw new Error('upstream'); }
+      return JSON.parse(await boundedText(response, 2 * 1024 * 1024));
+    } catch { throw new Error('RAWG 暂未返回有效资料，请稍后重试。'); }
   }
   async search(query) {
     const response = await this.request('games', { search: query, page_size: 12 });
-    return (response.results || []).map(normalizeRawgGame);
+    return (Array.isArray(response.results) ? response.results : [])
+      .filter(game => /^[1-9]\d{0,15}$/.test(String(game?.id)) && clean(game.name))
+      .slice(0, 12).map(normalizeRawgGame);
+  }
+  async getCoreById(id) {
+    if (!/^[1-9]\d{0,15}$/.test(String(id))) throw new Error('RAWG 游戏编号无效。');
+    const game = await this.request('games/' + id);
+    if (String(game?.id) !== String(id) || !clean(game.name)) throw new Error('RAWG 返回了不同的游戏编号。');
+    return normalizeRawgGame(game);
+  }
+  async storeUrls(id) {
+    if (!/^[1-9]\d{0,15}$/.test(String(id))) throw new Error('RAWG 游戏编号无效。');
+    const response = await this.request('games/' + id + '/stores', { page_size: 20 });
+    return (Array.isArray(response.results) ? response.results : []).slice(0, 20).map(item => item?.url).filter(Boolean);
   }
   async getById(id) {
-    const game = await this.request(`games/${encodeURIComponent(id)}`);
-    let normalized = normalizeRawgGame(game);
+    const normalized = await this.getCoreById(id);
     try {
-      const shots = await this.request(`games/${encodeURIComponent(id)}/screenshots`, { page_size: 8 });
+      const shots = await this.request('games/' + id + '/screenshots', { page_size: 8 });
       normalized.screenshots = [...new Set([...normalized.screenshots, ...(shots.results || []).map(item => clean(item.image)).filter(Boolean)])];
     } catch { /* Screenshots are optional enrichment. */ }
     return normalized;
@@ -199,7 +200,7 @@ export class RAWGProvider extends GameMetadataProvider {
 }
 
 export class ScreenScraperProvider extends GameMetadataProvider {
-  constructor(env) { super(); this.env = env; }
+  constructor(env, fetcher = fetch) { super(); this.env = env; this.fetcher = fetcher; }
   async request(endpoint, params = {}) {
     if (!this.env.SCREENSCRAPER_DEV_ID || !this.env.SCREENSCRAPER_DEV_PASSWORD) throw new Error('ScreenScraper 开发者凭据未配置');
     const url = new URL(`https://api.screenscraper.fr/api2/${endpoint}.php`);
@@ -213,9 +214,9 @@ export class ScreenScraperProvider extends GameMetadataProvider {
     };
     for (const [key, value] of Object.entries(values)) if (value !== undefined && value !== '') url.searchParams.set(key, String(value));
     try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(75000) });
-      if (!response.ok) throw new Error('upstream');
-      return await response.json();
+      const response = await this.fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(75000) });
+      if (!response.ok) { await response.body?.cancel(); throw new Error('upstream'); }
+      return JSON.parse(await boundedText(response, 2 * 1024 * 1024));
     } catch {
       // Upstream may return plaintext (including its authenticated URL).
       throw new Error('ScreenScraper 暂未返回有效资料，请稍后重试（最多等待 75 秒）。');
@@ -235,7 +236,9 @@ export class ScreenScraperProvider extends GameMetadataProvider {
     if (!systemId) throw new Error('ScreenScraper 结果缺少 systemId，无法读取详情');
     const data = await this.request('jeuInfos', { gameid: id, systemeid: systemId });
     const game = data?.response?.jeu || data?.jeu;
-    if (!game?.id) throw new Error('ScreenScraper 没有找到该游戏');
+    if (String(game?.id) !== String(id) || (game.systeme?.id && String(game.systeme.id) !== String(systemId))) {
+      throw new Error('ScreenScraper 没有返回该游戏及平台。');
+    }
     return normalizeScreenScraperGame(game, game.systeme || { id: systemId });
   }
 }

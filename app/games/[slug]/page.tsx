@@ -18,7 +18,9 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
   const posts = getAllPosts().filter(post => post.gameSlug === slug);
   return <main className="article-shell"><div className="container game-detail">
     <Link className="back" href="/games/">← 返回游戏档案</Link>
-    <header className="article-header"><span className="section-kicker">GAME DOSSIER</span><h1>{game.title}</h1><GameSummary summary={game.summary} /><span className="game-status-pill">{game.status}</span></header>
+    <header className="article-header"><span className="section-kicker">GAME DOSSIER</span><h1>{game.title}</h1><GameSummary summary={game.summary} />
+      {game.summarySource && <p className="game-platform-source">简介参考：<a href={game.summarySource.url} target="_blank" rel="noopener noreferrer">{game.summarySource.label} ↗</a></p>}
+      <span className="game-status-pill">{game.status}</span></header>
     <GameTime game={game} />
     <GamePlatformSelector title={game.title} status={game.status} platforms={game.platforms} manual={game.manual} />
     {!!game.projects?.length && <section id="projects" className="game-projects"><h2>相关 GitHub 项目</h2>{game.projects.map(project => <article key={project.url}><div><strong>{project.name}</strong><small>{project.type}</small></div>{project.description && <p>{project.description}</p>}<nav aria-label={`${project.name}链接`}><a href={project.url} target="_blank" rel="noopener noreferrer">查看源码 ↗</a>{project.releaseUrl && <a href={project.releaseUrl} target="_blank" rel="noopener noreferrer">下载发布版 ↗</a>}</nav></article>)}</section>}

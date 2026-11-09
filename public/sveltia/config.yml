@@ -56,8 +56,10 @@ collections:
     slug:
       editable: true
       pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', '只允许小写英文字母、数字和连字符']
+    preview_path: /games/{{filename}}/
     fields:
-      - { name: title, label: 手动名称覆盖（最高优先级）, widget: string, required: false, hint: "显示名称覆盖，不影响本地档案 slug 或任何数据源 ID。" }
+      - { name: _dossierNav, label: 档案编辑分区, widget: game-dossier-nav, required: false }
+      - { name: title, label: 档案显示名称, widget: string, required: false, hint: "留空沿用资料库名称；不改变档案网址或版本 ID。" }
       - name: status
         label: 当前状态
         widget: select
@@ -66,14 +68,16 @@ collections:
         min: 1
         default: [想玩]
         options: [想玩, 正在玩, 已通关, 暂时搁置, AFK, 考虑制作补丁, 已制作补丁]
-        hint: "可多选，例如已通关 + 已制作补丁；至少选择一项。开始、通关、回坑及补丁发布等历史记录保留在时间线中。"
-      - { name: summary, label: 简介, widget: text, required: false }
+        hint: "可多选，例如已通关 + 已制作补丁。"
+      - { name: gameMetadata, label: 游戏版本与资料, widget: game-metadata, required: false }
+      - { name: summary, label: 中文游戏简介, widget: game-brief, required: false }
+      - { name: manual, label: 正版渠道与获取状态, widget: game-manual, required: false }
       - name: playTime
         label: 我的游玩时长
         widget: object
         required: false
-        collapsed: false
-        hint: "小时支持小数，例如直接填 3.8 → 3.8 小时，此时分钟留空即可。小时和分钟都填写时相加，例如 3.8 小时 + 12 分钟 → 4.0 小时。前台保留一位小数。留空不展示。"
+        collapsed: true
+        hint: "小时可用小数；和分钟相加。留空不展示。"
         fields:
           - { name: hours, label: 小时（支持小数）, widget: number, value_type: float, min: 0, required: false }
           - { name: minutes, label: 分钟, widget: number, value_type: int, min: 0, max: 59, required: false }
@@ -85,17 +89,15 @@ collections:
         max: 10
         step: 0.01
         required: false
-        hint: "留空不展示；0 分也会展示。前台保留两位小数，并自动换算个人好评度，例如 8.00 分 → 80%，8.12 分 → 81.2%。更多小数位按四舍五入展示。"
+        hint: "留空不展示，0 分有效。前台自动换算个人好评度。"
       - name: hltb
-        label: HowLongToBeat 关联与参考通关时间
+        label: HLTB 参考通关时间
         widget: hltb-game
         required: false
-        hint: "搜索并明确选择版本后关联 HLTB ID；自动数据由 Worker + D1 缓存 14 天。手动时间作为覆盖，不影响个人实际游玩时长。"
-      - { name: gameMetadata, label: 游戏资料（元数据来源）, widget: game-metadata, required: false, hint: "搜索候选后手动确认并导入；在资料组件中勾选要生成档案卡片的平台。资料保留完整平台清单，前台仅显示勾选的平台卡片。" }
-      - { name: manual, label: 正版渠道与人工状态, widget: game-manual, required: false, hint: "正版售卖渠道、可获得状态和备注独立于资料数据源；刷新游戏资料不会覆盖。" }
       - name: events
         label: 时间线事件
         widget: list
+        collapsed: true
         required: false
         fields:
           - { name: date, label: 日期, widget: datetime, type: date, required: false }
@@ -104,6 +106,7 @@ collections:
       - name: projects
         label: 关联 GitHub 项目
         widget: list
+        collapsed: true
         required: false
         summary: '{{fields.name}} · {{fields.type}}'
         hint: "可关联多个项目。文章卡片自动复用；不实时请求 GitHub。"

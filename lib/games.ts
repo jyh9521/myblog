@@ -6,7 +6,7 @@ import { normalizeGameStatus } from './game-status';
 import { normalizeProjects } from './game-projects';
 import { normalizePlayTime, normalizeCompletionTimes, normalizePersonalRating } from './game-time';
 import gamePlatforms from '../public/sveltia/game-platforms.js';
-import type { AvailabilityStatus, GameEvent, GameManual, GameMetadata, GamePlatform, GameRecord, GameStore, StoreLink } from './game-types';
+import type { AvailabilityStatus, GameEvent, GameManual, GameMetadata, GamePlatform, GameRecord, GameStore, GameSummarySource, StoreLink } from './game-types';
 
 const gamesDir = path.join(process.cwd(), 'content/games');
 const stores = new Set<GameStore>(['pc', 'playstation', 'xbox', 'nintendo']);
@@ -94,6 +94,34 @@ function parsePlatform(record: any, metadata: GameMetadata, slug: string): GameP
   };
 }
 
+const summarySourceHosts: Record<string, string> = {
+  'store.steampowered.com': 'Steam',
+  'store.playstation.com': 'PlayStation Store',
+  'www.nintendo.com': 'Nintendo eShop',
+  'rawg.io': 'RAWG',
+  'thegamesdb.net': 'TheGamesDB',
+  'www.screenscraper.fr': 'ScreenScraper',
+};
+
+export function readGameSummary(value: unknown, legacy: string): { summary: string; summarySource?: GameSummarySource } {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return { summary: typeof value === 'string' ? value.trim() || legacy : legacy };
+  }
+  const { text, source } = value as { text?: unknown; source?: { url?: unknown } };
+  if (typeof text !== 'string' || !text.trim()) return { summary: legacy };
+  const summary = text.trim();
+  try {
+    if (typeof source?.url === 'string') {
+      const url = new URL(source.url);
+      const label = Object.hasOwn(summarySourceHosts, url.hostname) ? summarySourceHosts[url.hostname] : '';
+      if (label && url.protocol === 'https:' && !url.username && !url.password && !url.port) {
+        return { summary, summarySource: { url: url.href, label } };
+      }
+    }
+  } catch { /* Keep the editor's text even if a source URL is invalid. */ }
+  return { summary };
+}
+
 export function getGames(): GameRecord[] {
   if (!fs.existsSync(gamesDir)) return [];
   return fs.readdirSync(gamesDir).filter(file => /^[a-z0-9]+(?:-[a-z0-9]+)*\.md$/.test(file)).flatMap(file => {
@@ -123,7 +151,7 @@ export function getGames(): GameRecord[] {
       id: slug, slug,
       updatedAt: dossierEditDates().get(`content/games/${file}`) || metadata.updatedAt,
       title: asText(data.title || metadata.localizedName || metadata.title), status: normalizeGameStatus(data.status),
-      summary: asText(data.summary || metadata.description), metadata: hasMetadata ? metadata : null, manual, platforms, events, projects: normalizeProjects(data.projects),
+      ...readGameSummary(data.summary, metadata.description), metadata: hasMetadata ? metadata : null, manual, platforms, events, projects: normalizeProjects(data.projects),
       playTime: normalizePlayTime(data.playTime), completionTimes: normalizeCompletionTimes(data.hltb),
       personalRating: normalizePersonalRating(data.personalRating),
     }];

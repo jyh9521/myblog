@@ -35,7 +35,7 @@ function tgMock(calls) {
     if (endpoint === 'ByGameName' || endpoint === 'ByGameID') {
       assert.equal(url.searchParams.get(endpoint === 'ByGameName' ? 'name' : 'id'), endpoint === 'ByGameName' ? 'Fixture & Test' : '97');
       assert.equal(url.searchParams.get('include'), 'platform');
-      assert.equal(url.searchParams.get('fields'), 'overview,genres,publishers,alternates');
+      assert.equal(url.searchParams.get('fields'), endpoint === 'ByGameID' ? 'overview,genres,publishers,alternates' : 'genres,publishers,alternates');
       return Response.json({ code: 200, data: { games: [tgRecord] }, pages: { next: url.href },
         ...(endpoint === 'ByGameName' ? { include: { platform: { 24: { id: 24, name: 'Sony PlayStation 2' } } } } : {}) });
     }
@@ -60,6 +60,7 @@ test('TheGamesDB normalizes names, dates, aliases and platform; detail uses ID a
   assert.deepEqual(item.genres, ['RPG']);
   assert.deepEqual(item.alternativeNames, ['別名', 'Alternate']);
   assert.equal(item.fieldSources.developers, 'thegamesdb');
+  assert.equal(item.description, undefined);
   assert.equal(item.cover, undefined);
   assert.equal(item.screenshots, undefined);
   assert.equal(item.sources.thegamesdb.url, 'https://thegamesdb.net/game.php?id=97');
@@ -125,7 +126,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v1:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v2:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();

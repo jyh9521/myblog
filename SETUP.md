@@ -12,13 +12,15 @@
 
 ## 游戏资料数据库
 
-游戏搜索通过 Cloudflare Worker 的 `GameMetadataProvider` 层调用 RAWG 与 ScreenScraper，不要求 Twitch / IGDB 凭据。后台数据源可选自动、RAWG 或 ScreenScraper。每条记录保存在 `content/games/<slug>.md`：`gameMetadata` 只保存外部资料，顶层 `manual` 单独保存官方售卖渠道、获取状态和人工备注。文章游戏卡片用本地档案 slug 引用，因此页面构建和阅读不需要访问第三方 API。
+游戏搜索通过 Cloudflare Worker 的 `GameMetadataProvider` 层调用 RAWG、ScreenScraper 与 TheGamesDB，不要求 Twitch / IGDB 凭据。自动模式仍使用 RAWG / ScreenScraper；TheGamesDB 在数据源下拉框单独选择，只导入游戏字段。SteamGridDB 只在「封面图片 URL」旁提供图片搜索。每条记录保存在 `content/games/<slug>.md`；顶层 `manual` 独立保存官方售卖渠道、获取状态和人工备注。文章游戏卡片用本地档案 slug 引用，页面构建与阅读不查询第三方资料 API。
 
 复制根目录 `.env.example` 中的变量到 `workers/ns-counter/.dev.vars` 用于本地 Worker 调试；生产环境在 Cloudflare Worker 的 Secrets 中设置同名变量。`.dev.vars` 和 `.env` 已被 Git 忽略，不要提交密钥。
 
 必需/可选变量：
 
 - `RAWG_API_KEY`：RAWG API key。申请入口：[RAWG API Docs](https://rawg.io/apidocs)。
+- `THEGAMESDB_API_KEY`：TheGamesDB 资料检索与刷新。参见 [TheGamesDB API](https://api.thegamesdb.net/)。
+- `STEAMGRIDDB_API_KEY`：SteamGridDB 游戏与竖版封面检索。参见 [SteamGridDB API v2](https://www.steamgriddb.com/api/v2)。
 - `SCREENSCRAPER_DEV_ID` / `SCREENSCRAPER_DEV_PASSWORD`：ScreenScraper API 开发者凭据。
 - `SCREENSCRAPER_SOFTNAME`：ScreenScraper 登记/确认的客户端名称；若申请信息未另行指定，可填 `blfy-blog`。
 - `SCREENSCRAPER_USER_ID` / `SCREENSCRAPER_USER_PASSWORD`：可选的 ScreenScraper 用户账号凭据。
@@ -31,6 +33,8 @@ RAWG 的 API 文档提供个人/爱好项目申请入口；其免费方案限制
 
 ```powershell
 npx wrangler secret put RAWG_API_KEY
+npx wrangler secret put THEGAMESDB_API_KEY
+npx wrangler secret put STEAMGRIDDB_API_KEY
 npx wrangler secret put SCREENSCRAPER_DEV_ID
 npx wrangler secret put SCREENSCRAPER_DEV_PASSWORD
 npx wrangler secret put SCREENSCRAPER_USER_ID
@@ -47,13 +51,15 @@ npx wrangler d1 migrations apply ns-counter --remote
 npx wrangler deploy
 ```
 
-后台操作：进入「游戏档案」，在「游戏资料」中选择自动、RAWG 或 ScreenScraper 并搜索；结果展示封面、标题、年份、平台、开发商和明确的数据来源。手动选中正确条目后导入资料，编辑过的字段会保留。之后可点「刷新游戏资料」更新元数据；「正版渠道与人工状态」中的商店、状态和备注独立保存，不会被刷新覆盖。没有外部来源时仍可以手工填写资料和保存。
+后台操作：进入「游戏档案 → 游戏资料」。选择 **TheGamesDB** 并搜索，在候选中核对名称、年份和平台，点选后填入名称、简介、发售日期、平台、开发商、发行商和类型等可用字段。已手动编辑的字段保留，TheGamesDB 不导入封面或截图；后续「刷新游戏资料」按已保存的 TheGamesDB ID 查询。
+
+在「封面图片 URL」下点击「搜索 SteamGridDB 封面」，按游戏名搜索、选定游戏版本，再从缩略图选择封面。只回填原图 URL 并记录封面来源；不会上传图片、修改其他游戏字段或自动保存。该封面会保留在资料刷新前后，也可继续手填或替换 URL。两个新来源使用现有博客后台登录；未配置或服务出错时，手动编辑及已有档案仍可用。
 
 文章编辑器统一使用「添加游戏」入口。点击后默认显示下拉框，展开后输入名称筛选已有游戏档案，选项优先显示顶层 `title`（手动名称覆盖），支持按该名称、资料库名称、原名或 slug 搜索。保存的是档案 slug，而非名称快照；前台强制使用档案最新的手动覆盖名称，本文状态覆盖仍可选填。新卡片格式为 `[gframe]档案slug||[/gframe]`，平台与按钮颜色取自该档案首个已选平台；旧的 `pframe/nframe/xframe/sframe` 卡片继续正常显示和编辑，保留原平台。
 
-文章选择器读取构建生成的 /game-dossiers.json 本地档案索引，只包含 slug、显示名称和检索名称，不请求外部游戏数据库。新档案保存并部署完成后进入列表。原名和别名仅用于匹配，列表显示名称取自档案 title。RAWG / ScreenScraper 资料搜索仍在游戏档案编辑界面保留。
+文章选择器读取构建生成的 /game-dossiers.json 本地档案索引，只包含 slug、显示名称和检索名称，不请求外部游戏数据库。新档案保存并部署完成后进入列表。原名和别名仅用于匹配，列表显示名称取自档案 title。资料搜索仅在游戏档案编辑界面使用。
 
-RAWG / ScreenScraper / 未来 IGDB 是资料来源；Steam、GOG、Nintendo eShop、PlayStation Store 等是手动维护的正版渠道，两者保存在不同字段。游戏资料搜索导入后，可在 `selectedPlatforms` 中只勾选自己要记录的版本；RAWG 返回的完整平台列表仍保存在资料元数据中，但不会自动展开成一堆前台卡片。存在手动 `platforms` 卡片时，手动记录优先，不再从元数据重复生成卡片。
+RAWG / ScreenScraper / TheGamesDB 是资料来源；Steam、GOG、Nintendo eShop、PlayStation Store 等是手动维护的正版渠道，两者保存在不同字段。游戏资料搜索导入后，可在 `selectedPlatforms` 中只勾选自己要记录的版本；资料源返回的平台列表仍保存在资料元数据中，但不会自动展开成一堆前台卡片。存在手动 `platforms` 卡片时，手动记录优先，不再从元数据重复生成卡片。
 
 ## 本地预览
 

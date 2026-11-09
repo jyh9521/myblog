@@ -41,7 +41,7 @@
   }
   async function request(path,options={}) {
     const url=new URL(path,location.origin);
-    if(url.origin!==location.origin||url.username||url.password||!/^\/ns\/api\/(?:accounts(?:\/|$)|resources(?:\/|$)|posts\/admin(?:\/|$))/.test(url.pathname))throw failure('INVALID_ADMIN_ENDPOINT');
+    if(url.origin!==location.origin||url.username||url.password||!/^\/ns\/api\/(?:accounts(?:\/|$)|resources(?:\/|$)|posts\/admin(?:\/|$)|games\/(?:search|detail|covers(?:\/search)?)$)/.test(url.pathname))throw failure('INVALID_ADMIN_ENDPOINT');
     await connect();
     const send=()=>{
       const token=credential();

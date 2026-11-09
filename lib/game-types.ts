@@ -1,6 +1,6 @@
 import type { PlayTime, CompletionTimes, PersonalRating } from './game-time';
 export type GameStore = 'pc' | 'playstation' | 'xbox' | 'nintendo';
-export type GameSource = 'rawg' | 'screenscraper' | 'igdb';
+export type GameSource = 'rawg' | 'screenscraper' | 'igdb' | 'thegamesdb';
 export type StoreLink = { name: string; url: string; region?: string; note?: string };
 export type AvailabilityStatus = 'available' | 'delisted' | 'physical-only' | 'free' | 'unknown';
 export type GameManual = { officialStores: StoreLink[]; availabilityStatus: AvailabilityStatus; notes: string };

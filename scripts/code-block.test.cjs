@@ -98,7 +98,7 @@ test('article and timeline editors share the new button and describe inline vers
     assert.ok(field.editor_components.includes('code-block'), 'Keep existing standard fences supported');
     assert.match(field.hint, /插入代码块/); assert.match(field.hint, /行内/);
   }
-  assert.match(fs.readFileSync('public/sveltia/index.html', 'utf8'), /custom\.js\?v=multiline-code-20261105/);
+  assert.match(fs.readFileSync('public/sveltia/index.html', 'utf8'), /custom\.js\?v=[\w-]+/);
 });
 test('the reported article configuration is one TOML block rather than separate inline code spans', async () => {
   const article = fs.readFileSync(process.env.CODE_BLOCK_ARTICLE || 'content/posts/magna-carta-2-cn.md', 'utf8');

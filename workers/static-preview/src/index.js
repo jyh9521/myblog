@@ -5,6 +5,9 @@ import { dispatch } from './router.js';
 
 export default {
   fetch(request, env, ctx) {
-    return dispatch(request, env, ctx, {accounts, metadata});
+    const previewMetadata = { fetch: request => metadata.fetch(request, { ...env,
+      GAME_ADMIN: { fetch: probe => accounts.fetch(probe, env, ctx) },
+    }, ctx) };
+    return dispatch(request, env, ctx, { accounts, metadata: previewMetadata });
   }
 };

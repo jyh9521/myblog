@@ -12,6 +12,10 @@ migrations_dir = "migrations"
 pattern = "blog.blfy.cc/ns/api/*"
 zone_name = "blfy.cc"
 
+[[services]]
+binding = "GAME_ADMIN"
+service = "blog-gaming-accounts"
+
 [[durable_objects.bindings]]
 name = "IGDB_API"
 class_name = "IgdbApi"

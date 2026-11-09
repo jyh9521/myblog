@@ -22,7 +22,8 @@ export default function GamePlatformCard({ gameTitle, status = '', platform, man
       {!compact && (platform.developer || platform.publisher) && <p className="game-platform-credit" title={[platform.developer, platform.publisher].filter(Boolean).join(' · ')}>{[platform.developer, platform.publisher].filter(Boolean).join(' · ')}</p>}
       {!compact && platform.catalogSource && platform.catalogSource !== '手动资料' && <p className="game-platform-source">资料来源：{platform.catalogSource.split(' + ').map((source, index) => {
         const directLink = platform.catalogSourceLinks?.find(item => item.source.toLowerCase() === source.toLowerCase())?.url;
-        const label = source.toLowerCase() === 'rawg' ? 'RAWG' : source.toLowerCase() === 'screenscraper' ? 'ScreenScraper' : source;
+        const labels: Record<string, string> = { rawg: 'RAWG', screenscraper: 'ScreenScraper', thegamesdb: 'TheGamesDB' };
+        const label = labels[source.toLowerCase()] || source;
         return <span key={source}>{index > 0 && ' · '}{directLink ? <a href={directLink} target="_blank" rel="noopener noreferrer">{label}</a> : label}</span>;
       })}</p>}
       {!compact && manual && <>

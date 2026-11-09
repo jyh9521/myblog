@@ -42,8 +42,13 @@
     });
     const SelectControl = window.CMS.getFieldType('select').control;
     const normalizePlatforms = window.GamePlatforms?.normalizePlatformList || (values => [...new Set(values || [])]);
-    const sourceLabels = { rawg: 'RAWG', screenscraper: 'ScreenScraper', igdb: 'IGDB' };
+    const sourceLabels = { rawg: 'RAWG', screenscraper: 'ScreenScraper', thegamesdb: 'TheGamesDB', igdb: 'IGDB' };
     const labelSources = sources => Object.keys(sources || {}).map(source => sourceLabels[source] || source).join(' + ');
+    const archiveRequest = (path, options) => {
+      if (!window.BlogAdminAuth?.request) throw new Error('请从博客后台登录后使用数据源。');
+      return window.BlogAdminAuth.request(path, options);
+    };
+    const fieldHasValue = value => Array.isArray(value) ? value.length > 0 : Boolean(String(value || '').trim());
     const storeNames = ['Steam', 'GOG.com', 'Epic Store', 'Nintendo eShop', 'PlayStation Store', 'Xbox Store'];
     const storeAliases = { GOG: 'GOG.com', 'Epic Games': 'Epic Store', 'PS Store': 'PlayStation Store' };
     const presetStoreName = name => storeNames.includes(name) ? name : storeAliases[name] || '';
@@ -105,21 +110,92 @@
           )),
           h('button', { type: 'button', onClick: () => this.change({ officialStores: [...stores, { name: '', url: '', region: '', note: '' }] }), style: { justifySelf: 'start', minHeight: '36px', padding: '6px 12px' } }, '＋ 添加正版渠道'),
           h('label', { style: { display: 'grid', gap: '5px' } }, h('span', null, '人工备注'), h(ImeInput, { multiline: true, rows: 3, value: value.notes || '', onChange: notes => this.change({ notes }), style: { width: '100%', padding: '8px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } })),
-          h('small', null, '本区内容独立保存，刷新 RAWG / ScreenScraper 资料不会覆盖。'));
+          h('small', null, '本区内容独立保存，刷新外部游戏资料不会覆盖。'));
       },
     });
     window.CMS.registerFieldType('game-manual', GameManual);
 
+    const coverRoot = '/ns/api/games/covers';
+    const GameCoverPicker = createClass({
+      getInitialState: function () {
+        return { open: false, query: '', loading: false, games: [], grids: [], game: null, page: 0, hasMore: false, message: '', error: false };
+      },
+      componentWillUnmount: function () { this.version = (this.version || 0) + 1; },
+      toggle: function () {
+        this.version = (this.version || 0) + 1;
+        this.setState(this.state.open ? { open: false, loading: false, message: '', error: false }
+          : { ...this.getInitialState(), open: true, query: String(this.props.suggestedQuery || '').slice(0, 100) });
+      },
+      load: async function (path, pending, apply) {
+        if (this.state.loading) return;
+        const version = this.version = (this.version || 0) + 1;
+        this.setState({ ...pending, loading: true, error: false });
+        try {
+          const response = await archiveRequest(path);
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.error === 'ADMIN_LOGIN_REQUIRED' ? '请重新登录博客后台。' : result.error || 'SteamGridDB 搜索失败。');
+          if (version === this.version) apply(result);
+        } catch (error) {
+          if (version === this.version) this.setState({ error: true, message: error instanceof Error ? error.message : 'SteamGridDB 暂不可用，请稍后重试。' });
+        } finally { if (version === this.version) this.setState({ loading: false }); }
+      },
+      search: function () {
+        const query = this.state.query.trim();
+        if (query.length < 2) { this.setState({ message: '请输入至少两个字符。', error: true }); return; }
+        return this.load(`${coverRoot}/search?q=${encodeURIComponent(query)}`,
+          { games: [], grids: [], game: null, page: 0, hasMore: false, message: '正在搜索 SteamGridDB 游戏…' }, result => {
+            const games = result.results || [];
+            this.setState({ games, message: (games.length ? '请选择游戏或版本。' : '没有找到游戏，试试原名或英文名。') + (result.warning ? ' 当前显示缓存结果。' : '') });
+          });
+      },
+      loadGrids: function (game, page = 0) {
+        return this.load(`${coverRoot}?gameId=${encodeURIComponent(game.id)}&page=${page}`,
+          { game, ...(page === 0 ? { grids: [], page: 0, hasMore: false } : {}), message: '正在读取竖版封面…' }, result => {
+            const grids = result.results || [];
+            this.setState({ grids, page, hasMore: Boolean(result.hasMore),
+              message: (grids.length ? `第 ${page + 1} 页 · ${grids.length} 张竖版封面` : '此页没有可用的竖版封面。') + (result.warning ? ' 当前显示缓存结果。' : '') });
+          });
+      },
+      select: function (grid) {
+        this.props.onSelect(grid.url);
+        this.setState({ open: false, error: false, message: '已填入 SteamGridDB 封面 URL，请保存档案。' });
+      },
+      render: function () {
+        const { open, query, loading, games, grids, game, page, hasMore, message, error } = this.state;
+        return h('div', { className: 'game-cover-search' },
+          h('button', { className: 'game-cover-search-toggle', type: 'button', 'aria-expanded': open, onClick: () => this.toggle() }, open ? '关闭封面搜索' : '搜索 SteamGridDB 封面'),
+          open && h('section', { className: 'game-cover-panel', 'aria-label': 'SteamGridDB 封面搜索' },
+            h('div', { className: 'game-cover-query' },
+              h('label', null, 'SteamGridDB 游戏名称', h('input', { type: 'search', value: query, maxLength: 100, disabled: loading,
+                placeholder: '输入游戏原名或英文名', onChange: event => this.setState({ query: event.target.value }),
+                onKeyDown: event => { if (event.key === 'Enter' && !event.nativeEvent?.isComposing && !event.isComposing && event.keyCode !== 229) { event.preventDefault(); this.search(); } },
+              })),
+              h('button', { type: 'button', disabled: loading, onClick: () => this.search() }, '搜索游戏')),
+            games.length > 0 && h('div', { className: 'game-cover-games' }, ...games.map(item => h('button', { key: item.id, type: 'button', disabled: loading,
+              'aria-pressed': game?.id === item.id, onClick: () => this.loadGrids(item),
+            }, item.title, item.year ? ` (${item.year})` : ''))),
+            grids.length > 0 && h('div', { className: 'game-cover-grids' }, ...grids.map((grid, index) => h('button', { key: grid.id, type: 'button', disabled: loading,
+              'aria-label': `选用封面 ${index + 1}，${grid.width} × ${grid.height}${grid.author ? `，${grid.author}` : ''}`, onClick: () => this.select(grid),
+            }, h('img', { src: grid.thumb, alt: '', loading: 'lazy', referrerPolicy: 'no-referrer' }), h('small', null, `${grid.width} × ${grid.height}`, grid.author ? ` · ${grid.author}` : '')))),
+            game && h('div', { className: 'game-cover-pagination' },
+              page > 0 && h('button', { type: 'button', disabled: loading, onClick: () => this.loadGrids(game, page - 1) }, '上一页封面'),
+              hasMore && h('button', { type: 'button', disabled: loading, onClick: () => this.loadGrids(game, page + 1) }, '下一页封面'),
+              h('a', { href: `https://www.steamgriddb.com/game/${encodeURIComponent(game.id)}`, target: '_blank', rel: 'noopener noreferrer' }, '在 SteamGridDB 查看原页'))),
+          message && h('small', { role: error ? 'alert' : 'status' }, message));
+      },
+    });
+
     const GameMetadata = createClass({
       getInitialState: function () { return { loading: false, searching: false, message: '', results: [], query: '', dataSource: 'auto', pendingRefresh: null }; },
-      update: function (key, value) {
+      update: function (key, value, source = 'manual') {
         if (key === 'platforms' || key === 'selectedPlatforms') value = normalizePlatforms(value);
         const current = this.props.value || {};
+        if (key === 'cover' && source === 'manual' && current.cover === value) return;
         const manualFields = new Set(current.manualFields || []);
         const fieldSources = { ...(current.fieldSources || {}) };
         const isEmpty = Array.isArray(value) ? value.length === 0 : !String(value || '').trim();
         if (isEmpty) { manualFields.delete(key); delete fieldSources[key]; }
-        else { manualFields.add(key); fieldSources[key] = 'manual'; }
+        else { manualFields.add(key); fieldSources[key] = source; }
         this.props.onChange({ ...current, [key]: value, fieldSources, manualFields: [...manualFields] });
       },
       searchGames: async function () {
@@ -127,10 +203,12 @@
         if (!query) { this.setState({ message: '请输入游戏名称。' }); return; }
         this.setState({ searching: true, message: '正在搜索游戏资料…', results: [] });
         try {
-          const response = await fetch(`https://blog.blfy.cc/ns/api/games/search?q=${encodeURIComponent(query)}&source=${encodeURIComponent(this.state.dataSource)}`);
+          const source = this.state.dataSource;
+          const path = `/ns/api/games/search?q=${encodeURIComponent(query)}&source=${encodeURIComponent(source)}`;
+          const response = source === 'thegamesdb' ? await archiveRequest(path) : await fetch(`https://blog.blfy.cc${path}`);
           const result = await response.json();
-          if (!response.ok) throw new Error(result.error || `搜索失败（${response.status}）`);
-          this.setState({ results: result.results || [], message: result.results?.length ? `找到 ${result.results.length} 个候选，请人工确认名称、年份和平台。${result.warnings?.length ? `（${result.warnings.join('；')}）` : ''}` : (result.warnings?.join('；') || '没有找到结果，请尝试其他语言或关键词。') });
+          if (!response.ok) throw new Error(result.error === 'ADMIN_LOGIN_REQUIRED' ? '请重新登录博客后台。' : result.error || `搜索失败（${response.status}）`);
+          this.setState({ results: result.results || [], message: result.results?.length ? `找到 ${result.results.length} 个候选，请人工确认名称、年份和平台。${result.warnings?.length ? `（${result.warnings.join('；')}）` : ''}${result.warning ? ' 当前显示缓存结果。' : ''}` : (result.warnings?.join('；') || '没有找到结果，请尝试其他语言或关键词。') });
         } catch (error) {
           this.setState({ message: error instanceof Error ? error.message : '游戏数据库暂不可用，请稍后重试。' });
         } finally { this.setState({ searching: false }); }
@@ -138,24 +216,31 @@
       selectGame: async function (candidate, refresh = false) {
         this.setState({ loading: true, message: refresh ? '正在刷新游戏资料…' : '正在读取游戏资料…' });
         try {
-          const response = await fetch('https://blog.blfy.cc/ns/api/games/detail', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: candidate.title || this.props.value?.title || '', sources: candidate.sources || this.props.value?.sources || {}, dataSource: this.state.dataSource, refresh }) });
+          const sources = candidate.sources || this.props.value?.sources || {};
+          const textOnly = refresh ? Boolean(sources.thegamesdb) : this.state.dataSource === 'thegamesdb';
+          const dataSource = textOnly ? 'thegamesdb' : this.state.dataSource === 'thegamesdb' ? 'auto' : this.state.dataSource;
+          const options = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: candidate.title || this.props.value?.title || '', sources, dataSource, refresh }) };
+          const response = textOnly ? await archiveRequest('/ns/api/games/detail', options) : await fetch('https://blog.blfy.cc/ns/api/games/detail', options);
           const game = await response.json();
-          if (!response.ok) throw new Error(game.error || `读取失败（${response.status}）`);
+          if (!response.ok) throw new Error(game.error === 'ADMIN_LOGIN_REQUIRED' ? '请重新登录博客后台。' : game.error || `读取失败（${response.status}）`);
           const current = this.props.value || {};
-          const keys = ['title', 'localizedName', 'originalName', 'alternativeNames', 'description', 'releaseDate', 'developers', 'publishers', 'platforms', 'genres', 'cover', 'screenshots', 'website'];
+          const keys = ['title', 'localizedName', 'originalName', 'alternativeNames', 'description', 'releaseDate', 'developers', 'publishers', 'platforms', 'genres', 'cover', 'screenshots', 'website']
+            .filter(key => !textOnly || !['cover', 'screenshots'].includes(key) && fieldHasValue(game[key]));
           const manualFields = new Set(current.manualFields || []);
           if (!current.id && !current.sources) for (const key of keys) {
-            const hasValue = Array.isArray(current[key]) ? current[key].length > 0 : Boolean(String(current[key] || '').trim());
-            if (hasValue) manualFields.add(key);
+            if (fieldHasValue(current[key])) manualFields.add(key);
           }
-          const next = { ...current, id: game.id, sources: game.sources || candidate.sources || {}, fieldSources: game.fieldSources || {}, updatedAt: game.updatedAt || new Date().toISOString(), manualFields: [...manualFields] };
+          const next = { ...current, id: game.id, sources: game.sources || sources, fieldSources: { ...(current.fieldSources || {}) }, updatedAt: game.updatedAt || new Date().toISOString(), manualFields: [...manualFields] };
           for (const key of keys) {
             if (manualFields.has(key)) continue;
-            const hasValue = Array.isArray(current[key]) ? current[key].length > 0 : Boolean(String(current[key] || '').trim());
-              if (!hasValue || refresh || current.sources) next[key] = game[key] || (['alternativeNames', 'developers', 'publishers', 'platforms', 'genres', 'screenshots'].includes(key) ? [] : '');
+            if (!fieldHasValue(current[key]) || refresh || current.sources) {
+              next[key] = game[key] || (['alternativeNames', 'developers', 'publishers', 'platforms', 'genres', 'screenshots'].includes(key) ? [] : '');
+              if (fieldHasValue(next[key])) next.fieldSources[key] = game.fieldSources?.[key] || Object.keys(next.sources)[0] || 'manual';
+              else delete next.fieldSources[key];
+            }
             }
           next.platforms = normalizePlatforms(next.platforms);
-          next.selectedPlatforms = normalizePlatforms(current.selectedPlatforms).filter(platform => next.platforms.includes(platform));
+          next.selectedPlatforms = normalizePlatforms(current.selectedPlatforms).filter(platform => textOnly || next.platforms.includes(platform));
           if (refresh) {
             const labels = { title: '游戏名称', localizedName: '本地化名称', originalName: '原名', alternativeNames: '别名', description: '简介', releaseDate: '发售日期', developers: '开发商', publishers: '发行商', platforms: '平台', genres: '类型', cover: '封面', screenshots: '截图', website: '官网' };
             const changes = keys.flatMap(key => {
@@ -218,14 +303,17 @@
             h('label', { style: { display: 'grid', gap: '5px' } }, h('span', null, '搜索游戏资料'), h('input', { type: 'search', value: this.state.query, placeholder: '支持中文、日文、英文等游戏名称', onChange: event => this.setState({ query: event.target.value }), onKeyDown: event => { if (event.key === 'Enter' && !event.nativeEvent?.isComposing && !event.isComposing && event.keyCode !== 229) { event.preventDefault(); this.searchGames(); } }, style: { width: '100%', minHeight: '38px', padding: '7px 10px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } })),
             h('button', { id: this.props.forID, type: 'button', disabled: this.state.loading || this.state.searching, onClick: () => this.searchGames(), style: { minHeight: '38px', padding: '7px 14px', cursor: this.state.searching ? 'wait' : 'pointer' } }, this.state.searching ? '搜索中…' : '搜索游戏'),
           ),
-          h('label', { style: { display: 'flex', alignItems: 'center', gap: '8px' } }, h('span', null, '数据源'), h('select', { value: this.state.dataSource, onChange: event => this.setState({ dataSource: event.target.value }), style: { minHeight: '36px', padding: '5px 9px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }, [['auto', '自动'], ['rawg', 'RAWG'], ['screenscraper', 'ScreenScraper']].map(([key, label]) => h('option', { key, value: key }, label)))),
+          h('label', { style: { display: 'flex', alignItems: 'center', gap: '8px' } }, h('span', null, '数据源'), h('select', { value: this.state.dataSource, disabled: this.state.loading || this.state.searching, onChange: event => this.setState({ dataSource: event.target.value, results: [], message: '' }), style: { minHeight: '36px', padding: '5px 9px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' } }, [['auto', '自动'], ['rawg', 'RAWG'], ['screenscraper', 'ScreenScraper'], ['thegamesdb', 'TheGamesDB']].map(([key, label]) => h('option', { key, value: key }, label)))),
           this.state.results.length > 0 && h('div', { style: { display: 'grid', gap: '6px' } }, this.state.results.map(item => h('button', {
             key: item.id, type: 'button', disabled: this.state.loading, onClick: () => this.selectGame(item),
             style: { display: 'grid', gridTemplateColumns: '72px minmax(0,1fr)', alignItems: 'center', gap: '12px', width: '100%', minWidth: 0, textAlign: 'left', padding: '8px', cursor: 'pointer', color: 'inherit', background: 'transparent', border: '1px solid #68707a', borderRadius: '8px' },
           }, h('span', { 'aria-hidden': 'true', style: { display: 'grid', placeItems: 'center', width: '72px', height: '88px', overflow: 'hidden', borderRadius: '5px', background: 'linear-gradient(145deg,#35404d,#20262e)', color: '#b8c2cf', fontSize: '28px' } }, item.cover ? h('img', { src: item.cover, alt: '', style: { display: 'block', width: '100%', height: '100%', objectFit: 'cover' } }) : '🎮'), h('span', { style: { display: 'block', minWidth: 0, overflowWrap: 'anywhere', lineHeight: 1.5 } }, h('strong', { style: { display: 'block', marginBottom: '4px', fontSize: '1em', lineHeight: 1.35 } }, item.title), h('span', { style: { color: 'inherit', opacity: .82 } }, `${(item.platforms || []).join('、') || '平台未知'} · ${item.year || '年份未知'} · ${(item.developers || []).join('、') || '开发商未知'} · 来源：${labelSources(item.sources)}`))))),
           value.sources && h('button', { type: 'button', disabled: this.state.loading || this.state.searching, onClick: () => this.selectGame({ title: value.title, sources: value.sources }, true), style: { justifySelf: 'start', minHeight: '36px', padding: '6px 12px', cursor: this.state.loading ? 'wait' : 'pointer' } }, '刷新游戏资料'),
           input('title', '游戏名称（可手动覆盖）'), input('localizedName', '中文本地化名称'), input('originalName', '原始名称'),
-          stringList('alternativeNames', '别名 / Alternative Names'), input('cover', '封面图片 URL'),
+          stringList('alternativeNames', '别名 / Alternative Names'),
+          h('div', { key: 'cover-field', className: 'game-cover-field' }, input('cover', '封面图片 URL'),
+            h(GameCoverPicker, { suggestedQuery: value.originalName || value.title || this.state.query, onSelect: url => this.update('cover', url, 'steamgriddb') }),
+            value.fieldSources?.cover === 'steamgriddb' && h('small', null, '封面来源：SteamGridDB · 刷新游戏资料时保留')),
           h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: '10px' } }, input('releaseDate', '发售日期', 'date'), input('website', '官方网站 URL')),
           stringList('developers', '开发商（逗号分隔）'), stringList('publishers', '发行商（逗号分隔）'),
           stringList('platforms', '平台（逗号分隔）'), stringList('genres', '类型 / Genre'), stringList('screenshots', '截图 URL（逗号分隔）'),
@@ -238,7 +326,7 @@
                 this.update('selectedPlatforms', [...selected]);
               } }), platform)),
             h('small', null, '资料源的平台清单会完整保留；只有勾选的平台会生成前台游戏平台卡片。已有手动平台卡片时，以手动卡片为准。')),
-          text('description', '游戏简介'), value.sources && h('small', null, `数据来源：${Object.keys(value.sources).join('、')} · 最近更新：${String(value.updatedAt || '未知').slice(0, 10)}`),
+          text('description', '游戏简介'), value.sources && h('small', null, `数据来源：${labelSources(value.sources)} · 最近更新：${String(value.updatedAt || '未知').slice(0, 10)}`),
           this.state.message && h('div', { role: this.state.message.startsWith('游戏资料已填入') || this.state.message.startsWith('游戏资料已刷新') ? 'status' : 'alert', 'aria-live': 'polite', style: { padding: '9px 12px', borderRadius: '6px', border: `1px solid ${this.state.message.startsWith('游戏资料已填入') || this.state.message.startsWith('游戏资料已刷新') ? '#2e7d32' : '#b7791f'}`, background: this.state.message.startsWith('游戏资料已填入') || this.state.message.startsWith('游戏资料已刷新') ? 'rgba(46,125,50,.12)' : 'rgba(183,121,31,.12)' } }, this.state.message),
         );
       },

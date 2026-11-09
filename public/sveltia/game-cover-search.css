@@ -1,0 +1,16 @@
+.game-cover-field, .game-cover-search, .game-cover-panel { display: grid; gap: 8px; min-width: 0; }
+.game-cover-search button { min-height: 36px; padding: 6px 10px; border: 1px solid #68707a; border-radius: 6px; background: transparent; color: inherit; cursor: pointer; }
+.game-cover-search button:disabled { cursor: wait; opacity: .65; }
+.game-cover-search button[aria-pressed=true] { border-width: 2px; font-weight: bold; }
+.game-cover-search-toggle { justify-self: start; }
+.game-cover-panel { border: 1px solid #68707a; border-radius: 8px; padding: 10px; }
+.game-cover-query { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; }
+.game-cover-query label { display: grid; flex: 1 1 180px; gap: 4px; min-width: 0; }
+.game-cover-query input { width: 100%; min-height: 36px; padding: 6px 8px; border: 1px solid #68707a; border-radius: 6px; background: transparent; color: inherit; }
+.game-cover-games, .game-cover-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.game-cover-games { max-height: 180px; overflow: auto; padding: 2px; }
+.game-cover-games button { max-width: 100%; overflow-wrap: anywhere; }
+.game-cover-grids { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(96px, 100%), 1fr)); gap: 8px; }
+.game-cover-grids button { display: grid; align-content: start; gap: 5px; min-width: 0; padding: 4px; text-align: left; }
+.game-cover-grids img { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: contain; border-radius: 3px; background: rgba(115, 125, 140, .18); }
+.game-cover-grids small { overflow-wrap: anywhere; }

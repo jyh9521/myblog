@@ -1,6 +1,8 @@
 import { RAWGProvider, ScreenScraperProvider, screenScraperMedia, areSameGame, combineCandidates, mergeMetadata } from "./game-providers.js";
 import { DurableObject } from "cloudflare:workers";
 import { hltbRoute } from './hltb.js';
+import { cachedMetadata, readMetadataCache, writeMetadataCache } from './metadata-cache.js';
+import { detailTheGamesDB, searchTheGamesDB, steamGridDBRoute } from './archive-routes.js';
 
 // Keep the already-provisioned namespace export during the provider migration.
 // The old IGDB endpoints are retired; this stub prevents a destructive DO
@@ -12,30 +14,6 @@ export class IgdbApi extends DurableObject {
 }
 
 const jsonHeaders = { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" };
-async function readMetadataCache(env, key) {
-  try {
-    const row = await env.DB.prepare("SELECT payload, cached_at FROM game_metadata_cache WHERE cache_key = ?").bind(key).first();
-    return row ? { value: JSON.parse(row.payload), cachedAt: Number(row.cached_at) } : null;
-  } catch { return null; }
-}
-async function writeMetadataCache(env, key, value) {
-  try {
-    await env.DB.prepare("INSERT INTO game_metadata_cache (cache_key, payload, cached_at) VALUES (?, ?, ?) ON CONFLICT(cache_key) DO UPDATE SET payload = excluded.payload, cached_at = excluded.cached_at")
-      .bind(key, JSON.stringify(value), Date.now()).run();
-  } catch { /* Metadata fetch stays available if the optional cache migration is pending. */ }
-}
-async function cachedMetadata(env, key, ttlMs, producer, force = false) {
-  const cached = await readMetadataCache(env, key);
-  if (!force && cached && Date.now() - cached.cachedAt < ttlMs) return { value: cached.value, cached: true, stale: false };
-  try {
-    const value = await producer();
-    await writeMetadataCache(env, key, value);
-    return { value, cached: false, stale: false };
-  } catch (error) {
-    if (cached) return { value: cached.value, cached: true, stale: true, warning: error instanceof Error ? error.message : "上游数据源暂不可用" };
-    throw error;
-  }
-}
 function jsonError(message, status = 502) { return Response.json({ error: message }, { status, headers: jsonHeaders }); }
 const CACHE_SEARCH_MS = 60 * 60 * 1000;
 const CACHE_EMPTY_SEARCH_MS = 5 * 60 * 1000;
@@ -46,11 +24,13 @@ export default {
     const url = new URL(request.url);
     if (url.pathname.startsWith('/ns/api/hltb/')) return hltbRoute(request, env);
     if (url.pathname === "/ns/api/games/media") return screenScraperMedia(request, env);
+    if (url.pathname === '/ns/api/games/covers/search' || url.pathname === '/ns/api/games/covers') return steamGridDBRoute(request, env);
     if (url.pathname === "/ns/api/games/search") {
       if (request.method !== "GET") return jsonError("只支持 GET 请求。", 405);
       const query = (url.searchParams.get("q") || "").trim().replace(/\s+/g, " ").slice(0, 100);
       if (query.length < 2) return jsonError("请输入至少两个字符。", 400);
       const source = (url.searchParams.get("source") || "auto").toLowerCase();
+      if (source === 'thegamesdb') return searchTheGamesDB(request, env, query);
       if (!['auto', 'rawg', 'screenscraper'].includes(source)) return jsonError("数据源选项无效。", 400);
       const cacheKey = `game-search:v4:${source}:${query.toLocaleLowerCase()}`;
       const cached = await readMetadataCache(env, cacheKey);
@@ -85,6 +65,7 @@ export default {
       try { requestBody = await request.json(); } catch { return jsonError("游戏资料请求格式无效。", 400); }
       const title = String(requestBody?.title || "").trim().slice(0, 160);
       const source = String(requestBody?.dataSource || 'auto').toLowerCase();
+      if (source === 'thegamesdb') return detailTheGamesDB(request, env, requestBody);
       if (!['auto', 'rawg', 'screenscraper'].includes(source)) return jsonError("数据源选项无效。", 400);
       const sources = requestBody?.sources && typeof requestBody.sources === "object" ? requestBody.sources : {};
       const rawgId = source !== 'screenscraper' ? String(sources.rawg?.id || "").slice(0, 100) : '';

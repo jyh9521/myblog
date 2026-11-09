@@ -1,11 +1,12 @@
 # Blog Cloudflare Worker
 
-Worker 路由同时提供访问计数与游戏元数据 API。博客前端和 Sveltia CMS 只调用规范化接口，不直接访问 RAWG、ScreenScraper 或 IGDB。
+Worker 路由同时提供访问计数与游戏资料 API。Sveltia CMS 通过规范化接口使用 RAWG、ScreenScraper、TheGamesDB 与 SteamGridDB，密钥留在 Worker。
 
 ## 游戏元数据 Provider
 
 - `src/game-providers.js` 定义 `GameMetadataProvider`、`RAWGProvider`、`ScreenScraperProvider`、`IGDBProvider` 与统一字段转换、匹配/合并逻辑。
-- CMS 数据源选择支持自动、RAWG、ScreenScraper；自动模式按 RAWG → ScreenScraper 查询，ScreenScraper 仅补缺失字段。
+- `src/archive-providers.js` 的 TheGamesDB 只提供文字和发行资料；SteamGridDB 单独提供封面。自动模式仍按 RAWG → ScreenScraper 查询。
+- `GAME_ADMIN` 服务绑定使用现有 `blog-gaming-accounts` 登录来保护两项新增 API；浏览器无需再次输入 GitHub 令牌。预览 Worker 调用隔离的同进程账号接口，不使用生产会话。
 - `IGDBProvider` 仅保留扩展接口；当前 Worker 没有 IGDB 专用路由或 Durable Object，也不要求 Twitch/IGDB 密钥。
 - D1 `game_metadata_cache` 缓存搜索结果 1 小时、详情 7 天；发布到 `content/games/<slug>.md` 的档案是静态站点运行时数据源。
 - Markdown `gameMetadata` 存放外部资料；顶层 `manual` 独立存放 `officialStores`、`availabilityStatus` 和人工备注，刷新 API 资料不会修改该字段。
@@ -16,6 +17,8 @@ Worker 路由同时提供访问计数与游戏元数据 API。博客前端和 Sv
 
 ```dotenv
 RAWG_API_KEY=
+THEGAMESDB_API_KEY=
+STEAMGRIDDB_API_KEY=
 SCREENSCRAPER_DEV_ID=
 SCREENSCRAPER_DEV_PASSWORD=
 SCREENSCRAPER_SOFTNAME=
@@ -32,7 +35,9 @@ npx wrangler d1 migrations apply ns-counter --remote
 npx wrangler deploy
 ```
 
-游戏 API：`GET /ns/api/games/search?q=<名称>&source=auto|rawg|screenscraper`，`POST /ns/api/games/detail`（JSON: `{ "title": "...", "sources": {...}, "dataSource": "auto", "refresh": true }`）。外部 API 错误会在可用时回退到缓存；Worker 的游戏接口失败不会影响静态文章渲染。
+游戏 API：`GET /ns/api/games/search?q=<名称>&source=auto|rawg|screenscraper|thegamesdb`，`POST /ns/api/games/detail`（JSON: `{ "title": "...", "sources": {...}, "dataSource": "auto", "refresh": true }`）。TheGamesDB 详情按 `sources.thegamesdb.id` 查询，名称目录缓存 30 天，无需 D1 schema 迁移。
+
+封面 API：`GET /ns/api/games/covers/search?q=<名称>` 查询 SteamGridDB 游戏，`GET /ns/api/games/covers?gameId=<ID>&page=0` 返回静态竖版封面，每页最多 18 张。只返回公开 CDN URL，不代理或存储图片。游戏候选和封面列表缓存 1 小时，空结果 5 分钟；失败时有可用缓存则返回旧数据。Worker 的游戏接口失败不会影响静态页面渲染。
 
 ## 访问计数
 

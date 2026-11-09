@@ -2,20 +2,6 @@
 title: 奥里与萤火意志
 status:
   - 已通关
-playTime:
-  hours: 12.9
-personalRating: 8
-hltb:
-  auto: true
-  id: 46428
-  snapshot:
-    completionist: 18.32
-    extras: 15.73
-    id: 46428
-    main: 12
-    updatedAt: 2026-10-08T10:32:21.467Z
-  title: Ori and the Will of the Wisps
-  url: https://howlongtobeat.com/game/46428
 gameMetadata:
   platforms:
     - Xbox One
@@ -43,7 +29,7 @@ gameMetadata:
   publishers:
     - Microsoft Studios
     - Xbox Game Studios
-  cover: https://media.rawg.io/media/games/718/71891d2484a592d871e91dc826707e1c.jpg
+  cover: https://cdn2.steamgriddb.com/grid/9efb016192fbb2a7a84bc1c6589f88bc.jpg
   title: Ori and the Will of the Wisps
   sources:
     rawg:
@@ -96,13 +82,43 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:28199:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/28199
+  text: |-
+    一段新的旅程就此展开
+
+    踏上一场全新的冒险，体验全新的战斗与自定义选项，探索广袤而异域的世界，迎战体型巨大的敌人并破解极具挑战性的谜题。在揭开奥里真正命运的道路上，向沿途结识的盟友寻求帮助。
+
+    探索广袤、美丽且沉浸式的世界
+
+    探索一个广袤、美丽、沉浸式且充满危险的世界，这里有扣人心弦的敌人遭遇战、极具挑战性的谜题以及惊心动魄的逃亡序列。在这场情感丰富、精心打造且以剧情驱动的冒险中，揭开奥里真正的命运。
+
+    全新战斗系统
+
+    挥舞数十种全新的精灵武器、法术和技能，为奥里的世界带来全新的动态战斗机制。凭借完全由你调配的全新武器库，在无数的危险与废墟中敏捷地杀出一条血路。
+
+    自定义你的游戏风格
+
+    从数十种新获得的攻击、法术和技能中选择你的冒险工具，以契合你的游戏风格。此外，还可以利用全新的碎片系统来增强奥里的能力。
+
+    遭遇史诗级强敌
+
+    迎战宏大的史诗级头目，并向可发掘的盟友寻求支援，他们将为你提供服务并发布可选任务，以拓展你的冒险旅程。
 manual:
   availabilityStatus: available
   officialStores:
@@ -110,6 +126,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1057090/
+playTime:
+  hours: 12.9
+personalRating: 8
+hltb:
+  auto: true
+  id: 46428
+  snapshot:
+    completionist: 18.32
+    extras: 15.73
+    id: 46428
+    main: 12
+    updatedAt: 2026-10-08T10:32:21.467Z
+  title: Ori and the Will of the Wisps
+  url: https://howlongtobeat.com/game/46428
 events:
   - date: 2020-03-11
     title: 开始游戏

@@ -36,7 +36,7 @@ gameMetadata:
   publishers:
     - Gamecock Media Group
     - Atooi
-  cover: https://media.rawg.io/media/screenshots/d58/d584abd7727ed9c80bbb244cd923447a.jpg
+  cover: https://cdn2.steamgriddb.com/grid/b4305516f375b673c2ac9c6c74fdaa62.png
   title: 'Dementium: The Ward'
   sources:
     rawg:
@@ -55,13 +55,14 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
 manual:
   availabilityStatus: available
   officialStores:

@@ -5,8 +5,7 @@ import { editionEvidence, rankEditions } from './game-identity.js';
 import { combineCandidates, RAWGProvider } from './game-providers.js';
 import { searchDossierEditions } from './archive-routes.js';
 import { dossierBriefRoute } from './dossier-brief-route.js';
-import { parseStoreLink, storeSynopsis } from './game-store-summaries.js';
-import { detectSynopsisLanguage, plainReference, synopsisMaterial } from './summary-language.js';
+import { detectSynopsisLanguage, plainReference } from './summary-language.js';
 import { GAME_TRANSLATION_PROMPT } from './gemini-game-summary.js';
 
 const root = 'https://blog.example/ns/api/games';
@@ -17,9 +16,6 @@ const shortEn = 'The player follows the traces of a vanished crew and rebuilds a
 const shortZh = '这是一款探索游戏。你将扮演一名修理师，在岛上寻找线索，修复沉没船只留下的机械零件，并帮助居民恢复港口。';
 const shortTw = '這是一款冒險遊戲。玩家透過線索探索島嶼，修復損壞的船隻，並與居民攜手重建港口。';
 const approved = '在《港湾手记》中，玩家循着失踪船员留下的线索走访岛上的居民。为了让船只重新起航，他们需要收集散落的零件，在居民协助下修理船体。叙事围绕寻找船员和恢复船只展开，两条线索随调查和修缮逐步交汇。';
-const steam = 'https://store.steampowered.com/app/123/';
-const psn = 'https://store.playstation.com/en-us/product/UP0102-PPSA07411_00-RE4RMAINGAME0000';
-const eshop = 'https://www.nintendo.com/us/store/products/harbor-switch/';
 const raw = { id: 5, name: 'Harbor', released: '2023-01-03', developers: [{ name: 'Studio' }],
   platforms: ['PC', 'PS5', 'Nintendo Switch'].map(name => ({ platform: { name } })), description_raw: shortEn };
 const game = { id: 'fixture', title: 'Harbor', releaseDate: '2023-01-03', developers: ['Studio'], platforms: ['PC', 'PlayStation 5', 'Nintendo Switch'] };
@@ -39,22 +35,6 @@ function environment() {
   return { env, writes };
 }
 const post = (body, extra = {}) => new Request(root + '/brief', { method: 'POST', headers: { ...headers, ...extra }, body: JSON.stringify(body) });
-const steamData = (id, short, details = {}) => ({ [id]: { success: true, data: {
-  steam_appid: Number(id), type: 'game', name: 'Harbor', short_description: short,
-  developers: ['Studio'], platforms: { windows: true }, release_date: { date: '3 Jan, 2023' }, ...details,
-} } });
-const psnHtml = (id, short, long, name = 'Harbor') => '<script id="mfe-jsonld-tags" type="application/ld+json">'
-  + JSON.stringify({ name, sku: id, description: short, category: 'Full Game' }) + '</script>'
-  + '<script id="__NEXT_DATA__">' + JSON.stringify({ props: { pageProps: { productId: id, batarangs: {
-    overview: { text: '<p data-qa="mfe-game-overview#description">' + long + '</p>' },
-    info: { text: '<dd data-qa="gameInfo#releaseInformation#platform-value">PS5</dd><dd data-qa="gameInfo#releaseInformation#releaseDate-value">1/3/2023</dd>' },
-  } } } }) + '</script>';
-const nintendoHtml = (products, slug = 'harbor-switch') => '<script id="__NEXT_DATA__">' + JSON.stringify({
-  query: { slug }, props: { pageProps: { initialApolloState: products } },
-}) + '</script>';
-const nintendoProduct = { __typename: 'Product', urlKey: 'harbor-switch', nsuid: '70010000001234',
-  name: 'Harbor', headline: shortEn, releaseDate: '2023-01-03', softwareDeveloper: 'Studio', platform: { label: 'Nintendo Switch' } };
-
 test('edition evidence rejects name-only, year, developer and platform mismatches and retains edition suffixes', () => {
   assert.equal(editionEvidence({ title: 'Harbor' }, game).strong, false);
   assert.equal(editionEvidence({ title: 'Harbor', releaseDate: '2023-01-03', platforms: ['PC Windows'] }, game).strong, true);
@@ -116,80 +96,65 @@ test('source rejects unauthenticated or malformed requests without external call
   assert.equal((await dossierBriefRoute(post(valid, { Origin: 'https://cross-site.example' }), env, never)).status, 403);
   assert.equal((await dossierBriefRoute(post({ action: 'source', title: 'Harbor' }), env, never)).status, 400);
   assert.equal((await dossierBriefRoute(post({ ...valid, storeUrl: 'https://store.steampowered.com.evil.test/app/123/' }), env, never)).status, 400);
-  assert.equal((await dossierBriefRoute(post({ ...valid, text: 'a'.repeat(33000) }), env, never)).status, 413);
+  assert.equal((await dossierBriefRoute(post({ ...valid, text: 'a'.repeat(66000) }), env, never)).status, 413);
   assert.equal((await dossierBriefRoute(new Request(root + '/brief'), env, never)).status, 405);
 });
 
-test('exact catalog-linked Steam product reads actual language, prioritizes short text, and never caches it', async () => {
+test('an exact database ID reads only that database, even if an older tab asks for automatic stores', async () => {
   const { env, writes } = environment();
   const calls = [];
   const fetcher = async url => {
     calls.push(url.hostname + url.pathname);
-    if (url.pathname === '/api/games/5') return Response.json(raw);
-    if (url.pathname === '/api/games/5/stores') return Response.json({ results: [{ url: steam + '?tracking=foo' }] });
-    assert.equal(url.pathname, '/api/appdetails');
-    assert.equal(url.searchParams.get('appids'), '123');
-    const locale = url.searchParams.get('l');
-    return Response.json(steamData('123', locale === 'tchinese' ? shortTw : shortEn, { about_the_game: shortZh.repeat(6) }));
+    assert.equal(url.hostname, 'api.rawg.io');
+    assert.equal(url.pathname, '/api/games/5');
+    return Response.json(raw);
   };
   const response = await dossierBriefRoute(post({ action: 'source', edition: rawRef, autoStore: true }), env, fetcher);
   assert.equal(response.status, 200);
   assert.equal(response.headers.get('Cache-Control'), 'private, no-store');
   const result = await response.json();
-  assert.equal(result.selectedStoreUrl, steam);
-  assert.equal(result.material.language, 'zh-Hant');
-  assert.equal(result.material.kind, 'short');
+  assert.equal(result.material.label, 'RAWG');
+  assert.equal(result.material.language, 'en');
   assert.equal(result.material.mode, 'translate');
-  assert.equal(calls.length, 5);
-  assert.ok([...writes.values()].every(row => !row.payload.includes(shortTw) && !row.payload.includes('tracking')));
+  assert.equal(result.material.text, shortEn);
+  assert.equal(result.stores, undefined);
+  assert.deepEqual(calls, ['api.rawg.io/api/games/5']);
+  assert.equal(writes.size, 0);
 });
 
-test('multiple catalog links do not auto-select; unlinked links require confirmation', async () => {
-  const { env } = environment();
-  const fetched = [];
-  const fetcher = async url => {
-    fetched.push(url.href);
-    if (url.pathname === '/api/games/5') return Response.json(raw);
-    if (url.pathname.endsWith('/stores')) return Response.json({ results: [{ url: steam }, { url: eshop }] });
-    assert.fail('ambiguous selection must not contact a store');
+test('when the archive has no text, the draft uses the confirmed database ID and records the real source', async () => {
+  const { env, writes } = environment();
+  const edition = { provider: 'thegamesdb', id: '5' };
+  const calls = [];
+  const fetcher = async (url, options) => {
+    calls.push(url.hostname);
+    if (url.hostname === 'api.thegamesdb.net') {
+      assert.equal(url.pathname, '/v1/Games/ByGameID');
+      assert.equal(url.searchParams.get('id'), '5');
+      return Response.json({ code: 200, data: { games: [{ id: 5, game_title: 'Harbor', overview: shortEn }] } });
+    }
+    assert.equal(url.hostname, 'generativelanguage.googleapis.com');
+    assert.deepEqual(JSON.parse(JSON.parse(options.body).contents[0].parts[0].text), { gameTitle: 'Harbor', officialTitle: '', originalText: shortEn });
+    return geminiResponse(approved);
   };
-  const body = { action: 'source', edition: rawRef };
-  const response = await dossierBriefRoute(post({ ...body, autoStore: true }), env, fetcher);
-  const data = await response.json();
-  assert.equal(data.stores.length, 2);
-  assert.equal(data.selectedStoreUrl, '');
-  assert.equal(data.material.label, 'RAWG');
-  assert.equal((await dossierBriefRoute(post({ ...body, storeUrl: psn }), env, fetcher)).status, 409);
-  assert.ok(fetched.every(url => url.startsWith('https://api.rawg.io/')));
+  const response = await dossierBriefRoute(post({ action: 'draft', edition }), env, fetcher);
+  assert.equal(response.status, 200);
+  const result = await response.json();
+  assert.equal(result.mode, 'translate');
+  assert.equal(result.text, approved);
+  assert.deepEqual(result.source, { url: 'https://thegamesdb.net/game.php?id=5', label: 'TheGamesDB', language: 'en', kind: 'overview', edition: 'thegamesdb:5:' });
+  assert.deepEqual(calls, ['api.thegamesdb.net', 'generativelanguage.googleapis.com']);
+  assert.equal(writes.size, 0);
 });
 
-test('store products must match identifiers and edition evidence, not promotional text or display names alone', async () => {
-  const response = (data, details) => async () => Response.json(steamData('123', data, details));
-  const store = parseStoreLink(steam);
-  await assert.rejects(storeSynopsis(store, game, false, response(shortEn, { steam_appid: 999 })), /未返回/);
-  await assert.rejects(storeSynopsis(store, game, false, response(shortEn, { type: 'dlc' })), /未返回/);
-  await assert.rejects(storeSynopsis(store, game, false, response(shortEn, { release_date: { date: '2004' } })), /版本/);
-  await assert.rejects(storeSynopsis(store, game, false, response(shortEn, { developers: ['Other'] })), /版本/);
-  await assert.rejects(storeSynopsis(store, game, true, response(shortEn, { release_date: { date: '2004' } })), /版本/);
-  const port = { ...game, platformReleaseDates: { PC: '2024-01-03' } };
-  assert.equal((await storeSynopsis(store, port, true, response(shortEn, { release_date: { date: '2024' } }))).language, 'en');
-  assert.equal(parseStoreLink('https://store.playstation.com/en-us/concept/10000000'), null);
-  assert.equal(parseStoreLink('https://store.steampowered.com/bundle/123/'), null);
-  assert.equal(parseStoreLink('https://auth@store.steampowered.com/app/123/'), null);
-});
-
-test('PlayStation and Nintendo product parsing is bound to the selected SKU and ignores upsells', async () => {
-  const store = parseStoreLink(psn);
-  const long = shortEn.repeat(8);
-  const material = await storeSynopsis(store, game, false, async () => new Response(psnHtml(store.id, '', long, 'Harbor PS4 & PS5 (English, Japanese, Traditional Chinese)')));
-  assert.equal(material.kind, 'long');
-  assert.equal(material.mode, 'summarize');
-  await assert.rejects(storeSynopsis(store, game, false, async () => new Response(psnHtml('other-sku', shortEn, long))), /未返回/);
-  const nintendo = parseStoreLink(eshop);
-  const good = nintendoHtml({ chosen: nintendoProduct, upsell: { ...nintendoProduct, urlKey: 'harbor-upgrade', headline: 'wrong product' } });
-  assert.equal((await storeSynopsis(nintendo, game, false, async () => new Response(good))).kind, 'short');
-  await assert.rejects(storeSynopsis(nintendo, game, false, async () => new Response(nintendoHtml({ chosen: { ...nintendoProduct, isUpgrade: true } }))), /未返回/);
-  await assert.rejects(storeSynopsis(nintendo, game, false, async () => new Response(nintendoHtml({ chosen: nintendoProduct }, 'other'))), /未返回/);
+test('an empty database description produces a specific message before Gemini is called', async () => {
+  const { env } = environment();
+  const response = await dossierBriefRoute(post({ action: 'draft', edition: rawRef }), env, async url => {
+    assert.equal(url.hostname, 'api.rawg.io');
+    return Response.json({ ...raw, description_raw: '' });
+  });
+  assert.equal(response.status, 422);
+  assert.deepEqual(await response.json(), { error: '这份资料没有可翻译的简介正文。' });
 });
 
 test('a suitable Simplified Chinese reference skips AI by default; Gemini uses the editor prompt on actual translation', async () => {
@@ -208,7 +173,7 @@ test('a suitable Simplified Chinese reference skips AI by default; Gemini uses t
     assert.equal(JSON.parse(payload.contents[0].parts[0].text).originalText, shortTw);
     return Response.json({ candidates: [{ finishReason: 'STOP', content: { parts: [{ thought: true, text: 'not public' }, { text: approved }] } }] });
   };
-  assert.deepEqual(await (await dossierBriefRoute(post({ ...base, text: shortZh }), env, fetcher)).json(), { mode: 'manual', language: 'zh-Hans' });
+  assert.deepEqual(await (await dossierBriefRoute(post({ ...base, text: shortZh }), env, fetcher)).json(), { text: shortZh, mode: 'manual', language: 'zh-Hans', originalLanguage: 'zh-Hans' });
   assert.equal(calls, 0);
   const result = await (await dossierBriefRoute(post({ ...base, text: shortTw }), env, fetcher)).json();
   assert.equal(result.mode, 'translate');
@@ -231,64 +196,27 @@ const multiParagraphEn = [
 const geminiResponse = (text, finishReason = 'STOP') =>
   Response.json({ candidates: [{ finishReason, content: { parts: [{ text }] } }] });
 
-test('translation budget uses actual words and characters while preserving short references', () => {
-  const manyWords = 'The crew goes to the bay. '.repeat(17).trim();
-  const manyCharacters = 'Discover isolated communities, reconstruct forgotten navigational equipment, and investigate the consequences of an unexplained catastrophe. '.repeat(6).trim();
-  assert.ok(manyWords.length < 650);
-  assert.ok(manyCharacters.split(/\s+/).length <= 100);
-  assert.equal(synopsisMaterial(manyWords, 'overview').mode, 'summarize');
-  assert.equal(synopsisMaterial(manyCharacters, 'short').mode, 'summarize');
-  assert.equal(synopsisMaterial(shortEn, 'overview').mode, 'translate');
-  assert.equal(synopsisMaterial(shortZh, 'overview').mode, 'manual');
-  assert.equal(synopsisMaterial(shortZh.repeat(5), 'overview').mode, 'summarize');
-});
-
-test('long database overview uses summary mode at both the source and draft endpoints', async () => {
+test('long references are translated in full rather than summarized or truncated at 6500 characters', async () => {
   const { env, writes } = environment();
-  delete env.RAWG_API_KEY;
-  const edition = { provider: 'thegamesdb', id: '5' };
-  const request = post({ action: 'source', edition, autoStore: true });
-  assert.ok(multiParagraphEn.length > 650 && multiParagraphEn.length < 850);
-  const response = await dossierBriefRoute(request, env, async url => {
-    assert.equal(url.pathname, '/v1/Games/ByGameID');
-    assert.equal(url.searchParams.get('id'), '5');
-    return Response.json({ code: 200, data: { games: [{ id: 5, game_title: 'Harbor', overview: multiParagraphEn }] } });
-  });
-  assert.equal(response.status, 200);
-  const { material } = await response.json();
-  assert.equal(material.kind, 'overview');
-  assert.equal(material.language, 'en');
-  assert.equal(material.mode, 'summarize');
-
-  const reply = await dossierBriefRoute(post({ action: 'draft', edition, kind: material.kind, text: material.text }),
-    env, async (url, options) => {
-      assert.equal(url.hostname, 'generativelanguage.googleapis.com');
-      const request = JSON.parse(options.body);
-      assert.match(request.system_instruction.parts[0].text, /不是逐句翻译/);
-      assert.equal(JSON.parse(request.contents[0].parts[0].text).originalText, multiParagraphEn);
-      return geminiResponse(approved);
-    });
-  assert.equal(reply.status, 200);
-  assert.equal((await reply.json()).mode, 'summarize');
-  assert.equal(writes.size, 0);
-});
-
-test('valid Simplified Chinese drafts over 250 characters reach editorial review intact', async () => {
-  const { env, writes } = environment();
-  const body = { action: 'draft', edition: rawRef, kind: 'overview', text: multiParagraphEn };
-  const longDraft = approved + '灯塔沉寂之后，主角从防波堤出发，沿着补给船的最后航线逐一走访沿岸聚落。天气变化会封闭原有路线，也会露出通往新地点的水道。调查时还要核对互相矛盾的目击记录，判断下一步应去哪里。收集到的工具可以用来打捞沉没的设备，也能用来修复渡船。恢复照明后，调查者逐步厘清失踪事件的来龙去脉，同时将物资送还给曾收留船员的村民。航行期间，地图和天气报告也会提供参考，帮助玩家决定应先去哪里调查。';
+  const text = (multiParagraphEn + '\n\n').repeat(9) + 'The lighthouse keeper finally reunites with the crew.';
+  assert.ok(text.length > 6500 && text.length <= 12000);
+  const longDraft = approved + '\n\n' + shortZh.repeat(5);
   assert.ok([...longDraft].length > 250);
-  const requests = [];
-  const response = await dossierBriefRoute(post(body), env, async (url, options) => {
-    requests.push(JSON.parse(options.body));
+  const calls = [];
+  const response = await dossierBriefRoute(post({ action: 'draft', edition: rawRef, text }), env, async (url, options) => {
+    calls.push(url.hostname);
+    assert.equal(url.hostname, 'generativelanguage.googleapis.com');
+    const request = JSON.parse(options.body);
+    assert.match(request.system_instruction.parts[0].text, /不做摘要，不省略原文的信息/);
+    assert.equal(JSON.parse(request.contents[0].parts[0].text).originalText, text);
+    assert.ok(request.generationConfig.maxOutputTokens > 1024);
     return geminiResponse(longDraft);
   });
   assert.equal(response.status, 200);
-  assert.equal((await response.json()).text, longDraft);
-  assert.equal(requests.length, 1);
-  const prompt = requests[0].system_instruction.parts[0].text;
-  assert.match(prompt, /100–250 字为参考/);
-  assert.match(prompt, /可适当超出/);
+  const result = await response.json();
+  assert.equal(result.text, longDraft);
+  assert.equal(result.mode, 'translate');
+  assert.deepEqual(calls, ['generativelanguage.googleapis.com']);
   assert.equal(writes.size, 0);
 });
 
@@ -344,12 +272,30 @@ test('Gemini errors and persistently invalid output never return draft text', as
   }
 });
 
-test('Steam and catalog credits match legal suffix variants without merging different studios', async () => {
+test('edition evidence compares legal suffix variants without merging different studios', () => {
   const release = { ...game, developers: ['Valve Corporation'] };
-  const store = parseStoreLink(steam);
-  const steamCredit = developers => async () => Response.json(steamData('123', shortEn, { developers }));
   assert.equal(editionEvidence(release, { ...game, developers: ['Valve'] }).developer, 1);
   assert.equal(editionEvidence({ ...game, developers: ['Capcom Co., Ltd.'] }, { ...game, developers: ['Capcom'] }).developer, 1);
-  assert.equal((await storeSynopsis(store, release, false, steamCredit(['Valve']))).language, 'en');
-  await assert.rejects(storeSynopsis(store, release, false, steamCredit(['Valve South'])), /版本/);
+  assert.equal(editionEvidence(release, { ...game, developers: ['Valve South'] }).developer, -1);
+});
+test('saved archive HTML translates directly without a second edition lookup', async () => {
+  const { env, writes } = environment();
+  const draft = approved + '\n\n' + shortZh;
+  const calls = [];
+  const request = post({ action: 'draft', text: '<p>' + shortEn + '</p><p>In the end, the crew returns to the harbor.</p>', gameTitle: 'Harbor' });
+  const response = await dossierBriefRoute(request, env, async (url, options) => {
+    calls.push(url.hostname);
+    assert.equal(url.hostname, 'generativelanguage.googleapis.com');
+    const payload = JSON.parse(options.body);
+    assert.equal(JSON.parse(payload.contents[0].parts[0].text).originalText, shortEn + '\n\nIn the end, the crew returns to the harbor.');
+    return geminiResponse(draft);
+  });
+  assert.equal(response.status, 200);
+  const result = await response.json();
+  assert.equal(result.text, draft);
+  assert.equal(result.mode, 'translate');
+  assert.equal(result.originalLanguage, 'en');
+  assert.equal(result.source, undefined);
+  assert.deepEqual(calls, ['generativelanguage.googleapis.com']);
+  assert.equal(writes.size, 0);
 });

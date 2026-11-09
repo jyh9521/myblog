@@ -16,15 +16,19 @@ const bundle = process.env.SVELTIA_BUNDLE ? await readFile(process.env.SVELTIA_B
 const out = process.env.DOSSIER_SCREENSHOTS;
 const baseline = process.argv.includes('--baseline');
 const candidatesOnly = process.argv.includes('--candidates-only');
+const fromDatabase = process.argv.includes('--database-brief');
 const viewport = { width: Number(process.env.DOSSIER_TEST_WIDTH || 1440), height: Number(process.env.DOSSIER_TEST_HEIGHT || 1000) };
 const colorScheme = process.env.DOSSIER_TEST_THEME || 'light';
 if (out) await mkdir(out, { recursive: true });
+const original = 'In Harbor, you follow the clues left by a missing crew and work with island residents to repair a ship.';
+const archiveOriginal = '<p>' + original + '</p>';
+const purchaseLink = 'https://store.steampowered.com/app/123/';
 const seed = [
-  '---', 'title: 旧档案', 'status: [想玩]', 'summary: 已有手写简介。', 'playTime: {hours: 3.8}',
-  'personalRating: 8.12', 'manual: {availabilityStatus: physical-only, notes: 保留原版渠道}',
+  '---', 'title: 旧档案', 'status: [想玩]', 'playTime: {hours: 3.8}', 'personalRating: 8.12',
+  'manual: ' + JSON.stringify({ availabilityStatus: 'physical-only', notes: '保留原版渠道', officialStores: [{ name: 'Steam', url: purchaseLink }] }),
+  ...(!fromDatabase && !candidatesOnly ? ['gameMetadata: ' + JSON.stringify({ description: archiveOriginal })] : []),
   'hltb: {url: https://howlongtobeat.com/game/2500, main: 5}', 'events: [{title: 开始游戏, note: 旧记录}]', '---',
 ].join('\n');
-const original = 'In Harbor, you follow the clues left by a missing crew and work with island residents to repair a ship.';
 const draft = '在《港湾手记》中，你将循着失踪船员留下的线索走访岛上的居民。调查途中，你要收集修理船只所需的零件，并和居民协作修复船体。寻找船员与修复船只构成故事的两条线索，随着调查与修理的推进逐渐交织。';
 const oldGame = { id: 35, game_title: 'Harbor', release_date: '2004-04-19', platform: 24, developers: [12], overview: original };
 const newGame = { ...oldGame, id: 36, release_date: '2023-01-03', platform: 25, developers: [13] };
@@ -38,7 +42,7 @@ const env = { THEGAMESDB_API_KEY: 'local-fixture', GEMINI_API_KEY: 'local-fixtur
   GAME_ADMIN: { fetch: async () => new Response('') },
 };
 const dataRequests = [];
-let aiCalls = 0;
+let aiCalls = 0, catalogReads = 0;
 async function provider(url, options) {
   if (url.hostname === 'generativelanguage.googleapis.com') {
     aiCalls++;
@@ -50,6 +54,7 @@ async function provider(url, options) {
   if (endpoint === 'Developers') return Response.json({ code: 200, data: { developers: {
     12: { id: 12, name: 'Original Studio' }, 13: { id: 13, name: 'New Studio' },
   } } });
+  if (endpoint === 'ByGameID') catalogReads++;
   const games = endpoint === 'ByGameID' ? [oldGame, newGame].filter(game => String(game.id) === url.searchParams.get('id')) : [oldGame, newGame, ...extraGames];
   return Response.json({ code: 200, data: { games }, include: { platform: gamePlatforms } });
 }
@@ -165,7 +170,7 @@ try {
     assert.equal(await nav.getByRole('button').count(), 3);
     assert.equal(await field('playTime').isVisible(), false);
     assert.equal(await field('manual').isVisible(), false);
-    assert.equal(await summary.inputValue(), '已有手写简介。');
+    assert.equal(await summary.inputValue(), '');
     const preview = page.frameLocator('iframe').getByRole('article', { name: '游戏档案预览' });
     await preview.getByRole('heading', { name: '旧档案' }).waitFor();
     await screenshot('dossier-desktop');
@@ -192,29 +197,37 @@ try {
     await page.getByRole('button', { name: /Harbor.*2023.*TheGamesDB #36.*较高匹配/ }).click();
     await page.getByText('已关联版本', { exact: true }).waitFor();
     assert.equal(dataRequests.find(request => request.pathname.endsWith('/detail')).body.sources.thegamesdb.id, '36');
-    assert.equal(await summary.inputValue(), '已有手写简介。');
+    assert.equal(await summary.inputValue(), '');
 
-    await page.getByRole('button', { name: '从资料源准备简介' }).click();
-    await page.getByText('英文', { exact: true }).waitFor();
+    const readsBeforeDraft = catalogReads;
     assert.equal(aiCalls, 0);
-    await page.getByRole('button', { name: '翻译为简体中文' }).click();
+    await page.getByRole('button', { name: fromDatabase ? '翻译资料库简介' : '用 Gemini 翻译现有简介', exact: true }).click();
     const review = page.getByLabel('待审核草稿');
     await review.waitFor();
     assert.equal(await review.inputValue(), draft);
-    assert.equal(await summary.inputValue(), '已有手写简介。');
+    assert.equal(await summary.inputValue(), '');
     assert.equal(aiCalls, 1);
-    await page.getByRole('button', { name: '用此草稿替换简介' }).scrollIntoViewIfNeeded();
+    assert.equal(catalogReads - readsBeforeDraft, fromDatabase ? 1 : 0);
+    const briefRequests = dataRequests.filter(request => request.pathname.endsWith('/brief'));
+    assert.equal(briefRequests.length, 1);
+    assert.equal(briefRequests[0].body.action, 'draft');
+    assert.equal(briefRequests[0].body.text, fromDatabase ? undefined : archiveOriginal);
+    assert.deepEqual(briefRequests[0].body.edition, fromDatabase ? { provider: 'thegamesdb', id: '36' } : undefined);
+    assert.equal(briefRequests[0].body.storeUrl, undefined);
+    assert.equal(briefRequests[0].body.autoStore, undefined);
+    assert.equal(await page.getByText('简介来源', { exact: true }).count(), 0);
+    await page.getByRole('button', { name: '采用这段简介' }).scrollIntoViewIfNeeded();
     await screenshot('dossier-review');
     const final = draft + '\n\n从港口出发后，玩家首先要在岛上探查船员可能经过的地点。居民提供的信息各有侧重，有的记得船只离开时的天气，有的知道零件被存放在哪里。把这些线索放在一起，可以理清船只失踪前的行程。\n\n找到旧船并不意味着调查结束。需要先检查船体，确定哪些部件还能使用，再根据居民提供的线索寻找替换的零件。修理逐步推进时，玩家也会重新走访起初只有片段记忆的居民，补全事件经过。';
     const editedLength = [...final].length;
     assert.ok(editedLength > 250);
     await review.fill(final);
-    const apply = page.getByRole('button', { name: '用此草稿替换简介' });
+    const apply = page.getByRole('button', { name: '采用这段简介' });
     assert.equal(await apply.isEnabled(), true, 'editorial copy can exceed the recommended length');
-    await page.getByText(editedLength + ' 字 · Gemini 草稿', { exact: true }).waitFor();
+    await page.getByText(editedLength + ' 字 · Gemini 译稿', { exact: true }).waitFor();
     await apply.click();
     assert.equal(await summary.inputValue(), final);
-    await page.getByRole('link', { name: /参考：TheGamesDB/ }).waitFor();
+    if (fromDatabase) await page.getByRole('link', { name: /参考：TheGamesDB/ }).waitFor();
     await page.evaluate(value => value ? localStorage.setItem('sveltia-cms.user', value) : localStorage.removeItem('sveltia-cms.user'), loginBefore);
     await page.getByRole('button', { name: /^(保存|Save)$/ }).click();
     const raw = await page.evaluate(async marker => {
@@ -242,15 +255,22 @@ try {
     const { data } = matter(raw);
     assert.equal(data.summary.text, final);
     assert.equal(data.summary.method, 'translate');
-    assert.equal(data.summary.source.edition, 'thegamesdb:36:');
-    assert.equal(data.summary.source.url, 'https://thegamesdb.net/game.php?id=36');
+    if (fromDatabase) {
+      assert.equal(data.summary.source.edition, 'thegamesdb:36:');
+      assert.equal(data.summary.source.url, 'https://thegamesdb.net/game.php?id=36');
+      assert.doesNotMatch(raw, /In Harbor/);
+    } else {
+      assert.equal(data.summary.source, undefined);
+      assert.equal(data.gameMetadata.description, archiveOriginal);
+    }
+    assert.equal(data.manual.officialStores[0].url, purchaseLink);
     assert.equal(data.gameMetadata.cover, origin + '/fixture-cover.svg');
     assert.equal(data.manual.notes, '保留原版渠道');
     assert.equal(data.playTime.hours, 3.8);
     assert.equal(data.personalRating, 8.12);
     assert.equal(data.hltb.main, 5);
     assert.equal(data.events[0].note, '旧记录');
-    assert.doesNotMatch(raw, /_dossierNav|In Harbor|local-fixture|officialTitle/);
+    assert.doesNotMatch(raw, /_dossierNav|local-fixture|officialTitle/);
 
     const reopened = await context.newPage();
     reopened.on('pageerror', error => errors.push(error.message));
@@ -269,7 +289,9 @@ try {
     assert.equal(await mobileNav.evaluate(node => node.scrollWidth <= node.clientWidth + 1), true);
     assert.equal(await reopened.locator('.blog-admin-launcher:visible').count(), 0);
     if (out) await reopened.screenshot({ path: resolve(out, 'dossier-mobile.png'), animations: 'disabled' });
-    console.log('MODIFIED_UI tabs=3 manual/HLTB=hidden-by-default edition=TheGamesDB#36 draft=review-only save+reload=ok legacy-fields=preserved mobile=390px ai-calls=1 saved-chars=' + editedLength);
+    console.log('DIRECT_UI source=' + (fromDatabase ? 'confirmed-database-id' : 'archived-html')
+      + ' brief-requests=1 catalog-reads=' + (catalogReads - readsBeforeDraft)
+      + ' store-fetches=0 ai-calls=1 review-only save+reload=ok purchase-link=preserved mobile=390px saved-chars=' + editedLength);
   }
   assert.deepEqual(errors, []);
 } finally {

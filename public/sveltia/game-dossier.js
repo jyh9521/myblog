@@ -200,18 +200,16 @@
     const listText = (value, separator) => Array.isArray(value) ? value.join(separator) : typeof value === 'string' ? value : '';
     const hasValue = value => Array.isArray(value) ? value.length > 0 : Boolean(String(value || '').trim());
     const idString = value => /^[1-9]\d{0,15}$/.test(String(value ?? '')) ? String(value) : '';
-    const getEdition = metadata => {
-      for (const provider of ['rawg', 'thegamesdb', 'screenscraper']) {
-        const source = metadata?.sources?.[provider];
-        const id = idString(source?.id), systemId = idString(source?.systemId);
-        if (id && (provider !== 'screenscraper' || systemId)) return { provider, id, ...(systemId ? { systemId } : {}) };
-      }
-      return null;
+    const briefProviders = ['rawg', 'thegamesdb', 'screenscraper'];
+    const editionFor = (metadata, provider) => {
+      if (!briefProviders.includes(provider)) return null;
+      const source = metadata?.sources?.[provider];
+      const id = idString(source?.id), systemId = idString(source?.systemId);
+      return id && (provider !== 'screenscraper' || systemId) ? { provider, id, ...(systemId ? { systemId } : {}) } : null;
     };
-    const editionKey = metadata => {
-      const edition = getEdition(metadata);
-      return edition ? [edition.provider, edition.id, edition.systemId || ''].join(':') : '';
-    };
+    const getEdition = metadata => briefProviders.map(provider => editionFor(metadata, provider)).find(Boolean) || null;
+    const editionRefKey = edition => edition ? [edition.provider, edition.id, edition.systemId || ''].join(':') : '';
+    const editionKey = metadata => editionRefKey(getEdition(metadata));
     const sourceTags = sources => Object.entries(sources || {}).filter(([, source]) => source?.id)
       .map(([key, source]) => (sourceLabels[key] || key) + ' #' + source.id + (source.systemId ? '/' + source.systemId : '')).join(' · ');
     const formatFields = {
@@ -319,7 +317,7 @@
           next.selectedPlatforms = normalizePlatforms(current.selectedPlatforms);
           this.props.onChange(next);
           this.setState({ results: [], searchOpen: false, pendingRefresh: null,
-            message: (changedEdition ? '已更换游戏版本；原简介仍保留，请复核。' : '已确认游戏版本。接下来可读取参考简介。') + (warning ? ' ' + warning : '') });
+            message: (changedEdition ? '已更换游戏版本；原简介仍保留，请复核。' : '已确认游戏版本。接下来可翻译简介。') + (warning ? ' ' + warning : '') });
         });
       },
       applyRefresh() {
@@ -429,151 +427,112 @@
       'zh-mixed': '简繁混用', en: '英文', other: '其他或未确定' };
     const summaryText = value => typeof value === 'string' ? value : typeof value?.text === 'string' ? value.text : '';
     const textLength = value => [...value.trim()].length;
+    const usableSource = source => safeUrl(source?.url) && typeof source.label === 'string' ? source : null;
+    const briefContext = props => {
+      const metadata = entryValue(props, 'gameMetadata') || {};
+      const edition = getEdition(metadata);
+      const current = summaryText(props.value).trim();
+      const legacy = !current && typeof metadata.description === 'string' ? metadata.description.trim() : '';
+      const provider = metadata.fieldSources?.description;
+      const importedEdition = legacy && editionFor(metadata, provider);
+      const importedSource = importedEdition && {
+        url: metadata.sources[provider]?.url, label: sourceLabels[provider], kind: 'overview', edition: editionRefKey(importedEdition),
+      };
+      const source = usableSource(current ? props.value?.source : importedSource);
+      const gameTitle = entryValue(props, 'title') || metadata.title || '';
+      const officialTitle = metadata.localizedName || '';
+      const text = current || legacy;
+      const key = JSON.stringify([editionRefKey(edition), gameTitle, officialTitle, text, source]);
+      return { metadata, edition, current, legacy, text, source, gameTitle, officialTitle, key };
+    };
     const GameBrief = createClass({
       getInitialState() {
-        return { busy: '', opened: false, material: null, stores: [], selected: '', manualUrl: '', confirmed: false,
-          drafting: false, draft: '', generated: null, error: false, message: '' };
+        return { busy: false, context: '', draft: '', result: null, error: false, message: '' };
       },
-      metadata() { return entryValue(this.props, 'gameMetadata') || {}; },
       componentDidUpdate(previous) {
-        if (editionKey(entryValue(previous, 'gameMetadata')) !== editionKey(this.metadata())) {
+        if (briefContext(previous).key !== briefContext(this.props).key) {
           this.revision = (this.revision || 0) + 1;
-          this.setState(this.getInitialState());
+          if (this.state.context) this.setState(this.getInitialState());
         }
       },
       componentWillUnmount() { this.disposed = true; },
-      async request(action, body, useResult) {
+      async generate() {
         if (this.state.busy) return;
-        const metadata = this.metadata(), edition = getEdition(metadata);
-        if (!edition) { this.setState({ message: '请先确认游戏版本。', error: true }); return; }
-        const key = editionKey(metadata), revision = this.revision || 0;
-        const isCurrent = () => !this.disposed && (this.revision || 0) === revision && editionKey(this.metadata()) === key;
-        this.setState({ busy: action, error: false, message: '' });
+        const reference = briefContext(this.props);
+        if (!reference.text && !reference.edition) return;
+        const revision = this.revision || 0;
+        const isCurrent = () => !this.disposed && (this.revision || 0) === revision && briefContext(this.props).key === reference.key;
+        this.setState({ ...this.getInitialState(), busy: true, context: reference.key });
         try {
           const response = await archiveRequest('/ns/api/games/brief', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, edition, ...body }),
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'draft', gameTitle: reference.gameTitle, officialTitle: reference.officialTitle,
+              ...(reference.text ? { text: reference.text } : { edition: reference.edition }) }),
           });
           const data = await response.json();
-          if (!response.ok) throw new Error(data.error === 'ADMIN_LOGIN_REQUIRED' ? '请重新登录博客后台。' : data.error || '简介请求失败。');
-          if (isCurrent()) useResult(data, key);
+          if (!response.ok) throw new Error(data.error === 'ADMIN_LOGIN_REQUIRED' ? '请重新登录博客后台。' : data.error || '简介翻译失败。');
+          if (!isCurrent()) return;
+          if (typeof data.text !== 'string' || !data.text.trim()) throw new Error('没有返回可审核的简介草稿。');
+          if (data.mode === 'manual' && reference.current) {
+            this.setState({ message: '当前简介已是简体中文，未调用 Gemini。' });
+            return;
+          }
+          this.setState({ draft: data.text, result: data, message: data.mode === 'manual'
+            ? '原文已是简体中文，未调用 Gemini。请审核后再采用。'
+            : '译稿尚未写入档案。请核对译名和正文，再采用。' });
         } catch (error) {
-          if (isCurrent()) this.setState({ message: error.message || '简介请求失败。', error: true });
-        } finally { if (isCurrent()) this.setState({ busy: '' }); }
+          if (isCurrent()) this.setState({ message: error.message || '简介翻译失败。', error: true });
+        } finally { if (isCurrent()) this.setState({ busy: false }); }
       },
-      readSource(storeUrl = '', confirmed = false, autoStore = false) {
-        this.setState({ opened: true, material: null, drafting: false, draft: '', generated: null });
-        return this.request('source', { storeUrl, confirmed, autoStore }, (data, key) => {
-          const material = data.material?.text && safeUrl(data.material.url) ? data.material : null;
-          this.setState({ sourceEdition: key, material, stores: Array.isArray(data.stores) ? data.stores : [],
-            selected: confirmed ? 'manual' : data.selectedStoreUrl || storeUrl,
-            message: [data.warning, material ? '' : '该数据库没有可用简介。可选择商店或手写。'].filter(Boolean).join(' ') });
-        });
-      },
-      openSource() {
-        if (!this.state.opened) return this.readSource('', false, true);
-        this.revision = (this.revision || 0) + 1;
-        this.setState(this.getInitialState());
-      },
-      chooseStore(url) {
-        this.setState({ selected: url });
-        if (url === 'manual') {
-          const linked = entryValue(this.props, 'manual')?.officialStores || [];
-          const suggestion = linked.find(item => /^https:\/\/(?:store\.steampowered\.com|store\.playstation\.com|www\.nintendo\.com)\//i.test(item.url || ''));
-          this.setState({ manualUrl: this.state.manualUrl || suggestion?.url || '', confirmed: false,
-            material: null, drafting: false, draft: '', generated: null, message: '', error: false });
-        } else return this.readSource(url);
-      },
-      generate() {
-        const material = this.state.material;
-        if (!material || this.state.sourceEdition !== editionKey(this.metadata())) return;
-        return this.request('draft', {
-          text: material.text, kind: material.kind, gameTitle: entryValue(this.props, 'title') || this.metadata().title || '',
-          officialTitle: material.officialTitle || '', rewrite: material.mode === 'manual',
-        }, data => {
-          if (typeof data.text !== 'string' || !data.text.trim()) { this.setState({ message: '这段原文已是中文，可手写原创简介。' }); return; }
-          this.setState({ drafting: true, draft: data.text, generated: data,
-            message: '草稿尚未写入档案。请检查译名、事实和措辞，再采用。' });
-        });
-      },
-      startReview() { this.setState({ drafting: true, draft: '', generated: null, message: '' }); },
       applyDraft() {
-        const { material, draft, sourceEdition, generated } = this.state;
+        const reference = briefContext(this.props);
+        const { draft, result, context, busy } = this.state;
         const text = draft.trim();
-        if (!material || !safeUrl(material.url) || sourceEdition !== editionKey(this.metadata()) || !text || this.state.busy) return;
-        // Only the reviewed paragraph and provenance reach YAML. The source
-        // excerpt, unreviewed output and source picker are component state.
+        if (!result || context !== reference.key || !text || busy) return;
+        const source = usableSource(result.source) || reference.source;
         this.props.onChange({
-          text, source: { url: safeUrl(material.url), label: material.label, language: material.language, kind: material.kind, edition: sourceEdition },
-          method: generated?.mode || 'manual', ...(generated?.model ? { model: generated.model } : {}),
+          text,
+          ...(source ? { source: { ...source, language: source.language || result.originalLanguage } } : {}),
+          method: result.mode, ...(result.model ? { model: result.model } : {}),
         });
         this.setState({ ...this.getInitialState(), message: '已采用简介；点击 CMS 的「保存」后写入档案。' });
       },
       changeText(text) {
         const current = this.props.value;
-        if (text !== summaryText(current)) this.props.onChange(text.trim() && current?.source ? { ...current, text } : text);
+        if (text !== summaryText(current)) this.props.onChange(text.trim() && typeof current?.text === 'string' ? { ...current, text } : text);
       },
       render() {
-        const value = this.props.value, text = summaryText(value), metadata = this.metadata();
-        const edition = getEdition(metadata);
-        const { opened, busy, material, stores, selected, manualUrl, confirmed, drafting, draft, generated } = this.state;
-        const materialKindLabel = {
-          short: material?.mode === 'summarize' ? '较长的商店简介' : '短简介',
-          long: '详细介绍',
-          overview: material?.mode === 'summarize' ? '数据库详细介绍' : '数据库短简介',
-        }[material?.kind] || '参考简介';
-        const savedSource = value?.source;
-        const stale = savedSource?.edition && savedSource.edition !== editionKey(metadata);
-        const legacy = !text && typeof metadata.description === 'string' && metadata.description.trim();
+        const { metadata, edition, text: referenceText, legacy, source } = briefContext(this.props);
+        const text = summaryText(this.props.value);
+        const { busy, draft, result } = this.state;
+        const savedSource = usableSource(this.props.value?.source);
+        const stale = savedSource?.edition && !Object.keys(metadata.sources || {})
+          .some(provider => editionRefKey(editionFor(metadata, provider)) === savedSource.edition);
+        const draftSource = usableSource(result?.source) || source;
         return h('div', { className: 'dossier-stack' },
           labelInput('公开简介正文', { id: this.props.forID, multiline: true, rows: 4, value: text,
-            placeholder: '写一段游戏简介，或从已确认版本生成草稿', onChange: value => this.changeText(value) }),
+            placeholder: '写游戏简介，或翻译档案里已有的简介', onChange: value => this.changeText(value) }),
           h('div', { className: 'dossier-caption' },
-            h('small', null, textLength(text) + ' 字 · 常见篇幅 100–250 字，可按需增减'),
+            h('small', null, textLength(text) + ' 字'),
             savedSource && externalLink(savedSource.url, '参考：' + savedSource.label)),
           stale && status('已保存简介的来源属于先前版本。请复核正文和来源。', true),
           legacy && details('查看档案原有简介（仍在前台显示）', [h('p', { className: 'dossier-reference' }, legacy)]),
-          h('div', { className: 'dossier-actions' },
-            button(opened ? '收起简介工具' : '从资料源准备简介', () => this.openSource(), { primary: !opened, disabled: !edition })),
-          !edition && h('small', null, '手写可直接保存。自动简介需要先确认游戏版本。'),
-          opened && h('section', { className: 'dossier-card dossier-stack', 'aria-label': '简介来源与草稿' },
-            busy === 'source' && h('p', { role: 'status' }, '正在核对商品与读取简介…'),
-            (!busy || material || stores.length > 0) && h('label', { className: 'dossier-label' },
-              h('span', null, '简介来源'), h('select', {
-                value: selected, className: 'dossier-input', disabled: !!busy, onChange: event => this.chooseStore(event.target.value),
-              }, h('option', { value: '' }, '已确认的数据库条目'),
-              ...stores.map(store => h('option', { key: store.url, value: store.url }, store.label + ' · ' + store.id)),
-              h('option', { value: 'manual' }, '手动核对商品链接'))),
-            selected === 'manual' && h('div', { className: 'dossier-stack' },
-              labelInput('官方商店商品链接', { type: 'url', value: manualUrl, maxLength: 700, disabled: !!busy,
-                onChange: manualUrl => this.setState({ manualUrl, confirmed: false, material: null, drafting: false, draft: '', generated: null }) }),
-              h('label', null, h('input', { type: 'checkbox', checked: confirmed, disabled: !!busy, onChange: event => this.setState({ confirmed: event.target.checked }) }),
-                ' 已核对名称、发行年份、平台与商品编号，链接属于此版本'),
-              h('div', { className: 'dossier-actions' }, button('读取该商品', () => this.readSource(manualUrl.trim(), true), { disabled: !confirmed || !manualUrl.trim() || !!busy }))),
-            material && h('div', { className: 'dossier-stack' },
-              h('div', { className: 'dossier-caption' },
-                h('strong', null, languageLabels[material.language] || '语言未确定'),
-                h('span', { className: 'dossier-badge' }, materialKindLabel),
-                externalLink(material.url, material.label)),
-              details('查看参考原文（仅预览）', [h('p', { className: 'dossier-reference' }, material.text)]),
-              !drafting && h('p', { className: 'dossier-note' }, material.mode === 'manual'
-                ? '正文已是中文。可以写原创简介；需要协助时再让 Gemini 改写。'
-                : (material.mode === 'summarize' ? '正文较长，将生成一段简体摘要。' : '')
-                  + '只把参考正文和游戏名称送给 Gemini。生成结果需审核后才写入档案。'),
-              h('div', { className: 'dossier-actions' },
-                !drafting && button(material.mode === 'manual' ? '写原创简介' : '手写草稿', () => this.startReview(), { primary: material.mode === 'manual', disabled: !!busy }),
-                !drafting && button(busy === 'draft' ? 'Gemini 生成中…' : material.mode === 'manual' ? '用 Gemini 改写'
-                  : material.mode === 'summarize' ? '生成简体摘要' : material.mode === 'rewrite' ? '生成简体改写' : '翻译为简体中文',
-                () => this.generate(), { primary: material.mode !== 'manual', disabled: !!busy })),
-              drafting && h('div', { className: 'dossier-stack dossier-review' },
-                labelInput('待审核草稿', { multiline: true, rows: 5, value: draft, onChange: draft => this.setState({ draft }) }),
-                h('small', null, textLength(draft) + ' 字' + (generated ? ' · Gemini 草稿' : ' · 人工撰写')),
-                h('div', { className: 'dossier-actions' },
-                  button(text ? '用此草稿替换简介' : '采用这段简介', () => this.applyDraft(), { primary: true, disabled: !draft.trim() || !!busy }),
-                  button('舍弃草稿', () => this.setState({ drafting: false, draft: '', generated: null, message: '' })))))),
+          !result && (referenceText || edition) && h('div', { className: 'dossier-actions' },
+            button(busy ? '正在准备简体草稿…' : referenceText ? '用 Gemini 翻译现有简介' : '翻译资料库简介',
+              () => this.generate(), { primary: true, disabled: busy })),
+          !referenceText && !edition && h('small', null, '可直接填写简介，或确认游戏版本后读取资料库原文。'),
+          result && h('section', { className: 'dossier-stack dossier-review', 'aria-label': '简介草稿' },
+            h('div', { className: 'dossier-caption' },
+              h('small', null, '原文：' + (languageLabels[result.originalLanguage] || '语言未确定')),
+              draftSource && externalLink(draftSource.url, '参考：' + draftSource.label)),
+            labelInput('待审核草稿', { multiline: true, rows: 5, value: draft, onChange: draft => this.setState({ draft }) }),
+            h('small', null, textLength(draft) + ' 字' + (result.mode === 'translate' ? ' · Gemini 译稿' : ' · 简体原文')),
+            h('div', { className: 'dossier-actions' },
+              button(text.trim() ? '用此草稿替换简介' : '采用这段简介', () => this.applyDraft(), { primary: true, disabled: !draft.trim() || busy }),
+              button('舍弃草稿', () => this.setState(this.getInitialState())))),
           status(this.state.message, this.state.error));
       },
     });
-
 
     const views = [['core', '档案与简介'], ['details', '资料与渠道'], ['activity', '游玩与项目']];
     const DossierNavigation = createClass({

@@ -184,11 +184,6 @@ export class RAWGProvider extends GameMetadataProvider {
     if (String(game?.id) !== String(id) || !clean(game.name)) throw new Error('RAWG 返回了不同的游戏编号。');
     return normalizeRawgGame(game);
   }
-  async storeUrls(id) {
-    if (!/^[1-9]\d{0,15}$/.test(String(id))) throw new Error('RAWG 游戏编号无效。');
-    const response = await this.request('games/' + id + '/stores', { page_size: 20 });
-    return (Array.isArray(response.results) ? response.results : []).slice(0, 20).map(item => item?.url).filter(Boolean);
-  }
   async getById(id) {
     const normalized = await this.getCoreById(id);
     try {

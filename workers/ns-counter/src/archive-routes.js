@@ -44,7 +44,7 @@ function cacheResult(outcome) {
     ...(outcome.warning ? { warning: outcome.warning } : {}) };
 }
 
-// Store prose stays a transient reference; metadata imports only factual fields.
+// Database prose stays a transient reference; metadata imports only factual fields.
 export function metadataOnly(game) {
   const { description, ...facts } = game;
   const { description: proseSource, ...fieldSources } = facts.fieldSources || {};

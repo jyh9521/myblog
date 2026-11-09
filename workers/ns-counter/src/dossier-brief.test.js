@@ -6,7 +6,7 @@ import { combineCandidates, RAWGProvider } from './game-providers.js';
 import { searchDossierEditions } from './archive-routes.js';
 import { dossierBriefRoute } from './dossier-brief-route.js';
 import { parseStoreLink, storeSynopsis } from './game-store-summaries.js';
-import { detectSynopsisLanguage, plainReference } from './summary-language.js';
+import { detectSynopsisLanguage, plainReference, synopsisMaterial } from './summary-language.js';
 import { GAME_TRANSLATION_PROMPT } from './gemini-game-summary.js';
 
 const root = 'https://blog.example/ns/api/games';
@@ -218,7 +218,117 @@ test('a suitable Simplified Chinese reference skips AI by default; Gemini uses t
   assert.equal(writes.size, 0);
 });
 
-test('Gemini errors, unsupported output and oversized drafts never return draft text', async () => {
+const multiParagraphEn = [
+  'The harbor has gone quiet after a storm, and the lighthouse keeper sets out to find the missing supply ship.',
+  'You cross the breakwater, inspect the lighthouse, and retrace the crew’s last route through a chain of small islands.',
+  'At each stop, you collect parts and talk to people who saw the ship before it disappeared.',
+  'As the weather changes, old routes close and new paths appear along the coast. Maps and weather reports help you decide where to go next.',
+  'With the tools you find, you repair boats, raise sunken equipment, and return supplies to the villages that sheltered the crew.',
+  'Some conversations offer conflicting leads, so you compare clues before choosing which route to investigate.',
+  'By the time the lighthouse shines again, you know what happened to the ship.',
+].join('\n\n');
+
+const geminiResponse = (text, finishReason = 'STOP') =>
+  Response.json({ candidates: [{ finishReason, content: { parts: [{ text }] } }] });
+
+test('translation budget uses actual words and characters while preserving short references', () => {
+  const manyWords = 'The crew goes to the bay. '.repeat(17).trim();
+  const manyCharacters = 'Discover isolated communities, reconstruct forgotten navigational equipment, and investigate the consequences of an unexplained catastrophe. '.repeat(6).trim();
+  assert.ok(manyWords.length < 650);
+  assert.ok(manyCharacters.split(/\s+/).length <= 100);
+  assert.equal(synopsisMaterial(manyWords, 'overview').mode, 'summarize');
+  assert.equal(synopsisMaterial(manyCharacters, 'short').mode, 'summarize');
+  assert.equal(synopsisMaterial(shortEn, 'overview').mode, 'translate');
+  assert.equal(synopsisMaterial(shortZh, 'overview').mode, 'manual');
+  assert.equal(synopsisMaterial(shortZh.repeat(5), 'overview').mode, 'summarize');
+});
+
+test('long database overview uses summary mode at both the source and draft endpoints', async () => {
+  const { env, writes } = environment();
+  delete env.RAWG_API_KEY;
+  const edition = { provider: 'thegamesdb', id: '5' };
+  const request = post({ action: 'source', edition, autoStore: true });
+  assert.ok(multiParagraphEn.length > 650 && multiParagraphEn.length < 850);
+  const response = await dossierBriefRoute(request, env, async url => {
+    assert.equal(url.pathname, '/v1/Games/ByGameID');
+    assert.equal(url.searchParams.get('id'), '5');
+    return Response.json({ code: 200, data: { games: [{ id: 5, game_title: 'Harbor', overview: multiParagraphEn }] } });
+  });
+  assert.equal(response.status, 200);
+  const { material } = await response.json();
+  assert.equal(material.kind, 'overview');
+  assert.equal(material.language, 'en');
+  assert.equal(material.mode, 'summarize');
+
+  const reply = await dossierBriefRoute(post({ action: 'draft', edition, kind: material.kind, text: material.text }),
+    env, async (url, options) => {
+      assert.equal(url.hostname, 'generativelanguage.googleapis.com');
+      const request = JSON.parse(options.body);
+      assert.match(request.system_instruction.parts[0].text, /不是逐句翻译/);
+      assert.equal(JSON.parse(request.contents[0].parts[0].text).originalText, multiParagraphEn);
+      return geminiResponse(approved);
+    });
+  assert.equal(reply.status, 200);
+  assert.equal((await reply.json()).mode, 'summarize');
+  assert.equal(writes.size, 0);
+});
+
+test('valid Simplified Chinese drafts over 250 characters reach editorial review intact', async () => {
+  const { env, writes } = environment();
+  const body = { action: 'draft', edition: rawRef, kind: 'overview', text: multiParagraphEn };
+  const longDraft = approved + '灯塔沉寂之后，主角从防波堤出发，沿着补给船的最后航线逐一走访沿岸聚落。天气变化会封闭原有路线，也会露出通往新地点的水道。调查时还要核对互相矛盾的目击记录，判断下一步应去哪里。收集到的工具可以用来打捞沉没的设备，也能用来修复渡船。恢复照明后，调查者逐步厘清失踪事件的来龙去脉，同时将物资送还给曾收留船员的村民。航行期间，地图和天气报告也会提供参考，帮助玩家决定应先去哪里调查。';
+  assert.ok([...longDraft].length > 250);
+  const requests = [];
+  const response = await dossierBriefRoute(post(body), env, async (url, options) => {
+    requests.push(JSON.parse(options.body));
+    return geminiResponse(longDraft);
+  });
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).text, longDraft);
+  assert.equal(requests.length, 1);
+  const prompt = requests[0].system_instruction.parts[0].text;
+  assert.match(prompt, /100–250 字为参考/);
+  assert.match(prompt, /可适当超出/);
+  assert.equal(writes.size, 0);
+});
+
+test('Gemini retries one complete draft that fails the language check', async () => {
+  const { env, writes } = environment();
+  const body = { action: 'draft', edition: rawRef, kind: 'short', text: shortEn };
+  const requests = [];
+  const response = await dossierBriefRoute(post(body), env, async (url, options) => {
+    requests.push(JSON.parse(options.body));
+    return geminiResponse(requests.length === 1 ? shortTw : approved);
+  });
+  assert.equal(response.status, 200);
+  const result = await response.json();
+  assert.equal(result.text, approved);
+  assert.equal(result.mode, 'translate');
+  assert.equal(requests.length, 2);
+  assert.deepEqual(requests[0].contents, requests[1].contents);
+  assert.match(requests[1].system_instruction.parts[0].text, /正文必须用简体字/);
+  assert.equal(writes.size, 0);
+});
+
+test('Gemini blocked, interrupted and quota responses do not trigger another request', async () => {
+  const { env } = environment();
+  const body = { action: 'draft', edition: rawRef, kind: 'short', text: shortEn };
+  for (const [upstream, status, reason] of [
+    [() => geminiResponse('', 'SAFETY'), 502, /内容过滤/],
+    [() => geminiResponse(approved, 'MAX_TOKENS'), 502, /输出截断/],
+    [() => Response.json({ error: 'private upstream message' }, { status: 429 }), 429, /额度/],
+  ]) {
+    let calls = 0;
+    const response = await dossierBriefRoute(post(body), env, async () => { calls++; return upstream(); });
+    assert.equal(response.status, status);
+    const result = await response.json();
+    assert.match(result.error, reason);
+    assert.equal(result.text, undefined);
+    assert.equal(calls, 1);
+  }
+});
+
+test('Gemini errors and persistently invalid output never return draft text', async () => {
   const { env } = environment();
   const body = { action: 'draft', edition: rawRef, kind: 'short', text: shortEn };
   const never = () => assert.fail('missing key must not call Gemini');
@@ -226,7 +336,7 @@ test('Gemini errors, unsupported output and oversized drafts never return draft 
   const rate = await dossierBriefRoute(post(body), env, async () => Response.json({ error: 'gemini-test' }, { status: 429 }));
   assert.equal(rate.status, 429);
   assert.doesNotMatch(JSON.stringify(await rate.json()), /gemini-test/);
-  for (const text of [shortEn, shortTw, shortZh.repeat(6), '[网页](https://test.invalid) ' + shortZh]) {
+  for (const text of [shortEn, shortTw, '[网页](https://test.invalid) ' + shortZh]) {
     const response = await dossierBriefRoute(post(body), env,
       async () => Response.json({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text }] } }] }));
     assert.equal(response.status, 502);

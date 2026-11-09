@@ -205,14 +205,19 @@ try {
     assert.equal(aiCalls, 1);
     await page.getByRole('button', { name: '用此草稿替换简介' }).scrollIntoViewIfNeeded();
     await screenshot('dossier-review');
-    const final = draft + '（审核）';
+    const final = draft + '\n\n从港口出发后，玩家首先要在岛上探查船员可能经过的地点。居民提供的信息各有侧重，有的记得船只离开时的天气，有的知道零件被存放在哪里。把这些线索放在一起，可以理清船只失踪前的行程。\n\n找到旧船并不意味着调查结束。需要先检查船体，确定哪些部件还能使用，再根据居民提供的线索寻找替换的零件。修理逐步推进时，玩家也会重新走访起初只有片段记忆的居民，补全事件经过。';
+    const editedLength = [...final].length;
+    assert.ok(editedLength > 250);
     await review.fill(final);
-    await page.getByRole('button', { name: '用此草稿替换简介' }).click();
+    const apply = page.getByRole('button', { name: '用此草稿替换简介' });
+    assert.equal(await apply.isEnabled(), true, 'editorial copy can exceed the recommended length');
+    await page.getByText(editedLength + ' 字 · Gemini 草稿', { exact: true }).waitFor();
+    await apply.click();
     assert.equal(await summary.inputValue(), final);
     await page.getByRole('link', { name: /参考：TheGamesDB/ }).waitFor();
     await page.evaluate(value => value ? localStorage.setItem('sveltia-cms.user', value) : localStorage.removeItem('sveltia-cms.user'), loginBefore);
     await page.getByRole('button', { name: /^(保存|Save)$/ }).click();
-    const savedHandle = await page.waitForFunction(async expected => {
+    const raw = await page.evaluate(async marker => {
       const dir = await navigator.storage.getDirectory();
       async function scan(folder) {
         for await (const [name, handle] of folder.entries()) {
@@ -221,15 +226,22 @@ try {
             if (found) return found;
           } else if (name === 'legacy-entry.md') {
             const text = await (await handle.getFile()).text();
-            if (text.includes(expected)) return text;
+            if (text.includes(marker)) return text;
           }
         }
         return null;
       }
-      return scan(dir);
-    }, final);
-    const raw = await savedHandle.jsonValue(), { data } = matter(raw);
+      for (let attempt = 0; attempt < 80; attempt++) {
+        const text = await scan(dir);
+        if (text) return text;
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      return null;
+    }, final.slice(-20));
+    assert.ok(raw, 'saved Markdown contains the final sentence');
+    const { data } = matter(raw);
     assert.equal(data.summary.text, final);
+    assert.equal(data.summary.method, 'translate');
     assert.equal(data.summary.source.edition, 'thegamesdb:36:');
     assert.equal(data.summary.source.url, 'https://thegamesdb.net/game.php?id=36');
     assert.equal(data.gameMetadata.cover, origin + '/fixture-cover.svg');
@@ -257,7 +269,7 @@ try {
     assert.equal(await mobileNav.evaluate(node => node.scrollWidth <= node.clientWidth + 1), true);
     assert.equal(await reopened.locator('.blog-admin-launcher:visible').count(), 0);
     if (out) await reopened.screenshot({ path: resolve(out, 'dossier-mobile.png'), animations: 'disabled' });
-    console.log('MODIFIED_UI tabs=3 manual/HLTB=hidden-by-default edition=TheGamesDB#36 draft=review-only save+reload=ok legacy-fields=preserved mobile=390px ai-calls=1');
+    console.log('MODIFIED_UI tabs=3 manual/HLTB=hidden-by-default edition=TheGamesDB#36 draft=review-only save+reload=ok legacy-fields=preserved mobile=390px ai-calls=1 saved-chars=' + editedLength);
   }
   assert.deepEqual(errors, []);
 } finally {

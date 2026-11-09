@@ -81,13 +81,8 @@ async function readSource(input, edition, env, fetcher) {
     material = await storeSynopsis(store, catalog, catalogLinked, fetcher, true);
     selectedStoreUrl = store.url;
   } else if (!material) {
-    const source = synopsisMaterial(catalog.description, 'long', catalog.title);
+    const source = synopsisMaterial(catalog.description, 'overview', catalog.title);
     material = source ? { ...source, url: catalog.sources[edition.provider].url, label: LABEL[edition.provider], officialTitle: '' } : null;
-    // These providers expose an overview, not a short field. A brief overview
-    // can still be translated directly; longer ones get an original summary.
-    if (material && [...material.text].length <= (material.language.startsWith('zh-') ? 250 : 850)) {
-      material = { ...material, ...synopsisMaterial(material.text, 'short', catalog.title), kind: 'overview' };
-    }
   }
   return archiveJson({ identity, edition, material, stores, selectedStoreUrl, warning });
 }
@@ -105,7 +100,7 @@ export function dossierBriefRoute(request, env, fetcher = fetch) {
     if (input.action !== 'draft' || !['short', 'long', 'overview'].includes(input.kind)) {
       return archiveJson({ error: '简介草稿请求无效。' }, 400);
     }
-    const material = synopsisMaterial(input.text, input.kind === 'overview' ? 'short' : input.kind);
+    const material = synopsisMaterial(input.text, input.kind);
     if (!material) return archiveJson({ error: '来源缺少足够的简介正文。' }, 422);
     if (material.mode === 'manual' && input.rewrite !== true) {
       return archiveJson({ mode: 'manual', language: material.language });

@@ -499,7 +499,7 @@
       applyDraft() {
         const { material, draft, sourceEdition, generated } = this.state;
         const text = draft.trim();
-        if (!material || !safeUrl(material.url) || sourceEdition !== editionKey(this.metadata()) || !text || textLength(text) > 250 || this.state.busy) return;
+        if (!material || !safeUrl(material.url) || sourceEdition !== editionKey(this.metadata()) || !text || this.state.busy) return;
         // Only the reviewed paragraph and provenance reach YAML. The source
         // excerpt, unreviewed output and source picker are component state.
         this.props.onChange({
@@ -516,6 +516,11 @@
         const value = this.props.value, text = summaryText(value), metadata = this.metadata();
         const edition = getEdition(metadata);
         const { opened, busy, material, stores, selected, manualUrl, confirmed, drafting, draft, generated } = this.state;
+        const materialKindLabel = {
+          short: material?.mode === 'summarize' ? '较长的商店简介' : '短简介',
+          long: '详细介绍',
+          overview: material?.mode === 'summarize' ? '数据库详细介绍' : '数据库短简介',
+        }[material?.kind] || '参考简介';
         const savedSource = value?.source;
         const stale = savedSource?.edition && savedSource.edition !== editionKey(metadata);
         const legacy = !text && typeof metadata.description === 'string' && metadata.description.trim();
@@ -523,7 +528,7 @@
           labelInput('公开简介正文', { id: this.props.forID, multiline: true, rows: 4, value: text,
             placeholder: '写一段游戏简介，或从已确认版本生成草稿', onChange: value => this.changeText(value) }),
           h('div', { className: 'dossier-caption' },
-            h('small', null, textLength(text) + ' 字 · 建议 100–250 字'),
+            h('small', null, textLength(text) + ' 字 · 常见篇幅 100–250 字，可按需增减'),
             savedSource && externalLink(savedSource.url, '参考：' + savedSource.label)),
           stale && status('已保存简介的来源属于先前版本。请复核正文和来源。', true),
           legacy && details('查看档案原有简介（仍在前台显示）', [h('p', { className: 'dossier-reference' }, legacy)]),
@@ -547,12 +552,13 @@
             material && h('div', { className: 'dossier-stack' },
               h('div', { className: 'dossier-caption' },
                 h('strong', null, languageLabels[material.language] || '语言未确定'),
-                h('span', { className: 'dossier-badge' }, { short: '短简介', long: '详细介绍', overview: '数据库短简介' }[material.kind] || '参考简介'),
+                h('span', { className: 'dossier-badge' }, materialKindLabel),
                 externalLink(material.url, material.label)),
               details('查看参考原文（仅预览）', [h('p', { className: 'dossier-reference' }, material.text)]),
               !drafting && h('p', { className: 'dossier-note' }, material.mode === 'manual'
                 ? '正文已是中文。可以写原创简介；需要协助时再让 Gemini 改写。'
-                : '只把参考正文和游戏名称送给 Gemini。生成结果需审核后才写入档案。'),
+                : (material.mode === 'summarize' ? '正文较长，将生成一段简体摘要。' : '')
+                  + '只把参考正文和游戏名称送给 Gemini。生成结果需审核后才写入档案。'),
               h('div', { className: 'dossier-actions' },
                 !drafting && button(material.mode === 'manual' ? '写原创简介' : '手写草稿', () => this.startReview(), { primary: material.mode === 'manual', disabled: !!busy }),
                 !drafting && button(busy === 'draft' ? 'Gemini 生成中…' : material.mode === 'manual' ? '用 Gemini 改写'
@@ -560,9 +566,9 @@
                 () => this.generate(), { primary: material.mode !== 'manual', disabled: !!busy })),
               drafting && h('div', { className: 'dossier-stack dossier-review' },
                 labelInput('待审核草稿', { multiline: true, rows: 5, value: draft, onChange: draft => this.setState({ draft }) }),
-                h('small', null, textLength(draft) + ' / 250 字' + (generated ? ' · Gemini 草稿' : ' · 人工撰写')),
+                h('small', null, textLength(draft) + ' 字' + (generated ? ' · Gemini 草稿' : ' · 人工撰写')),
                 h('div', { className: 'dossier-actions' },
-                  button(text ? '用此草稿替换简介' : '采用这段简介', () => this.applyDraft(), { primary: true, disabled: !draft.trim() || textLength(draft) > 250 || !!busy }),
+                  button(text ? '用此草稿替换简介' : '采用这段简介', () => this.applyDraft(), { primary: true, disabled: !draft.trim() || !!busy }),
                   button('舍弃草稿', () => this.setState({ drafting: false, draft: '', generated: null, message: '' })))))),
           status(this.state.message, this.state.error));
       },

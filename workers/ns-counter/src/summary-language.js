@@ -2,6 +2,7 @@
 const entities = { amp: '&', apos: "'", quot: '"', lt: '<', gt: '>', nbsp: ' ', ndash: '–', mdash: '—', lsquo: '‘', rsquo: '’', ldquo: '“', rdquo: '”', hellip: '…', trade: '™', reg: '®', copy: '©' };
 
 export const charCount = text => [...text].length;
+const SHORT_CHINESE_REFERENCE_CHARS = 250;
 
 export function plainReference(value, limit = 6500) {
   if (typeof value !== 'string') return '';
@@ -53,10 +54,15 @@ export function detectSynopsisLanguage(text) {
 
 export function synopsisMaterial(raw, kind, title = '') {
   const text = plainReference(raw);
-  if (charCount(text) < 16) return null;
+  const chars = charCount(text);
+  if (chars < 16) return null;
   const language = detectSynopsisLanguage(text);
-  // Store "short" is an upstream field, not a guarantee of its length.
-  const mode = kind === 'long' || charCount(text) > (language.startsWith('zh-') ? 250 : 850) ? 'summarize'
+  // Upstream fields are not a length guarantee. Use a conservative translation
+  // budget for Latin prose: many small words can still produce a long draft.
+  // These thresholds choose the starting workflow, not a draft size limit.
+  const needsSummary = language.startsWith('zh-') ? chars > SHORT_CHINESE_REFERENCE_CHARS
+    : chars > 650 || (text.match(/\p{Script=Latin}+(?:['’]\p{Script=Latin}+)*/gu) || []).length > 100;
+  const mode = kind === 'long' || needsSummary ? 'summarize'
     : ['zh-Hans', 'zh-und'].includes(language) ? 'manual' : language === 'zh-mixed' ? 'rewrite' : 'translate';
   return { text, kind, language, mode, title };
 }

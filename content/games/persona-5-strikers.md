@@ -2,20 +2,6 @@
 title: 女神异闻录5 乱战：魅影攻手
 status:
   - 已通关
-playTime:
-  hours: 24.5
-personalRating: 8
-hltb:
-  auto: true
-  id: 72069
-  snapshot:
-    completionist: 70.61
-    extras: 45.88
-    id: 72069
-    main: 35.18
-    updatedAt: 2026-10-21T06:31:03.921Z
-  title: Persona 5 Strikers
-  url: https://howlongtobeat.com/game/72069
 gameMetadata:
   platforms:
     - Nintendo Switch
@@ -44,7 +30,7 @@ gameMetadata:
   publishers:
     - SEGA
     - Atlus
-  cover: https://media.rawg.io/media/games/161/16107bc17254244531927450ad9716a7.jpg
+  cover: https://cdn2.steamgriddb.com/grid/3c0445be79d4169ca2e6ae1ee6294095.png
   title: Persona 5 Strikers
   sources:
     rawg:
@@ -72,13 +58,33 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:528768:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/528768
+  text: |-
+    绝地反击！
+
+    与心之怪盗团一起，向侵蚀日本各大城市的腐败势力发起反击。原本与挚友共度的暑假却因扭曲现实的出现而急转直下——揭露真相，拯救被囚禁在危机中心的迷失心灵！
+
+    在全新剧情中尽情体验《女神异闻录》极具时尚感的奇异世界
+
+    在激烈的动作战斗中动态操控你的小队
+
+    开启一场横跨日本的史诗级公路之旅，尽情战斗
 manual:
   availabilityStatus: available
   officialStores:
@@ -86,6 +92,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1382330/
+playTime:
+  hours: 24.5
+personalRating: 8
+hltb:
+  auto: true
+  id: 72069
+  snapshot:
+    completionist: 70.61
+    extras: 45.88
+    id: 72069
+    main: 35.18
+    updatedAt: 2026-10-21T06:31:03.921Z
+  title: Persona 5 Strikers
+  url: https://howlongtobeat.com/game/72069
 events:
   - date: 2024-10-05
     title: 开始游戏

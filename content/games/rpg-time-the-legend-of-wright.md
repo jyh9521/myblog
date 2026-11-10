@@ -2,20 +2,6 @@
 title: 角色扮演游戏时间 ~光之传说~
 status:
   - 已通关
-playTime:
-  hours: 6.1
-personalRating: 10
-hltb:
-  auto: true
-  id: 91903
-  snapshot:
-    completionist: 10.77
-    extras: 8.9
-    id: 91903
-    main: 7.39
-    updatedAt: 2026-10-21T06:29:54.257Z
-  title: 'RPG Time: The Legend of Wright'
-  url: https://howlongtobeat.com/game/91903
 gameMetadata:
   platforms:
     - PC
@@ -38,7 +24,7 @@ gameMetadata:
   releaseDate: 2022-03-10
   publishers:
     - 株式会社アニプレックス
-  cover: https://media.rawg.io/media/screenshots/763/76359861771039c69c02f23ed86c4a57.jpg
+  cover: https://cdn2.steamgriddb.com/grid/37eabff983469823dc7069fd372264b8.jpg
   title: 'RPG Time: The Legend of Wright'
   sources:
     rawg:
@@ -57,13 +43,24 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:326237:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/326237
+  text: 放学啦！来空教室和一位怀揣梦想的年轻游戏开发者以及他亲手打造的RPG展开一场宏大的冒险吧。当你踏入这个充满惊喜与魔力的想象世界时，他手绘的各种创意定会让你眼花缭乱！把作业统统忘掉吧！
 manual:
   availabilityStatus: available
   officialStores:
@@ -71,6 +68,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1839510/
+playTime:
+  hours: 6.1
+personalRating: 10
+hltb:
+  auto: true
+  id: 91903
+  snapshot:
+    completionist: 10.77
+    extras: 8.9
+    id: 91903
+    main: 7.39
+    updatedAt: 2026-10-21T06:29:54.257Z
+  title: 'RPG Time: The Legend of Wright'
+  url: https://howlongtobeat.com/game/91903
 events:
   - date: 2024-09-27
     title: 开始游戏

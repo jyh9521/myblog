@@ -2,20 +2,6 @@
 title: 黑神话：悟空
 status:
   - 暂时搁置
-playTime:
-  hours: 6
-personalRating: 8.8
-hltb:
-  auto: true
-  id: 82089
-  snapshot:
-    completionist: 67.49
-    extras: 48.37
-    id: 82089
-    main: 37.82
-    updatedAt: 2026-10-21T06:20:47.408Z
-  title: 'Black Myth: Wukong'
-  url: https://howlongtobeat.com/game/82089
 gameMetadata:
   platforms:
     - PC
@@ -40,7 +26,7 @@ gameMetadata:
   releaseDate: 2024-08-20
   publishers:
     - Game Science
-  cover: https://media.rawg.io/media/games/779/77988e89f7862afeede524420aa251b0.jpg
+  cover: https://cdn2.steamgriddb.com/grid/b796a4ec1753e04ee0716faea5a2de5b.png
   title: 'Black Myth: Wukong'
   sources:
     rawg:
@@ -71,13 +57,36 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:481913:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/481913
+  text: |-
+    踏足未竟之境，每一步皆有新景。进入一个充满中国古代神话奇观与探索的迷人领域！
+
+    作为“天命人”，你将在《西游记》这部经典传奇的壮丽山河中冒险，谱写一段未知冒险的全新史诗。
+
+    英雄美猴王，威名震四方，妖邪纷起，试其锋芒。《西游记》的一大亮点便是其形形色色的敌人群体，每一位都拥有独特的本领。
+    作为“天命人”，你将在旅途中遭遇强敌与劲敌。无畏地与他们投身于绝不妥协的史诗级战斗之中。
+
+    法术无拘，灵光乍现，无边神通大显身手。法术、变幻与法宝，千姿百态，相生相克，长期以来一直是中国神话中标志性的战斗元素。
+    作为“天命人”，除了精通各种棍术，你还可以自由组合不同的法术、天赋、兵器与披挂，寻找最适合你战斗风格的制胜之道。
+
+    众生皆有其生平故事。在敌人凶残与狡诈的表象之下，交织着他们引人入胜的出身、性格与动机，正等待着被揭开。
+    作为“天命人”，你将探寻形形色色角色背后的故事，不仅限于与他们的战斗，去体味他们曾经拥有并至今承载的爱恨、贪嗔与痴狂。
 manual:
   availabilityStatus: available
   officialStores:
@@ -85,6 +94,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/2358720/
+playTime:
+  hours: 6
+personalRating: 8.8
+hltb:
+  auto: true
+  id: 82089
+  snapshot:
+    completionist: 67.49
+    extras: 48.37
+    id: 82089
+    main: 37.82
+    updatedAt: 2026-10-21T06:20:47.408Z
+  title: 'Black Myth: Wukong'
+  url: https://howlongtobeat.com/game/82089
 events:
   - date: 2024-08-20
     title: 开始游戏

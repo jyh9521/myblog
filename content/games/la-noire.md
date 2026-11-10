@@ -2,20 +2,6 @@
 title: 黑色洛城
 status:
   - 已通关
-playTime:
-  hours: 23
-personalRating: 8.3
-hltb:
-  auto: true
-  id: 5146
-  snapshot:
-    completionist: 43.08
-    extras: 29.51
-    id: 5146
-    main: 22.32
-    updatedAt: 2026-10-21T06:25:55.817Z
-  title: L.A. Noire
-  url: https://howlongtobeat.com/game/5146
 gameMetadata:
   platforms:
     - PlayStation 4
@@ -43,7 +29,7 @@ gameMetadata:
   releaseDate: 2011-05-17
   publishers:
     - Rockstar Games
-  cover: https://media.rawg.io/media/games/e2d/e2d3f396b16dded0f841c17c9799a882.jpg
+  cover: https://cdn2.steamgriddb.com/grid/5a081c2f3859aed81bbc14054e060d41.png
   title: L.A. Noire
   sources:
     rawg:
@@ -64,13 +50,27 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:4514:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/4514
+  text: |-
+    第二次世界大战结束后，人们迎来了期盼已久且亟待守护的和平。曾获功勋的退伍军人科尔·菲尔普斯（Cole Phelps）回到加利福尼亚州的洛杉矶，与妻子团聚并加入了洛杉矶警察局（LAPD）。作为一款新黑色电影风格的动作冒险游戏，《黑色洛城》允许玩家通过收集线索、获取证词和审讯嫌疑人来侦破犯罪案件。高度逼真的面部动画让玩家能够捕捉到证人或嫌疑人流露出的细微情绪，这可能会成为破案的关键线索。节奏缓慢而细致的破案过程穿插着惊险刺激的动作场面，包括汽车追逐、枪战和肉搏战。
+
+    在每起案件结束后，系统会根据玩家在审讯中的表现以及线索搜寻的完成度，给出1到5星的评分。除了主线剧情案件外，侦探科尔还可以参与被称为“街头犯罪”的可选支线调查。
 manual:
   availabilityStatus: available
   officialStores:
@@ -78,6 +78,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/110800/
+playTime:
+  hours: 23
+personalRating: 8.3
+hltb:
+  auto: true
+  id: 5146
+  snapshot:
+    completionist: 43.08
+    extras: 29.51
+    id: 5146
+    main: 22.32
+    updatedAt: 2026-10-21T06:25:55.817Z
+  title: L.A. Noire
+  url: https://howlongtobeat.com/game/5146
 events:
   - date: 2024-09-07
     title: 开始游戏

@@ -20,7 +20,7 @@
   add('Xbox', 'xbox', ['Microsoft Xbox']);
   add('Xbox 360', 'xbox', ['Microsoft Xbox 360', 'X360']);
   add('Xbox One', 'xbox', ['Microsoft Xbox One']);
-  add('Xbox Series X|S', 'xbox', ['Xbox Series X/S', 'Xbox Series X', 'Xbox Series S', 'Xbox Series', 'Microsoft Xbox Series X|S']);
+  add('Xbox Series X|S', 'xbox', ['Xbox Series X/S', 'Xbox Series X', 'Xbox Series S', 'Xbox Series', 'Microsoft Xbox Series X|S', 'Microsoft Xbox Series X', 'Microsoft Xbox Series S']);
   add('NES', 'nintendo', ['Nintendo Entertainment System', 'Nintendo NES', 'Famicom', 'Nintendo Famicom']);
   add('SNES', 'nintendo', ['Super Nintendo', 'Super Nintendo Entertainment System', 'Super Famicom', 'Nintendo SNES']);
   add('SNES MSU-1', 'nintendo', ['Super Nintendo MSU-1', 'Super Famicom MSU-1']);

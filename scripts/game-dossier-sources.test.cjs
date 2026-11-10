@@ -38,7 +38,7 @@ test('CMS entry loads the versioned cover styles and updated admin/field scripts
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);
   assert.match(html, /admin-auth\.js\?v=game-brief-20261109/);
-  assert.match(html, /game-dossier\.js\?v=brief-direct-20261109/);
+  assert.match(html, /game-dossier\.js\?v=thegamesdb-versions-20261110/);
 });
 
 test('TheGamesDB option imports and refreshes game fields only, including after reopening', async () => {
@@ -74,6 +74,35 @@ test('TheGamesDB option imports and refreshes game fields only, including after 
   assert.equal(reopened.field.props.value.releaseDate, '2011-04-20');
   assert.equal(reopened.field.props.value.cover, originalCover);
   assert.equal(reopened.field.props.value.developers[0], 'Fixture Dev', 'missing upstream values never erase old metadata');
+});
+
+test('one TheGamesDB candidate shows each platform record and keeps them on import and reopen', async () => {
+  const versions = [
+    { id: '35', platform: 'PC', releaseDate: '2011-04-19' },
+    { id: '53', platform: 'PlayStation 5', releaseDate: '2012-06-30' },
+  ];
+  const group = { ...game, platforms: ['PC', 'PlayStation 5'], sources: { thegamesdb: { id: '35', versions } } };
+  const calls = [];
+  const request = async (path, options) => {
+    calls.push({ path, body: options && JSON.parse(options.body) });
+    return Response.json(options ? group : { results: [group] });
+  };
+  const c = cms({ selectedPlatforms: ['PC'], description: '手写简介' }, request);
+  Object.assign(c.field.state, { dataSource: 'thegamesdb', query: 'Fixture Quest', year: '2011', platform: 'PC', developer: 'Fixture Dev' });
+  await c.field.searchGames();
+  assert.equal(calls[0].path, '/ns/api/games/search?q=Fixture%20Quest&source=thegamesdb&year=2011&platform=PC&developer=Fixture%20Dev');
+  assert.equal(c.updates(), 0);
+  const candidates = descendants(c.field.render()).filter(node => node.props.className === 'dossier-candidate');
+  assert.equal(candidates.length, 1);
+  assert.ok(descendants(candidates[0]).some(node => node.children.includes('平台记录：PC 2011-04-19 #35；PlayStation 5 2012-06-30 #53')));
+  await c.field.selectGame(c.field.state.results[0]);
+  assert.deepEqual(calls[1].body.sources.thegamesdb.versions, versions);
+  const saved = matter(matter.stringify('', { gameMetadata: JSON.parse(JSON.stringify(c.field.props.value)) })).data.gameMetadata;
+  assert.deepEqual(saved.sources.thegamesdb.versions, versions);
+  assert.deepEqual(saved.platforms, ['PC', 'PlayStation 5']);
+  assert.deepEqual(saved.selectedPlatforms, ['PC']);
+  assert.equal(saved.description, '手写简介');
+  assert.ok(cms(saved, request).nodes.some(node => node.children.includes('平台记录：PC 2011-04-19 #35；PlayStation 5 2012-06-30 #53')));
 });
 
 test('SteamGridDB search and selection changes only the cover and protects it from later imports', async () => {

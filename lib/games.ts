@@ -71,11 +71,16 @@ function parsePlatform(record: any, metadata: GameMetadata, slug: string): GameP
   const overrides = { ...(record?.metadata || {}), ...record };
   const selectedPlatform = asText(choice.platform || record.platform);
   const platform = gamePlatforms.normalizePlatform(selectedPlatform);
+  const theGamesDB = metadata.sources.thegamesdb;
+  const versionMatches = (Array.isArray(theGamesDB?.versions) ? theGamesDB.versions : []).filter(version =>
+    /^[1-9]\d{0,15}$/.test(asText(version?.id)) && gamePlatforms.normalizePlatform(version?.platform) === platform);
+  const version = versionMatches.find(item => item.id === theGamesDB?.id) || versionMatches[0];
+  const catalogDate = version && metadata.fieldSources.releaseDate !== 'manual' ? version.releaseDate : metadata.releaseDate;
   const sources = Object.keys(metadata.sources || {});
   const catalogSource = sources.length ? sources.join(' + ') : '手动资料';
   const catalogSourceLinks = Object.entries(metadata.sources || {}).flatMap(([source, details]) => {
     if (!details?.id) return [];
-    const url = details.url || (source === 'rawg'
+    const url = source === 'thegamesdb' && version ? `https://thegamesdb.net/game.php?id=${encodeURIComponent(version.id)}` : details.url || (source === 'rawg'
       ? `https://rawg.io/games/${encodeURIComponent(details.id)}`
       : source === 'screenscraper' && details.systemId
         ? `https://www.screenscraper.fr/index.php?gameid=${encodeURIComponent(details.id)}&plateforme=${encodeURIComponent(details.systemId)}`
@@ -88,7 +93,7 @@ function parsePlatform(record: any, metadata: GameMetadata, slug: string): GameP
     cover: asText(overrides.cover || metadata.cover), description: asText(overrides.description || metadata.description),
     developer: asList(overrides.developers || overrides.developer || metadata.developers).join(', '),
     publisher: asList(overrides.publishers || overrides.publisher || metadata.publishers).join(', '),
-    releaseDate: asDate(overrides.releaseDate || metadata.releaseDate),
+    releaseDate: asDate(overrides.releaseDate || catalogDate),
     genres: asList(overrides.genres || metadata.genres), catalogSource,
     catalogId: metadata.id || slug, catalogSourceLinks,
   };

@@ -14,6 +14,8 @@
 
 游戏资料由 Cloudflare Worker 查询 RAWG、TheGamesDB、ScreenScraper。默认同时查询 RAWG 和 TheGamesDB，按名称、年份、平台、开发商排序，由编辑确认版本后按 ID 读取。SteamGridDB 单独用于封面。每条记录保存在 `content/games/<slug>.md`；`manual` 继续保存正版渠道与备注。已审核的中文简介随档案保存，前台不请求第三方 API。
 
+TheGamesDB 中能够核对为同一作品的跨平台记录在搜索结果中合为一条。合并保留各平台的编号与发行日期；选用前可填写目标平台或年份，让对应记录作为主资料。按完整版本名、开发商和发行时间核对，不用简称或别名强行合并；同名不同年代、不同工作室或有歧义的记录继续分列。搜索最多读取 TheGamesDB 的前四页，结果不完整时会提示。重新搜索并选用后可在「资料与渠道」勾选实际要展示的平台；既有档案不自动迁移。
+
 复制根目录 `.env.example` 中的变量到 `workers/ns-counter/.dev.vars` 用于本地 Worker 调试；生产环境在 Cloudflare Worker 的 Secrets 中设置同名变量。`.dev.vars` 和 `.env` 已被 Git 忽略，不要提交密钥。
 
 必需/可选变量：

@@ -212,6 +212,13 @@
     const editionKey = metadata => editionRefKey(getEdition(metadata));
     const sourceTags = sources => Object.entries(sources || {}).filter(([, source]) => source?.id)
       .map(([key, source]) => (sourceLabels[key] || key) + ' #' + source.id + (source.systemId ? '/' + source.systemId : '')).join(' · ');
+    const platformRecordTags = sources => {
+      const records = sources?.thegamesdb?.versions;
+      const versions = Array.isArray(records) ? records.filter(version => version?.platform && /^[1-9]\d{0,15}$/.test(version.id)) : [];
+      if (versions.length < 2) return null;
+      return h('small', null, '平台记录：' + versions.map(version =>
+        [version.platform, version.releaseDate, '#' + version.id].filter(Boolean).join(' ')).join('；'));
+    };
     const formatFields = {
       title: '资料库名称', localizedName: '中文本地化名称', originalName: '原始名称', alternativeNames: '别名 / Alternative Names',
       releaseDate: '发售日期', developers: '开发商', publishers: '发行商', platforms: '平台', genres: '类型', cover: '封面',
@@ -255,8 +262,9 @@
         return this.run('search', async () => {
           this.setState({ results: [], query, searchOpen: true });
           let path = '/ns/api/games/search?q=' + encodeURIComponent(query) + '&source=' + encodeURIComponent(source);
-          for (const [key, value] of Object.entries({ year, platform, developer })) if (source === 'identity' && value) path += '&' + key + '=' + encodeURIComponent(value);
-          const response = ['identity', 'thegamesdb'].includes(source) ? await archiveRequest(path) : await fetch(path);
+          const usesArchive = ['identity', 'thegamesdb'].includes(source);
+          for (const [key, value] of Object.entries({ year, platform, developer })) if (usesArchive && value) path += '&' + key + '=' + encodeURIComponent(value);
+          const response = usesArchive ? await archiveRequest(path) : await fetch(path);
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || '搜索失败。');
           if (this.disposed) return;
@@ -357,7 +365,7 @@
             edition && h('div', { className: 'dossier-card dossier-identity' },
               h('div', null, h('span', { className: 'dossier-kicker' }, '已关联版本'), h('strong', null, heading || '游戏版本'),
                 h('small', null, [String(value.releaseDate || '').slice(0, 4), listText(value.platforms, ' / '), listText(value.developers, '、')].filter(Boolean).join(' · ') || '发行资料待补充'),
-                h('small', null, sourceTags(value.sources))),
+                h('small', null, sourceTags(value.sources)), platformRecordTags(value.sources)),
               externalLink(value.sources[edition.provider]?.url, '资料库')),
             h('details', { className: 'dossier-disclosure', open: this.state.searchOpen,
               onToggle: event => { if (event.currentTarget.open !== this.state.searchOpen) this.setState({ searchOpen: event.currentTarget.open }); } },
@@ -382,6 +390,7 @@
                   h('small', null, [item.releaseDate || item.year || '年份未知', (item.platforms || []).join(' / ') || '平台未知',
                     (item.developers || []).join('、') || '开发商未知'].join(' · ')),
                   h('small', null, sourceTags(item.sources)),
+                  platformRecordTags(item.sources),
                   item.match?.conflicts?.length > 0 && h('small', { className: 'dossier-error' }, '需核对：' + item.match.conflicts.map(key => checks[key]).join('、') + '不同')),
                 h('span', { className: 'dossier-badge' }, item.match?.confidence === 'high' ? '较高匹配 · 选用' : '核对后选用')))))),
             !pendingRefresh && status(this.state.message, this.state.error)),

@@ -1,7 +1,8 @@
-import { ArchiveProviderError, TheGamesDBProvider, SteamGridDBProvider, externalId, MAX_GRID_PAGE } from './archive-providers.js';
+import { ArchiveProviderError, TheGamesDBProvider, SteamGridDBProvider, externalId, MAX_GRID_PAGE, MAX_THEGAMESDB_VERSIONS } from './archive-providers.js';
 import { RAWGProvider } from './game-providers.js';
 import { rankEditions, releaseYear } from './game-identity.js';
 import { cachedMetadata } from './metadata-cache.js';
+import { preferTheGamesDBVersion } from './thegamesdb-versions.js';
 
 const HOUR = 60 * 60 * 1000;
 const searchTtl = value => value.results.length ? HOUR : 5 * 60 * 1000;
@@ -51,49 +52,71 @@ export function metadataOnly(game) {
   return { ...facts, fieldSources };
 }
 
+function editionHints(request, query) {
+  const { searchParams } = new URL(request.url);
+  const year = searchParams.get('year') || '';
+  const platform = (searchParams.get('platform') || '').trim().slice(0, 80);
+  const developer = (searchParams.get('developer') || '').trim().slice(0, 100);
+  if (year && !/^(?:19|20)\d{2}$/.test(year)) throw new ArchiveProviderError('请输入四位发行年份。', 400);
+  return { title: query, releaseDate: year, platforms: platform ? [platform] : [], developers: developer ? [developer] : [] };
+}
+
+function rankedCatalog(outcome, hints) {
+  const value = cacheResult(outcome);
+  const games = value.results.map(result => {
+    const game = preferTheGamesDBVersion(result, hints);
+    return { ...game, year: releaseYear(game.releaseDate) };
+  });
+  return archiveJson({ ...value, results: rankEditions(games, hints) });
+}
+
+async function cachedTheGamesDBSearch(env, query, fetcher) {
+  return cachedMetadata(env, 'thegamesdb:search:v3:' + query.toLowerCase(), searchTtl, async () => {
+    const { results, warnings } = await new TheGamesDBProvider(env, fetcher).searchCatalog(query);
+    return { results: results.map(metadataOnly), warnings };
+  });
+}
+
 export function searchDossierEditions(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
-    const url = new URL(request.url);
-    const year = url.searchParams.get('year') || '';
-    const platform = (url.searchParams.get('platform') || '').trim().slice(0, 80);
-    const developer = (url.searchParams.get('developer') || '').trim().slice(0, 100);
-    if (year && !/^(?:19|20)\d{2}$/.test(year)) return archiveJson({ error: '请输入四位发行年份。' }, 400);
-    const outcome = await cachedMetadata(env, 'dossier:editions:v1:' + query.toLowerCase(), searchTtl, async () => {
-      const providers = [
-        ['RAWG', new RAWGProvider(env, fetcher)],
-        ['TheGamesDB', new TheGamesDBProvider(env, fetcher)],
-      ];
-      const settled = await Promise.allSettled(providers.map(([, provider]) => provider.search(query)));
-      const warnings = settled.flatMap((result, index) => result.status === 'rejected' ? [providers[index][0] + ' 暂不可用'] : []);
-      if (settled.every(result => result.status === 'rejected')) throw new ArchiveProviderError('RAWG 与 TheGamesDB 暂不可用。请试用其他来源或手动填写。', 503);
-      const results = settled.flatMap(result => result.status === 'fulfilled' ? result.value.map(game => ({
-        ...metadataOnly(game), year: releaseYear(game.releaseDate),
-      })) : []);
-      return { results, warnings };
+    const hints = editionHints(request, query);
+    const outcome = await cachedMetadata(env, 'dossier:editions:v2:' + query.toLowerCase(), searchTtl, async () => {
+      const [rawg, catalog] = await Promise.allSettled([
+        new RAWGProvider(env, fetcher).search(query), cachedTheGamesDBSearch(env, query, fetcher),
+      ]);
+      if (rawg.status === 'rejected' && catalog.status === 'rejected') {
+        throw new ArchiveProviderError('RAWG 与 TheGamesDB 暂不可用。请试用其他来源或手动填写。', 503);
+      }
+      const catalogValue = catalog.status === 'fulfilled' ? cacheResult(catalog.value) : null;
+      return { results: [...(rawg.status === 'fulfilled' ? rawg.value.map(metadataOnly) : []), ...(catalogValue?.results || [])],
+        warnings: [...(rawg.status === 'rejected' ? ['RAWG 暂不可用'] : []),
+          ...(catalogValue ? [...catalogValue.warnings, ...(catalogValue.warning ? [catalogValue.warning] : [])] : ['TheGamesDB 暂不可用'])] };
     });
-    const value = cacheResult(outcome);
-    return archiveJson({ ...value, results: rankEditions(value.results, {
-      title: query, releaseDate: year, platforms: platform ? [platform] : [], developers: developer ? [developer] : [],
-    }) });
+    return rankedCatalog(outcome, hints);
   });
 }
 
 export function searchTheGamesDB(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
-    const outcome = await cachedMetadata(env, `thegamesdb:search:v2:${query.toLowerCase()}`, searchTtl, async () => {
-      const results = (await new TheGamesDBProvider(env, fetcher).search(query)).map(game => ({ ...metadataOnly(game), year: game.releaseDate.slice(0, 4) }));
-      return { results, warnings: [...new Set(results.flatMap(game => game.warnings || []))] };
-    });
-    return archiveJson(cacheResult(outcome));
+    const hints = editionHints(request, query);
+    return rankedCatalog(await cachedTheGamesDBSearch(env, query, fetcher), hints);
   });
 }
 
 export function detailTheGamesDB(request, env, body, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
-    const id = externalId(body?.sources?.thegamesdb?.id);
+    const source = body?.sources?.thegamesdb;
+    const id = externalId(source?.id);
     if (!id) return archiveJson({ error: '请先选择一个 TheGamesDB 游戏候选。' }, 400);
-    const outcome = await cachedMetadata(env, `thegamesdb:detail:v2:${id}`, 7 * 24 * HOUR,
-      async () => metadataOnly(await new TheGamesDBProvider(env, fetcher).getById(id)), body.refresh === true);
+    const versions = source.versions ?? [];
+    if (!Array.isArray(versions) || versions.length > MAX_THEGAMESDB_VERSIONS || versions.some(version => !externalId(version?.id))) {
+      return archiveJson({ error: 'TheGamesDB 平台记录无效，请重新搜索。' }, 400);
+    }
+    // Trust only the IDs, never the browser's platform names or release dates.
+    const ids = [...new Set(versions.map(version => externalId(version.id)))].filter(value => value !== id).sort();
+    if (ids.length >= MAX_THEGAMESDB_VERSIONS) return archiveJson({ error: 'TheGamesDB 平台记录过多，请重新搜索。' }, 400);
+    const outcome = await cachedMetadata(env, `thegamesdb:detail:v3:${[id, ...ids].join(',')}`, 7 * 24 * HOUR,
+      async () => metadataOnly(await new TheGamesDBProvider(env, fetcher).getByVersionIds(id, ids)), body.refresh === true);
     return archiveJson(cacheResult(outcome));
   });
 }

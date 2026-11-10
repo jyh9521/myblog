@@ -2,19 +2,6 @@
 title: 女巫悲歌
 status:
   - AFK
-playTime:
-  hours: 0.5
-hltb:
-  auto: true
-  id: 93684
-  snapshot:
-    completionist: 22.4
-    extras: 15.82
-    id: 93684
-    main: 8.14
-    updatedAt: 2026-10-21T06:22:18.566Z
-  title: BLACKTAIL
-  url: https://howlongtobeat.com/game/93684
 gameMetadata:
   platforms:
     - PC
@@ -41,7 +28,7 @@ gameMetadata:
   publishers:
     - Focus Entertainment
     - THE PARASIGHT
-  cover: https://media.rawg.io/media/games/d00/d0045250cc21dfd18987a8986004262a.jpg
+  cover: https://cdn2.steamgriddb.com/grid/dd80ef0436cb2dd91c5e30f4adaaa157.png
   title: Blacktail
   sources:
     rawg:
@@ -94,13 +81,42 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:616690:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/616690
+  text: |-
+    你是芭芭雅加，一个被指控犯有巫术并被中世纪早期斯拉夫定居点驱逐的16岁女孩。当她过去的生动记忆化作在世间游荡的邪恶幽灵时，雅加最好的选择就是做她最擅长的事：猎杀它们。
+
+    在由THE PARASIGHT工作室带来的第一人称动作冒险游戏《BLACKTAIL》中，亲历这个经典斯拉夫民间故事的起源，谱写芭芭雅加的神话。体验紧张刺激的射击战斗与黑暗叙事的独家融合。选择你的道路，成为森林的守护者或是噩梦的化身。
+
+    使用你信赖的弓和护手，在旅途中击败敌人
+    制作箭矢和药水，狩猎野生动物，采集草药，在诡异的森林中生存下来
+    寻找隐藏的宝藏和斯拉夫传说碎片
+
+    跟随一个神秘的声音，引领雅加走上通往力量的黑暗之路，并在途中揭开你自己的过去
+    追踪难以捉摸的幽灵，参与惊心动魄的Boss战，找回雅加丢失的记忆
+    重温记忆以收集线索，解开雅加失踪朋友之谜
+    超越超现实之境。每一段记忆都是精心打造的2.5D叙事篇章——每个迷幻的幻象都照亮了雅加的心灵与灵魂，以及她神秘的出身
+
+    通过剧情驱动的支线任务来确定你的阵营与信仰。决定这片土地及其居民的命运：选择复仇与操纵，或是诚实与同情
+    《BLACKTAIL》的道德系统将对你的游戏体验产生重大影响。当你做出决定剧情走向的道德选择时，观察你的技能树随之发生的变化
+    从古老的魔导书收集失落的配方，在大锅中熬制灵药以解锁技能升级，成长为强大的存在
+
+    选择你最终的命运，书写你自己的童话。你是会坚守光明，还是会滑向黑暗？
 manual:
   availabilityStatus: available
   officialStores:
@@ -108,6 +124,19 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1532690/
+playTime:
+  hours: 0.5
+hltb:
+  auto: true
+  id: 93684
+  snapshot:
+    completionist: 22.4
+    extras: 15.82
+    id: 93684
+    main: 8.14
+    updatedAt: 2026-10-21T06:22:18.566Z
+  title: BLACKTAIL
+  url: https://howlongtobeat.com/game/93684
 events:
   - date: 2024-08-24
     title: 开始游戏

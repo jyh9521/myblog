@@ -2,20 +2,6 @@
 title: 波斯王子：失落的王冠
 status:
   - 已通关
-playTime:
-  hours: 24.5
-personalRating: 8.5
-hltb:
-  auto: true
-  id: 129785
-  snapshot:
-    completionist: 31.26
-    extras: 24.53
-    id: 129785
-    main: 16.69
-    updatedAt: 2026-10-21T06:19:38.612Z
-  title: 'Prince of Persia: The Lost Crown'
-  url: https://howlongtobeat.com/game/129785
 gameMetadata:
   platforms:
     - PlayStation 5
@@ -41,7 +27,7 @@ gameMetadata:
   releaseDate: 2024-01-18
   publishers:
     - Ubisoft Entertainment
-  cover: https://media.rawg.io/media/games/cca/ccaa933775fe1ffcebe40a01f52545db.jpg
+  cover: https://cdn2.steamgriddb.com/grid/8dd416ae211439aa0860ce5e9579627b.png
   title: 'Prince of Persia: The Lost Crown'
   sources:
     rawg:
@@ -75,7 +61,7 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     alternativeNames: rawg
@@ -83,6 +69,25 @@ gameMetadata:
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:962011:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/962011
+  text: |-
+    释放你的内心战士
+    运用你的时间之力、战斗与平台跳跃技巧，使出致命连招，击败受时间侵蚀的敌人和神话生物。
+
+    迷失在宏伟壮丽的卡夫山
+    探索一个受波斯启发的被诅咒的世界，这里充满了宏伟的地标，并探索各种高度细节化的生态区，每一处都拥有独特的风貌、奇观与危险。
+
+    开启史诗冒险
+    通过引人入胜的原创故事，沉浸于波斯神话幻想之中。运用你的智慧解开谜题，寻找隐藏的宝藏，并完成任务，以深入了解这个遭受腐蚀的地方。
 manual:
   availabilityStatus: available
   officialStores:
@@ -90,6 +95,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/2751000/
+playTime:
+  hours: 24.5
+personalRating: 8.5
+hltb:
+  auto: true
+  id: 129785
+  snapshot:
+    completionist: 31.26
+    extras: 24.53
+    id: 129785
+    main: 16.69
+    updatedAt: 2026-10-21T06:19:38.612Z
+  title: 'Prince of Persia: The Lost Crown'
+  url: https://howlongtobeat.com/game/129785
 events:
   - date: 2024-08-17
     title: 开始游戏

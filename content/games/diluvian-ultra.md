@@ -1,26 +1,13 @@
 ---
-title: Diluvian Ultra
+title: 洪荒至尊
 status:
   - AFK
-playTime:
-  hours: 0.5
-hltb:
-  auto: true
-  id: 112921
-  snapshot:
-    completionist: 13
-    extras: 7.63
-    id: 112921
-    main: 6.22
-    updatedAt: 2026-10-21T06:23:27.271Z
-  title: Diluvian Ultra
-  url: https://howlongtobeat.com/game/112921
 gameMetadata:
   platforms:
     - PC
   selectedPlatforms:
     - PC
-  localizedName: ''
+  localizedName: 洪荒至尊
   developers:
     - Crest Helm Studios
   screenshots:
@@ -37,7 +24,7 @@ gameMetadata:
   releaseDate: 2023-09-28
   publishers:
     - Fulqrum Publishing
-  cover: https://media.rawg.io/media/screenshots/404/4045a88d51324d13eda8aa26f245f2df.jpg
+  cover: https://cdn2.steamgriddb.com/grid/a4f8e29955a24e057c1975e0fcc63e7b.png
   title: Diluvian Ultra
   sources:
     rawg:
@@ -60,17 +47,42 @@ gameMetadata:
   fieldSources:
     platforms: rawg
     selectedPlatforms: manual
+    localizedName: manual
     developers: rawg
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - localizedName
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:826885:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/826885
+  text: |-
+    化身不朽的战士王子阿提拉（Atilla），在沉睡数千年后，因一场对你墓船的无礼入侵而惊醒。拿起你的血剑一探究竟——这些不速之客究竟是你过去的宿敌，还是尚未征服的未知强敌？无论如何，他们已在舰船上盘根错节，用其污秽的存在玷污了对你而言神圣的一切。是时候将他们驱逐至虚空之中，拯救你的子民了。
+    醒来吧，王子，用血腥的毁灭杀出一条血路！
+    《洪荒至尊》（Diluvian Ultra）第一章包含 10 个关卡外加一个中心枢纽、6 种拥有 30 种不同升级的武器，以及 13 种敌人。
+    后续将作为付费 DLC 推出的章节会继续阿提拉的故事，并扩展他的武器库以及供你消灭的敌方阵容。
+
+    《洪荒至尊》的战斗围绕双重伤害系统构建，你必须结合使用多种武器才能发挥奇效。护甲可以吸收伤害，但某些武器旨在快速剥离目标的护甲——虽然无法将其直接击杀，却能为致命的一击创造条件。不过你必须小心，敌人也会以同样的方式配合攻击。收集并消耗鲜血来升级武器，在恰当的时机拾取各种强化道具，化身为复仇的化身——哪怕只有一会儿！
+
+    在《洪荒至尊》中，生存的关键在于机动性。在躲避敌人火力的同时，将远程攻击与近战打击以及毁灭性的地面重击串联起来。进行二段跳、冲刺、寻找掩护，甚至用你的剑反弹弹道投射物，但切记不要在同一个地方停留太久！
+
+    你的飞船家园是血肉与岩石的有机结合，你的武器库亦是如此；既能使用传统的科技武器，也能使用怪诞、活生生的有机武装，同时别忘了照顾好你最亲密的伙伴——具备感知能力的侍从枪贝拉（Bella）。
+
+    《洪荒至尊》或许是一款充斥着狂热动作的夸张复古第一人称射击游戏，但所有这些血腥杀戮都以一个史诗般、悲剧性的故事为背景，探讨狂热、创伤、背叛与救赎希望等主题，并在新哥特式的建筑布景和大如大教堂的庞大飞船中展开。
 manual:
   availabilityStatus: available
   officialStores:
@@ -78,6 +90,19 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1306970/
+playTime:
+  hours: 0.5
+hltb:
+  auto: true
+  id: 112921
+  snapshot:
+    completionist: 13
+    extras: 7.63
+    id: 112921
+    main: 6.22
+    updatedAt: 2026-10-21T06:23:27.271Z
+  title: Diluvian Ultra
+  url: https://howlongtobeat.com/game/112921
 events:
   - date: 2024-08-24
     title: 开始游戏

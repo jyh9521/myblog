@@ -167,7 +167,9 @@ export class RAWGProvider extends GameMetadataProvider {
     url.searchParams.set('key', this.env.RAWG_API_KEY);
     for (const [key, value] of Object.entries(params)) url.searchParams.set(key, String(value));
     try {
-      const response = await this.fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(10000) });
+      // Workerd native fetch rejects a provider instance as its receiver.
+      const fetcher = this.fetcher;
+      const response = await fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(10000) });
       if (!response.ok) { await response.body?.cancel(); throw new Error('upstream'); }
       return JSON.parse(await boundedText(response, 2 * 1024 * 1024));
     } catch { throw new Error('RAWG 暂未返回有效资料，请稍后重试。'); }
@@ -209,7 +211,8 @@ export class ScreenScraperProvider extends GameMetadataProvider {
     };
     for (const [key, value] of Object.entries(values)) if (value !== undefined && value !== '') url.searchParams.set(key, String(value));
     try {
-      const response = await this.fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(75000) });
+      const fetcher = this.fetcher;
+      const response = await fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(75000) });
       if (!response.ok) { await response.body?.cancel(); throw new Error('upstream'); }
       return JSON.parse(await boundedText(response, 2 * 1024 * 1024));
     } catch {

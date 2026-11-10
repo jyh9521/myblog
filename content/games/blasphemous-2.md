@@ -2,20 +2,6 @@
 title: 神之亵渎2
 status:
   - 已通关
-playTime:
-  hours: 13.25
-personalRating: 8
-hltb:
-  auto: true
-  id: 118447
-  snapshot:
-    completionist: 26.63
-    extras: 20.83
-    id: 118447
-    main: 16.43
-    updatedAt: 2026-10-21T06:16:39.245Z
-  title: Blasphemous II
-  url: https://howlongtobeat.com/game/118447
 gameMetadata:
   platforms:
     - PC
@@ -44,7 +30,7 @@ gameMetadata:
   releaseDate: 2023-08-23
   publishers:
     - Team17 Digital
-  cover: https://media.rawg.io/media/games/73b/73bcfec00beec38a3d3527db4f9b8c53.jpg
+  cover: https://cdn2.steamgriddb.com/grid/f448516500da6c00b831b48426579f7e.jpg
   title: Blasphemous II
   sources:
     rawg:
@@ -63,13 +49,24 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:650621:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/650621
+  text: 悔罪者一觉醒来，《神之亵渎2》再度陪伴他展开与“奇迹”的无休止抗争。深入一个充满谜团与秘密的危险新世界，杀出一条血路，击败那些挡在你与彻底终结轮回之旅之间的 monstruous 敌人。
 manual:
   availabilityStatus: available
   officialStores:
@@ -77,6 +74,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/2114740/
+playTime:
+  hours: 13.25
+personalRating: 8
+hltb:
+  auto: true
+  id: 118447
+  snapshot:
+    completionist: 26.63
+    extras: 20.83
+    id: 118447
+    main: 16.43
+    updatedAt: 2026-10-21T06:16:39.245Z
+  title: Blasphemous II
+  url: https://howlongtobeat.com/game/118447
 events:
   - date: 2024-07-27
     title: 开始游戏

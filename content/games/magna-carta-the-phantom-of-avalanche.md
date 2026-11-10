@@ -2,17 +2,6 @@
 title: 真名法典：冰之魅影
 status:
   - 考虑制作补丁
-hltb:
-  auto: true
-  id: 56101
-  snapshot:
-    completionist: null
-    extras: null
-    id: 56101
-    main: 27.5
-    updatedAt: 2026-10-12T08:27:45.392Z
-  title: 'Magna Carta: The Phantom of Avalanche'
-  url: https://howlongtobeat.com/game/56101
 gameMetadata:
   platforms:
     - PC
@@ -60,8 +49,32 @@ gameMetadata:
     originalName: rawg
   manualFields:
     - selectedPlatforms
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:35866:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/35866
+  text: |-
+    《真名法典：冰之魅影》是由Softmax开发的一款角色扮演游戏。该作最初于2002年发售，由Softmax发行。在RAWG上，这款游戏被评为“推荐”。
+    你可以在PC上游玩《真名法典：冰之魅影》。
+    该作由李柱焕（Joo-Hwan Lee）和郑英熙（Young-Hee Jeong）制作，崔渊圭（Yeon-Kyu Choi）担任导演，卢亨宇（Hyung-Woo Noh）、李相浩（Sang-Ho Lee）和张成云（Sung-Woon Jang）负责游戏配乐。
 manual:
   availabilityStatus: physical-only
+hltb:
+  auto: true
+  id: 56101
+  snapshot:
+    completionist: null
+    extras: null
+    id: 56101
+    main: 27.5
+    updatedAt: 2026-10-12T08:27:45.392Z
+  title: 'Magna Carta: The Phantom of Avalanche'
+  url: https://howlongtobeat.com/game/56101
 events:
   - date: 2026-10-12
     title: 开始汉化工作

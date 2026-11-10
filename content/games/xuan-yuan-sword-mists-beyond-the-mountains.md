@@ -2,20 +2,6 @@
 title: 轩辕剑叁：云和山的彼端
 status:
   - 已通关
-playTime:
-  hours: 12.5
-personalRating: 8
-hltb:
-  auto: true
-  id: 131601
-  snapshot:
-    completionist: 39.35
-    extras: 31.25
-    id: 131601
-    main: 24.41
-    updatedAt: 2026-10-21T06:17:49.228Z
-  title: 'Xuan-Yuan Sword: Mists Beyond the Mountains'
-  url: https://howlongtobeat.com/game/131601
 gameMetadata:
   platforms:
     - PC
@@ -38,7 +24,7 @@ gameMetadata:
   publishers:
     - Gamera Games
     - 方块游戏(CubeGame)
-  cover: https://media.rawg.io/media/screenshots/e52/e52535042ae18ba692e5437a571651c6.jpg
+  cover: https://cdn2.steamgriddb.com/grid/08cb697f9a8572905b7c30675c698a9d.jpg
   title: 'Xuan-Yuan Sword: Mists Beyond the Mountains'
   sources:
     rawg:
@@ -70,12 +56,13 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
 manual:
   availabilityStatus: available
   notes: ''
@@ -84,6 +71,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1638230/
+playTime:
+  hours: 12.5
+personalRating: 8
+hltb:
+  auto: true
+  id: 131601
+  snapshot:
+    completionist: 39.35
+    extras: 31.25
+    id: 131601
+    main: 24.41
+    updatedAt: 2026-10-21T06:17:49.228Z
+  title: 'Xuan-Yuan Sword: Mists Beyond the Mountains'
+  url: https://howlongtobeat.com/game/131601
 events:
   - date: 2024-08-03
     title: 开始游戏

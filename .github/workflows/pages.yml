@@ -7,12 +7,12 @@ permissions:
   contents: read
   pages: write
   id-token: write
-concurrency:
-  group: pages
-  # Finish the active release; GitHub keeps only the latest pending run.
-  cancel-in-progress: false
 jobs:
   build:
+    # Serialize primary releases without waiting for an older Pages deploy.
+    concurrency:
+      group: blog-primary-production
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,10 +40,6 @@ jobs:
       - run: node scripts/prepare-static-host.cjs
         env:
           BLOG_RELEASE: ${{ github.sha }}
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
       - name: Deploy primary Workers Static Assets
         run: node workers/static-preview/node_modules/wrangler/bin/wrangler.js deploy --config workers/static-host/wrangler.jsonc
         env:
@@ -53,13 +49,22 @@ jobs:
         run: node scripts/verify-static-host.cjs https://blog.blfy.cc
         env:
           BLOG_RELEASE: ${{ github.sha }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
   deploy:
     needs: build
+    # Keep the existing Pages lock, including while an older workflow is
+    # already deploying to the same fallback site.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     # Only the actual publishing job creates a deployment record.
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/configure-pages@v5
       - id: deployment
         uses: actions/deploy-pages@v4

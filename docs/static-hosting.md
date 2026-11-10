@@ -4,6 +4,7 @@
 
 - GitHub `main` 保存文章、配置、源码；Sveltia 编辑方式不变。
 - `pages.yml` 构建一次 Next.js 静态导出，先发布 `blog-static-host`，核验版本和资源 SHA256，再发布同一输出到 GitHub Pages 回退副本。
+- 主发布和 Pages 回退各自串行，使用不同的任务队列。Pages 的配置与文件同步只在回退任务中执行；回退任务卡住或失败时，后续提交的主发布仍可进行。回退失败仍会如实显示，不视为整轮成功。
 - `blog.blfy.cc/*` 指向纯静态 Worker，无 JavaScript 入口、无数据库绑定、无回源代理。页面和 JS/CSS 直接由 Workers Static Assets 服务。
 - 原 `/ns/api/*`、`/api/auth/*`、`/uploads/*` 的更具体路由仍优先匹配原 Workers；R2、私密 D1、登录 cookie、定时同步保持不变。
 - DNS 保留原 proxied GitHub Pages CNAME，作为回退入口；日常请求由 Worker 路由截获，并不读取 Pages 原站。

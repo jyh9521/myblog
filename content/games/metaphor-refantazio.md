@@ -2,20 +2,6 @@
 title: 暗喻幻想：ReFantazio
 status:
   - 已通关
-playTime:
-  hours: 50
-personalRating: 7
-hltb:
-  auto: true
-  id: 129956
-  snapshot:
-    completionist: 109.25
-    extras: 88.38
-    id: 129956
-    main: 65.43
-    updatedAt: 2026-10-21T06:32:45.250Z
-  title: 'Metaphor: ReFantazio'
-  url: https://howlongtobeat.com/game/129956
 gameMetadata:
   platforms:
     - PC
@@ -44,7 +30,7 @@ gameMetadata:
   publishers:
     - SEGA
     - Atlus
-  cover: https://media.rawg.io/media/games/2cd/2cd2467a32aaaed0bdeb192c2831cfe0.jpg
+  cover: https://cdn2.steamgriddb.com/grid/7febb9395de45df61740c518ea279af7.jpg
   title: 'Metaphor: ReFantazio'
   sources:
     rawg:
@@ -66,13 +52,27 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:963212:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/963212
+  text: |-
+    “书写你的命运，战胜恐惧，踏入一个前所未见的奇幻世界。王国笼罩在令人不安的谜团之中，正悬于绝境边缘。现在，你必须踏上旅程，克服重重险阻，与伙伴建立羁绊。
+
+    本作由《女神异闻录》系列的核心创作者倾力打造——《暗喻幻想：ReFantazio》是ATLUS首款真正意义上的大型奇幻RPG，由总监桥野桂、角色设计副岛成记、作曲家目黑将司联手呈现。该作由Studio Zero开发。”
 manual:
   availabilityStatus: available
   officialStores:
@@ -80,6 +80,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/2679460/
+playTime:
+  hours: 50
+personalRating: 7
+hltb:
+  auto: true
+  id: 129956
+  snapshot:
+    completionist: 109.25
+    extras: 88.38
+    id: 129956
+    main: 65.43
+    updatedAt: 2026-10-21T06:32:45.250Z
+  title: 'Metaphor: ReFantazio'
+  url: https://howlongtobeat.com/game/129956
 events:
   - date: 2024-10-14
     title: 开始游戏

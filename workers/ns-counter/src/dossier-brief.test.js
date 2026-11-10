@@ -196,6 +196,44 @@ const multiParagraphEn = [
 const geminiResponse = (text, finishReason = 'STOP') =>
   Response.json({ candidates: [{ finishReason, content: { parts: [{ text }] } }] });
 
+test('Gemini preserves the literal <3 heart in an archived introduction without retrying', async () => {
+  const { env, writes } = environment();
+  const originalText = 'Stay in touch with us <3\n\n' + shortEn;
+  const draft = '和我们保持联系 <3\n\n' + approved;
+  const requests = [];
+  const response = await dossierBriefRoute(post({ action: 'draft', gameTitle: 'Harbor', text: originalText }), env, async (url, options) => {
+    assert.equal(url.hostname, 'generativelanguage.googleapis.com');
+    requests.push(JSON.parse(options.body));
+    return geminiResponse(draft);
+  });
+  const result = await response.json();
+  assert.equal(response.status, 200, result.error);
+  assert.equal(result.text, draft);
+  assert.equal(result.mode, 'translate');
+  assert.equal(result.originalLanguage, 'en');
+  assert.equal(requests.length, 1);
+  assert.equal(JSON.parse(requests[0].contents[0].parts[0].text).originalText, originalText);
+  assert.equal(writes.size, 0);
+});
+
+test('a literal <3 heart does not exempt HTML, headings, links or Markdown formatting', async () => {
+  const { env, writes } = environment();
+  for (const extra of ['<em>排版</em>', '# 额外标题', '[网页](https://example.test)', '**强调**', '<3>']) {
+    let calls = 0;
+    const response = await dossierBriefRoute(post({ action: 'draft', text: shortEn }), env, async () => {
+      calls++;
+      return geminiResponse('和我们保持联系 <3\n\n' + shortZh + '\n\n' + extra);
+    });
+    const result = await response.json();
+    assert.equal(response.status, 502, extra);
+    assert.match(result.error, /草稿含链接、标题或不支持的格式/);
+    assert.equal(result.text, undefined);
+    assert.equal(calls, 2);
+  }
+  assert.equal(writes.size, 0);
+});
+
+
 test('long references are translated in full rather than summarized or truncated at 6500 characters', async () => {
   const { env, writes } = environment();
   const text = (multiParagraphEn + '\n\n').repeat(9) + 'The lighthouse keeper finally reunites with the crew.';

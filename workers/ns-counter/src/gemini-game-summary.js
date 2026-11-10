@@ -48,6 +48,9 @@ async function requestDraft(fetcher, url, key, body) {
 const unchanged = '，原简介未修改。';
 const contentFilters = new Set(['SAFETY', 'BLOCKLIST', 'PROHIBITED_CONTENT', 'SPII', 'RECITATION', 'IMAGE_SAFETY']);
 
+// A standalone "<3" from an archived blurb is plain text, not markup.
+const unsupportedDraftFormat = /(?:^#{1,6}\s|https?:\/\/|<(?!3\b)|>|[\x60]{3}|\[[^\]]+\]\(|\*\*|^(?:翻译结果|简体中文简介)[：:])/im;
+
 function checkDraft(payload) {
   const candidate = payload?.candidates?.[0];
   const finish = candidate?.finishReason;
@@ -67,7 +70,7 @@ function checkDraft(payload) {
     issue = ['Gemini 草稿为空', '请根据原文输出完整的简体中文译文，不要只输出标题或空文本。'];
   } else if (!['zh-Hans', 'zh-und'].includes(language)) {
     issue = ['Gemini 草稿未通过简体中文校验', '正文必须用简体字和简体中文表达，不得混用繁体字或输出其他语言，原文专名可保留。'];
-  } else if (/(?:^#{1,6}\s|https?:\/\/|[<>]|[\x60]{3}|\[[^\]]+\]\(|\*\*|^(?:翻译结果|简体中文简介)[：:])/im.test(text)) {
+  } else if (unsupportedDraftFormat.test(text)) {
     issue = ['Gemini 草稿含链接、标题或不支持的格式', '只输出纯文本译文，保留自然分段，去掉额外的标题、链接、HTML 和 Markdown。'];
   }
   return { text, language, issue };

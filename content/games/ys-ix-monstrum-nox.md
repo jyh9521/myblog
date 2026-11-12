@@ -2,25 +2,54 @@
 title: 伊苏IX -怪人之夜-
 status:
   - 已通关
-playTime:
-  hours: 29.5
-personalRating: 7.5
-hltb:
-  id: 70939
-  url: https://howlongtobeat.com/game/70939
-  title: 'Ys IX: Monstrum Nox'
-  auto: true
-  snapshot:
-    id: 70939
-    main: 27.59
-    extras: 39.83
-    completionist: 53.29
-    updatedAt: 2026-10-09T01:06:24.385Z
 gameMetadata:
-  alternativeNames:
-    - Ys 9
-    - イースIX -Monstrum NOX-
-  cover: https://media.rawg.io/media/screenshots/4e0/4e01779807f21e9b21b315e510191c55.jpg
+  platforms:
+    - Nintendo Switch
+    - PC
+    - PlayStation 4
+    - Stadia
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Falcom
+  screenshots:
+    - https://media.rawg.io/media/screenshots/1da/1da65c75ebd074362beb38fa222171e9.jpg
+    - https://media.rawg.io/media/screenshots/57b/57bf785e18060f82bb5435315e893fe9.jpg
+    - https://media.rawg.io/media/screenshots/5fd/5fd7d5a46545566fb8d48bbed678b4ba.jpg
+    - https://media.rawg.io/media/screenshots/0d8/0d8452f5359a9e99316cb202ba137023.jpg
+    - https://media.rawg.io/media/screenshots/03a/03a211ededec8bf2b38ee10faf3a39a7.jpg
+    - https://media.rawg.io/media/screenshots/86b/86bae2d86857d8c69808c6fb9226a5d1.jpg
+  updatedAt: 2026-11-12T02:15:24.602Z
+  genres:
+    - Action
+    - Adventure
+    - Role-Playing
+  releaseDate: 2021-02-02
+  publishers:
+    - Falcom
+  title: 'Ys IX: Monstrum Nox'
+  sources:
+    thegamesdb:
+      id: '76875'
+      url: https://thegamesdb.net/game.php?id=76875
+      versions:
+        - id: '77801'
+          platform: Nintendo Switch
+          releaseDate: 2021-06-30
+        - id: '130079'
+          platform: Nintendo Switch
+          releaseDate: 2021-07-16
+        - id: '100811'
+          platform: PC
+          releaseDate: 2021-07-06
+        - id: '76875'
+          platform: PlayStation 4
+          releaseDate: 2021-02-02
+        - id: '100236'
+          platform: Stadia
+          releaseDate: 2021-07-06
+  id: thegamesdb:76875
   description: |-
     Ys IX: Monstrum Nox takes place in Balduq, northeast of Esteria in the Gllia region under Romun control. Balduq is known as 'the prison city' for its large prison facility inside the town and its architecture featuring high walls as a result of being built upon the fortified era. Furthermore the city is an important nexus for transportation in the region resulting in a wide range of inns, bars and trade centers. In more recent years public facilities such as theaters and baths are starting to be developed too.
 
@@ -29,59 +58,20 @@ gameMetadata:
     Balduq Prison, located at the edge of the city, supposedly is the largest prison facility of the Romun empire. Originally it was a fortress built to protect the Romun border, it is more recently that it has been repurposed as a prison facility. Featuring only one entrance through a drawbridge and surrounded by steep rock walls and deep moats it is said to be inescapable. The townsfolk does not hold the prison facility in high regard as the facility also is used to detain critics of the empire as does it detain political prisoners.
 
     Source: https://isu.fandom.com/
-  developers:
-    - Engine Software
-    - Nihon Falcom
-    - PH3
+  originalName: 'Ys IX: Monstrum Nox'
   fieldSources:
-    alternativeNames: rawg
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
+    platforms: thegamesdb
     selectedPlatforms: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
     title: manual
-    website: rawg
-  genres:
-    - Action
-    - Adventure
-    - RPG
-  id: rawg:401804
-  localizedName: ''
+    description: rawg
+    originalName: thegamesdb
   manualFields:
     - selectedPlatforms
     - title
-  originalName: 'Ys IX: Monstrum Nox'
-  platforms:
-    - PlayStation 4
-    - Nintendo Switch
-    - PC
-  publishers:
-    - NIS America
-    - NIHON FALCOM
-    - Clouded Leopard Entertainment
-  releaseDate: 2021-02-05
-  screenshots:
-    - https://media.rawg.io/media/screenshots/1da/1da65c75ebd074362beb38fa222171e9.jpg
-    - https://media.rawg.io/media/screenshots/57b/57bf785e18060f82bb5435315e893fe9.jpg
-    - https://media.rawg.io/media/screenshots/5fd/5fd7d5a46545566fb8d48bbed678b4ba.jpg
-    - https://media.rawg.io/media/screenshots/0d8/0d8452f5359a9e99316cb202ba137023.jpg
-    - https://media.rawg.io/media/screenshots/03a/03a211ededec8bf2b38ee10faf3a39a7.jpg
-    - https://media.rawg.io/media/screenshots/86b/86bae2d86857d8c69808c6fb9226a5d1.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '401804'
-      slug: ys-ix-monstrum-nox
-      url: https://rawg.io/games/401804
-  title: 'Ys IX: Monstrum Nox'
-  updatedAt: 2026-10-09T00:39:16.392Z
-  website: https://www.falcom.co.jp/ys9/
 manual:
   availabilityStatus: available
   officialStores:
@@ -89,6 +79,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1351630/
+playTime:
+  hours: 29.5
+personalRating: 7.5
+hltb:
+  auto: true
+  id: 70939
+  snapshot:
+    completionist: 53.29
+    extras: 39.83
+    id: 70939
+    main: 27.59
+    updatedAt: 2026-10-09T01:06:24.385Z
+  title: 'Ys IX: Monstrum Nox'
+  url: https://howlongtobeat.com/game/70939
 events:
   - date: 2022-07-02
     title: 开始游戏

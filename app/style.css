@@ -131,16 +131,16 @@ button:not(.toc-toggle),.hero-button,.read-more,.site-header nav a{transition-pr
 .game-shelf-platforms{margin:0 0 14px;gap:7px}
 .game-shelf-platforms span{padding:5px 10px;font-size:12px}
 .game-platform-link{margin-top:0;padding:11px 17px}
-/* Public dossier covers: the frame itself is portrait, not a landscape letterbox. */
+/* Public dossier covers keep the source aspect ratio; only the empty placeholder has a fixed ratio. */
 .game-detail>.game-platform-panel .game-platform-card{grid-template-columns:var(--dossier-cover-width) minmax(0,1fr);align-items:center}
-.game-shelf-art,.game-detail>.game-platform-panel .game-platform-art{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:9/16;min-height:0;max-height:none;overflow:hidden;border-radius:15px;color:var(--muted);font-size:clamp(24px,5vw,42px);text-decoration:none}
-.game-shelf-art img,.game-detail>.game-platform-panel .game-platform-art img{position:absolute;inset:0;display:block;width:100%;height:100%;min-height:0;max-height:none;object-fit:cover}
-.game-shelf-art:not(:has(img)){background:linear-gradient(135deg,#e9eef5,#dbe5f0)}
-:root[data-theme="dark"] .game-shelf-art:not(:has(img)){background:linear-gradient(135deg,#252b34,#171a20)}
-.game-detail>.game-platform-panel .game-platform-art:has(img){background:none}
+.game-shelf-art,.game-detail>.game-platform-panel .game-platform-art{position:relative;display:grid;place-items:center;width:100%;min-height:0;max-height:none;overflow:visible;color:var(--muted);font-size:clamp(24px,5vw,42px);text-decoration:none}
+.game-shelf-art img,.game-detail>.game-platform-panel .game-platform-art img{position:static;display:block;width:auto;height:auto;min-height:0;max-width:100%;max-height:203px;object-fit:contain}
+.game-shelf-art:not(:has(img)),.game-detail>.game-platform-panel .game-platform-art:not(:has(img)){aspect-ratio:2/3;border-radius:15px;background:linear-gradient(135deg,#e9eef5,#dbe5f0)}
+:root[data-theme="dark"] .game-shelf-art:not(:has(img)),:root[data-theme="dark"] .game-detail>.game-platform-panel .game-platform-art:not(:has(img)){background:linear-gradient(135deg,#252b34,#171a20)}
+.game-shelf-art:has(img),.game-detail>.game-platform-panel .game-platform-art:has(img){background:none}
 :root[data-theme="dark"] .game-shelf-item{background:#1c2027;color:var(--ink);border-color:var(--line)}
 @media(max-width:850px){.game-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.game-filter-search{grid-column:1/-1}.game-filter-count{grid-column:1/-1}}
-@media(max-width:700px){.game-directory,.game-detail{--dossier-cover-width:clamp(68px,23vw,100px)}.game-shelf-item,.game-detail>.game-platform-panel .game-platform-card{gap:12px;min-height:0;padding:14px}.game-shelf-title{align-items:flex-start;flex-wrap:wrap;gap:6px}.game-shelf-title>a{font-size:19px}.game-shelf-item> .game-shelf-copy>p{-webkit-line-clamp:3}}
+@media(max-width:700px){.game-directory,.game-detail{--dossier-cover-width:clamp(68px,23vw,100px)}.game-shelf-art img,.game-detail>.game-platform-panel .game-platform-art img{max-height:178px}.game-shelf-item,.game-detail>.game-platform-panel .game-platform-card{gap:12px;min-height:0;padding:14px}.game-shelf-title{align-items:flex-start;flex-wrap:wrap;gap:6px}.game-shelf-title>a{font-size:19px}.game-shelf-item> .game-shelf-copy>p{-webkit-line-clamp:3}}
 @media(max-width:420px){.game-filters{gap:9px;padding:12px}.game-filter-field input,.game-filter-field select{font-size:13px}}
 
 /* Embedded dossier cards: keep media and metadata inside equal-sized rows. */

@@ -71,7 +71,7 @@ function rankedCatalog(outcome, hints) {
 }
 
 async function cachedTheGamesDBSearch(env, query, fetcher) {
-  return cachedMetadata(env, 'thegamesdb:search:v4:' + query.toLowerCase(), searchTtl, async () => {
+  return cachedMetadata(env, 'thegamesdb:search:v5:' + query.toLowerCase(), searchTtl, async () => {
     const { results, warnings } = await new TheGamesDBProvider(env, fetcher).searchCatalog(query);
     return { results: results.map(metadataOnly), warnings };
   });
@@ -80,7 +80,7 @@ async function cachedTheGamesDBSearch(env, query, fetcher) {
 export function searchDossierEditions(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
     const hints = editionHints(request, query);
-    const outcome = await cachedMetadata(env, 'dossier:editions:v3:' + query.toLowerCase(), searchTtl, async () => {
+    const outcome = await cachedMetadata(env, 'dossier:editions:v4:' + query.toLowerCase(), searchTtl, async () => {
       const [rawg, catalog] = await Promise.allSettled([
         new RAWGProvider(env, fetcher).search(query), cachedTheGamesDBSearch(env, query, fetcher),
       ]);
@@ -115,7 +115,7 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch) {
     // Trust only the IDs, never the browser's platform names or release dates.
     const ids = [...new Set(versions.map(version => externalId(version.id)))].filter(value => value !== id).sort();
     if (ids.length >= MAX_THEGAMESDB_VERSIONS) return archiveJson({ error: 'TheGamesDB 平台记录过多，请重新搜索。' }, 400);
-    const outcome = await cachedMetadata(env, `thegamesdb:detail:v4:${[id, ...ids].join(',')}`, 7 * 24 * HOUR,
+    const outcome = await cachedMetadata(env, `thegamesdb:detail:v5:${[id, ...ids].join(',')}`, 7 * 24 * HOUR,
       async () => metadataOnly(await new TheGamesDBProvider(env, fetcher).getByVersionIds(id, ids)), body.refresh === true);
     return archiveJson(cacheResult(outcome));
   });

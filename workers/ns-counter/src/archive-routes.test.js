@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { searchDossierEditions, searchTheGamesDB, detailTheGamesDB, steamGridDBRoute } from './archive-routes.js';
+import { groupTheGamesDBVersions } from './thegamesdb-versions.js';
 
 const root = 'https://blog.example/ns/api/games';
 const auth = { 'X-Gaming-Admin': '1', Cookie: 'other=do-not-forward; __Host-gaming_admin=fixture-session' };
@@ -217,7 +218,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v4:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v5:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -278,4 +279,52 @@ test('Ys IX groups the standard releases without swallowing explicitly named edi
     assert.equal(detail.status, 200);
     assert.deepEqual((await detail.json()).sources.thegamesdb.versions, group.sources.thegamesdb.versions);
   }
+});
+
+
+test('TheGamesDB keeps a corroborated core and attaches a sparse release without bridging different editions', async () => {
+  const title = 'Ys: The Oath in Felghana';
+  const rows = [
+    [9464, 1, '2012-03-19', [6010]], [13220, 2, '2010-11-02', [2984]], [62612, 3, '2010-11-02', []],
+    [114646, 4, '2023-04-26', [], 'Ys Memoire: The Oath in Felghana'],
+    [63221, 2, '2010-11-02', [2984], title + ' [Premium Edition]'],
+  ].map(([id, platform, release_date, developers, game_title = title]) => ({ id, platform, release_date, developers, game_title }));
+  const platforms = { 1: { name: 'PC' }, 2: { name: 'Sony Playstation Portable' }, 3: { name: 'Sony Playstation Vita' }, 4: { name: 'Nintendo Switch' } };
+  const request = new Request(root + '/search?platform=PS+Vita&year=2010', { headers: auth });
+  const e = env();
+  const fetcher = async url => {
+    const endpoint = url.pathname.split('/').at(-1);
+    if (endpoint === 'Developers') return Response.json({ code: 200, data: { developers: {} } });
+    assert.ok(['ByGameName', 'ByGameID'].includes(endpoint));
+    const ids = url.searchParams.get('id')?.split(',');
+    return Response.json({ code: 200, data: { games: ids ? rows.filter(row => ids.includes(String(row.id))).reverse() : rows },
+      include: { platform: platforms } });
+  };
+  const result = await (await searchTheGamesDB(request, e, title, fetcher)).json();
+  assert.equal(result.results.length, 3);
+  const standard = result.results.find(row => row.title === title);
+  assert.deepEqual(new Set(standard.platforms), new Set(['PC', 'PSP', 'PS Vita']));
+  assert.equal(standard.sources.thegamesdb.id, '62612');
+  const detail = await (await detailTheGamesDB(request, e, { sources: standard.sources }, fetcher)).json();
+  assert.deepEqual(detail.sources.thegamesdb.versions, standard.sources.thegamesdb.versions);
+});
+
+test('an ambiguous sparse row cannot bridge or dissolve either same-title studio group', () => {
+  const make = (id, platform, releaseDate, studio) => ({
+    game: { title: 'Unrelated Shared Name', platforms: [platform], releaseDate, sources: { thegamesdb: { id } } },
+    credits: studio ? [studio] : [],
+  });
+  const rows = [
+    make('1', 'PC', '2020-03-01', 'id:11'),
+    make('2', 'PS4', '2019-03-01', 'id:11'),
+    make('3', 'PC', '2020-03-01', 'id:12'),
+    make('4', 'Xbox One', '2021-03-01', 'id:12'),
+    make('5', 'Nintendo Switch', '2020-03-01'),
+  ];
+  const ids = input => groupTheGamesDBVersions(input).map(game => {
+    const source = game.sources.thegamesdb;
+    return (source.versions?.map(row => row.id) || [source.id]).sort().join(',');
+  }).sort();
+  assert.deepEqual(ids(rows), ['1,2', '3,4', '5']);
+  assert.deepEqual(ids([...rows].reverse()), ids(rows));
 });

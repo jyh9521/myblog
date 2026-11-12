@@ -11,7 +11,7 @@ export const releaseYear = value => text(value).match(/(?:19|20)\d{2}/)?.[0] || 
 const overlap = (a, b) => a.some(item => b.includes(item));
 const compare = (a, b) => !a.length || !b.length ? 0 : overlap(a, b) ? 1 : -1;
 const platformKeys = value => gamePlatforms.normalizePlatformList(value).map(key);
-function developerKey(value) {
+export function developerKey(value) {
   const original = text(value).normalize('NFKC').trim();
   let name = original, previous;
   // Store and catalog credits can include different legal suffixes

@@ -2,7 +2,8 @@ import gamePlatforms from '../../../public/sveltia/game-platforms.js';
 import { GameMetadataProvider } from './game-providers.js';
 import { boundedText } from './bounded-body.js';
 import { cachedMetadata } from './metadata-cache.js';
-import { catalogKey, groupTheGamesDBVersions, theGamesDBLink } from './thegamesdb-versions.js';
+import { groupTheGamesDBVersions, theGamesDBLink } from './thegamesdb-versions.js';
+import { developerKey } from './game-identity.js';
 
 const DAY = 86400000;
 const MAX_RESPONSE = 2 * 1024 * 1024;
@@ -101,7 +102,7 @@ export class TheGamesDBProvider extends GameMetadataProvider {
         alternativeNames: names(asArray(game.alternates).map(value => typeof value === 'string' ? value : value?.name)),
         description: text(game.overview, 12000), releaseDate: isoDate(game.release_date),
         developers: mapNames('developers'), publishers: mapNames('publishers'), genres: mapNames('genres'),
-        platforms: gamePlatforms.normalizePlatformList([platform]),
+        platforms: gamePlatforms.normalizePlatformList([platform.replace(/^Sony (?=PlayStation (?:Portable|Vita)$)/i, '')]),
         sources: { thegamesdb: { id, url: theGamesDBLink(id) } },
         updatedAt: new Date().toISOString(),
       };
@@ -112,7 +113,7 @@ export class TheGamesDBProvider extends GameMetadataProvider {
       // Keep raw developer identifiers for grouping even when the name
       // dictionary is temporarily unavailable. Do not expose them as facts.
       const credits = asArray(game.developers).map(value => externalId(value?.id ?? value)).filter(Boolean);
-      return { game: result, credits: [...credits.map(id => 'id:' + id), ...result.developers.map(catalogKey).filter(Boolean).map(name => 'name:' + name)] };
+      return { game: result, credits: [...credits.map(id => 'id:' + id), ...result.developers.map(developerKey).filter(Boolean).map(name => 'name:' + name)] };
     });
   }
 

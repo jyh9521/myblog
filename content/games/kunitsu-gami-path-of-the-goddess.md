@@ -2,20 +2,6 @@
 title: 祇：女神之路
 status:
   - AFK
-playTime:
-  hours: 1
-personalRating: 7
-hltb:
-  auto: true
-  id: 129966
-  snapshot:
-    completionist: 36.21
-    extras: 21.31
-    id: 129966
-    main: 16.45
-    updatedAt: 2026-10-21T06:12:58.561Z
-  title: 'Kunitsu-Gami: Path of the Goddess'
-  url: https://howlongtobeat.com/game/129966
 gameMetadata:
   platforms:
     - Xbox Series S/X
@@ -44,7 +30,7 @@ gameMetadata:
   releaseDate: 2024-07-18
   publishers:
     - Capcom
-  cover: https://media.rawg.io/media/screenshots/ff2/ff27a1cb8bcf9132b3f9b669503e7484.jpg
+  cover: https://cdn2.steamgriddb.com/grid/426b6538904c4cdadad8e459cc2dc922.png
   title: 'Kunitsu-Gami: Path of the Goddess'
   sources:
     rawg:
@@ -73,13 +59,32 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:985578:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/985578
+  text: |-
+    神明的新故事正等待着你
+    《祇：女神之路》是一款独具特色的日式单人神乐动作策略游戏。
+
+    游戏的故事发生在一座被污秽覆盖的山中。
+    白天，净化村庄，为日落做好准备。
+    夜晚，保护巫女免受成群“畏哭”的袭击。
+
+    不断重复日夜循环，直到你清除山上的污秽，让这片土地重归和平。
 manual:
   availabilityStatus: available
   officialStores:
@@ -87,6 +92,20 @@ manual:
       note: ''
       region: TW
       url: https://www.xbox.com/zh-TW/games/store/kunitsu-gami-path-of-the-goddess/9pcwxx0ms15s
+playTime:
+  hours: 1
+personalRating: 7
+hltb:
+  auto: true
+  id: 129966
+  snapshot:
+    completionist: 36.21
+    extras: 21.31
+    id: 129966
+    main: 16.45
+    updatedAt: 2026-10-21T06:12:58.561Z
+  title: 'Kunitsu-Gami: Path of the Goddess'
+  url: https://howlongtobeat.com/game/129966
 events:
   - date: 2024-07-23
     title: 开始游戏

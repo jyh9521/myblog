@@ -117,6 +117,42 @@ function reviewedEditionGroups(key, rows) {
     .sort((a, b) => order.get(a[0]) - order.get(b[0]));
 }
 
+// A date-only match is never enough to join different titles or override a
+// studio conflict. For an otherwise unresolved, uncredited singleton, prefer
+// one uniquely corroborated release day over the coarse year window.
+function attachSameDayPorts(groups, rows) {
+  const proposals = new Map();
+  const publisherKeys = row => (row.game.publishers || []).map(name => name.normalize('NFKC').trim().toLowerCase());
+  for (const [row, ...rest] of groups) {
+    const platform = row.game.platforms[0], date = row.game.releaseDate;
+    if (rest.length || row.credits.length || !platform || !date) continue;
+    const matching = groups.map(group => ({group, anchors: group.filter(other =>
+      other.credits.length && other.game.platforms[0] && other.game.platforms[0] !== platform &&
+      other.game.releaseDate === date)})).filter(({anchors}) => anchors.length);
+    if (matching.length !== 1) continue;
+    const {group, anchors} = matching[0];
+    if (group.some(other => other.game.platforms[0] === platform)) continue;
+    const pubs = publisherKeys(row);
+    if (pubs.length && anchors.some(anchor => {
+      const known = publisherKeys(anchor);
+      return known.length && !known.some(name => pubs.includes(name));
+    })) continue;
+    if (!proposals.has(group)) proposals.set(group, []);
+    proposals.get(group).push(row);
+  }
+  const attached = new Set();
+  const order = new Map(rows.map((row, i) => [row, i]));
+  const expanded = groups.map(group => {
+    const candidates = proposals.get(group) || [];
+    const unique = candidates.filter(row => !candidates.some(other =>
+      other !== row && other.game.platforms[0] === row.game.platforms[0]));
+    unique.forEach(row => attached.add(row));
+    return [...group, ...unique].sort((a, b) => order.get(a) - order.get(b));
+  });
+  return expanded.filter(group => group.length > 1 || !attached.has(group[0]))
+    .sort((a, b) => order.get(a[0]) - order.get(b[0]));
+}
+
 export function groupTheGamesDBVersions(rows, primaryId = '') {
   const titles = new Map();
   for (const row of rows) {
@@ -124,7 +160,7 @@ export function groupTheGamesDBVersions(rows, primaryId = '') {
     if (!titles.has(key)) titles.set(key, []);
     titles.get(key).push(row);
   }
-  return [...titles].flatMap(([key, matches]) => reviewedEditionGroups(key, matches)).map(members => {
+  return [...titles].flatMap(([key, matches]) => attachSameDayPorts(reviewedEditionGroups(key, matches), matches)).map(members => {
     const { game } = members.find(row => sourceId(row) === primaryId) || members[0];
     if (members.length === 1) return game;
     const versions = members.map(row => ({

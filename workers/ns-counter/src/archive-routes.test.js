@@ -218,7 +218,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v6:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v7:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -429,17 +429,20 @@ test('TUNIC production catalog: verified 2022 ports group, unrelated and later e
   };
   const request = new Request(root+'/search?platform=PC', {headers:auth});
   const stale = {cached_at:Date.now(), payload:JSON.stringify({results:[],warnings:[]})};
-  e.cache.set('thegamesdb:search:v5:tunic', stale);
-  e.cache.set('dossier:all:v1:tunic', stale);
-  const expected = ['104354','104890','66459','99191'];
+  e.cache.set('thegamesdb:search:v6:tunic', stale);
+  e.cache.set('dossier:all:v2:tunic', stale);
+  const expected = ['104354','104890','106641','66459','99191'];
   const check = result => {
     const candidates = result.results.filter(game => game.sources?.thegamesdb);
     const group = candidates.find(game=>game.sources.thegamesdb.versions?.some(v=>v.id==='66459'));
     assert.deepEqual(group?.sources.thegamesdb.versions.map(v=>v.id).sort(), expected);
-    assert.deepEqual(group.platforms.slice().sort(), ['Nintendo Switch','PC','Xbox One','Xbox Series X|S'].sort());
-    for (const id of ['106641','117590','123537','123708','999991'])
-      assert.equal(candidates.find(game=>game.sources.thegamesdb.id===id)?.sources.thegamesdb.versions, undefined);
-    assert.equal(candidates.length,6);
+    assert.deepEqual(group.platforms.slice().sort(), ['Nintendo Switch','PC','PlayStation 5','Xbox One','Xbox Series X|S'].sort());
+    for (const id of ['117590','123537','123708','999991']) {
+      const separate = candidates.find(game=>game.sources.thegamesdb.id===id);
+      assert.ok(separate, id);
+      assert.equal(separate.sources.thegamesdb.versions, undefined);
+    }
+    assert.equal(candidates.length,5);
     return group;
   };
   const first = await (await searchTheGamesDB(request,e,'Tunic',fetcher)).json();
@@ -451,4 +454,20 @@ test('TUNIC production catalog: verified 2022 ports group, unrelated and later e
     versions:[...group.sources.thegamesdb.versions,...['117590','123537','123708','999991'].map(id=>({id}))]}}},fetcher)).json();
   assert.deepEqual(detail.sources.thegamesdb.versions.map(v=>v.id).sort(),expected);
   assert.ok(detail.warnings.some(w=>w.includes('未通过核对')));
+});
+
+test('a unique same-day credited cross-platform release breaks ambiguity for any title, but conflicting evidence does not', () => {
+  const row = (id, platform, releaseDate, credits = [], publishers = []) => ({credits,game:{
+    title:'Ordinary Harbor',platforms:[platform],releaseDate,publishers,sources:{thegamesdb:{id}},
+  }});
+  const early = row('9001','PC','2022-09-27',['id:1'],['Original publisher']);
+  const late = row('9002','PC','2023-08-11',['id:1']);
+  const port = row('9003','PlayStation 5','2022-09-27');
+  const distant = row('9004','Game Boy Color','2023-01-20');
+  const members = (rows, id) => groupTheGamesDBVersions(rows).find(game => game.sources.thegamesdb.id === id)?.sources.thegamesdb.versions?.map(v=>v.id).sort();
+  assert.deepEqual(members([early,late,port,distant],'9001'),['9001','9003']);
+  assert.equal(members([early,late,port,distant],'9002'),undefined);
+  assert.equal(members([early,late,port,distant,row('9005','Xbox One','2022-09-27',['id:2'])],'9001'),undefined);
+  assert.equal(members([early,late,{...port,game:{...port.game,publishers:['Different publisher']}}],'9001'),undefined);
+  assert.equal(members([early,late,port,row('9006','PlayStation 5','2022-09-27')],'9001'),undefined);
 });

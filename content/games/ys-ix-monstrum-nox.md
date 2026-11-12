@@ -28,6 +28,7 @@ gameMetadata:
   releaseDate: 2021-02-02
   publishers:
     - Falcom
+  cover: https://cdn2.steamgriddb.com/grid/02e60c0c648fc4f63dea724e2c3ad8f5.png
   title: 'Ys IX: Monstrum Nox'
   sources:
     thegamesdb:
@@ -66,12 +67,25 @@ gameMetadata:
     genres: thegamesdb
     releaseDate: thegamesdb
     publishers: thegamesdb
+    cover: steamgriddb
     title: manual
     description: rawg
     originalName: thegamesdb
   manualFields:
     - selectedPlatforms
     - title
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: |-
+    《伊苏IX：怪人之夜》的故事发生在罗门帝国统治下的格利亚（Gllia）地区，即艾斯提亚（Esteria）东北部的巴尔杜克（Balduq）。巴尔杜克因城内建有大型监狱设施，且建筑风格继承了要塞时代的坚固高墙，而被称为“监狱都市”。此外，该城市也是该地区重要的交通枢纽，因此拥有各式各样的旅馆、酒吧和贸易中心。近年来，剧院和浴场等公共设施也开始相继建立。
+
+    近几年来，被称为“怪人（Monstrum）”的存在开始频繁出没的传闻在居民中引发了巨大的轰动。据说这些怪人拥有独特的超能力，其中一些人似乎在帮助贫困和无依无靠的人，而另一些人则是作恶多端的法外之徒。这种两面性导致村民们对他们感到恐惧和戒备。
+
+    位于城市边缘的巴尔杜克监狱据说是罗门帝国境内最大的监狱设施。它原本是为了保护罗门边境而建造的要塞，近年来才被改造成监狱设施。这里只有一个通过吊桥的出入口，周围环绕着陡峭的岩壁和深深的护城河，据说插翅难逃。由于该设施还被用来关押帝国的批评者和政治犯，因此镇上的居民对这座监狱并没有什么好感。
+
+    来源：https://isu.fandom.com/
 manual:
   availabilityStatus: available
   officialStores:

@@ -2,68 +2,65 @@
 title: 紫塞秋风
 status:
   - AFK
-playTime:
-  hours: 2
-personalRating: 5
-hltb:
-  id: 69308
-  url: https://howlongtobeat.com/game/69308
-  title: The Wind Road
-  auto: true
-  snapshot:
-    id: 69308
-    main: 13.94
-    extras: 24.43
-    completionist: 51.17
-    updatedAt: 2026-10-08T23:49:27.628Z
 gameMetadata:
-  alternativeNames:
-    - 紫塞秋风
-  cover: https://media.rawg.io/media/screenshots/d9b/d9b605c4b6f1ccdac1e4af786076dabf.jpg
-  description: '"The Wind Road" is an ARPG real-time combat game, constructing a martial-arts world based on the ancient Silk Road under the background of a fictional era.'
-  developers:
-    - Phoenix Games
-  fieldSources:
-    alternativeNames: rawg
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - Adventure
-    - RPG
-    - Indie
-  id: rawg:723955
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-  originalName: The Wind Road
   platforms:
     - PC
-  publishers: []
-  releaseDate: 2020-06-09
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Phoenix Games
   screenshots:
     - https://media.rawg.io/media/screenshots/9c7/9c7d35013e4949cb6a61b72c8770edb5.jpg
     - https://media.rawg.io/media/screenshots/da8/da8d067e7c43e7e90405f848f4646ff0.jpg
     - https://media.rawg.io/media/screenshots/bb6/bb6e9b0cdebbc0abbe0d1bb5771f47d8.jpg
     - https://media.rawg.io/media/screenshots/d9b/d9b605c4b6f1ccdac1e4af786076dabf.jpg
-  selectedPlatforms:
-    - PC
+  updatedAt: 2026-10-08T23:49:50.017Z
+  genres:
+    - Action
+    - Adventure
+    - RPG
+    - Indie
+  releaseDate: 2020-06-09
+  publishers: []
+  cover: https://cdn2.steamgriddb.com/grid/01a91ad5c99f94c23d70496aae5c99bd.jpg
+  title: The Wind Road
   sources:
     rawg:
       id: '723955'
       slug: the-wind-road
       url: https://rawg.io/games/723955
-  title: The Wind Road
-  updatedAt: 2026-10-08T23:49:50.017Z
   website: http://zsqf.fhyx.hk/
+  id: rawg:723955
+  alternativeNames:
+    - 紫塞秋风
+  description: '"The Wind Road" is an ARPG real-time combat game, constructing a martial-arts world based on the ancient Silk Road under the background of a fictional era.'
+  originalName: The Wind Road
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    genres: rawg
+    releaseDate: rawg
+    cover: steamgriddb
+    title: rawg
+    website: rawg
+    alternativeNames: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:723955:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/723955
+  text: 《紫塞秋风》是一款ARPG即时战斗游戏，在架空的历史背景下，构建了一个以古代丝绸之路为基础的武侠世界。
 manual:
   availabilityStatus: available
   officialStores:
@@ -71,6 +68,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1264670/
+playTime:
+  hours: 2
+personalRating: 5
+hltb:
+  auto: true
+  id: 69308
+  snapshot:
+    completionist: 51.17
+    extras: 24.43
+    id: 69308
+    main: 13.94
+    updatedAt: 2026-10-08T23:49:27.628Z
+  title: The Wind Road
+  url: https://howlongtobeat.com/game/69308
 events:
   - date: 2020-07-10
     title: 开始游戏

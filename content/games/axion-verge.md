@@ -4,7 +4,12 @@ status:
   - AFK
 gameMetadata:
   platforms:
+    - Nintendo Switch
     - PC
+    - PlayStation 4
+    - Sony Playstation Vita
+    - Wii U
+    - Xbox One
   selectedPlatforms:
     - PC
   localizedName: ''
@@ -17,7 +22,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/368/368ba4cef20b754b75b0dcab434d0aa1.jpg
     - https://media.rawg.io/media/screenshots/645/645d8b9de26d138926cbaee7992d1d7c.jpg
     - https://media.rawg.io/media/screenshots/489/489bf4565ac028f9f3c12921bcc0e32d.jpg
-  updatedAt: 2026-11-09T04:44:46.767Z
+  updatedAt: 2026-11-12T02:01:44.050Z
   genres:
     - Action
     - Adventure
@@ -33,6 +38,25 @@ gameMetadata:
     thegamesdb:
       id: '27455'
       url: https://thegamesdb.net/game.php?id=27455
+      versions:
+        - id: '50106'
+          platform: Nintendo Switch
+          releaseDate: 2017-11-21
+        - id: '27455'
+          platform: PC
+          releaseDate: 2015-05-14
+        - id: '27457'
+          platform: PlayStation 4
+          releaseDate: 2015-03-31
+        - id: '138077'
+          platform: Sony Playstation Vita
+          releaseDate: 2015-03-31
+        - id: '44220'
+          platform: Wii U
+          releaseDate: 2016-09-01
+        - id: '62186'
+          platform: Xbox One
+          releaseDate: 2015-03-31
   id: thegamesdb:27455
   alternativeNames: []
   description: |-

@@ -2,62 +2,16 @@
 title: 红色派系2
 status:
   - 考虑制作补丁
-hltb:
-  id: 7684
-  url: https://howlongtobeat.com/game/7684
-  title: Red Faction II
-  auto: true
-  snapshot:
-    id: 7684
-    main: 4.46
-    extras: 5.68
-    completionist: 6.33
-    updatedAt: 2026-10-09T01:40:49.491Z
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/8ae/8aeb9db0a0f6077b08a5bc9975904003.jpg
-  description: Red Faction II is a first-person shooter by Volition. It is the second part of the same-named tetralogy. The games of the series are traditionally divided into the categories by the genre. Red Faction II corresponds to the first section which includes the first-person shooter gameplay.
-  developers:
-    - THQ Nordic
-    - Volition
-    - Outrage Games
-    - Cranky Pants Games
-  fieldSources:
-    cover: rawg
-    description: manual
-    developers: rawg
-    genres: rawg
-    originalName: manual
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    selectedPlatforms: manual
-    title: rawg
-    website: rawg
-  genres:
-    - Action
-    - Shooter
-    - Strategy
-  id: rawg:13038
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-    - description
-    - originalName
-  originalName: Red Faction II
   platforms:
-    - PlayStation 2
-    - Xbox One
-    - Xbox 360
     - PC
-    - PlayStation 3
-    - PlayStation 4
+    - PlayStation 2
     - Xbox
-    - GameCube
-  publishers:
-    - THQ Nordic
-    - THQ
-  releaseDate: 2002-10-14
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Volition, Inc.
   screenshots:
     - https://media.rawg.io/media/screenshots/310/3103d7b068bdfedc96cb6b3a0603e3c9.jpg
     - https://media.rawg.io/media/screenshots/cae/caef6279c1ae25165fabaa0c74823254.jpg
@@ -65,14 +19,52 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/606/60666698896f6afa110bed556707c490.jpg
     - https://media.rawg.io/media/screenshots/f68/f68d1e3802656e42f9c7fd0ca4a2476e.jpg
     - https://media.rawg.io/media/screenshots/a35/a358afcc593af92459318a7fab899d6a.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '13038'
+  updatedAt: 2026-11-12T04:32:58.952Z
+  genres:
+    - Shooter
+  releaseDate: 2002-10-15
+  publishers:
+    - THQ
+  cover: https://cdn2.steamgriddb.com/grid/41a2c4dcb15209b720aa3934bf3c772f.png
   title: Red Faction II
-  updatedAt: 2026-10-02T04:48:11.096Z
-  website: http://www.redfaction.com
+  sources:
+    thegamesdb:
+      id: '792'
+      url: https://thegamesdb.net/game.php?id=792
+      versions:
+        - id: '792'
+          platform: PC
+          releaseDate: 2002-10-15
+        - id: '4801'
+          platform: PlayStation 2
+          releaseDate: 2002-10-15
+        - id: '18378'
+          platform: Xbox
+          releaseDate: 2003-04-01
+  id: thegamesdb:792
+  alternativeNames: []
+  description: Red Faction II is a first-person shooter by Volition. It is the second part of the same-named tetralogy. The games of the series are traditionally divided into the categories by the genre. Red Faction II corresponds to the first section which includes the first-person shooter gameplay.
+  originalName: Red Faction II
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    description: manual
+    originalName: manual
+  manualFields:
+    - selectedPlatforms
+    - description
+    - originalName
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: 《红色派系2》是由Volition开发的的第一人称射击游戏。它是同名四部曲的第二部作品。该系列的游戏传统上按游戏类型划分为不同的类别。《红色派系2》对应包含第一人称射击玩法的第一部分。
 manual:
   availabilityStatus: available
   officialStores:
@@ -80,4 +72,15 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/20550/
+hltb:
+  auto: true
+  id: 7684
+  snapshot:
+    completionist: 6.33
+    extras: 5.68
+    id: 7684
+    main: 4.46
+    updatedAt: 2026-10-09T01:40:49.491Z
+  title: Red Faction II
+  url: https://howlongtobeat.com/game/7684
 ---

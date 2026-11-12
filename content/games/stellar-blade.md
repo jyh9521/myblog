@@ -17,7 +17,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/4f0/4f068fe7cd517a475f78bd2712b7e9c1.jpg
     - https://media.rawg.io/media/screenshots/f80/f8000e4f6b17a15a79a3c6eda3b7f535.jpg
     - https://media.rawg.io/media/screenshots/543/543f315f253a026a974c98e995ef3874.jpg
-  updatedAt: 2026-11-10T01:00:38.142Z
+  updatedAt: 2026-11-12T02:01:23.256Z
   genres:
     - Action
     - Adventure

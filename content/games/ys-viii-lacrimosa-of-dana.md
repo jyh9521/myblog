@@ -2,47 +2,7 @@
 title: 伊苏VIII -丹娜的陨涕日-
 status:
   - 已通关
-playTime:
-  hours: 32.1
-personalRating: 8
-hltb:
-  id: 39002
-  url: https://howlongtobeat.com/game/39002
-  title: 'Ys VIII: Lacrimosa of Dana'
-  auto: true
-  snapshot:
-    id: 39002
-    main: 37.12
-    extras: 50.56
-    completionist: 69.43
-    updatedAt: 2026-10-09T00:34:16.888Z
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/d3c/d3c42a40030d2c80aa37824914026052.jpg
-  description: 'Ys returns with a brand new adventure for the first time in 8 years! Adol awakens shipwrecked and stranded on a cursed island. There, he and the other shipwrecked passengers he rescues form a village to challenge fearsome beasts and mysterious ruins on the isolated island. Amidst this, Adol begins to dream of a mysterious blue-haired maiden living in an unknown world. Join Adol as he unravels the riddle of the cursed isle and the blue-haired maiden Dana in Ys VIII: Lacrimosa of Dana!'
-  developers:
-    - NIS America
-    - Nihon Falcom
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - RPG
-  id: rawg:12258
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-  originalName: 'Ys VIII: Lacrimosa of DANA'
   platforms:
     - PC
     - PlayStation 4
@@ -51,25 +11,62 @@ gameMetadata:
     - Android
     - PlayStation 5
     - Nintendo Switch
-  publishers:
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
     - NIS America
-  releaseDate: 2017-09-11
+    - Nihon Falcom
   screenshots:
     - https://media.rawg.io/media/screenshots/18d/18d829b0f057c5405e01f776579a14df.jpg
     - https://media.rawg.io/media/screenshots/b9b/b9be2cb386d62dd2414bdf436853f650.jpg
     - https://media.rawg.io/media/screenshots/217/21758b1d4467d0cf71ebdacaac0c738e.jpg
     - https://media.rawg.io/media/screenshots/b53/b5397804f92fb3667b64b6dae7a9dfd0.jpg
     - https://media.rawg.io/media/screenshots/c8c/c8c303eb58f263662287fab924b51cb0.jpg
-  selectedPlatforms:
-    - PC
+  updatedAt: 2026-10-09T00:35:08.371Z
+  genres:
+    - Action
+    - RPG
+  releaseDate: 2017-09-11
+  publishers:
+    - NIS America
+  cover: https://cdn2.steamgriddb.com/grid/d331bf1c8560a6f79528429b0094d8af.png
+  title: 'Ys VIII: Lacrimosa of DANA'
   sources:
     rawg:
       id: '12258'
       slug: ys-viii-lacrimosa-of-dana
       url: https://rawg.io/games/12258
-  title: 'Ys VIII: Lacrimosa of DANA'
-  updatedAt: 2026-10-09T00:35:08.371Z
   website: http://ysviii.com
+  id: rawg:12258
+  alternativeNames: []
+  description: 'Ys returns with a brand new adventure for the first time in 8 years! Adol awakens shipwrecked and stranded on a cursed island. There, he and the other shipwrecked passengers he rescues form a village to challenge fearsome beasts and mysterious ruins on the isolated island. Amidst this, Adol begins to dream of a mysterious blue-haired maiden living in an unknown world. Join Adol as he unravels the riddle of the cursed isle and the blue-haired maiden Dana in Ys VIII: Lacrimosa of Dana!'
+  originalName: 'Ys VIII: Lacrimosa of DANA'
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: steamgriddb
+    title: rawg
+    website: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:12258:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/12258
+  text: 《伊苏》系列时隔8年迎来全新冒险！亚特鲁醒来时，发现自己遭遇海难，正身处一座被诅咒的岛屿。在这里，他和救出的其他船难幸存者们建立了一座村庄，以挑战这座孤岛上的可怕野兽与神秘遗迹。与此同时，亚特鲁开始梦到一位生活在未知世界中的神秘蓝发少女。快来加入《伊苏VIII -丹娜的陨涕日-》，和亚特鲁一起解开这座被诅咒的岛屿以及蓝发少女丹娜的谜团吧！
 manual:
   availabilityStatus: available
   officialStores:
@@ -77,6 +74,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/579180/
+playTime:
+  hours: 32.1
+personalRating: 8
+hltb:
+  auto: true
+  id: 39002
+  snapshot:
+    completionist: 69.43
+    extras: 50.56
+    id: 39002
+    main: 37.12
+    updatedAt: 2026-10-09T00:34:16.888Z
+  title: 'Ys VIII: Lacrimosa of Dana'
+  url: https://howlongtobeat.com/game/39002
 events:
   - date: 2022-06-26
     title: 开始游戏

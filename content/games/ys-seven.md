@@ -2,14 +2,41 @@
 title: 伊苏7
 status:
   - 已通关
-playTime:
-  hours: 17.1
-personalRating: 5.5
-hltb:
-  url: Ys SEVEN
 gameMetadata:
+  platforms:
+    - PC
+    - PSP
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Nihon Falcom
+    - XSEED Games
+  screenshots:
+    - https://media.rawg.io/media/screenshots/22d/22d359fce49ca75ebd8e0e777af12fe0.jpg
+    - https://media.rawg.io/media/screenshots/78e/78e7329c15a36982848ba5d6699482a6.jpg
+    - https://media.rawg.io/media/screenshots/c6c/c6cb0897e49b14cb6c546270c2dea46b.jpg
+    - https://media.rawg.io/media/screenshots/566/56621ab2793260acd6e8febb46e593eb.jpg
+    - https://media.rawg.io/media/screenshots/3f0/3f0dba8a2ac87cb42b69035dbd543a59.jpg
+    - https://media.rawg.io/media/screenshots/279/279c73ce8845cdab2916ecbba120d35b.jpg
+  updatedAt: 2026-10-09T01:02:55.120Z
+  genres:
+    - Action
+    - RPG
+  releaseDate: 2009-09-16
+  publishers:
+    - XSEED Games
+    - Marvelous USA
+  cover: https://cdn2.steamgriddb.com/grid/e77678884350a507b20fce34ef0072cf.png
+  title: Ys SEVEN
+  sources:
+    rawg:
+      id: '45291'
+      slug: ys-seven-2
+      url: https://rawg.io/games/45291
+  website: http://www.worldofys.com/ys7/
+  id: rawg:45291
   alternativeNames: []
-  cover: https://media.rawg.io/media/screenshots/4d0/4d03cffe8d3646f5d1c97811c0fd00f0.jpg
   description: |-
     Originally released as a PSP exclusive, Ys SEVEN was the first fully 3D Ys title, the first Ys title to include a party-based battle system allowing players to swap control of characters in real-time, and the most story-heavy Ys game of its time.
     This original PC port presents the game in full upscaled HD with a wide variety of resolution options, smooth 60 fps gameplay, full Steamworks integration featuring a variety of new achievements, and even a revised localization to ensure players receive the most immersive gaming experience possible.
@@ -24,53 +51,45 @@ gameMetadata:
     One of the most complex and involving storylines of the entire series, spanning well over 20 hours’ worth of gameplay
     Upscaled HD graphics and consistent 60 fps framerate bring this former PSP-exclusive title up to modern PC standards
     Full Steamworks integration, including a bevy of new achievements
-  developers:
-    - Nihon Falcom
-    - XSEED Games
+  originalName: Ys SEVEN
   fieldSources:
-    cover: rawg
-    description: rawg
+    platforms: rawg
+    selectedPlatforms: manual
     developers: rawg
     genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
     releaseDate: rawg
+    publishers: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - RPG
-  id: rawg:45291
-  localizedName: ''
+    description: rawg
+    originalName: rawg
   manualFields:
     - selectedPlatforms
-  originalName: Ys SEVEN
-  platforms:
-    - PC
-    - PSP
-  publishers:
-    - XSEED Games
-    - Marvelous USA
-  releaseDate: 2009-09-16
-  screenshots:
-    - https://media.rawg.io/media/screenshots/22d/22d359fce49ca75ebd8e0e777af12fe0.jpg
-    - https://media.rawg.io/media/screenshots/78e/78e7329c15a36982848ba5d6699482a6.jpg
-    - https://media.rawg.io/media/screenshots/c6c/c6cb0897e49b14cb6c546270c2dea46b.jpg
-    - https://media.rawg.io/media/screenshots/566/56621ab2793260acd6e8febb46e593eb.jpg
-    - https://media.rawg.io/media/screenshots/3f0/3f0dba8a2ac87cb42b69035dbd543a59.jpg
-    - https://media.rawg.io/media/screenshots/279/279c73ce8845cdab2916ecbba120d35b.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '45291'
-      slug: ys-seven-2
-      url: https://rawg.io/games/45291
-  title: Ys SEVEN
-  updatedAt: 2026-10-09T01:02:55.120Z
-  website: http://www.worldofys.com/ys7/
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:45291:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/45291
+  text: |-
+    《伊苏7》最初作为PSP独占游戏推出，是该系列首款全面采用3D画面的作品，首次引入了允许玩家在实时战斗中切换角色的团队战斗系统，也是当时剧情最丰满的《伊苏》游戏。
+    这款原汁原味的PC移植版提供了完全高清重制的画面以及丰富的分辨率选项、流畅的60帧游戏体验、全面整合的Steamworks功能（包含各种全新成就），甚至还采用了经过修订的本地化文本，以确保玩家获得最具沉浸感的游戏体验。
+    加入红发冒险家亚特鲁·克里斯汀与其忠实伙伴多奇的行列，利用他们以往冒险中结识的强盗人脉，在繁华的港口城市阿尔塔戈起航——这座昔日的世界贸易之都，由于不久前刚刚结束与罗门帝国的战争，曾长时间与外界隔绝。
+    阿尔塔戈的人民依然对外国人充满戒心，这片土地上也到处横行着刀枪不入的恐怖怪物，导致亚特鲁在历代游戏中百试百灵的武器库失去了效用。被迫从零开始重新武装与训练，并向这个排外的新国家的人民证明自己的价值后，亚特鲁接下了国王的委托去探索附近的一处遗迹，却发现自己再次卷入了一场安抚古代巨神、拯救世界的重大危机之中……
+    在旅途中，他将遇到形形色色新老伙伴，他们将通过全新引入的组队系统加入他的冒险，单次出战最多可操控三名角色。唯有熟练掌握打击、斩击和刺击属性的攻击，以及数十种独特的技能、瞬时闪避、“闪避防御”等技巧，亚特鲁和他的团队才能揭开五大龙、阿尔塔戈五大部族，以及威胁着要将这片历史悠久的古老土地撕裂的近期连串地震背后的谜团。
+    快来参与现代伊苏冒险的开山之作吧！让这个历史悠久的系列闻名遐迩的快节奏挑战与庞大Boss战再度回归，且规模更胜以往。
+    让“7”成为你的幸运数字！主要特色：
+    快节奏的实时战斗，拥有数十种独特的物理与魔法能力
+    全新的组队系统，支持同时操作最多三名可玩角色，包括亚特鲁的忠实搭档多奇，以及自《伊苏6：纳比斯汀的方舟》起备受粉丝喜爱的雇佣兵盖迪哈尔
+    充满整个屏幕的巨大Boss，搭配由传奇Falcom Sound Team jdk创作的极具伊苏风格的摇滚配乐
+    全系列中最错综复杂、引人入胜的剧情之一，游戏时长超过20小时
+    高清重制画面与稳定的60帧帧率，让这款昔日的PSP独占作品达到现代PC标准
+    全面整合Steamworks功能，包含大量全新成就
 manual:
   availabilityStatus: available
   officialStores:
@@ -78,6 +97,11 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/587100/
+playTime:
+  hours: 17.1
+personalRating: 5.5
+hltb:
+  url: Ys SEVEN
 events:
   - date: 2022-07-16
     title: 开始游戏

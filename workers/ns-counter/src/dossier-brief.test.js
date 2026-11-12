@@ -337,3 +337,46 @@ test('saved archive HTML translates directly without a second edition lookup', a
   assert.deepEqual(calls, ['generativelanguage.googleapis.com']);
   assert.equal(writes.size, 0);
 });
+
+
+test('Gemini translates linked synopsis prose and preserves only original URLs', async () => {
+  const { env, writes } = environment();
+  const url = 'https://example.com/wiki/Harbor_(game)?a=1&b=2#map';
+  const manual = 'https://example.org/guide';
+  const trailer = 'https://example.net/trailer';
+  const original = shortEn + '\n\nRead [the harbor map](' + url + '), visit ' + manual + ', or watch <' + trailer + '>.';
+  let calls = 0;
+  const response = await dossierBriefRoute(post({ action: 'draft', text: original }), env, async (requestUrl, options) => {
+    calls++;
+    assert.equal(requestUrl.hostname, 'generativelanguage.googleapis.com');
+    const text = JSON.parse(JSON.parse(options.body).contents[0].parts[0].text).originalText;
+    const markers = text.match(/\[\[SOURCE_LINK_\d+\]\]/g);
+    // Simulate a faithful translation that retains URLs under either protocol.
+    if (!markers) return geminiResponse(approved + '\n\n请查看港口地图（' + url + '），阅读指南（' + manual + '），或观看预告片（' + trailer + '）。');
+    assert.equal(markers.length, 3);
+    assert.ok(text.includes('the harbor map'));
+    assert.doesNotMatch(text, /https?:\/\//);
+    return geminiResponse(approved + '\n\n请查看港口地图（' + markers[0] + '），阅读指南（' + markers[1] + '），或观看预告片（' + markers[2] + '）。');
+  });
+  const result = await response.json();
+  assert.equal(response.status, 200, result.error);
+  assert.equal(result.text, approved + '\n\n请查看港口地图（' + url + '），阅读指南（' + manual + '），或观看预告片（' + trailer + '）。');
+  assert.equal(calls, 1);
+  assert.equal(writes.size, 0);
+});
+
+test('Gemini retries a lost or changed source link and rejects a fabricated URL', async () => {
+  for (const invalid of ['', '[[SOURCE_LINK_9]]', '[[SOURCE_LINK_1]][[SOURCE_LINK_1]]',
+    '[[SOURCE_LINK_1]] https://unrelated.example/']) {
+    const { env } = environment();
+    let calls = 0;
+    const response = await dossierBriefRoute(post({ action: 'draft', text: shortEn + '\n\nhttps://example.com/guide' }), env, async (_url, options) => {
+      calls++;
+      if (calls === 2) assert.match(JSON.parse(options.body).system_instruction.parts[0].text, /链接/);
+      return geminiResponse(approved + '\n\n' + invalid);
+    });
+    assert.equal(response.status, 502, invalid);
+    assert.equal((await response.json()).text, undefined);
+    assert.equal(calls, 2);
+  }
+});

@@ -51,7 +51,46 @@ const contentFilters = new Set(['SAFETY', 'BLOCKLIST', 'PROHIBITED_CONTENT', 'SP
 // A standalone "<3" from an archived blurb is plain text, not markup.
 const unsupportedDraftFormat = /(?:^#{1,6}\s|https?:\/\/|<(?!3\b)|>|[\x60]{3}|\[[^\]]+\]\(|\*\*|^(?:翻译结果|简体中文简介)[：:])/im;
 
-function checkDraft(payload) {
+function protectSourceLinks(source) {
+  let prefix = 'SOURCE_LINK_';
+  for (let n = 1; source.includes(prefix); n++) prefix = 'SOURCE' + n + '_LINK_';
+  const links = new Map();
+  // Stop at whitespace, quotes and CJK punctuation; keep balanced URL
+  // parentheses but leave a surrounding sentence/Markdown delimiter outside.
+  const text = source.replace(/https?:\/\/[a-z\d\-._~:/?#[\]@!$&()*+,;=%]+/gi, match => {
+    let url = match.replace(/[.,;!?]+$/, '');
+    let parens = 0, brackets = 0;
+    for (const ch of url) {
+      if (ch === '(') parens++;
+      if (ch === ')') parens--;
+      if (ch === '[') brackets++;
+      if (ch === ']') brackets--;
+    }
+    while ((parens < 0 && url.endsWith(')')) || (brackets < 0 && url.endsWith(']'))) {
+      if (url.endsWith(')')) parens++;
+      else brackets++;
+      url = url.slice(0, -1);
+    }
+    try {
+      const parsed = new URL(url);
+      if (!parsed.hostname || parsed.username || parsed.password) return match;
+    } catch { return match; }
+    const marker = '[[' + prefix + (links.size + 1) + ']]';
+    links.set(marker, url);
+    return marker + match.slice(url.length);
+  }).replace(new RegExp(String.raw`\[([^\[\]\n]+)\]\((\[\[${prefix}\d+\]\])\)`, 'g'), '$1 ($2)');
+  const markerPattern = new RegExp(String.raw`\[\[${prefix}\d+\]\]`, 'g');
+  const valid = draft => {
+    if (!links.size) return true;
+    const markers = [...draft.matchAll(markerPattern)].map(match => match[0]);
+    return markers.length === links.size && new Set(markers).size === links.size &&
+      markers.every(marker => links.has(marker)) && !draft.replace(markerPattern, '').includes(prefix);
+  };
+  return { text, hasLinks: links.size > 0, valid,
+    restore: draft => draft.replace(markerPattern, marker => links.get(marker) ?? marker) };
+}
+
+function checkDraft(payload, sourceLinks) {
   const candidate = payload?.candidates?.[0];
   const finish = candidate?.finishReason;
   const block = payload?.promptFeedback?.blockReason;
@@ -71,7 +110,9 @@ function checkDraft(payload) {
   } else if (!['zh-Hans', 'zh-und'].includes(language)) {
     issue = ['Gemini 草稿未通过简体中文校验', '正文必须用简体字和简体中文表达，不得混用繁体字或输出其他语言，原文专名可保留。'];
   } else if (unsupportedDraftFormat.test(text)) {
-    issue = ['Gemini 草稿含链接、标题或不支持的格式', '只输出纯文本译文，保留自然分段，去掉额外的标题、链接、HTML 和 Markdown。'];
+    issue = ['Gemini 草稿含链接、标题或不支持的格式', '只输出纯文本译文，保留自然分段，去掉额外的标题、链接、HTML 和 Markdown。原文的链接占位符须原样保留。'];
+  } else if (!sourceLinks.valid(text)) {
+    issue = ['Gemini 草稿未保留原文链接', '请将原文的每个链接占位符原样保留一次，不要改写、省略、重复或添加占位符。'];
   }
   return { text, language, issue };
 }
@@ -82,16 +123,20 @@ export async function geminiDraft(env, material, { gameTitle = '', officialTitle
   const model = env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
   if (!/^gemini-[a-z0-9][a-z0-9.-]{1,63}$/.test(model)) throw new ArchiveProviderError('Gemini 模型设置有误。', 503);
   const url = new URL('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent');
-  const contents = [{ role: 'user', parts: [{ text: JSON.stringify({ gameTitle, officialTitle, originalText: material.text }) }] }];
+  const sourceLinks = protectSourceLinks(material.text);
+  const linkInstruction = sourceLinks.hasLinks
+    ? '\n\n原文中的双中括号链接占位符代表原有网址，每个都必须原样保留一次，只翻译周围文字（包括链接的可见名称）。不要输出实际网址，不要添加新的链接。'
+    : '';
+  const contents = [{ role: 'user', parts: [{ text: JSON.stringify({ gameTitle, officialTitle, originalText: sourceLinks.text }) }] }];
   const generate = async (correction = '') => checkDraft(await requestDraft(fetcher, url, key, {
-    system_instruction: { parts: [{ text: correction ? systemPrompt + '\n\n' + correction : systemPrompt }] },
+    system_instruction: { parts: [{ text: systemPrompt + linkInstruction + (correction ? '\n\n' + correction : '') }] },
     contents,
     generationConfig: { temperature: .3, maxOutputTokens: 16384, candidateCount: 1 },
-  }));
+  }), sourceLinks);
   let result = await generate();
   // Only complete but invalid drafts get one corrective attempt. Never
   // return, persist or resend the rejected output.
   if (result.issue) result = await generate(result.issue[1]);
   if (result.issue) throw new ArchiveProviderError(result.issue[0] + unchanged);
-  return { text: result.text, language: result.language, mode: 'translate', model };
+  return { text: sourceLinks.restore(result.text), language: result.language, mode: 'translate', model };
 }

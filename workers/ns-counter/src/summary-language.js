@@ -11,6 +11,7 @@ export function plainReference(value, limit = 6500) {
     const code = key.startsWith('#x') ? parseInt(key.slice(2), 16) : Number(key.slice(1));
     return code > 0 && code <= 0x10ffff && !(code >= 0xd800 && code <= 0xdfff) ? String.fromCodePoint(code) : ' ';
   }).replace(/<!--[\s\S]*?-->|<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '')
+    .replace(/<(https?:\/\/[^<>\s]+)>/gi, '$1')
     .replace(/<\/?(?:br|p|li|div|h[1-6])\b[^>]*>/gi, '\n')
     .replace(/<\/?[a-z][^>]*>/gi, ' ')
     .replace(/\r\n?/g, '\n').replace(/[^\S\n]+/g, ' ')

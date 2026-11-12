@@ -73,7 +73,7 @@ function rankedCatalog(outcome, hints) {
 }
 
 async function cachedTheGamesDBSearch(env, query, fetcher) {
-  return cachedMetadata(env, 'thegamesdb:search:v7:' + query.toLowerCase(), searchTtl, async () => {
+  return cachedMetadata(env, 'thegamesdb:search:v8:' + query.toLowerCase(), searchTtl, async () => {
     const { results, warnings } = await new TheGamesDBProvider(env, fetcher).searchCatalog(query);
     return { results: results.map(metadataOnly), warnings };
   });
@@ -82,7 +82,7 @@ async function cachedTheGamesDBSearch(env, query, fetcher) {
 export function searchDossierEditions(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
     const hints = editionHints(request, query);
-    const outcome = await cachedMetadata(env, 'dossier:all:v3:' + query.toLowerCase(), partialTtl, async () => {
+    const outcome = await cachedMetadata(env, 'dossier:all:v4:' + query.toLowerCase(), partialTtl, async () => {
       const [catalog, rawg, screen] = await Promise.allSettled([
         cachedTheGamesDBSearch(env, query, fetcher), new RAWGProvider(env, fetcher).search(query),
         new ScreenScraperProvider(env, fetcher).search(query),
@@ -131,7 +131,7 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch, supplement
     if (supplement && ((body.sources.rawg && !rawg) || (body.sources.screenscraper && (!ss || !system)))) {
       return archiveJson({ error: '辅助资料的游戏或平台编号无效，请重新搜索。' }, 400);
     }
-    const baseKey = `thegamesdb:detail:v7:${[id, ...ids].join(',')}`;
+    const baseKey = `thegamesdb:detail:v8:${[id, ...ids].join(',')}`;
     const detailTtl = 7 * 24 * HOUR;
     const refresh = body.refresh === true;
     const loadCatalog = async () => metadataOnly(await loadBase());

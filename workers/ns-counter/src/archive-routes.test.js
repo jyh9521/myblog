@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { searchDossierEditions, searchTheGamesDB, detailTheGamesDB, steamGridDBRoute } from './archive-routes.js';
 import { groupTheGamesDBVersions } from './thegamesdb-versions.js';
+import { matchesCatalogEdition } from './dossier-source-merge.js';
 
 const root = 'https://blog.example/ns/api/games';
 const auth = { 'X-Gaming-Admin': '1', Cookie: 'other=do-not-forward; __Host-gaming_admin=fixture-session' };
@@ -218,7 +219,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v7:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v8:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -470,4 +471,68 @@ test('a unique same-day credited cross-platform release breaks ambiguity for any
   assert.equal(members([early,late,port,distant,row('9005','Xbox One','2022-09-27',['id:2'])],'9001'),undefined);
   assert.equal(members([early,late,{...port,game:{...port.game,publishers:['Different publisher']}}],'9001'),undefined);
   assert.equal(members([early,late,port,row('9006','PlayStation 5','2022-09-27')],'9001'),undefined);
+});
+
+test('same-day ports with a compound studio credit join only across platforms and do not absorb other editions', () => {
+  const row = (id, title, platform, releaseDate, developers, credits) => ({ credits, game: {
+    title, platforms: [platform], releaseDate, developers, sources: { thegamesdb: { id } },
+  } });
+  const rows = [
+    row('1','Harbor','PlayStation 5','2023-01-27',['Anchor Studio'],['id:51','name:anchorstudio']),
+    row('2','Harbor','PC','2023-01-27',['Anchor Studio, Partner Co., Ltd., Third Studio'],['id:52','name:compound']),
+    row('3','Harbor','Xbox Series X|S','2023-01-27',['Anchor Studio'],['id:51','name:anchorstudio']),
+    row('4','Harbor','PlayStation 3','2008-10-13',['Other Studio'],['id:53','name:otherstudio']),
+    row('5','Harbor Deluxe Edition','PlayStation 5','2023-01-27',['Anchor Studio'],['id:51','name:anchorstudio']),
+    row('6','Harbor','PC','2017-08-14',['Partner'],['id:54','name:partner']),
+  ];
+  const groups = groupTheGamesDBVersions(rows).map(g=>g.sources.thegamesdb.versions?.map(v=>v.id).sort() ?? [g.sources.thegamesdb.id]);
+  assert.deepEqual(groups, [['1','2','3'],['4'],['6'],['5']]);
+});
+
+test('reviewed cross-catalog ports work for other titles and reject name-only, wrong ID, edition and date matches', () => {
+  const anchor = {id:'11',platform:'PlayStation 4',releaseDate:'2021-02-02'};
+  const port = {provider:'screenscraper',id:'21',systemId:'31',platform:'PlayStation 5',releaseDates:['2023-05-09'],developers:['Test Studio'],publishers:['Test Publisher']};
+  const title = 'Harbor Chronicles';
+  const review = [{title,anchor,port,evidence:'https://publisher.example/release'}];
+  const base = {title,platforms:['PlayStation 4'],releaseDate:anchor.releaseDate,sources:{thegamesdb:{id:anchor.id}}};
+  const sparse = {title,platforms:['PlayStation 5'],sources:{screenscraper:{id:port.id,systemId:port.systemId}}};
+  assert.ok(matchesCatalogEdition(base,sparse,review));
+  assert.ok(!matchesCatalogEdition(base,sparse,[]));
+  for (const variant of [
+    {...sparse,title:title+' Deluxe Edition'},
+    {...sparse,releaseDate:'2024-02-01'},
+    {...sparse,publishers:['Different publisher']},
+    {...sparse,sources:{screenscraper:{id:'22',systemId:'31'}}},
+    {...sparse,sources:{screenscraper:{id:'21',systemId:'32'}}},
+  ]) assert.ok(!matchesCatalogEdition(base,variant,review));
+  assert.ok(!matchesCatalogEdition({...base,sources:{thegamesdb:{id:'12'}}},sparse,review));
+});
+
+test('Ys IX sparse PS5 record is revalidated in both search and detail without merging Deluxe', async () => {
+  const title = 'Ys IX: Monstrum Nox';
+  const e = {...env(),SCREENSCRAPER_DEV_ID:'ss-test',SCREENSCRAPER_DEV_PASSWORD:'ss-test'};
+  const entries = [{id:76875,game_title:title,release_date:'2021-02-02',platform:1},
+    {id:109105,game_title:title+' [Deluxe Edition]',release_date:'2023-05-30',platform:2}];
+  const ps5 = {id:479669,nom:title,systeme:{id:284,text:'PlayStation 5'}};
+  const fetcher = async url => {
+    const endpoint = url.pathname.split('/').at(-1);
+    if (endpoint==='ByGameName' || endpoint==='ByGameID') return Response.json({code:200,data:{
+      games:endpoint==='ByGameID'?entries.filter(r=>String(r.id)===url.searchParams.get('id')):entries},
+      include:{platform:{1:{name:'PlayStation 4'},2:{name:'PlayStation 5'}}}});
+    if(endpoint==='jeuRecherche.php') return Response.json({response:{jeux:[ps5]}});
+    if(endpoint==='jeuInfos.php') return Response.json({response:{jeu:ps5}});
+    return new Response('fixture unavailable',{status:503});
+  };
+  const request = new Request(root+'/search',{headers:auth});
+  const {results} = await (await searchDossierEditions(request,e,title,fetcher)).json();
+  const base = results.find(g=>g.sources.thegamesdb?.id==='76875');
+  const deluxe = results.find(g=>g.sources.thegamesdb?.id==='109105');
+  assert.equal(base.sources.screenscraper.id,'479669');
+  assert.deepEqual(base.platforms,['PlayStation 4','PlayStation 5']);
+  assert.ok(deluxe && !deluxe.sources.screenscraper);
+  assert.equal(results.length,2);
+  const detail = await (await detailTheGamesDB(request,e,{sources:base.sources},fetcher,true)).json();
+  assert.deepEqual(detail.platforms,base.platforms);
+  assert.deepEqual(detail.sources,base.sources);
+  assert.equal(detail.releaseDate,'2021-02-02');
 });

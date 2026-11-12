@@ -1,5 +1,5 @@
 import gamePlatforms from '../../../public/sveltia/game-platforms.js';
-import { releaseYear } from './game-identity.js';
+import { developerKey, releaseYear } from './game-identity.js';
 
 // Keep subtitles, edition words and numbers; punctuation alone does not
 // distinguish a port. Do not group from fuzzy matches or aliases.
@@ -117,22 +117,34 @@ function reviewedEditionGroups(key, rows) {
     .sort((a, b) => order.get(a[0]) - order.get(b[0]));
 }
 
-// A date-only match is never enough to join different titles or override a
-// studio conflict. For an otherwise unresolved, uncredited singleton, prefer
-// one uniquely corroborated release day over the coarse year window.
+function compoundStudios(row) {
+  return (row.game.developers || []).flatMap(value => {
+    // Do not mistake comma-separated corporate suffixes for another studio.
+    const pieces = value.replace(/,\s*(?:incorporated|inc|corporation|corp|co|limited|ltd|llc|plc|gmbh)\.?(?=\s*,|\s*$)/giu, '')
+      .split(/,\s+/u).map(developerKey).filter(Boolean);
+    return pieces.length >= 2 ? pieces : [];
+  });
+}
+
+// Require a unique exact-day anchor for an unresolved port, not a broad year match.
+// Compound credits must independently corroborate the target studio.
 function attachSameDayPorts(groups, rows) {
   const proposals = new Map();
   const publisherKeys = row => (row.game.publishers || []).map(name => name.normalize('NFKC').trim().toLowerCase());
   for (const [row, ...rest] of groups) {
     const platform = row.game.platforms[0], date = row.game.releaseDate;
-    if (rest.length || row.credits.length || !platform || !date) continue;
+    const compound = compoundStudios(row);
+    if (rest.length || (row.credits.length && !compound.length) || !platform || !date) continue;
+    const studioFits = other => sharesDeveloper(row, other) || (other.game.developers || [])
+      .some(name => compound.includes(developerKey(name)));
     const matching = groups.map(group => ({group, anchors: group.filter(other =>
       other.credits.length && other.game.platforms[0] && other.game.platforms[0] !== platform &&
-      other.game.releaseDate === date)})).filter(({anchors}) => anchors.length);
+      other.game.releaseDate === date && (!compound.length || studioFits(other)))})).filter(({anchors}) => anchors.length);
     if (matching.length !== 1) continue;
     const {group, anchors} = matching[0];
     if (group.some(other => other.game.platforms[0] === platform)) continue;
-    const pubs = publisherKeys(row);
+    if (compound.length && group.some(other => other.credits.length && !studioFits(other))) continue;
+    const pubs = compound.length ? [] : publisherKeys(row);
     if (pubs.length && anchors.some(anchor => {
       const known = publisherKeys(anchor);
       return known.length && !known.some(name => pubs.includes(name));

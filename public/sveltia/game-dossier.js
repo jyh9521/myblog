@@ -207,7 +207,7 @@
       const id = idString(source?.id), systemId = idString(source?.systemId);
       return id && (provider !== 'screenscraper' || systemId) ? { provider, id, ...(systemId ? { systemId } : {}) } : null;
     };
-    const getEdition = metadata => briefProviders.map(provider => editionFor(metadata, provider)).find(Boolean) || null;
+    const getEdition = metadata => editionFor(metadata, 'thegamesdb') || briefProviders.map(provider => editionFor(metadata, provider)).find(Boolean) || null;
     const editionRefKey = edition => edition ? [edition.provider, edition.id, edition.systemId || ''].join(':') : '';
     const editionKey = metadata => editionRefKey(getEdition(metadata));
     const sourceTags = sources => Object.entries(sources || {}).filter(([, source]) => source?.id)
@@ -230,10 +230,9 @@
     const GameMetadata = createClass({
       getInitialState() {
         const value = this.props?.value || {};
-        return { busy: '', message: '', error: false, results: [], query: '', dataSource: 'identity',
+        return { busy: '', message: '', error: false, results: [], query: '', dataSource: 'all',
           searchOpen: !value.id && !getEdition(value), pendingRefresh: null,
-          year: String(value.releaseDate || '').slice(0, 4), platform: normalizePlatforms(value.selectedPlatforms)[0] || '',
-          developer: Array.isArray(value.developers) ? value.developers[0] || '' : listText(value.developers, '') };
+          year: '', platform: '', developer: '' };
       },
       componentWillUnmount() { this.disposed = true; },
       update(key, value, source = 'manual') {
@@ -262,7 +261,7 @@
         return this.run('search', async () => {
           this.setState({ results: [], query, searchOpen: true });
           let path = '/ns/api/games/search?q=' + encodeURIComponent(query) + '&source=' + encodeURIComponent(source);
-          const usesArchive = ['identity', 'thegamesdb'].includes(source);
+          const usesArchive = ['all', 'thegamesdb'].includes(source);
           for (const [key, value] of Object.entries({ year, platform, developer })) if (usesArchive && value) path += '&' + key + '=' + encodeURIComponent(value);
           const response = usesArchive ? await archiveRequest(path) : await fetch(path);
           const data = await response.json();
@@ -278,13 +277,13 @@
       async selectGame(candidate, refresh = false) {
         return this.run('detail', async () => {
           const sources = candidate.sources || this.props.value?.sources || {};
-          const dataSource = sources.thegamesdb ? 'thegamesdb' : sources.rawg && sources.screenscraper ? 'auto'
+          const dataSource = sources.thegamesdb ? (sources.rawg || sources.screenscraper ? 'all' : 'thegamesdb') : sources.rawg && sources.screenscraper ? 'auto'
             : sources.rawg ? 'rawg' : 'screenscraper';
           if (!getEdition({ sources })) throw new Error('请先选择带有资料库编号的版本。');
           const options = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
             title: candidate.title || this.props.value?.title || '', sources, dataSource, refresh,
           }) };
-          const response = dataSource === 'thegamesdb' ? await archiveRequest('/ns/api/games/detail', options) : await fetch('/ns/api/games/detail', options);
+          const response = ['all', 'thegamesdb'].includes(dataSource) ? await archiveRequest('/ns/api/games/detail', options) : await fetch('/ns/api/games/detail', options);
           const game = await response.json();
           if (!response.ok) throw new Error(game.error === 'ADMIN_LOGIN_REQUIRED' ? '请重新登录博客后台。' : game.error || '读取失败。');
           if (this.disposed) return;
@@ -377,12 +376,12 @@
                 }), button(busy === 'search' ? '搜索中…' : '查找版本', () => this.searchGames(), { primary: true, disabled: !!busy })),
                 details('按年份、平台或开发商筛选', [h('div', { className: 'dossier-form-grid' },
                   labelInput('发行年份', { inputMode: 'numeric', maxLength: 4, value: this.state.year, onChange: year => this.setState({ year }) }),
-                  labelInput('平台', { maxLength: 80, value: this.state.platform, placeholder: '例如 PS5', onChange: platform => this.setState({ platform }) }),
+                  labelInput('平台', { maxLength: 80, value: this.state.platform, onChange: platform => this.setState({ platform }) }),
                   labelInput('开发商', { maxLength: 100, value: this.state.developer, onChange: developer => this.setState({ developer }) }),
                   h('label', { className: 'dossier-label' }, h('span', null, '资料库'), h('select', {
                     className: 'dossier-input', value: this.state.dataSource, disabled: !!busy,
                     onChange: event => this.setState({ dataSource: event.target.value, results: [], message: '' }),
-                  }, [['identity', 'RAWG + TheGamesDB'], ['rawg', 'RAWG'], ['thegamesdb', 'TheGamesDB'], ['screenscraper', 'ScreenScraper']].map(([id, label]) =>
+                  }, [['all', '搜索全部来源'], ['rawg', 'RAWG'], ['thegamesdb', 'TheGamesDB'], ['screenscraper', 'ScreenScraper']].map(([id, label]) =>
                     h('option', { key: id, value: id }, label)))))]),
                 results.length > 0 && h('div', { className: 'dossier-candidates', 'aria-label': '候选游戏版本' }, results.map(item => h('button', {
                   key: item.id, type: 'button', className: 'dossier-candidate', disabled: !!busy, onClick: () => this.selectGame(item),

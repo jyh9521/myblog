@@ -32,7 +32,7 @@ export default {
       const query = (url.searchParams.get("q") || "").trim().replace(/\s+/g, " ").slice(0, 100);
       if (query.length < 2) return jsonError("请输入至少两个字符。", 400);
       const source = (url.searchParams.get("source") || "auto").toLowerCase();
-      if (source === 'identity') return searchDossierEditions(request, env, query);
+      if (source === 'all' || source === 'identity') return searchDossierEditions(request, env, query);
       if (source === 'thegamesdb') return searchTheGamesDB(request, env, query);
       if (!['auto', 'rawg', 'screenscraper'].includes(source)) return jsonError("数据源选项无效。", 400);
       const cacheKey = `game-search:v5:${source}:${query.toLocaleLowerCase()}`;
@@ -69,6 +69,7 @@ export default {
       const title = String(requestBody?.title || "").trim().slice(0, 160);
       const source = String(requestBody?.dataSource || 'auto').toLowerCase();
       if (source === 'thegamesdb') return detailTheGamesDB(request, env, requestBody);
+      if (source === 'all') return detailTheGamesDB(request, env, requestBody, fetch, true);
       if (!['auto', 'rawg', 'screenscraper'].includes(source)) return jsonError("数据源选项无效。", 400);
       const sources = requestBody?.sources && typeof requestBody.sources === "object" ? requestBody.sources : {};
       const id = value => /^[1-9]\d{0,15}$/.test(String(value ?? '')) ? String(value) : '';

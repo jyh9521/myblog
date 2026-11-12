@@ -1,11 +1,13 @@
 import { ArchiveProviderError, TheGamesDBProvider, SteamGridDBProvider, externalId, MAX_GRID_PAGE, MAX_THEGAMESDB_VERSIONS } from './archive-providers.js';
-import { RAWGProvider } from './game-providers.js';
+import { RAWGProvider, ScreenScraperProvider } from './game-providers.js';
 import { rankEditions, releaseYear } from './game-identity.js';
 import { cachedMetadata } from './metadata-cache.js';
 import { preferTheGamesDBVersion } from './thegamesdb-versions.js';
+import { combineDossierSources, matchesCatalogEdition, supplementCatalog } from './dossier-source-merge.js';
 
 const HOUR = 60 * 60 * 1000;
 const searchTtl = value => value.results.length ? HOUR : 5 * 60 * 1000;
+const partialTtl = value => value.incomplete ? 5 * 60 * 1000 : searchTtl(value);
 export const archiveJson = (body, status = 200, headers = {}) => Response.json(body, { status, headers: {
   'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', ...headers,
 } });
@@ -80,17 +82,24 @@ async function cachedTheGamesDBSearch(env, query, fetcher) {
 export function searchDossierEditions(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
     const hints = editionHints(request, query);
-    const outcome = await cachedMetadata(env, 'dossier:editions:v4:' + query.toLowerCase(), searchTtl, async () => {
-      const [rawg, catalog] = await Promise.allSettled([
-        new RAWGProvider(env, fetcher).search(query), cachedTheGamesDBSearch(env, query, fetcher),
+    const outcome = await cachedMetadata(env, 'dossier:all:v1:' + query.toLowerCase(), partialTtl, async () => {
+      const [catalog, rawg, screen] = await Promise.allSettled([
+        cachedTheGamesDBSearch(env, query, fetcher), new RAWGProvider(env, fetcher).search(query),
+        new ScreenScraperProvider(env, fetcher).search(query),
       ]);
-      if (rawg.status === 'rejected' && catalog.status === 'rejected') {
-        throw new ArchiveProviderError('RAWG 与 TheGamesDB 暂不可用。请试用其他来源或手动填写。', 503);
+      if ([catalog, rawg, screen].every(outcome => outcome.status === 'rejected')) {
+        throw new ArchiveProviderError('游戏资料库暂不可用，请稍后重试。', 503);
       }
       const catalogValue = catalog.status === 'fulfilled' ? cacheResult(catalog.value) : null;
-      return { results: [...(rawg.status === 'fulfilled' ? rawg.value.map(metadataOnly) : []), ...(catalogValue?.results || [])],
-        warnings: [...(rawg.status === 'rejected' ? ['RAWG 暂不可用'] : []),
-          ...(catalogValue ? [...catalogValue.warnings, ...(catalogValue.warning ? [catalogValue.warning] : [])] : ['TheGamesDB 暂不可用'])] };
+      const providers = { thegamesdb: catalogValue ? catalogValue.cache === 'stale' ? 'stale' : 'ok' : 'unavailable',
+        rawg: rawg.status === 'fulfilled' ? 'ok' : 'unavailable', screenscraper: screen.status === 'fulfilled' ? 'ok' : 'unavailable' };
+      const warnings = [
+        ...(catalogValue ? [...catalogValue.warnings, ...(catalogValue.warning ? ['TheGamesDB 暂使用缓存'] : [])] : ['TheGamesDB 暂不可用']),
+        ...(providers.rawg === 'unavailable' ? ['RAWG 暂不可用'] : []),
+        ...(providers.screenscraper === 'unavailable' ? ['ScreenScraper 暂不可用'] : []),
+      ];
+      const results = combineDossierSources(catalogValue?.results || [], rawg.value || [], screen.value || []).map(metadataOnly);
+      return { results, providers, warnings, incomplete: Object.values(providers).some(status => status !== 'ok') };
     });
     return rankedCatalog(outcome, hints);
   });
@@ -103,7 +112,7 @@ export function searchTheGamesDB(request, env, query, fetcher = fetch) {
   });
 }
 
-export function detailTheGamesDB(request, env, body, fetcher = fetch) {
+export function detailTheGamesDB(request, env, body, fetcher = fetch, supplement = false) {
   return withArchiveAdmin(request, env, async () => {
     const source = body?.sources?.thegamesdb;
     const id = externalId(source?.id);
@@ -115,8 +124,36 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch) {
     // Trust only the IDs, never the browser's platform names or release dates.
     const ids = [...new Set(versions.map(version => externalId(version.id)))].filter(value => value !== id).sort();
     if (ids.length >= MAX_THEGAMESDB_VERSIONS) return archiveJson({ error: 'TheGamesDB 平台记录过多，请重新搜索。' }, 400);
-    const outcome = await cachedMetadata(env, `thegamesdb:detail:v5:${[id, ...ids].join(',')}`, 7 * 24 * HOUR,
-      async () => metadataOnly(await new TheGamesDBProvider(env, fetcher).getByVersionIds(id, ids)), body.refresh === true);
+    const loadBase = () => new TheGamesDBProvider(env, fetcher).getByVersionIds(id, ids);
+    const rawg = supplement ? externalId(body.sources.rawg?.id) : '';
+    const ss = supplement ? externalId(body.sources.screenscraper?.id) : '';
+    const system = supplement ? externalId(body.sources.screenscraper?.systemId) : '';
+    if (supplement && ((body.sources.rawg && !rawg) || (body.sources.screenscraper && (!ss || !system)))) {
+      return archiveJson({ error: '辅助资料的游戏或平台编号无效，请重新搜索。' }, 400);
+    }
+    const baseKey = `thegamesdb:detail:v5:${[id, ...ids].join(',')}`;
+    const detailTtl = 7 * 24 * HOUR;
+    const refresh = body.refresh === true;
+    const loadCatalog = async () => metadataOnly(await loadBase());
+    const outcome = !rawg && !ss ? await cachedMetadata(env, baseKey, detailTtl, loadCatalog, refresh)
+      : await cachedMetadata(env, `dossier:all:detail:v1:${baseKey}:${rawg}:${ss}:${system}`,
+        value => value.incomplete ? 5 * 60 * 1000 : detailTtl, async () => {
+          const jobs = [
+            ...(rawg ? [['rawg', 'RAWG', new RAWGProvider(env, fetcher).getById(rawg)]] : []),
+            ...(ss ? [['screenscraper', 'ScreenScraper', new ScreenScraperProvider(env, fetcher).getById(ss, system)]] : []),
+          ];
+          const [catalog, ...secondary] = await Promise.allSettled([loadCatalog(), ...jobs.map(job => job[2])]);
+          if (catalog.status !== 'fulfilled') throw catalog.reason;
+          const base = catalog.value, warnings = [...(base.warnings || [])];
+          let game = base, incomplete = false;
+          secondary.forEach((result, index) => {
+            const [provider, label] = jobs[index];
+            if (result.status !== 'fulfilled') { incomplete = true; warnings.push(label + ' 详情暂不可用'); }
+            else if (!matchesCatalogEdition(base, result.value)) warnings.push(label + ' 详情未通过版本核对，已略过');
+            else game = supplementCatalog(game, result.value, provider);
+          });
+          return { ...game, warnings, incomplete };
+        }, refresh);
     return archiveJson(cacheResult(outcome));
   });
 }

@@ -12,7 +12,7 @@
 
 ## 游戏资料数据库
 
-游戏资料由 Cloudflare Worker 查询 RAWG、TheGamesDB、ScreenScraper。默认同时查询 RAWG 和 TheGamesDB，按名称、年份、平台、开发商排序，由编辑确认版本后按 ID 读取。SteamGridDB 单独用于封面。每条记录保存在 `content/games/<slug>.md`；`manual` 继续保存正版渠道与备注。已审核的中文简介随档案保存，前台不请求第三方 API。
+游戏资料由 Cloudflare Worker 查询 RAWG、TheGamesDB、ScreenScraper。默认的「搜索全部来源」并行查询三库；发行年份、平台和开发商初始为空，编辑需要时可填写。以 TheGamesDB 为蓝本，只补入唯一匹配且没有明确冲突的记录；未匹配的候选仍可单独选用。选用后按来源 ID 重新核对详情，不导入资料库简介，不覆盖手动字段。SteamGridDB 单独用于封面。每条记录保存在 `content/games/<slug>.md`；`manual` 继续保存正版渠道与备注。已审核的中文简介随档案保存，前台不请求第三方 API。
 
 TheGamesDB 中能够核对为同一作品的跨平台记录在搜索结果中合为一条。合并保留各平台的编号与发行日期；选用前可填写目标平台或年份，让对应记录作为主资料。按完整版本名、开发商和发行时间核对，不用简称或别名强行合并；同名不同年代、不同工作室或有歧义的记录继续分列。搜索最多读取 TheGamesDB 的前四页，结果不完整时会提示。重新搜索并选用后可在「资料与渠道」勾选实际要展示的平台；既有档案不自动迁移。
 
@@ -28,7 +28,7 @@ TheGamesDB 中能够核对为同一作品的跨平台记录在搜索结果中合
 - `SCREENSCRAPER_SOFTNAME`：ScreenScraper 登记/确认的客户端名称；若申请信息未另行指定，可填 `blfy-blog`。
 - `SCREENSCRAPER_USER_ID` / `SCREENSCRAPER_USER_PASSWORD`：可选的 ScreenScraper 用户账号凭据。
 
-RAWG 与 TheGamesDB 凭据可单独缺省；默认搜索会显示可用的来源和提示。ScreenScraper 可在筛选中单独选择，开发者凭据和 softname 按其官方 WebAPI 申请流程获取。
+缺少某个来源的凭据或来源暂时失败时，全部来源搜索会保留其他来源的结果并提示。三个资料库也可单独选择；ScreenScraper 的开发者凭据和 softname 按其官方 WebAPI 申请流程获取。
 
 RAWG 的 API 文档提供个人/爱好项目申请入口；其免费方案限制为非商业项目，并要求在使用数据的页面链接回 RAWG。本站游戏卡片会显示来源链接。ScreenScraper 需先注册账号，再通过官方论坛联系团队介绍应用并申请开发者 ID、密码和登记的 `softname`；官方说明 API 面向免费分发的软件，其他用途需事先取得许可。
 

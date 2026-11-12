@@ -328,3 +328,78 @@ test('an ambiguous sparse row cannot bridge or dissolve either same-title studio
   assert.deepEqual(ids(rows), ['1,2', '3,4', '5']);
   assert.deepEqual(ids([...rows].reverse()), ids(rows));
 });
+
+test('all-source search fans out concurrently, anchors to catalog versions, and verifies detail before supplementing', { timeout: 3000 }, async () => {
+  const e = { ...env(), RAWG_API_KEY: 'rawg-fixture', SCREENSCRAPER_DEV_ID: 'ss-fixture', SCREENSCRAPER_DEV_PASSWORD: 'ss-fixture' };
+  const title = 'Archive Coast', calls = new Set();
+  let release, mismatch = false;
+  const started = new Promise(resolve => { release = resolve; });
+  const base = [
+    { id: 31, game_title: title, platform: 1, release_date: '2010-05-12', developers: [7], genres: [9] },
+    { id: 32, game_title: title, platform: 2, release_date: '2012-06-20', developers: [7], genres: [9] },
+  ];
+  const raw = { id: 41, name: title, released: '2010-04-01', website: 'https://example.org/',
+    platforms: [{ platform: { name: 'PC' }, released_at: '2012-06-20' }, { platform: { name: 'Linux' } }],
+    genres: [{ name: 'Adventure' }], description_raw: 'Never import source prose' };
+  const screen = { id: 51, nom: title, noms: { cn: '海岸档案' }, dates: { us: '2010-05-12' },
+    systeme: { id: 4, text: 'Xbox 360' }, developpeur: 'Fixture Dev', editeur: 'Supplement Pub' };
+  const fetcher = async url => {
+    const endpoint = url.pathname.split('/').at(-1);
+    if (['ByGameName', 'games', 'jeuRecherche.php'].includes(endpoint)) {
+      calls.add(endpoint);
+      if (calls.size === 3) release();
+      await started;
+    }
+    if (endpoint === 'ByGameName' || endpoint === 'ByGameID') return Response.json({ code: 200, data: { games: base },
+      include: { platform: { 1: { name: 'Xbox 360' }, 2: { name: 'PC' } } } });
+    if (endpoint === 'Developers') return Response.json({ code: 200, data: { developers: { 7: { id: 7, name: 'Fixture Dev' } } } });
+    if (endpoint === 'Genres') return Response.json({ code: 200, data: { genres: { 9: { id: 9, name: 'Action' } } } });
+    if (endpoint === 'games') return Response.json({ results: [raw, { ...raw, id: 42, released: '2024-10-04',
+      platforms: [{ platform: { name: 'PC' }, released_at: '2024-10-04' }] }] });
+    if (endpoint === '41') return Response.json(raw);
+    if (endpoint === 'screenshots') return Response.json({ results: [] });
+    if (endpoint === 'jeuRecherche.php') return Response.json({ response: { jeux: [screen] } });
+    if (endpoint === 'jeuInfos.php') return Response.json({ response: { jeu: mismatch ? { ...screen, dates: { us: '2024-03-03' } } : screen } });
+    assert.fail('unexpected request: ' + endpoint);
+  };
+  const request = new Request(root + '/search?platform=PC&year=2012', { headers: auth });
+  const response = await searchDossierEditions(request, e, title, fetcher);
+  assert.equal(response.status, 200);
+  const { results, providers } = await response.json();
+  assert.deepEqual(providers, { thegamesdb: 'ok', rawg: 'ok', screenscraper: 'ok' });
+  assert.equal(results.length, 2);
+  const [game, separate] = results;
+  assert.equal(game.id, 'thegamesdb:32');
+  assert.equal(game.title, title);
+  assert.equal(separate.id, 'rawg:42');
+  assert.deepEqual(Object.keys(game.sources), ['thegamesdb', 'rawg', 'screenscraper']);
+  assert.deepEqual(game.genres, ['Action', 'Adventure']);
+  assert.deepEqual(game.platforms, ['PC', 'Xbox 360', 'Linux']);
+  assert.equal(game.fieldSources.website, 'rawg');
+  assert.equal(game.fieldSources.publishers, 'screenscraper');
+  assert.equal(game.description, undefined);
+  const detailRequest = new Request(root + '/detail', { method: 'POST', headers: auth });
+  const detail = async () => (await detailTheGamesDB(detailRequest, e, { sources: game.sources, refresh: true }, fetcher, true)).json();
+  assert.deepEqual((await detail()).sources, game.sources);
+  mismatch = true;
+  const rejected = await detail();
+  assert.equal(rejected.sources.screenscraper, undefined);
+  assert.equal(rejected.localizedName, undefined);
+  assert.match(rejected.warnings.join(), /ScreenScraper 详情未通过版本核对/);
+  assert.equal(rejected.id, 'thegamesdb:32');
+  assert.ok([...e.cache.values()].every(row => !row.payload.includes('Never import source prose')));
+});
+
+test('all-source search retains available candidates and reports unavailable providers', async () => {
+  const e = { ...env(), RAWG_API_KEY: 'rawg-fixture', SCREENSCRAPER_DEV_ID: 'ss-fixture', SCREENSCRAPER_DEV_PASSWORD: 'ss-fixture' };
+  const fetcher = async url => url.hostname === 'api.screenscraper.fr' ? Response.json({ response: { jeux: [
+    { id: 21, nom: 'Fallback Title', dates: { us: '2004-03-01' }, systeme: { id: 4, text: 'PlayStation 2' } },
+  ] } }) : new Response('private upstream error', { status: 503 });
+  const request = new Request(root + '/search', { headers: auth });
+  const response = await searchDossierEditions(request, e, 'Fallback Title', fetcher);
+  assert.equal(response.status, 200);
+  const result = await response.json();
+  assert.deepEqual(result.results.map(item => item.id), ['screenscraper:21']);
+  assert.deepEqual(result.providers, { thegamesdb: 'unavailable', rawg: 'unavailable', screenscraper: 'ok' });
+  assert.deepEqual(result.warnings, ['TheGamesDB 暂不可用', 'RAWG 暂不可用']);
+});

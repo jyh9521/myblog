@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const matter = require('gray-matter');
 
 function instance(def, props) {
-  return { ...def, state: def.getInitialState(), props, setState(change) { Object.assign(this.state, change); } };
+  return { ...def, state: def.getInitialState.call({ props }), props, setState(change) { Object.assign(this.state, change); } };
 }
 function descendants(tree) {
   if (!tree || typeof tree !== 'object') return [];
@@ -38,7 +38,7 @@ test('CMS entry loads the versioned cover styles and updated admin/field scripts
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);
   assert.match(html, /admin-auth\.js\?v=game-brief-20261109/);
-  assert.match(html, /game-dossier\.js\?v=thegamesdb-versions-20261110/);
+  assert.match(html, /game-dossier\.js\?v=all-sources-20261112/);
 });
 
 test('TheGamesDB option imports and refreshes game fields only, including after reopening', async () => {
@@ -148,4 +148,26 @@ test('closing a pending cover search discards the late response and never edits 
   assert.equal(c.picker.state.open, false);
   assert.equal(c.picker.state.games.length, 0);
   assert.equal(c.updates(), 0);
+});
+
+
+test('all-source search starts with blank optional filters and keeps the catalog ID when applying supplements', async () => {
+  const calls = [];
+  const result = { ...game, website: 'https://example.com/game', sources: { ...game.sources, rawg: { id: '9' }, screenscraper: { id: '8', systemId: '4' } },
+    fieldSources: { ...game.fieldSources, website: 'rawg' } };
+  const c = cms({ releaseDate: '2020-01-01', selectedPlatforms: ['Nintendo Switch'], developers: ['Old Dev'] }, async (path, options) => {
+    calls.push({ path, body: options && JSON.parse(options.body) });
+    return Response.json(options ? result : { results: [result] });
+  });
+  assert.deepEqual(['year', 'platform', 'developer'].map(key => c.field.state[key]), ['', '', '']);
+  assert.equal(c.field.state.dataSource, 'all');
+  assert.ok(c.nodes.some(node => node.type === 'option' && node.props.value === 'all' && node.children[0] === '搜索全部来源'));
+  assert.ok(!c.nodes.some(node => node.type === 'option' && node.children[0] === 'RAWG + TheGamesDB'));
+  c.field.state.query = 'Fixture Quest';
+  await c.field.searchGames();
+  assert.equal(calls[0].path, '/ns/api/games/search?q=Fixture%20Quest&source=all');
+  await c.field.selectGame(c.field.state.results[0]);
+  assert.equal(calls[1].body.dataSource, 'all');
+  assert.equal(c.field.props.value.id, 'thegamesdb:35');
+  assert.equal(c.field.props.value.fieldSources.website, 'rawg');
 });

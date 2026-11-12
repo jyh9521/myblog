@@ -2,56 +2,15 @@
 title: 死亡搁浅：导演剪辑版
 status:
   - 已通关
-playTime:
-  hours: 39.3
-personalRating: 9
-hltb:
-  auto: true
-  id: 93457
-  snapshot:
-    id: 93457
-    main: 38.22
-    extras: 59.48
-    completionist: 111.85
-    updatedAt: 2026-10-08T23:53:38.610Z
-  title: "Death Stranding: Director's Cut"
-  url: https://howlongtobeat.com/game/93457
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/b6f/b6fa0cde8a1204c7d6edc2ec3c753df9.jpg
-  description: Sam Bridges must brave a world utterly transformed by the Death Stranding. Carrying the stranded remnants of the future in his hands, Sam embarks on a journey to reunite the shattered world one step at a time. What is the mystery of the Death Stranding? What will Sam discover on the road ahead? A genre defining gameplay experience holds these answers and more.
-  developers:
-    - Kojima Productions
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    selectedPlatforms: manual
-    title: manual
-    website: rawg
-  genres:
-    - Action
-    - Adventure
-  id: rawg:614964
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-    - title
-  originalName: Death Stranding Director's Cut
   platforms:
     - PC
-    - macOS
-    - iOS
     - PlayStation 5
-  publishers:
-    - Sony Interactive Entertainment
-    - 505 Games
-  releaseDate: 2021-09-24
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Kojima Productions (Konami)
   screenshots:
     - https://media.rawg.io/media/screenshots/d7b/d7b48852bf6d21bbc439cb375bcdec91.jpg
     - https://media.rawg.io/media/screenshots/87d/87dcff471cc2d210dd1f2b7f953755ef.jpg
@@ -59,16 +18,56 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/426/426a1ffa0cb4864db68c8964f728d2f9.jpg
     - https://media.rawg.io/media/screenshots/22c/22c038eb6dfcf4ba3b466e3bacc451c5.jpg
     - https://media.rawg.io/media/screenshots/ea0/ea0af644fb10443ffff0b3dad18efc99.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '614964'
-      slug: death-stranding-directors-cut
-      url: https://rawg.io/games/614964
+  updatedAt: 2026-11-12T02:51:51.386Z
+  genres:
+    - Action
+    - Role-Playing
+    - Life Simulation
+  releaseDate: 2021-09-24
+  publishers:
+    - Sony Interactive Entertainment
+  cover: https://cdn2.steamgriddb.com/grid/34042c360d640bc6a90e04a4a329c906.png
   title: Death Stranding Director's Cut
-  updatedAt: 2026-10-08T23:51:41.048Z
-  website: https://www.playstation.com/en-us/games/death-stranding-directors-cut/
+  sources:
+    thegamesdb:
+      id: '88885'
+      url: https://thegamesdb.net/game.php?id=88885
+      versions:
+        - id: '99247'
+          platform: PC
+          releaseDate: 2022-03-30
+        - id: '88885'
+          platform: PlayStation 5
+          releaseDate: 2021-09-24
+        - id: '113885'
+          platform: PlayStation 5
+          releaseDate: 2021-09-24
+        - id: '119949'
+          platform: PlayStation 5
+          releaseDate: 2021-09-24
+  id: thegamesdb:88885
+  alternativeNames: []
+  description: Sam Bridges must brave a world utterly transformed by the Death Stranding. Carrying the stranded remnants of the future in his hands, Sam embarks on a journey to reunite the shattered world one step at a time. What is the mystery of the Death Stranding? What will Sam discover on the road ahead? A genre defining gameplay experience holds these answers and more.
+  originalName: "Death Stranding: Director's Cut"
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: manual
+    description: rawg
+    originalName: thegamesdb
+  manualFields:
+    - selectedPlatforms
+    - title
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: 山姆·布里吉斯必须勇敢面对因“死亡搁浅”而彻底巨变的世界。山姆手中掌握着人类未来的残存碎片，踏上了将破碎的世界一步步重新连接起来的旅程。“死亡搁浅”的秘密究竟是什么？山姆在前方的大道上又会发现什么？开创全新游戏类型的体验将为您揭晓这些答案以及更多内容。
 manual:
   availabilityStatus: available
   officialStores:
@@ -76,6 +75,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/1850570/
+playTime:
+  hours: 39.3
+personalRating: 9
+hltb:
+  auto: true
+  id: 93457
+  snapshot:
+    completionist: 111.85
+    extras: 59.48
+    id: 93457
+    main: 38.22
+    updatedAt: 2026-10-08T23:53:38.610Z
+  title: "Death Stranding: Director's Cut"
+  url: https://howlongtobeat.com/game/93457
 events:
   - date: 2022-04-02
     title: 开始游戏

@@ -2,23 +2,46 @@
 title: 叛逆机械师
 status:
   - 已通关
-playTime:
-  hours: 10.4
-personalRating: 8
-hltb:
-  id: 9939
-  url: https://howlongtobeat.com/game/9939
-  title: Iconoclasts
-  auto: true
-  snapshot:
-    id: 9939
-    main: 11.01
-    extras: 13.33
-    completionist: 16.32
-    updatedAt: 2026-10-08T17:44:08.595Z
 gameMetadata:
+  platforms:
+    - Xbox One
+    - Nintendo Switch
+    - PlayStation 4
+    - PS Vita
+    - PC
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Joakim Sandberg
+    - Bifrost Entertainment
+  screenshots:
+    - https://media.rawg.io/media/screenshots/6eb/6eb77153db932bda2f3dab32a88f7a12.jpg
+    - https://media.rawg.io/media/screenshots/e16/e1670ba3377dc45999023f00ebc2eea7.jpg
+    - https://media.rawg.io/media/screenshots/f55/f5508fd9f908aec7a18597479433dc5c.jpg
+    - https://media.rawg.io/media/screenshots/f3e/f3ec672b245962f1e43c00245ac5d038.jpg
+    - https://media.rawg.io/media/screenshots/ff3/ff3e7213958d9341ab8ba50458428885.jpg
+    - https://media.rawg.io/media/screenshots/720/7209b93e849b54bd364535c3c8255023.jpg
+  updatedAt: 2026-10-08T17:44:42.723Z
+  genres:
+    - Action
+    - Adventure
+    - Indie
+    - Platformer
+  releaseDate: 2018-01-23
+  publishers:
+    - Bifrost Entertainment
+    - Bifrost Ent.
+  cover: https://cdn2.steamgriddb.com/grid/3abce6f025381b2af3189415e003b4b9.png
+  title: Iconoclasts
+  sources:
+    rawg:
+      id: '10878'
+      slug: iconoclasts
+      url: https://rawg.io/games/10878
+  website: http://www.bifrostent.com/iconoclasts
+  id: rawg:10878
   alternativeNames: []
-  cover: https://media.rawg.io/media/games/01a/01a73c4a2d3d5b67e369047896749a95.jpg
   description: |-
     Robin just wants to be a mechanic and help people, but without a license that makes her a sinner in Mother’s eyes.
     Ever since Robin picked up her wrench, the world’s been going nuts. Now Penance is raining down on everyone she loves and creepy One Concern agents are after her.
@@ -29,58 +52,45 @@ gameMetadata:
     20+ gear-grinding, screen-filling boss battles stand in your way
     3 game-changing difficulty settings supported by a unique skill system
     A heart-wrenching epic -- can one mechanic fix the whole world?
-  developers:
-    - Joakim Sandberg
-    - Bifrost Entertainment
+  originalName: Iconoclasts
   fieldSources:
-    cover: rawg
-    description: rawg
+    platforms: rawg
+    selectedPlatforms: manual
     developers: rawg
     genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
     releaseDate: rawg
+    publishers: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - Adventure
-    - Indie
-    - Platformer
-  id: rawg:10878
-  localizedName: ''
+    description: rawg
+    originalName: rawg
   manualFields:
     - selectedPlatforms
-  originalName: Iconoclasts
-  platforms:
-    - Xbox One
-    - Nintendo Switch
-    - PlayStation 4
-    - PS Vita
-    - PC
-  publishers:
-    - Bifrost Entertainment
-    - Bifrost Ent.
-  releaseDate: 2018-01-23
-  screenshots:
-    - https://media.rawg.io/media/screenshots/6eb/6eb77153db932bda2f3dab32a88f7a12.jpg
-    - https://media.rawg.io/media/screenshots/e16/e1670ba3377dc45999023f00ebc2eea7.jpg
-    - https://media.rawg.io/media/screenshots/f55/f5508fd9f908aec7a18597479433dc5c.jpg
-    - https://media.rawg.io/media/screenshots/f3e/f3ec672b245962f1e43c00245ac5d038.jpg
-    - https://media.rawg.io/media/screenshots/ff3/ff3e7213958d9341ab8ba50458428885.jpg
-    - https://media.rawg.io/media/screenshots/720/7209b93e849b54bd364535c3c8255023.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '10878'
-      slug: iconoclasts
-      url: https://rawg.io/games/10878
-  title: Iconoclasts
-  updatedAt: 2026-10-08T17:44:42.723Z
-  website: http://www.bifrostent.com/iconoclasts
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:10878:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/10878
+  text: |-
+    罗宾只想当个机械师去帮助别人，但在“母亲”眼中，没有执照的她就是个罪人。
+
+    自从罗宾拿起扳手，这个世界就彻底疯狂了。现在，苦修之雨正倾盆落在她所爱之人的头上，诡异的“一心”特工也对她穷追不舍。
+
+    一场巨大的阴谋正在酝酿，它比象牙短缺或月球碎裂还要宏大——而罗宾正处于风暴的中心。
+
+    《叛逆机械师》是独立开发者乔金·桑德伯格（Joakim Sandberg）历时七年打造的匠心之作。游戏带来了精彩绝伦的动作体验、令人捧腹的 antics（注：此处按惯例直译或意译为妙趣横生的恶作剧/冒险）以及情感跌宕起伏的沉浸式个人叙事。
+
+    10个令人绞尽脑汁的类银河战士恶魔城风格平台冒险小时
+    10个细节满满的区域，充满精心调校的动作玩法与谜题
+    20多场惊心动魄、充满整个屏幕的头目战挡在你的面前
+    3种颠覆游戏体验的难度设定，搭配独特的技能系统
+    一场撕心裂肺的史诗之旅——一个机械师能拯救整个世界吗？
 manual:
   availabilityStatus: available
   officialStores:
@@ -88,6 +98,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/393520/
+playTime:
+  hours: 10.4
+personalRating: 8
+hltb:
+  auto: true
+  id: 9939
+  snapshot:
+    completionist: 16.32
+    extras: 13.33
+    id: 9939
+    main: 11.01
+    updatedAt: 2026-10-08T17:44:08.595Z
+  title: Iconoclasts
+  url: https://howlongtobeat.com/game/9939
 events:
   - date: 2020-06-28
     title: 开始游戏

@@ -87,6 +87,36 @@ function editionGroups(rows) {
     .sort((a, b) => order.get(a[0]) - order.get(b[0]));
 }
 
+// Verified catalog relationships, not title-wide overrides. The IDs, platforms,
+// and release dates must all match; additional editions are never admitted.
+// Sources: https://finji.co/games/tunic/ and the platform release announcements.
+const verifiedPorts = new Map([
+  ['tunic', new Map([
+    ['66459', ['PC', '2022-03-16']],
+    ['99191', ['Xbox One', '2022-03-16']],
+    ['104354', ['Xbox Series X|S', '2022-03-16']],
+    ['104890', ['Nintendo Switch', '2022-09-27']],
+  ])],
+]);
+
+function reviewedEditionGroups(key, rows) {
+  const groups = editionGroups(rows);
+  const review = verifiedPorts.get(key);
+  if (!review) return groups;
+  const verified = rows.filter(row => {
+    const expected = review.get(sourceId(row));
+    return expected && row.game.platforms[0] === expected[0] && row.game.releaseDate === expected[1];
+  });
+  if (!verified.length || verified.some(row => row.credits.length && verified.some(other =>
+    other.credits.length && !sharesDeveloper(row, other)))) return groups;
+  // Do not rerun inference without these rows: removing an anchor could make
+  // another same-title edition appear unambiguous when it is not.
+  const members = new Set(verified);
+  const order = new Map(rows.map((row, i) => [row, i]));
+  return [verified, ...groups.map(group => group.filter(row => !members.has(row))).filter(group => group.length)]
+    .sort((a, b) => order.get(a[0]) - order.get(b[0]));
+}
+
 export function groupTheGamesDBVersions(rows, primaryId = '') {
   const titles = new Map();
   for (const row of rows) {
@@ -94,7 +124,7 @@ export function groupTheGamesDBVersions(rows, primaryId = '') {
     if (!titles.has(key)) titles.set(key, []);
     titles.get(key).push(row);
   }
-  return [...titles.values()].flatMap(editionGroups).map(members => {
+  return [...titles].flatMap(([key, matches]) => reviewedEditionGroups(key, matches)).map(members => {
     const { game } = members.find(row => sourceId(row) === primaryId) || members[0];
     if (members.length === 1) return game;
     const versions = members.map(row => ({

@@ -218,7 +218,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v5:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v6:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -402,4 +402,53 @@ test('all-source search retains available candidates and reports unavailable pro
   assert.deepEqual(result.results.map(item => item.id), ['screenscraper:21']);
   assert.deepEqual(result.providers, { thegamesdb: 'unavailable', rawg: 'unavailable', screenscraper: 'ok' });
   assert.deepEqual(result.warnings, ['TheGamesDB 暂不可用', 'RAWG 暂不可用']);
+});
+
+test('TUNIC production catalog: verified 2022 ports group, unrelated and later editions stay separate', async () => {
+  const records = [
+    [66459, 'TUNIC', '2022-03-16', 1, null],
+    [99191, 'Tunic', '2022-03-16', 4920, null],
+    [104354, 'Tunic', '2022-03-16', 4981, null],
+    [104890, 'Tunic', '2022-09-27', 4971, [10838]],
+    [106641, 'Tunic', '2022-09-27', 4980, null],
+    [117590, 'Tunic', '2023-08-11', 4971, [10838]],
+    [123537, 'Tunic', '2023-01-20', 41, null],
+    [123708, 'Tunic', '2023-01-29', 41, null],
+    [999991, 'Tunic Deluxe Edition', '2022-09-27', 4971, [10838]],
+  ].map(([id, game_title, release_date, platform, developers]) => ({ id, game_title, release_date, platform, developers }));
+  const names = { 1: 'PC', 4920: 'Microsoft Xbox One', 4981: 'Microsoft Xbox Series X', 4971: 'Nintendo Switch', 4980: 'Sony PlayStation 5', 41: 'Nintendo Game Boy Color' };
+  const e = env();
+  const fetcher = async url => {
+    if (url.pathname.endsWith('/Developers')) return Response.json({code:200,data:{developers:{10838:{id:10838,name:'Isometricorp Games'}}}});
+    if (url.pathname.endsWith('/ByGameName') || url.pathname.endsWith('/ByGameID')) {
+      const ids = url.searchParams.get('id')?.split(',');
+      return Response.json({code:200,data:{games:ids?records.filter(r=>ids.includes(String(r.id))):records},
+        include:{platform:Object.fromEntries(Object.entries(names).map(([id,name])=>[id,{name}]))}});
+    }
+    return Response.json({error:'fixture: supplemental source unavailable'}, {status:503});
+  };
+  const request = new Request(root+'/search?platform=PC', {headers:auth});
+  const stale = {cached_at:Date.now(), payload:JSON.stringify({results:[],warnings:[]})};
+  e.cache.set('thegamesdb:search:v5:tunic', stale);
+  e.cache.set('dossier:all:v1:tunic', stale);
+  const expected = ['104354','104890','66459','99191'];
+  const check = result => {
+    const candidates = result.results.filter(game => game.sources?.thegamesdb);
+    const group = candidates.find(game=>game.sources.thegamesdb.versions?.some(v=>v.id==='66459'));
+    assert.deepEqual(group?.sources.thegamesdb.versions.map(v=>v.id).sort(), expected);
+    assert.deepEqual(group.platforms.slice().sort(), ['Nintendo Switch','PC','Xbox One','Xbox Series X|S'].sort());
+    for (const id of ['106641','117590','123537','123708','999991'])
+      assert.equal(candidates.find(game=>game.sources.thegamesdb.id===id)?.sources.thegamesdb.versions, undefined);
+    assert.equal(candidates.length,6);
+    return group;
+  };
+  const first = await (await searchTheGamesDB(request,e,'Tunic',fetcher)).json();
+  assert.equal(first.cache,'miss');
+  const group = check(first);
+  assert.equal((await (await searchTheGamesDB(request,e,'TUNIC',fetcher)).json()).cache,'fresh');
+  check(await (await searchDossierEditions(request,e,'Tunic',fetcher)).json());
+  const detail = await (await detailTheGamesDB(request,e,{sources:{thegamesdb:{...group.sources.thegamesdb,
+    versions:[...group.sources.thegamesdb.versions,...['117590','123537','123708','999991'].map(id=>({id}))]}}},fetcher)).json();
+  assert.deepEqual(detail.sources.thegamesdb.versions.map(v=>v.id).sort(),expected);
+  assert.ok(detail.warnings.some(w=>w.includes('未通过核对')));
 });

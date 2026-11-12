@@ -75,10 +75,18 @@ function parsePlatform(record: any, metadata: GameMetadata, slug: string): GameP
   const versionMatches = (Array.isArray(theGamesDB?.versions) ? theGamesDB.versions : []).filter(version =>
     /^[1-9]\d{0,15}$/.test(asText(version?.id)) && gamePlatforms.normalizePlatform(version?.platform) === platform);
   const version = versionMatches.find(item => item.id === theGamesDB?.id) || versionMatches[0];
-  const catalogDate = version && metadata.fieldSources.releaseDate !== 'manual' ? version.releaseDate : metadata.releaseDate;
-  const sources = Object.keys(metadata.sources || {});
-  const catalogSource = sources.length ? sources.join(' + ') : '手动资料';
-  const catalogSourceLinks = Object.entries(metadata.sources || {}).flatMap(([source, details]) => {
+  const scoped = Object.entries(metadata.sources).find(([, details]) => details?.platformRelease &&
+    gamePlatforms.normalizePlatform(details.platformRelease.platform) === platform &&
+    /^\d{4}-\d{2}-\d{2}$/.test(asDate(details.platformRelease.releaseDate)) &&
+    /^https:\/\//i.test(asText(details.platformRelease.evidence)));
+  const scopedDate = !version ? scoped?.[1]?.platformRelease : undefined;
+  const catalogDate = scopedDate?.releaseDate || (version && metadata.fieldSources.releaseDate !== 'manual' ? version.releaseDate : metadata.releaseDate);
+  const scopedSelected = !version && !!scopedDate;
+  const sourceEntries = Object.entries(metadata.sources || {}).filter(([source, details]) => {
+    if (details?.platformRelease) return !!scopedDate && source === scoped?.[0];
+    return !scopedSelected || source !== 'thegamesdb';
+  });
+  const catalogSourceLinks = sourceEntries.flatMap(([source, details]) => {
     if (!details?.id) return [];
     const url = source === 'thegamesdb' && version ? `https://thegamesdb.net/game.php?id=${encodeURIComponent(version.id)}` : details.url || (source === 'rawg'
       ? `https://rawg.io/games/${encodeURIComponent(details.id)}`
@@ -87,6 +95,10 @@ function parsePlatform(record: any, metadata: GameMetadata, slug: string): GameP
         : '');
     return url ? [{ source, url }] : [];
   });
+  if (scopedDate) catalogSourceLinks.push({ source: 'officialRelease', url: scopedDate.evidence });
+  const sourceNames = sourceEntries.map(([source]) => source);
+  if (scopedDate) sourceNames.push('officialRelease');
+  const catalogSource = sourceNames.join(' + ') || '手动资料';
   return {
     store, platform,
     catalogUrl: `/games/${encodeURIComponent(slug)}/`,
@@ -94,6 +106,7 @@ function parsePlatform(record: any, metadata: GameMetadata, slug: string): GameP
     developer: asList(overrides.developers || overrides.developer || metadata.developers).join(', '),
     publisher: asList(overrides.publishers || overrides.publisher || metadata.publishers).join(', '),
     releaseDate: asDate(overrides.releaseDate || catalogDate),
+    ...(scopedDate && !overrides.releaseDate ? { releaseRegion: scopedDate.region } : {}),
     genres: asList(overrides.genres || metadata.genres), catalogSource,
     catalogId: metadata.id || slug, catalogSourceLinks,
   };

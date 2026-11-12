@@ -91,3 +91,33 @@ test('CMS refresh preserves a legacy platform selection when a provider returns 
   assert.deepEqual([...changed.platforms], ['PC']);
   assert.deepEqual([...changed.selectedPlatforms], ['PC']);
 });
+
+test('platform-scoped source uses its own official date and never links another platform record', () => {
+  const yaml = `---
+title: Fixture
+gameMetadata:
+  releaseDate: '2021-02-02'
+  platforms: [PlayStation 4, PlayStation 5]
+  selectedPlatforms: [PlayStation 4, PS5]
+  sources:
+    thegamesdb:
+      id: '35'
+      url: https://thegamesdb.net/game.php?id=35
+      versions:
+        - {id: '35', platform: PlayStation 4, releaseDate: '2021-02-02'}
+    screenscraper:
+      id: '53'
+      systemId: '284'
+      platformRelease: {platform: PlayStation 5, releaseDate: '2023-05-09', region: US, evidence: 'https://publisher.example/release'}
+---
+`;
+  const [ps4, ps5] = readDossiers({ 'scoped.md': yaml })[0].platforms;
+  assert.equal(ps4.releaseDate, '2021-02-02');
+  assert.deepEqual(Array.from(ps4.catalogSourceLinks,x=>x.source), ['thegamesdb']);
+  assert.equal(ps5.releaseDate, '2023-05-09');
+  assert.equal(ps5.releaseRegion, 'US');
+  assert.deepEqual(JSON.parse(JSON.stringify(ps5.catalogSourceLinks)), [
+    {source:'screenscraper',url:'https://www.screenscraper.fr/index.php?gameid=53&plateforme=284'},
+    {source:'officialRelease',url:'https://publisher.example/release'},
+  ]);
+});

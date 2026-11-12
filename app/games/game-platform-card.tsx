@@ -18,11 +18,11 @@ export default function GamePlatformCard({ gameTitle, status = '', platform, man
     </div>
     <div className="game-platform-copy">
       {!compact && <div className="game-platform-heading"><strong>{gameTitle}</strong>{status && <span className="game-status-pill">{status}</span>}</div>}
-      <p className="game-platform-specs">{[platformName, platform.releaseDate, platform.genres.slice(0, 2).join(' / ')].filter(Boolean).join(' · ') || gameStoreLabels[family]}</p>
+      <p className="game-platform-specs">{[platformName, platform.releaseDate && (platform.releaseRegion ? `${platform.releaseDate}（${platform.releaseRegion}）` : platform.releaseDate), platform.genres.slice(0, 2).join(' / ')].filter(Boolean).join(' · ') || gameStoreLabels[family]}</p>
       {!compact && (platform.developer || platform.publisher) && <p className="game-platform-credit" title={[platform.developer, platform.publisher].filter(Boolean).join(' · ')}>{[platform.developer, platform.publisher].filter(Boolean).join(' · ')}</p>}
       {!compact && platform.catalogSource && platform.catalogSource !== '手动资料' && <p className="game-platform-source">资料来源：{platform.catalogSource.split(' + ').map((source, index) => {
         const directLink = platform.catalogSourceLinks?.find(item => item.source.toLowerCase() === source.toLowerCase())?.url;
-        const labels: Record<string, string> = { rawg: 'RAWG', screenscraper: 'ScreenScraper', thegamesdb: 'TheGamesDB' };
+        const labels: Record<string, string> = { rawg: 'RAWG', screenscraper: 'ScreenScraper', thegamesdb: 'TheGamesDB', officialrelease: '官方发行资料' };
         const label = labels[source.toLowerCase()] || source;
         return <span key={source}>{index > 0 && ' · '}{directLink ? <a href={directLink} target="_blank" rel="noopener noreferrer">{label}</a> : label}</span>;
       })}</p>}

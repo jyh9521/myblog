@@ -82,7 +82,7 @@ async function cachedTheGamesDBSearch(env, query, fetcher) {
 export function searchDossierEditions(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
     const hints = editionHints(request, query);
-    const outcome = await cachedMetadata(env, 'dossier:all:v4:' + query.toLowerCase(), partialTtl, async () => {
+    const outcome = await cachedMetadata(env, 'dossier:all:v5:' + query.toLowerCase(), partialTtl, async () => {
       const [catalog, rawg, screen] = await Promise.allSettled([
         cachedTheGamesDBSearch(env, query, fetcher), new RAWGProvider(env, fetcher).search(query),
         new ScreenScraperProvider(env, fetcher).search(query),
@@ -136,7 +136,7 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch, supplement
     const refresh = body.refresh === true;
     const loadCatalog = async () => metadataOnly(await loadBase());
     const outcome = !rawg && !ss ? await cachedMetadata(env, baseKey, detailTtl, loadCatalog, refresh)
-      : await cachedMetadata(env, `dossier:all:detail:v1:${baseKey}:${rawg}:${ss}:${system}`,
+      : await cachedMetadata(env, `dossier:all:detail:v2:${baseKey}:${rawg}:${ss}:${system}`,
         value => value.incomplete ? 5 * 60 * 1000 : detailTtl, async () => {
           const jobs = [
             ...(rawg ? [['rawg', 'RAWG', new RAWGProvider(env, fetcher).getById(rawg)]] : []),

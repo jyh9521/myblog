@@ -19,11 +19,11 @@ const editionTags = game => [...new Set((game.originalName || game.title || '').
 const exactTitle = game => (game.originalName || game.title || '').normalize('NFKC')
   .toLowerCase().replace(/[™®©]/gu, '').replace(/[^\p{L}\p{N}]+/gu, '');
 
-function reviewedPortMatches(base, candidate, reviews) {
+function reviewedPortEvidence(base, candidate, reviews) {
   const source = base.sources?.thegamesdb;
   if (!source) return false;
   const catalogRows = source.versions || [{ id: source.id, platform: base.platforms?.[0], releaseDate: base.releaseDate }];
-  return reviews.some(({ title, anchor, port }) => {
+  return reviews.find(({ title, anchor, port }) => {
     const reference = candidate.sources?.[port.provider];
     if (reference?.id !== port.id || (port.systemId && reference.systemId !== port.systemId)) return false;
     const titleKey = exactTitle({ title });
@@ -40,14 +40,19 @@ function reviewedPortMatches(base, candidate, reviews) {
 export function matchesCatalogEdition(base, candidate, reviews = reviewedCrossCatalogPorts) {
   // Do not let an alias bridge an explicitly named edition and the base game.
   if (editionTags(base) !== editionTags(candidate)) return false;
-  return reviewedPortMatches(base, candidate, reviews) || releaseViews(base).some(a => releaseViews(candidate).some(b => editionEvidence(a, b).strong));
+  return !!reviewedPortEvidence(base, candidate, reviews) || releaseViews(base).some(a => releaseViews(candidate).some(b => editionEvidence(a, b).strong));
 }
 
 const present = value => Array.isArray(value) ? value.length > 0 : Boolean(value);
 const listKey = value => value.normalize('NFKC').toLowerCase().trim();
 
 export function supplementCatalog(base, candidate, provider) {
-  const merged = { ...base, sources: { ...base.sources, [provider]: candidate.sources[provider] },
+  const review = reviewedPortEvidence(base, candidate, reviewedCrossCatalogPorts);
+  const release = review?.port.provider === provider ? review.port.displayRelease : null;
+  const source = release && review.port.releaseDates.includes(release.releaseDate)
+    ? { ...candidate.sources[provider], platformRelease: { platform: review.port.platform, ...release, evidence: review.evidence } }
+    : candidate.sources[provider];
+  const merged = { ...base, sources: { ...base.sources, [provider]: source },
     fieldSources: { ...base.fieldSources } };
   const fill = (key, value) => {
     if (!present(merged[key]) && present(value)) {

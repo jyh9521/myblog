@@ -1,6 +1,7 @@
 import type { PlayTime, CompletionTimes, PersonalRating } from './game-time';
 export type GameStore = 'pc' | 'playstation' | 'xbox' | 'nintendo';
 export type GameSource = 'rawg' | 'screenscraper' | 'igdb' | 'thegamesdb';
+type ScopedPlatformRelease = { platform: string; releaseDate: string; region: string; evidence: string };
 type GameSourceVersion = { id: string; platform: string; releaseDate: string };
 export type StoreLink = { name: string; url: string; region?: string; note?: string };
 export type AvailabilityStatus = 'available' | 'delisted' | 'physical-only' | 'free' | 'unknown';
@@ -15,6 +16,7 @@ export type GamePlatform = {
   publisher: string;
   releaseDate: string;
   genres: string[];
+  releaseRegion?: string;
   catalogSource: string;
   catalogId: string;
   catalogSourceLinks?: { source: string; url: string }[];
@@ -35,7 +37,7 @@ export type GameMetadata = {
   cover: string;
   screenshots: string[];
   website: string;
-  sources: Partial<Record<GameSource, { id: string; systemId?: string; slug?: string; url?: string; versions?: GameSourceVersion[] }>>;
+  sources: Partial<Record<GameSource, { id: string; systemId?: string; slug?: string; url?: string; versions?: GameSourceVersion[]; platformRelease?: ScopedPlatformRelease }>>;
   fieldSources: Record<string, string>;
   updatedAt: string;
 };

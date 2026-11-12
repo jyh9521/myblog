@@ -8,6 +8,7 @@ export const reviewedCrossCatalogPorts = [
     port: {
       provider: 'screenscraper', id: '479669', systemId: '284', platform: 'PlayStation 5',
       releaseDates: ['2023-05-09', '2023-05-12', '2023-05-19'],
+      displayRelease: { releaseDate: '2023-05-09', region: 'US' },
       developers: ['Falcom', 'Nihon Falcom'],
       publishers: ['NIS America', 'Falcom', 'Nihon Falcom'],
     },

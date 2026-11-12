@@ -215,9 +215,16 @@
     const platformRecordTags = sources => {
       const records = sources?.thegamesdb?.versions;
       const versions = Array.isArray(records) ? records.filter(version => version?.platform && /^[1-9]\d{0,15}$/.test(version.id)) : [];
-      if (versions.length < 2) return null;
-      return h('small', null, '平台记录：' + versions.map(version =>
-        [version.platform, version.releaseDate, '#' + version.id].filter(Boolean).join(' ')).join('；'));
+      const verified = Object.entries(sources || {}).flatMap(([provider, source]) => {
+        const row = source?.platformRelease;
+        if (!row?.platform || !row.releaseDate || !idString(source.id)) return [];
+        return [[row.platform, row.releaseDate + (row.region ? '（' + row.region + '）' : ''),
+          (sourceLabels[provider] || provider) + ' #' + source.id + (source.systemId ? '/' + source.systemId : ''),
+          '官方发行资料'].join(' ')];
+      });
+      if (versions.length < 2 && !verified.length) return null;
+      return h('small', null, '平台记录：' + [...versions.map(version =>
+        [version.platform, version.releaseDate, '#' + version.id].filter(Boolean).join(' ')), ...verified].join('；'));
     };
     const formatFields = {
       title: '资料库名称', localizedName: '中文本地化名称', originalName: '原始名称', alternativeNames: '别名 / Alternative Names',

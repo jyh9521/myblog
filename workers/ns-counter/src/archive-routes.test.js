@@ -528,6 +528,9 @@ test('Ys IX sparse PS5 record is revalidated in both search and detail without m
   const base = results.find(g=>g.sources.thegamesdb?.id==='76875');
   const deluxe = results.find(g=>g.sources.thegamesdb?.id==='109105');
   assert.equal(base.sources.screenscraper.id,'479669');
+  assert.deepEqual(base.sources.screenscraper.platformRelease,{
+    platform:'PlayStation 5',releaseDate:'2023-05-09',region:'US',evidence:'https://nisamerica.com/ys-ix/',
+  });
   assert.deepEqual(base.platforms,['PlayStation 4','PlayStation 5']);
   assert.ok(deluxe && !deluxe.sources.screenscraper);
   assert.equal(results.length,2);

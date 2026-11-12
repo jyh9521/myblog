@@ -5,7 +5,8 @@ import { DailyPick } from './site-enhancements';
 export default function Home() {
   const posts = getAllPosts();
   const dated = [...posts].sort((a, b) => a.date.localeCompare(b.date));
-  return <main>
+  const featured = posts.find(post => post.visibility !== 'password' && post.cover);
+  return <main className="m3-home">
     <section className="hero-shell">
       <div className="hero container">
         <div className="hero-copy">
@@ -14,26 +15,29 @@ export default function Home() {
           <p>记录玩过的游戏、做过的项目，还有生活中值得分享的发现。</p>
           <Link className="hero-button" href="#latest">浏览文章 <span aria-hidden="true">↗</span></Link>
         </div>
-        <div className="hero-art" aria-hidden="true">
+        {featured ? <Link className="m3-feature" href={`/posts/${featured.slug}/`}>
+          <img src={featured.cover} alt="" /><span><small>PICK UP</small><strong>{featured.title}</strong></span>
+        </Link> : <div className="hero-art" aria-hidden="true">
           <div className="hero-orbit orbit-one" />
           <div className="hero-orbit orbit-two" />
           <div className="hero-tile tile-one">PLAY</div>
           <div className="hero-tile tile-two">CREATE</div>
           <div className="hero-spark spark-one">✦</div>
           <div className="hero-spark spark-two">✳</div>
-        </div>
+        </div>}
       </div>
     </section>
+    <nav className="m3-quick" aria-label="快速入口"><div className="container"><Link href="/posts/">文章与搜索 <span aria-hidden="true">→</span></Link><Link href="/games/">游戏档案 <span aria-hidden="true">→</span></Link><Link href="/games/timelines/">系列时间线 <span aria-hidden="true">→</span></Link></div></nav>
     <section className="container latest" id="latest">
       {!!dated.length && <DailyPick items={dated.map(post => ({ href: `/posts/${post.slug}/`, title: post.title }))} />}
       <div className="section-title">
-        <div><span className="section-kicker">DISCOVER</span><h2>最新文章</h2></div>
+        <div><span className="section-kicker">TOPICS</span><h2>最新文章</h2></div>
         <span className="article-count">共 {posts.length} 篇</span>
       </div>
       {posts.length ? <div className="post-grid">{posts.map((post, index) =>
         <article key={post.slug} className="post-card">
           <Link className={`post-visual visual-${index % 3}`} href={`/posts/${post.slug}/`} aria-label={`阅读：${post.title}`}>
-            {hasLocalAsset(post.cover) ? <img src={post.cover} alt="" /> : <span className="visual-mark" aria-hidden="true">{index % 2 ? '✦' : '●'}</span>}
+            {(hasLocalAsset(post.cover) || (post.visibility !== 'password' && post.cover)) ? <img src={post.cover} alt="" /> : <span className="visual-mark" aria-hidden="true">{index % 2 ? '✦' : '●'}</span>}
             <span className="visual-arrow" aria-hidden="true">↗</span>
           </Link>
           <div className="post-meta">{post.pinned && <span className="pinned-badge">置顶</span>}{post.visibility === 'password' && <span className="locked-post-badge">🔒 密码访问</span>}<time>{post.date.slice(0, 10)}</time><span className="meta-line" />{post.tags?.[0] ? <Link className="tag-link" href={`/posts/?tag=${encodeURIComponent(post.tags[0])}`}>{post.tags[0]}</Link> : '博客'}</div>

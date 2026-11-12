@@ -2,59 +2,17 @@
 title: 伊苏：塞尔塞塔的树海
 status:
   - 已通关
-playTime:
-  hours: 17.1
-personalRating: 6.5
-hltb:
-  id: 11472
-  url: https://howlongtobeat.com/game/11472
-  title: 'Ys: Memories of Celceta'
-  auto: true
-  snapshot:
-    id: 11472
-    main: 21.42
-    extras: 26.6
-    completionist: 50.34
-    updatedAt: 2026-10-09T00:56:29.721Z
 gameMetadata:
-  alternativeNames:
-    - Foliage Ocean in Celceta
-    - 'Ys: Celceta no Jukai'
-  cover: https://media.rawg.io/media/screenshots/5dc/5dc58d9e42bb80411ade0dedc2bc73bf.jpeg
-  description: 'In Ys: Memories of Celceta, developer Falcom revisits the land and characters of Japanese cult favorite Ys IV for its first ever North American debut. This re-envisioning of the fourth installment in the Ys series takes a brand new approach, changing and framing the story of Ys IV within an all-new tale of conspiracy, deception and mystery. Featuring an updated version of the party-based battle system from Ys Seven, as well as the largest and most varied overworld in series history, Ys: Memories of Celceta brings a greater sense of adventure to the Ys universe than has ever been seen before.'
-  developers:
-    - Nihon Falcom
-    - XSEED Games
-  fieldSources:
-    alternativeNames: rawg
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - RPG
-  id: rawg:3829
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-  originalName: 'Ys: Memories of Celceta'
   platforms:
     - PC
     - PS Vita
     - PlayStation 4
-  publishers:
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Nihon Falcom
     - XSEED Games
-    - Marvelous USA
-    - NIHON FALCOM
-  releaseDate: 2012-09-27
   screenshots:
     - https://media.rawg.io/media/screenshots/444/4440c6e6d4cdf058c91175edfb0930bb.jpg
     - https://media.rawg.io/media/screenshots/627/6272a3af008c45e350046627888fe7fe.jpg
@@ -62,16 +20,55 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/367/36763615a2552f7193eeb351d5ef1926.jpg
     - https://media.rawg.io/media/screenshots/2cf/2cf47d8ce0a45327d4e08bcc17b68bd8.jpg
     - https://media.rawg.io/media/screenshots/fc9/fc93066730fea5b9bfae183285d133a0.jpg
-  selectedPlatforms:
-    - PC
+  updatedAt: 2026-10-09T00:56:49.873Z
+  genres:
+    - Action
+    - RPG
+  releaseDate: 2012-09-27
+  publishers:
+    - XSEED Games
+    - Marvelous USA
+    - NIHON FALCOM
+  cover: https://cdn2.steamgriddb.com/grid/d19c87d1f806cca1f9ac5db6f5962ec0.png
+  title: 'Ys: Memories of Celceta'
   sources:
     rawg:
       id: '3829'
       slug: ys-memories-of-celceta
       url: https://rawg.io/games/3829
-  title: 'Ys: Memories of Celceta'
-  updatedAt: 2026-10-09T00:56:49.873Z
   website: http://worldofys.com/celceta/
+  id: rawg:3829
+  alternativeNames:
+    - Foliage Ocean in Celceta
+    - 'Ys: Celceta no Jukai'
+  description: 'In Ys: Memories of Celceta, developer Falcom revisits the land and characters of Japanese cult favorite Ys IV for its first ever North American debut. This re-envisioning of the fourth installment in the Ys series takes a brand new approach, changing and framing the story of Ys IV within an all-new tale of conspiracy, deception and mystery. Featuring an updated version of the party-based battle system from Ys Seven, as well as the largest and most varied overworld in series history, Ys: Memories of Celceta brings a greater sense of adventure to the Ys universe than has ever been seen before.'
+  originalName: 'Ys: Memories of Celceta'
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: steamgriddb
+    title: rawg
+    website: rawg
+    alternativeNames: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:3829:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/3829
+  text: 在《伊苏：塞尔塞塔的树海》中，开发商 Falcom 重新回到了在日本备受推崇的《伊苏IV》的土地与角色怀抱，并首次将其带入北美市场。这部对《伊苏》系列第四部作品的全新构想采取了截然不同的方法，将《伊苏IV》的故事进行了重塑和包装，融入了一个充满阴谋、欺骗与谜团的全新故事之中。本作采用了《伊苏7》中登场的队伍战斗系统的升级版本，并拥有系列历史上最大、最多样化的开放世界，《伊苏：塞尔塞塔的树海》为伊苏世界带来了前所未有的宏大冒险感。
 manual:
   availabilityStatus: available
   officialStores:
@@ -79,6 +76,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/587110/
+playTime:
+  hours: 17.1
+personalRating: 6.5
+hltb:
+  auto: true
+  id: 11472
+  snapshot:
+    completionist: 50.34
+    extras: 26.6
+    id: 11472
+    main: 21.42
+    updatedAt: 2026-10-09T00:56:29.721Z
+  title: 'Ys: Memories of Celceta'
+  url: https://howlongtobeat.com/game/11472
 events:
   - date: 2022-07-08
     title: 开始游戏

@@ -2,20 +2,6 @@
 title: 燧石枪：黎明之围
 status:
   - AFK
-playTime:
-  hours: 1
-personalRating: 6
-hltb:
-  auto: true
-  id: 105586
-  snapshot:
-    completionist: 21.55
-    extras: 15.44
-    id: 105586
-    main: 8.91
-    updatedAt: 2026-10-21T06:11:55.573Z
-  title: 'Flintlock: The Siege of Dawn'
-  url: https://howlongtobeat.com/game/105586
 gameMetadata:
   platforms:
     - PC
@@ -44,7 +30,7 @@ gameMetadata:
   releaseDate: 2024-07-17
   publishers:
     - Kepler Interactive
-  cover: https://media.rawg.io/media/games/7d6/7d6c838b1c57d3625fb879805b647b25.jpg
+  cover: https://cdn2.steamgriddb.com/grid/611a83c9ba4e20ca80ff07a9e9bcf27f.jpg
   title: 'Flintlock: The Siege of Dawn'
   sources:
     rawg:
@@ -77,13 +63,38 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:759686:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/759686
+  text: |-
+    加入人类的背水一战，在这款全新的动作RPG开放世界冒险中，见证神明与枪械的碰撞。
+
+    通往来世的大门已被打开，放出了旧神的不死族大军。人类正处于灭绝的边缘。是时候让联军夺回他们的世界了。拥抱复仇、火药与魔法，踏上一场史诗般的征程，带领人类发起对抗死灵浪潮的最终围攻。
+
+    你的战斗现在开始。
+
+    建立无与伦比的羁绊
+    加入联军士兵诺·瓦内克（Nor Vanek），携手你的同伴恩奇（Enki）——一个拥有神奇力量的奇异生物，共同向神明展开复仇。
+
+    击败造物中最强大的存在
+    向神明发起挑战。精通要求严苛却回报丰厚的高难度战斗系统，将斧术、枪战、魔法等多种元素完美融合。释放强力连击，在每一次遭遇战中尽情展现你的创造力。
+
+    在广袤的战场上留下你的印记
+    探索危机四伏的开放世界。穿梭于沙漠黄沙，游历错综复杂的洞穴遗迹，揭开高耸的黎明之城（City of Dawn）中隐藏的秘密。重新集结黑溪（Blackstream）工兵队——这支顶尖的爆炸物与武器专家团队，在对神明的最终围攻中展现他们的精湛技艺。
 manual:
   availabilityStatus: available
   officialStores:
@@ -91,6 +102,20 @@ manual:
       note: ''
       region: TW
       url: https://www.xbox.com/zh-TW/games/store/flintlock-the-siege-of-dawn/9pbbqhx6v3pj
+playTime:
+  hours: 1
+personalRating: 6
+hltb:
+  auto: true
+  id: 105586
+  snapshot:
+    completionist: 21.55
+    extras: 15.44
+    id: 105586
+    main: 8.91
+    updatedAt: 2026-10-21T06:11:55.573Z
+  title: 'Flintlock: The Siege of Dawn'
+  url: https://howlongtobeat.com/game/105586
 events:
   - date: 2024-07-23
     title: 开始游戏

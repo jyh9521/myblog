@@ -217,7 +217,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v3:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v4:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -236,4 +236,46 @@ test('redirects are not followed or exposed to the CMS', async () => {
   assert.equal(calls, 1);
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /else\.invalid|sg-fixture-key/);
+});
+
+
+test('Ys IX groups the standard releases without swallowing explicitly named editions', async () => {
+  const title = 'Ys IX: Monstrum Nox';
+  const rows = [
+    [76875, 1, '2021-02-02', [2984]], [100236, 2, '2021-07-06', []],
+    [100811, 3, '2021-07-06', [2796, 6010]], [130079, 4, '2021-07-16', [6010]],
+    [77801, 4, '2021-06-30', [6010], ' '], [109105, 5, '2023-05-30', [6010], ' [Deluxe Edition]'],
+    [128402, 1, '2019-09-26', [2984], " [Limited Edition Collector's Box]"],
+    [84546, 1, '2021-02-06', [2984], ' [Pact Edition]'],
+  ].map(([id, platform, release_date, developers, suffix = '']) => ({
+    id, platform, release_date, developers, game_title: title + suffix,
+  }));
+  const platforms = Object.fromEntries(['PlayStation 4', 'Stadia', 'PC', 'Nintendo Switch', 'PlayStation 5']
+    .map((name, index) => [index + 1, { name }]));
+  const request = new Request(root + '/search', { headers: auth });
+  const e = env();
+  // The pre-fix cache had already stored separate cards.
+  e.cache.set('thegamesdb:search:v3:' + title.toLowerCase(), { cached_at: Date.now(),
+    payload: JSON.stringify({ results: [{ id: 'thegamesdb:76875', title, platforms: ['PlayStation 4'] }], warnings: [] }) });
+  const fetcher = async url => {
+    const endpoint = url.pathname.split('/').at(-1);
+    if (endpoint === 'Developers') return Response.json({ code: 200, data: { developers: {
+      2984: { name: 'Falcom' }, 6010: { name: 'Nihon Falcom Corp.' }, 2796: { name: 'Engine Software' },
+    } } });
+    assert.ok(['ByGameName', 'ByGameID'].includes(endpoint));
+    const ids = url.searchParams.get('id')?.split(',');
+    return Response.json({ code: 200, data: { games: ids ? rows.filter(row => ids.includes(String(row.id))) : rows },
+      include: { platform: platforms } });
+  };
+  for (const context of [env(), e]) {
+    const result = await (await searchTheGamesDB(request, context, title, fetcher)).json();
+    assert.equal(result.results.length, 4);
+    const [group] = result.results;
+    assert.equal(group.title, title);
+    assert.deepEqual(new Set(group.platforms), new Set(['PlayStation 4', 'Stadia', 'PC', 'Nintendo Switch']));
+    assert.deepEqual(group.sources.thegamesdb.versions.map(v => v.id).sort(), ['100236', '100811', '130079', '76875', '77801']);
+    const detail = await detailTheGamesDB(request, context, { sources: group.sources }, fetcher);
+    assert.equal(detail.status, 200);
+    assert.deepEqual((await detail.json()).sources.thegamesdb.versions, group.sources.thegamesdb.versions);
+  }
 });

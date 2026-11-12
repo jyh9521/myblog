@@ -9,15 +9,28 @@ export const catalogKey = value => value.replace(/[™®©]/gu, '').normalize('N
 const sourceId = row => row.game.sources.thegamesdb.id;
 export const theGamesDBLink = id => `https://thegamesdb.net/game.php?id=${id}`;
 
-function compatible(a, b) {
+// TheGamesDB credits the same studio under both IDs on the Ys IX ports.
+const developerAliases = new Map([
+  ['id:2984', 'nihonfalcom'], ['id:6010', 'nihonfalcom'],
+  ['name:falcom', 'nihonfalcom'], ['name:nihonfalcomcorp', 'nihonfalcom'],
+]);
+const studio = credit => developerAliases.get(credit) || credit;
+const sharesDeveloper = (a, b) => a.credits.some(credit => b.credits.some(other => studio(credit) === studio(other)));
+const releaseDistance = (a, b) => Math.abs(Date.parse(a.game.releaseDate) - Date.parse(b.game.releaseDate)) / 86400000;
+
+function compatible(a, b, titleRows) {
   const ap = a.game.platforms[0], bp = b.game.platforms[0];
   if (!ap || !bp) return false;
-  const sameDeveloper = a.credits.some(credit => b.credits.includes(credit));
+  const sameDeveloper = sharesDeveloper(a, b);
   if (a.credits.length && b.credits.length && !sameDeveloper) return false;
   const ad = a.game.releaseDate, bd = b.game.releaseDate;
-  // Same-platform duplicates may have multiple IDs. Keep them only when the
-  // date agrees exactly; a different date may be a different release.
-  if (ap === bp) return Boolean(ad && ad === bd);
+  // Preserve nearby dates as separate source records within a single card
+  // only when another platform corroborates the title and studio.
+  if (ap === bp) return Boolean(ad && ad === bd) ||
+    (sameDeveloper && releaseDistance(a, b) <= 31 && titleRows.some(other =>
+      other.game.platforms[0] && other.game.platforms[0] !== ap &&
+      sharesDeveloper(a, other) && sharesDeveloper(b, other) &&
+      releaseDistance(a, other) <= 366 && releaseDistance(b, other) <= 366));
   const ay = releaseYear(ad), by = releaseYear(bd);
   if (!ay || !by) return sameDeveloper;
   return Math.abs(Number(ay) - Number(by)) <= (sameDeveloper ? 3 : 1);
@@ -30,11 +43,11 @@ function editionGroups(rows) {
     const component = [index];
     seen.add(index);
     for (const i of component) rows.forEach((row, j) => {
-      if (!seen.has(j) && compatible(rows[i], row)) { component.push(j); seen.add(j); }
+      if (!seen.has(j) && compatible(rows[i], row, rows)) { component.push(j); seen.add(j); }
     });
     const members = component.sort((a, b) => a - b).map(i => rows[i]);
     // An uncertain row must not act as a bridge between incompatible games.
-    return members.every((row, i) => members.slice(i + 1).every(other => compatible(row, other)))
+    return members.every((row, i) => members.slice(i + 1).every(other => compatible(row, other, rows)))
       ? [members] : members.map(row => [row]);
   });
 }

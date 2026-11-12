@@ -2,23 +2,50 @@
 title: 蓓优妮塔2
 status:
   - 已通关
-playTime:
-  hours: 9
-personalRating: 8.5
-hltb:
-  id: 967
-  url: https://howlongtobeat.com/game/967
-  title: Bayonetta 2
-  auto: true
-  snapshot:
-    id: 967
-    main: 9.08
-    extras: 12.38
-    completionist: 47.21
-    updatedAt: 2026-10-09T10:03:15.136Z
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/3d7/3d7c8e749b18cfc898c80016594981fe.jpg
+  platforms:
+    - Nintendo Switch
+  selectedPlatforms:
+    - Nintendo Switch
+  localizedName: ''
+  developers:
+    - PlatinumGames
+  screenshots:
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=225&jeuid=195951&media=sstitle%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=225&jeuid=195951&media=ss%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=225&jeuid=195951&media=screenmarquee%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=225&jeuid=195951&media=screenmarqueesmall%28wor%29
+  updatedAt: 2026-11-12T04:35:08.000Z
+  genres:
+    - Action
+    - Action / Adventure
+    - Beat'em Up
+  releaseDate: 2018-02-16
+  publishers:
+    - Nintendo
+  cover: https://cdn2.steamgriddb.com/grid/db76ba9f1aadf1434c1d08a590f41fde.png
+  title: Bayonetta 2
+  sources:
+    screenscraper:
+      id: '195951'
+      systemId: '225'
+      url: https://www.screenscraper.fr/index.php?gameid=195951&plateforme=225
+    thegamesdb:
+      id: '51678'
+      url: https://thegamesdb.net/game.php?id=51678
+      versions:
+        - id: '51678'
+          platform: Nintendo Switch
+          releaseDate: 2018-02-16
+        - id: '113664'
+          platform: Nintendo Switch
+          releaseDate: 2018-02-16
+        - id: '126012'
+          platform: Nintendo Switch
+          releaseDate: 2018-02-16
+  id: thegamesdb:51678
+  alternativeNames:
+    - Bayonetta 2
   description: |-
     Wield wild weapons and execute deadly moves—like the powerful Umbran
     Climax—to take out angels and demons in this breathtaking action game.
@@ -50,57 +77,44 @@ gameMetadata:
     The original Wii U version of Bayonetta™ game is now on the Nintendo
     Switch™ system—included with the packaged version of Bayonetta 2 as a
     pack-in digital download code
-  developers:
-    - Platinum Games
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-  id: rawg:23760
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
   originalName: Bayonetta 2
-  platforms:
-    - Wii U
-    - Nintendo Switch
-  publishers:
-    - Nintendo
-  releaseDate: 2014-09-20
-  screenshots:
-    - https://media.rawg.io/media/screenshots/9bd/9bdf5a7fd96180970182cfe1c2644591.jpg
-    - https://media.rawg.io/media/screenshots/24e/24e17421e42f3f8456c37aa7e8e07b69.jpg
-    - https://media.rawg.io/media/screenshots/71d/71d7a438a97e74d025a8d726e6634948.jpg
-    - https://media.rawg.io/media/screenshots/375/375f76c0880c82743b69a0f62041f7e1.jpg
-    - https://media.rawg.io/media/screenshots/80e/80eaee524a7e217d7e58cf155780a254.jpg
-    - https://media.rawg.io/media/screenshots/950/9508546289ffd6e38d9920c1e527ded5.jpg
-  selectedPlatforms:
-    - Nintendo Switch
-  sources:
-    rawg:
-      id: '23760'
-      slug: bayonetta-2
-      url: https://rawg.io/games/23760
-  title: Bayonetta 2
-  updatedAt: 2026-10-09T10:03:47.117Z
-  website: https://www.platinumgames.com/games/bayonetta-2
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    developers: thegamesdb
+    screenshots: screenscraper
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    alternativeNames: screenscraper
+    description: rawg
+    originalName: thegamesdb
+  manualFields:
+    - cover
+    - selectedPlatforms
 manual:
+  availabilityStatus: available
   officialStores:
     - name: Nintendo eShop
       note: ''
       region: US
       url: https://www.nintendo.com/us/store/products/bayonetta-2-switch/
-  availabilityStatus: available
+playTime:
+  hours: 9
+personalRating: 8.5
+hltb:
+  auto: true
+  id: 967
+  snapshot:
+    completionist: 47.21
+    extras: 12.38
+    id: 967
+    main: 9.08
+    updatedAt: 2026-10-09T10:03:15.136Z
+  title: Bayonetta 2
+  url: https://howlongtobeat.com/game/967
 events:
   - date: 2022-10-05
     title: 开始游戏

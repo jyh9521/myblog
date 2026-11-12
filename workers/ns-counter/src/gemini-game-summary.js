@@ -51,6 +51,13 @@ const contentFilters = new Set(['SAFETY', 'BLOCKLIST', 'PROHIBITED_CONTENT', 'SP
 // A standalone "<3" from an archived blurb is plain text, not markup.
 const unsupportedDraftFormat = /(?:^#{1,6}\s|https?:\/\/|<(?!3\b)|>|[\x60]{3}|\[[^\]]+\]\(|\*\*|^(?:翻译结果|简体中文简介)[：:])/im;
 
+function plainSourceHeadings(text) {
+  // Imported blurbs also use compact headings such as "###Gameplay".
+  // Keep single-hash tags, issue numbers and inline hashes as text.
+  return text.replace(/^(?:#{1,6}[ \t]+|#{2,6}(?=\p{L}))([^\n]+)$/gmu,
+    (_, heading) => heading.replace(/[ \t]+#+[ \t]*$/, ''));
+}
+
 function protectSourceLinks(source) {
   let prefix = 'SOURCE_LINK_';
   for (let n = 1; source.includes(prefix); n++) prefix = 'SOURCE' + n + '_LINK_';
@@ -123,7 +130,7 @@ export async function geminiDraft(env, material, { gameTitle = '', officialTitle
   const model = env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
   if (!/^gemini-[a-z0-9][a-z0-9.-]{1,63}$/.test(model)) throw new ArchiveProviderError('Gemini 模型设置有误。', 503);
   const url = new URL('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent');
-  const sourceLinks = protectSourceLinks(material.text);
+  const sourceLinks = protectSourceLinks(plainSourceHeadings(material.text));
   const linkInstruction = sourceLinks.hasLinks
     ? '\n\n原文中的双中括号链接占位符代表原有网址，每个都必须原样保留一次，只翻译周围文字（包括链接的可见名称）。不要输出实际网址，不要添加新的链接。'
     : '';

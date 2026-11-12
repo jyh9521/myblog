@@ -196,6 +196,39 @@ const multiParagraphEn = [
 const geminiResponse = (text, finishReason = 'STOP') =>
   Response.json({ candidates: [{ finishReason, content: { parts: [{ text }] } }] });
 
+test('Salt and Sanctuary sends plain heading text and preserves the archived synopsis paragraphs', async () => {
+  const { env, writes } = environment();
+  // Freeze the imported heading style independently of live CMS content.
+  const synopsis = [
+    'Salt and Sanctuary is a 2D action role-playing game.',
+    '',
+    '###Plot and art style ',
+    'A shipwreck leaves the protagonist on a mysterious island.',
+    'The game uses a hand-painted art style.',
+    '',
+    '###Gameplay ',
+    'Players choose a class and explore the island.',
+    '',
+    'The game features local multiplayer.',
+  ].join('\n');
+  const original = synopsis + '\n\n## Other notes ##\n#hashtag, item #42, and inline ### stay.';
+  const expected = plainReference(original)
+    .replace('###Plot and art style', 'Plot and art style')
+    .replace('###Gameplay', 'Gameplay')
+    .replace('## Other notes ##', 'Other notes');
+  const sent = [];
+  const draft = '盐与避难所是一款带有角色扮演元素的二维动作游戏。\n\n剧情与美术风格\n主角漂流到神秘岛屿。\n\n玩法\n玩家可以探索岛屿并选择不同的职业。';
+  const response = await dossierBriefRoute(post({ action: 'draft', gameTitle: '盐与避难所', text: original }), env, async (url, options) => {
+    assert.equal(url.hostname, 'generativelanguage.googleapis.com');
+    sent.push(JSON.parse(JSON.parse(options.body).contents[0].parts[0].text).originalText);
+    return geminiResponse(draft);
+  });
+  assert.equal(response.status, 200);
+  assert.deepEqual(sent, [expected]);
+  assert.equal((await response.json()).text, draft);
+  assert.equal(writes.size, 0);
+});
+
 test('Gemini preserves the literal <3 heart in an archived introduction without retrying', async () => {
   const { env, writes } = environment();
   const originalText = 'Stay in touch with us <3\n\n' + shortEn;

@@ -13,7 +13,7 @@ const context = { exports: {} };
 vm.runInNewContext(code, context);
 const { gameStatuses, normalizeGameStatus, normalizeGameStatuses, matchesGameStatus } = context.exports;
 
-test('CMS and runtime use the same seven multi-select states', () => {
+test('CMS and runtime use the same eight multi-select states', () => {
   const config = yaml.load(fs.readFileSync('public/sveltia/config.yml', 'utf8'));
   const field = config.collections.flatMap(collection => collection.fields || []).find(field => field.name === 'status');
   assert.equal(field.widget, 'select');
@@ -21,7 +21,7 @@ test('CMS and runtime use the same seven multi-select states', () => {
   assert.equal(field.multiple, true);
   assert.equal(field.min, 1);
   assert.deepEqual(field.options, Array.from(gameStatuses));
-  assert.deepEqual(Array.from(gameStatuses), ['想玩', '正在玩', '已通关', '暂时搁置', 'AFK', '考虑制作补丁', '已制作补丁']);
+  assert.deepEqual(Array.from(gameStatuses), ['想玩', '正在玩', '已通关', '暂时搁置', 'AFK', '考虑制作补丁', '正在制作补丁', '已制作补丁']);
   for (const state of gameStatuses) assert.equal(normalizeGameStatus(state), state);
 });
 
@@ -55,4 +55,10 @@ test('multiple statuses deduplicate and all selected states match archive filter
   assert.equal(normalizeGameStatus(['已弃坑', '考虑制作补丁']), 'AFK、考虑制作补丁');
   assert.equal(normalizeGameStatus([]), '想玩');
   assert.equal(normalizeGameStatus(['unknown']), '想玩');
+});
+test('in-progress patch work matches its own filter, not completed patch work', () => {
+  const statuses = ['已通关', '正在制作补丁'];
+  assert.equal(normalizeGameStatus(statuses), '已通关、正在制作补丁');
+  assert.equal(matchesGameStatus(statuses, '正在制作补丁'), true);
+  assert.equal(matchesGameStatus(statuses, '已制作补丁'), false);
 });

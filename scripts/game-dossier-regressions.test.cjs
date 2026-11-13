@@ -44,10 +44,10 @@ test('back restoration tracks card offset across async layout shifts and stops o
   stop(); timer(); assert.equal(Object.keys(listeners).length, 0);
 });
 
-test('pagination defaults to 15, clamps empty/end pages and persists page in URL',()=>{
+test('pagination defaults to 16, clamps empty/end pages and persists page in URL',()=>{
  const shelf=load('lib/game-shelf-state.ts');
- assert.equal(shelf.shelfPageSize,15);
- for(const [total,input,page,start,end] of [[107,'1',1,0,15],[107,'2',2,15,30],[107,'8',8,105,107],[107,'999',8,105,107],[0,'2',1,0,0],[16,'bad',1,0,15],[15,'2',1,0,15]]){
+ assert.equal(shelf.shelfPageSize,16);
+ for(const [total,input,page,start,end] of [[107,'1',1,0,16],[107,'2',2,16,32],[107,'7',7,96,107],[107,'999',7,96,107],[0,'2',1,0,0],[17,'bad',1,0,16],[16,'2',1,0,16]]){
   const result=shelf.shelfPagination(total,input);assert.equal(result.page,page);assert.equal(result.start,start);assert.equal(result.end,end);
  }
  const params=shelf.writeShelfState({...shelf.shelfDefaults,page:'3',q:'死亡搁浅'});

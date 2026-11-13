@@ -6,6 +6,10 @@ div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="
 div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="core"]) [data-dossier-pane="details"],
 div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="details"]) [data-dossier-pane="core"] { display: none; }
 
+/* Keep these CMS fields mounted at their original data paths. */
+div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs):not(:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="details"])) > :is([data-key-path="screenshotGallery"],[data-key-path="resourceFolder"]),
+div:has(> [data-field-type="game-dossier-nav"] .dossier-tabs[data-dossier-view="details"]):not(:has(> [data-key-path="gameMetadata"] details[data-dossier-media-disclosure][open])) > :is([data-key-path="screenshotGallery"],[data-key-path="resourceFolder"]) { display: none; }
+
 [data-mode="edit"] [data-field-type="game-dossier-nav"] > header { display: none; }
 [data-mode="edit"] [data-field-type="game-dossier-nav"] {
   position: sticky;

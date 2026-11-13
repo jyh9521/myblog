@@ -196,7 +196,7 @@
     }, label);
     const status = (message, error) => message ? h('p', { className: error ? 'dossier-message dossier-error' : 'dossier-message', role: error ? 'alert' : 'status' }, message) : null;
     const labelInput = (label, props) => h('label', { className: 'dossier-label' }, h('span', null, label), h(ImeInput, { className: 'dossier-input', ...props }));
-    const details = (label, children) => h('details', { className: 'dossier-disclosure' }, h('summary', null, label), ...children);
+    const details = (label, children, attributes) => h('details', { className: 'dossier-disclosure', ...attributes }, h('summary', null, label), ...children);
     const listText = (value, separator) => Array.isArray(value) ? value.join(separator) : typeof value === 'string' ? value : '';
     const hasValue = value => Array.isArray(value) ? value.length > 0 : Boolean(String(value || '').trim());
     const idString = value => /^[1-9]\d{0,15}$/.test(String(value ?? '')) ? String(value) : '';
@@ -435,7 +435,7 @@
                 this.state.coverMessage && h('small', { role: 'status' }, this.state.coverMessage),
                 h(GameCoverPicker, { suggestedQuery: value.originalName || value.title || this.state.query, onSelect: url => this.update('cover', url, 'steamgriddb') }),
                 value.fieldSources?.cover === 'steamgriddb' && h('small', null, '已选 SteamGridDB 封面 · 刷新时保留')),
-              field('screenshots', '截图 URL（逗号分隔）', 'text', true)]),
+              field('screenshots', '截图 URL（逗号分隔）', 'text', true)], { 'data-dossier-media-disclosure': '' }),
             edition && h('div', { className: 'dossier-actions' }, button(busy === 'detail' ? '读取中…' : '刷新外部资料',
               () => this.selectGame({ title: value.title, sources: value.sources }, true), { disabled: !!busy }),
             h('small', null, value.updatedAt ? '上次更新：' + String(value.updatedAt).slice(0, 10) : '')),

@@ -115,7 +115,8 @@
           const gallery=this.props.value||{},folder=gallery.folder||defaultGameFolder(this.props.entry,gallery);
           if(!folder)throw Error('请先填写英文游戏名，或选择包含英文名称的游戏资料。');
           const images=[...(gallery.images||[])],errors=[];
-          for(const file of files){
+          // Browsers expose lastModified, not the original file creation time.
+          for(const file of [...files].sort((a,b)=>a.lastModified-b.lastModified)){
             try{
               validateSelection(file,'image');
               const result=await upload(file,folder,true);

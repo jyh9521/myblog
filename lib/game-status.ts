@@ -1,5 +1,5 @@
 // Current state is separate from dated milestones and patch-release notes.
-export const gameStatuses = ['想玩', '正在玩', '已通关', '暂时搁置', 'AFK', '考虑制作补丁', '已制作补丁'] as const;
+export const gameStatuses = ['想玩', '正在玩', '已通关', '暂时搁置', 'AFK', '考虑制作补丁', '正在制作补丁', '已制作补丁'] as const;
 export type GameStatus = typeof gameStatuses[number];
 
 export function normalizeGameStatuses(value: unknown): GameStatus[] {

@@ -68,7 +68,7 @@ collections:
         multiple: true
         min: 1
         default: [想玩]
-        options: [想玩, 正在玩, 已通关, 暂时搁置, AFK, 考虑制作补丁, 已制作补丁]
+        options: [想玩, 正在玩, 已通关, 暂时搁置, AFK, 考虑制作补丁, 正在制作补丁, 已制作补丁]
         hint: "可多选，例如已通关 + 已制作补丁。"
       - { name: gameMetadata, label: 游戏版本与资料, widget: game-metadata, required: false }
       - { name: summary, label: 中文游戏简介, widget: game-brief, required: false }

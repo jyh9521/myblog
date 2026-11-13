@@ -1,7 +1,7 @@
 import type { GameRecord } from './game-types';
 
-export const shelfDefaults = { q: '', platform: 'all', status: 'all', year: 'all', genre: 'all', sort: 'updated', page: '1' };
-export const shelfPageSize = 15;
+export const shelfDefaults = { q: '', platform: 'all', status: 'all', year: 'all', sort: 'updated', page: '1' };
+export const shelfPageSize = 16;
 export function shelfPagination(total: number, requested: string) {
   const pages = Math.max(1, Math.ceil(total / shelfPageSize));
   const number = /^\d+$/.test(requested) ? Number(requested) : 1;
@@ -24,6 +24,7 @@ export function writeShelfState(state: ShelfState, params = new URLSearchParams(
     if (state[key] === shelfDefaults[key]) params.delete(key);
     else params.set(key, state[key]);
   }
+  params.delete('genre'); // Remove the retired filter from old shelf links.
   return params;
 }
 export function sortShelfGames(games: GameRecord[], sort: string) {

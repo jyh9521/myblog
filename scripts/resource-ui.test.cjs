@@ -25,8 +25,11 @@ test('linked article upload and game screenshot batch use scoped destinations an
  assert.equal(article.props.value,'/uploads/cover.png');
  assert.equal(urls[0].get('folder'),'Articles/My Article');assert.equal(urls[0].get('destination'),'entry');
  const gallery=mount('screenshot-gallery',{enabled:true,images:[]},'games',{title:'伊苏 IX',gameMetadata:{title:'Ys IX: Monstrum Nox'}});
- await gallery.addFiles([new File(['1'],'one.png'),new File(['2'],'two.png'),new File(['bad'],'invalid.pdf')]);
- assert.deepEqual(Array.from(gallery.props.value.images),['/uploads/one.png','/uploads/two.png']);
+ gallery.props.value.images=['/uploads/manually-ordered.png'];
+ await gallery.addFiles([new File(['2'],'two.png',{lastModified:2000}),new File(['1'],'one.png',{lastModified:1000}),new File(['bad'],'invalid.pdf',{lastModified:1000})]);
+ assert.equal(urls[1].get('name'),'one.png');
+ assert.equal(urls[2].get('name'),'two.png');
+ assert.deepEqual(Array.from(gallery.props.value.images),['/uploads/manually-ordered.png','/uploads/one.png','/uploads/two.png']);
  assert.equal(gallery.props.value.folder,'Game Dossiers/Ys IX - Monstrum Nox');
  assert.equal(urls[1].get('folder'),gallery.props.value.folder);
  assert.equal(urls[2].get('destination'),'entry');assert.equal(urls.length,3);

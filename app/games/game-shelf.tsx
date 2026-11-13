@@ -6,7 +6,7 @@ import { saveShelfPosition, restoreShelfPosition } from '../../lib/game-shelf-sc
 import type { GameRecord } from '../../lib/game-types';
 import { gameStoreLabels } from '../../lib/game-types';
 import { gameStatuses, matchesGameStatus, normalizeGameStatuses, type GameStatus } from '../../lib/game-status';
-import { readShelfState, writeShelfState, shelfDefaults, shelfKeys, shelfSorts, sortShelfGames, shelfPagination, type ShelfState } from '../../lib/game-shelf-state';
+import { readShelfState, writeShelfState, shelfDefaults, shelfKeys, shelfSorts, sortShelfGames, shelfPagination, shelfPageSize, type ShelfState } from '../../lib/game-shelf-state';
 
 const shelfBadges: Record<GameStatus, { tone: string; mark: string }> = {
   '想玩': { tone: 'wishlist', mark: '☆' },
@@ -15,6 +15,7 @@ const shelfBadges: Record<GameStatus, { tone: string; mark: string }> = {
   '暂时搁置': { tone: 'paused', mark: 'Ⅱ' },
   'AFK': { tone: 'afk', mark: '◷' },
   '考虑制作补丁': { tone: 'considering', mark: '◇' },
+  '正在制作补丁': { tone: 'patching', mark: '◐' },
   '已制作补丁': { tone: 'patched', mark: '✦' },
 };
 
@@ -23,7 +24,7 @@ export default function GameShelf({ games }: { games: GameRecord[] }) {
   const [ready, setReady] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
   const paging = useRef(false);
-  const { q: query, platform: platformFilter, status: statusFilter, year: yearFilter, genre: genreFilter } = filters;
+  const { q: query, platform: platformFilter, status: statusFilter, year: yearFilter } = filters;
   const update = (key: keyof ShelfState, value: string) => setFilters(current => ({ ...current, [key]: value, page: key === 'page' ? value : '1' }));
   useLayoutEffect(() => {
     if (paging.current) {
@@ -53,15 +54,9 @@ export default function GameShelf({ games }: { games: GameRecord[] }) {
     if (ready) return restoreShelfPosition();
   }, [ready]);
   const platformOptions = useMemo(() => [...new Set(games.flatMap(game => game.platforms.map(platform => `${gameStoreLabels[platform.store]} · ${platform.platform}`)))].sort((a, b) => a.localeCompare(b, 'zh-CN')), [games]);
-  const quickPlatforms = [
-    ['PC', / · PC$/i], ['Switch', / · Nintendo Switch$/i],
-    ['PS5', / · PlayStation 5$/i], ['Xbox Series X|S', / · Xbox Series X[|/]S$/i],
-  ] as const;
   const statusOptions = [...gameStatuses];
   const yearOf = (game: GameRecord) => (game.metadata?.releaseDate || game.platforms.find(platform => platform.releaseDate)?.releaseDate || '').slice(0, 4);
   const yearOptions = useMemo(() => [...new Set(games.map(yearOf).filter(year => /^\d{4}$/.test(year)))].sort((a, b) => b.localeCompare(a)), [games]);
-  const genresOf = (game: GameRecord) => [...new Set([...(game.metadata?.genres || []), ...game.platforms.flatMap(platform => platform.genres || [])])];
-  const genreOptions = useMemo(() => [...new Set(games.flatMap(genresOf))].sort((a, b) => a.localeCompare(b, 'zh-CN')), [games]);
   const filteredGames = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
     return sortShelfGames(games.filter(game => {
@@ -70,10 +65,9 @@ export default function GameShelf({ games }: { games: GameRecord[] }) {
       return (!normalizedQuery || searchText.includes(normalizedQuery))
         && (platformFilter === 'all' || platforms.includes(platformFilter))
         && matchesGameStatus(game.status, statusFilter)
-        && (yearFilter === 'all' || yearOf(game) === yearFilter)
-        && (genreFilter === 'all' || genresOf(game).includes(genreFilter));
+        && (yearFilter === 'all' || yearOf(game) === yearFilter);
     }), filters.sort);
-  }, [games, query, platformFilter, statusFilter, yearFilter, genreFilter, filters.sort]);
+  }, [games, query, platformFilter, statusFilter, yearFilter, filters.sort]);
   const pagination = shelfPagination(filteredGames.length, filters.page);
   useEffect(() => {
     if (ready && filters.page !== String(pagination.page)) setFilters(current => ({ ...current, page: String(pagination.page) }));
@@ -87,31 +81,23 @@ export default function GameShelf({ games }: { games: GameRecord[] }) {
 
   if (!games.length) return <p className="empty-posts">还没有游戏档案，之后可在 Sveltia 后台添加。</p>;
   const select = (label: string, value: string, options: string[], onChange: (value: string) => void) => <label className="game-filter-field"><span>{label}</span><select data-filter={label} value={value} onChange={event => onChange(event.target.value)}><option value="all">全部</option>{options.map(option => <option key={option} value={option}>{option}</option>)}</select></label>;
-  const activeFilters = ([['platform', '平台', platformFilter], ['status', '游玩状态', statusFilter], ['year', '发售年份', yearFilter], ['genre', '类型', genreFilter]] as const).filter(([, , value]) => value !== 'all');
+  const activeFilters = ([['platform', '平台', platformFilter], ['status', '游玩状态', statusFilter], ['year', '发售年份', yearFilter]] as const).filter(([, , value]) => value !== 'all');
   return <>
     <div ref={filterRef} className="game-filters" aria-label="筛选游戏档案">
       <label className="game-filter-field game-filter-search"><span>搜索游戏</span><input type="search" value={query} onChange={event => update('q', event.target.value)} placeholder="按游戏名称或别名搜索" /></label>
       <label className="game-filter-field"><span>排序</span><select value={filters.sort} onChange={event => update('sort', event.target.value)}>{Object.entries(shelfSorts).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
       <button className="game-filter-reset" type="button" onClick={() => setFilters({ ...shelfDefaults })}>重置筛选与排序</button>
-      <div className="m3-platform-row" role="group" aria-label="快捷平台筛选">
-        <button type="button" aria-pressed={platformFilter === 'all'} onClick={() => update('platform', 'all')}>全部平台</button>
-        {quickPlatforms.map(([label, match]) => {
-          const value = platformOptions.find(item => match.test(item));
-          return value ? <button key={label} type="button" aria-pressed={platformFilter === value} onClick={() => update('platform', value)}>{label}</button> : null;
-        })}
-      </div>
       <div className="m3-advanced-fields" role="group" aria-label="详细筛选">
       {select('平台', platformFilter, platformOptions, value => update('platform', value))}
       {select('游玩状态', statusFilter, statusOptions, value => update('status', value))}
       {select('发售年份', yearFilter, yearOptions, value => update('year', value))}
-      {select('类型', genreFilter, genreOptions, value => update('genre', value))}
       </div>
       {activeFilters.length > 0 &&
         <div className="m3-active-filters" role="group" aria-label="已选筛选条件">
           {activeFilters.map(([key, label, value]) =>
             <button key={key} type="button" aria-label={`清除${label}筛选：${value}`} onClick={event => { event.currentTarget.closest('.game-filters')?.querySelector<HTMLSelectElement>(`select[data-filter="${label}"]`)?.focus(); update(key, 'all'); }}>{label}：{value}<span aria-hidden="true"> ×</span></button>)}
         </div>}
-      <p className="game-filter-count" aria-live="polite">共 {filteredGames.length} / {games.length} 款 · 本页 {filteredGames.length ? pagination.start + 1 : 0}–{pagination.end} 款 · 每页 15 款</p>
+      <p className="game-filter-count" aria-live="polite">共 {filteredGames.length} / {games.length} 款 · 本页 {filteredGames.length ? pagination.start + 1 : 0}–{pagination.end} 款 · 每页 {shelfPageSize} 款</p>
     </div>
     {pageControls('顶部')}
     {filteredGames.length ? <div className="game-shelf">{filteredGames.slice(pagination.start, pagination.end).map(game => {

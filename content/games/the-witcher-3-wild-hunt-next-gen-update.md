@@ -2,56 +2,7 @@
 title: 巫师3：狂猎 次世代版本
 status:
   - 已通关
-playTime:
-  hours: 82
-  minutes: 16
-personalRating: 9.5
-hltb:
-  id: 10270
-  url: https://howlongtobeat.com/game/10270
-  title: 'The Witcher 3: Wild Hunt'
-  auto: true
-  snapshot:
-    id: 10270
-    main: 51.68
-    extras: 103.76
-    completionist: 175.22
-    updatedAt: 2026-10-09T10:23:19.490Z
 gameMetadata:
-  alternativeNames:
-    - 'Wiedźmin 3: Dziki Gon'
-    - Ведьмак 3
-    - 'Ведьмак 3: Дикая Охота'
-  cover: https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg
-  description: |-
-    The third game in a series, it holds nothing back from the player. Open world adventures of the renowned monster slayer Geralt of Rivia are now even on a larger scale. Following the source material more accurately, this time Geralt is trying to find the child of the prophecy, Ciri while making a quick coin from various contracts on the side. Great attention to the world building above all creates an immersive story, where your decisions will shape the world around you.
-
-    CD Project Red are infamous for the amount of work they put into their games, and it shows, because aside from classic third-person action RPG base game they provided 2 massive DLCs with unique questlines and 16 smaller DLCs, containing extra quests and items.
-
-    Players praise the game for its atmosphere and a wide open world that finds the balance between fantasy elements and realistic and believable mechanics, and the game deserved numerous awards for every aspect of the game, from music to direction.
-  developers:
-    - CD PROJEKT RED
-  fieldSources:
-    alternativeNames: rawg
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - RPG
-  id: rawg:3328
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-  originalName: 'The Witcher 3: Wild Hunt'
   platforms:
     - PlayStation 5
     - Xbox Series S/X
@@ -60,9 +11,11 @@ gameMetadata:
     - Nintendo Switch
     - PC
     - Xbox One
-  publishers:
+  selectedPlatforms:
+    - Xbox Series S/X
+  localizedName: ''
+  developers:
     - CD PROJEKT RED
-  releaseDate: 2015-05-18
   screenshots:
     - https://media.rawg.io/media/screenshots/1ac/1ac19f31974314855ad7be266adeb500.jpg
     - https://media.rawg.io/media/screenshots/6a0/6a08afca95261a2fe221ea9e01d28762.jpg
@@ -70,16 +23,65 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/862/862397b153221a625922d3bb66337834.jpg
     - https://media.rawg.io/media/screenshots/166/166787c442a45f52f4f230c33fd7d605.jpg
     - https://media.rawg.io/media/screenshots/f63/f6373ee614046d81503d63f167181803.jpg
-  selectedPlatforms:
-    - Xbox Series S/X
+  updatedAt: 2026-11-13T13:38:45.225Z
+  genres:
+    - Action
+    - RPG
+  releaseDate: 2015-05-18
+  publishers:
+    - CD PROJEKT RED
+  cover: https://cdn2.steamgriddb.com/grid/2f87d717bf556321774d1b4975d2e1c1.png
+  title: 'The Witcher 3: Wild Hunt'
   sources:
     rawg:
       id: '3328'
       slug: the-witcher-3-wild-hunt
       url: https://rawg.io/games/3328
-  title: 'The Witcher 3: Wild Hunt'
-  updatedAt: 2026-10-09T10:24:01.101Z
   website: https://thewitcher.com/en/witcher3
+  id: rawg:3328
+  alternativeNames:
+    - 'Wiedźmin 3: Dziki Gon'
+    - Ведьмак 3
+    - 'Ведьмак 3: Дикая Охота'
+  description: |-
+    The third game in a series, it holds nothing back from the player. Open world adventures of the renowned monster slayer Geralt of Rivia are now even on a larger scale. Following the source material more accurately, this time Geralt is trying to find the child of the prophecy, Ciri while making a quick coin from various contracts on the side. Great attention to the world building above all creates an immersive story, where your decisions will shape the world around you.
+
+    CD Project Red are infamous for the amount of work they put into their games, and it shows, because aside from classic third-person action RPG base game they provided 2 massive DLCs with unique questlines and 16 smaller DLCs, containing extra quests and items.
+
+    Players praise the game for its atmosphere and a wide open world that finds the balance between fantasy elements and realistic and believable mechanics, and the game deserved numerous awards for every aspect of the game, from music to direction.
+  originalName: 'The Witcher 3: Wild Hunt'
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    screenshots: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: steamgriddb
+    title: rawg
+    website: rawg
+    alternativeNames: rawg
+    description: rawg
+    originalName: rawg
+  manualFields:
+    - cover
+    - selectedPlatforms
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:3328:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/3328
+  text: |-
+    作为该系列的第三部作品，它对玩家毫无保留。知名怪物猎人利维亚的杰洛特的开放世界冒险现在规模更加宏大。这一次，杰洛特更加忠于原著，试图寻找预言之子希里，同时通过接取各种委托赚取外快。最重要的是，该作对世界构建倾注了巨大心血，打造出一个沉浸式的故事，你的每一个决定都将塑造你周围的世界。
+
+    CD PROJEKT RED 以在其游戏中投入大量心血而闻名，这一点在此作中表露无遗：除了经典的第三人称动作 RPG 游戏本体外，他们还提供了包含独特任务线的 2 个大型 DLC，以及包含额外任务和物品的 16 个小型 DLC。
+
+    玩家们对该游戏的氛围和广阔的开放世界赞不绝口，它在奇幻元素与逼真可信的机制之间找到了平衡。从音乐到导演，该游戏的各个方面都赢得了无数奖项。
 manual:
   availabilityStatus: available
   officialStores:
@@ -87,6 +89,21 @@ manual:
       note: ''
       region: TW
       url: https://www.xbox.com/zh-TW/games/store/3/c261457lcnmj
+playTime:
+  hours: 82
+  minutes: 16
+personalRating: 9.5
+hltb:
+  auto: true
+  id: 10270
+  snapshot:
+    completionist: 175.22
+    extras: 103.76
+    id: 10270
+    main: 51.68
+    updatedAt: 2026-10-09T10:23:19.490Z
+  title: 'The Witcher 3: Wild Hunt'
+  url: https://howlongtobeat.com/game/10270
 events:
   - date: 2022-12-14
     title: 开始游戏

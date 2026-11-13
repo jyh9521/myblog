@@ -6,6 +6,7 @@ date: 2026-07-30
 description: |-
   > BloodRayne: Terminal Cut Simplified Chinese Patch
   > 《吸血莱恩：终极剪辑版》简体中文汉化补丁
+resourceFolder: chinesetranslationpatch/blood-rayne-cn
 cover: /uploads/chinesetranslationpatch/bloodrayne/cover.avif
 tags:
   - 汉化

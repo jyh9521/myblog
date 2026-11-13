@@ -2,24 +2,59 @@
 title: 破败之王：英雄联盟外传
 status:
   - 已通关
-playTime:
-  hours: 22.1
-personalRating: 7
-hltb:
-  id: 87857
-  url: https://howlongtobeat.com/game/87857
-  title: 'Ruined King: A League of Legends Story'
-  auto: true
-  snapshot:
-    id: 87857
-    main: 24.4
-    extras: 35.99
-    completionist: 46.69
-    updatedAt: 2026-10-09T15:39:35.134Z
 gameMetadata:
+  platforms:
+    - Nintendo Switch
+    - PC
+    - PlayStation 4
+    - PlayStation 5
+    - Xbox One
+  selectedPlatforms:
+    - Xbox One
+  localizedName: ''
+  developers:
+    - Airship Syndicate
+  screenshots:
+    - https://media.rawg.io/media/screenshots/a7c/a7c03b8d50f91d7bacaa52cbe0cf144d.jpg
+    - https://media.rawg.io/media/screenshots/fdb/fdbab066b394af168fcb728ba64d7d74.jpg
+    - https://media.rawg.io/media/screenshots/f43/f435773ab216a8ec10b382771e0084a4.jpg
+    - https://media.rawg.io/media/screenshots/a2f/a2f65ff9b0b0f2bac1a9ab2bb0ec81c4.jpg
+    - https://media.rawg.io/media/screenshots/337/33734cb07f4eb9ad337c0e3c0c4cd85e.jpg
+    - https://media.rawg.io/media/screenshots/027/027c35a16801d3a5cd671585b2eca89b.jpg
+  updatedAt: 2026-11-13T14:50:35.487Z
+  genres:
+    - Role-Playing
+    - RPG
+  releaseDate: 2021-11-16
+  publishers:
+    - Riot
+  cover: https://cdn2.steamgriddb.com/grid/4b304361727f9f9188816afaa4642aea.png
+  title: 'Ruined King: A League of Legends Story'
+  sources:
+    rawg:
+      id: '398406'
+      slug: ruined-king
+      url: https://rawg.io/games/398406
+    thegamesdb:
+      id: '95109'
+      url: https://thegamesdb.net/game.php?id=95109
+      versions:
+        - id: '95110'
+          platform: Nintendo Switch
+          releaseDate: 2021-11-16
+        - id: '107202'
+          platform: PC
+          releaseDate: 2021-11-16
+        - id: '95109'
+          platform: PlayStation 4
+          releaseDate: 2021-11-16
+        - id: '110808'
+          platform: PlayStation 5
+          releaseDate: 2023-03-02
+  website: https://ruinedking.com/
+  id: thegamesdb:95109
   alternativeNames:
     - 'Ruined King: A League of Legends Story'
-  cover: https://media.rawg.io/media/games/ca9/ca914d13db738b6072d6eac2208c6470.jpg
   description: "Rise Against Ruin\r
 
     Unite a party of League of Legends Champions, explore Bilgewater and set sail for the Shadow Isles to uncover the secrets of the deadly Black Mist.\r
@@ -31,54 +66,42 @@ gameMetadata:
     Legal Disclaimer\r
 
     Ruined King: A League of Legends Story™ will have English, BrazilianPourtuguese, Latin Spanish, Castilian Spanish, Polish, French, German, Italian, Simplified Chinese (China), Traditional Chinese, Japanese, Korean, Russian and Turkish voice-over and subtitle as well as Thai and Vietnamese subtitle support."
-  developers:
-    - Airship Syndicate
+  originalName: 'Ruined King: A League of Legends Story'
   fieldSources:
-    alternativeNames: rawg
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
+    platforms: thegamesdb
     selectedPlatforms: manual
-  genres:
-    - RPG
-  id: rawg:398406
-  localizedName: ''
+    developers: thegamesdb
+    screenshots: rawg
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    website: rawg
+    alternativeNames: rawg
+    description: rawg
+    originalName: thegamesdb
   manualFields:
     - selectedPlatforms
-  originalName: 'Ruined King: A League of Legends Story'
-  platforms:
-    - Xbox One
-    - Nintendo Switch
-    - PlayStation 4
-    - PC
-  publishers:
-    - Riot Games
-    - Riot Forge
-  releaseDate: 2021-11-15
-  screenshots:
-    - https://media.rawg.io/media/screenshots/a7c/a7c03b8d50f91d7bacaa52cbe0cf144d.jpg
-    - https://media.rawg.io/media/screenshots/fdb/fdbab066b394af168fcb728ba64d7d74.jpg
-    - https://media.rawg.io/media/screenshots/f43/f435773ab216a8ec10b382771e0084a4.jpg
-    - https://media.rawg.io/media/screenshots/a2f/a2f65ff9b0b0f2bac1a9ab2bb0ec81c4.jpg
-    - https://media.rawg.io/media/screenshots/337/33734cb07f4eb9ad337c0e3c0c4cd85e.jpg
-    - https://media.rawg.io/media/screenshots/027/027c35a16801d3a5cd671585b2eca89b.jpg
-  selectedPlatforms:
-    - Xbox One
-  sources:
-    rawg:
-      id: '398406'
-      slug: ruined-king
-      url: https://rawg.io/games/398406
-  title: 'Ruined King: A League of Legends Story'
-  updatedAt: 2026-10-09T15:40:15.032Z
-  website: https://ruinedking.com/
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:398406:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/398406
+  text: |-
+    对抗破败
+    集结《英雄联盟》的英雄小队，探索比尔吉沃特，扬帆起航前往暗影岛，揭开致命黑雾背后的秘密。
+
+    关于《破败之王：英雄联盟外传™》
+    《破败之王：英雄联盟外传》由 Airship Syndicate 开发，并由曾创作《战神：夜袭》和《暗黑血统》的传奇漫画家 Joe Madureira 操刀美术风格，是首款邀请玩家探索《英雄联盟》宇宙的 Riot Forge 游戏。在这款沉浸式回合制 RPG 中，你将自由组建小队，掌控这群性格各异的《英雄联盟》英雄，探索繁华的比尔吉沃特与神秘的暗影岛，并体验全新的线路主动权战斗系统。
+
+    法律声明
+    《破败之王：英雄联盟外传™》将提供英语、巴西葡萄牙语、拉丁美洲西班牙语、卡斯蒂利亚西班牙语、波兰语、法语、德语、意大利语、简体中文（中国）、繁体中文、日语、韩语、俄语和土耳其语的配音及字幕支持，并提供泰语和越南语字幕支持。
 manual:
   availabilityStatus: available
   officialStores:
@@ -86,6 +109,20 @@ manual:
       note: ''
       region: TW
       url: https://www.xbox.com/zh-TW/games/store/ruined-king-a-league-of-legends-story/9nxm6k0wf0x2
+playTime:
+  hours: 22.1
+personalRating: 7
+hltb:
+  auto: true
+  id: 87857
+  snapshot:
+    completionist: 46.69
+    extras: 35.99
+    id: 87857
+    main: 24.4
+    updatedAt: 2026-10-09T15:39:35.134Z
+  title: 'Ruined King: A League of Legends Story'
+  url: https://howlongtobeat.com/game/87857
 events:
   - date: 2023-03-13
     title: 开始游戏

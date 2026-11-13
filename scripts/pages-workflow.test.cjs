@@ -23,3 +23,15 @@ test('Pages fallback never holds the primary Workers publishing queue', () => {
   assert.equal(workflow.permissions.pages, 'write');
   assert.equal(workflow.permissions['id-token'], 'write');
 });
+
+test('failed primary deployments preserve diagnostics without masking failure', () => {
+  const steps = yaml.load(fs.readFileSync('.github/workflows/pages.yml', 'utf8')).jobs.build.steps;
+  const deploy = steps.findIndex(step => step.id === 'deploy_primary');
+  const archive = steps[deploy + 1];
+  assert.equal(steps[deploy].run, 'node scripts/deploy-static-host.cjs');
+  assert.ok(!steps[deploy]['continue-on-error']);
+  assert.equal(archive.if, "failure() && steps.deploy_primary.outcome == 'failure'");
+  assert.equal(archive.with.path, '${{ runner.temp }}/blog-wrangler-deploy/');
+  assert.equal(archive.with['retention-days'], 14);
+  assert.equal(steps[deploy + 2].name, 'Verify primary release');
+});

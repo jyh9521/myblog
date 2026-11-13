@@ -41,10 +41,19 @@ jobs:
         env:
           BLOG_RELEASE: ${{ github.sha }}
       - name: Deploy primary Workers Static Assets
-        run: node workers/static-preview/node_modules/wrangler/bin/wrangler.js deploy --config workers/static-host/wrangler.jsonc
+        id: deploy_primary
+        run: node scripts/deploy-static-host.cjs
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: cf4b9d821c2fe041b84fa71647e57bcd
+      - name: Preserve failed Wrangler deployment logs
+        if: failure() && steps.deploy_primary.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: wrangler-deploy-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/blog-wrangler-deploy/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Verify primary release
         run: node scripts/verify-static-host.cjs https://blog.blfy.cc
         env:

@@ -82,6 +82,12 @@ summary:
     《蓓优妮塔》是一款第三人称游戏。玩家将操控蓓优妮塔，利用近中距离攻击、复杂的连招以及种类繁多的武器进行战斗。游戏中设有特殊的“刑具攻击”，蓓优妮塔可以使用诸如断头台之类的刑具来处决敌人。“魔女时间”能力则允许玩家在成功闪避敌人攻击后使时间变慢。
 
     随着剧情的推进，玩家可以将蓓优妮塔变身成黑豹或其他动物，以强化她的能力。游戏由多个章节组成，每个章节又包含多个部分。游戏内设有评分系统，会在每个任务结束时授予玩家一枚奖牌。特殊的奖牌则散落在关卡的秘密区域中。
+screenshotGallery:
+  enabled: true
+  englishName: bayonetta
+  folder: Game Dossiers/bayonetta
+  images:
+    - /uploads/cms/b5239a84e2e30c0c61c3908d501cdfb6b6bac1c12339244b340161b605abad1b/9f83adcd5b67be1806bfe0636883e63e67c5db1bd4bbb17d04b5c3da5d1e64c9/2022100214205900_c.jpg
 manual:
   availabilityStatus: available
   officialStores:

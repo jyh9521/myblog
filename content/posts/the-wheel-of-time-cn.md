@@ -4,6 +4,7 @@ date: 2026-10-08
 description: |-
   > The Wheel of Time Simplified Chinese Patch
   > 《时光之轮》简体中文汉化补丁
+resourceFolder: chinesetranslationpatch/the-wheel-of-time-cn
 cover: /uploads/chinesetranslationpatch/thewheeloftime/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 汉化

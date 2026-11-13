@@ -6,6 +6,7 @@ date: 2026-06-30
 description: |-
   > Vivisector: Beast Within Simplified Chinese Patch
   > 《活体解剖者：人面兽心》简体中文汉化补丁
+resourceFolder: chinesetranslationpatch/vivisector-beast-within-cn
 cover: /uploads/chinesetranslationpatch/vivisectorbeastwithin/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 汉化

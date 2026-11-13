@@ -12,9 +12,9 @@ export default function GamesPage() {
       <div className="m3-archive-side"><strong>{games.length} 款游戏</strong><a href="#gaming-profile-title">跨平台游戏资料 ↓</a><a href="/games/timelines/">系列时间线 ↗</a></div>
     </div></header>
     <div className="container game-directory m3-archive-wrap">
-      <section id="library" aria-label="档案目录"><GameShelf games={games} /></section>
-      <GameSectionNav active="library" />
       <GamingProfile />
+      <GameSectionNav active="library" />
+      <section id="library" aria-label="档案目录"><GameShelf games={games} /></section>
     </div>
   </main>;
 }

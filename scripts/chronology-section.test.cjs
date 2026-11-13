@@ -55,6 +55,17 @@ test('UI removes hidden image URLs, captions, credits and an open dialog when a 
  renderer.act(()=>{tree.root.findAllByType('button').find(b=>b.children.join('')==='乙').props.onClick();});assert.doesNotMatch(JSON.stringify(tree.toJSON()),/secret-picture|独立图注秘密/);renderer.act(()=>tree.unmount());
 });
 
+test('game library shows the cross-platform profile above the archive directory',()=>{
+ const Page=load('app/games/page.tsx',{
+  './gaming-profile':()=>React.createElement('section',{id:'gaming-profile-title'}),
+  './game-shelf':()=>null,
+  '../../lib/games':{getGames:()=>[]}
+ }).default;
+ const html=renderToStaticMarkup(React.createElement(Page));
+ assert.match(html,/href="#gaming-profile-title"/);
+ assert.match(html,/id="gaming-profile-title".*id="library"/);
+});
+
 test('timeline directory is a game archive subsection with illustrated cards and preserved detail URLs',()=>{
  const Page=load('app/games/timelines/page.tsx').default,html=renderToStaticMarkup(React.createElement(Page));
  assert.match(html,/游戏档案子板块/);assert.match(html,/href="\/games\/"/);assert.match(html,/href="\/chronicles\/genesis\/"/);assert.match(html,/href="\/chronicles\/metroid\/"/);assert.match(html,/359 条事件/);assert.match(html,/106 条事件/);assert.equal((html.match(/<img /g)||[]).length,2);

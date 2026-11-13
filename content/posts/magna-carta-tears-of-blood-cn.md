@@ -1,6 +1,7 @@
 ---
 title: PS2《真名法典：真红的圣痕》简体中文汉化版
 date: 2026-10-22
+resourceFolder: chinesetranslationpatch/magna-carta-tears-of-blood-cn
 cover: /uploads/cms/e9661e4d4c720dbe9e410b52c5f09a57aaacbfb6d934980fa55cbdcd80b25b07/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 汉化

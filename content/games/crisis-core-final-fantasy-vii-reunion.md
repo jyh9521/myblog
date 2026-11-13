@@ -2,65 +2,18 @@
 title: 最终幻想VII：核心危机 重聚
 status:
   - 已通关
-playTime:
-  hours: 11
-personalRating: 6.5
-hltb:
-  id: 109435
-  url: https://howlongtobeat.com/game/109435
-  title: 'Crisis Core: Final Fantasy VII Reunion'
-  auto: true
-  snapshot:
-    id: 109435
-    main: 13.86
-    extras: 21.08
-    completionist: 46.39
-    updatedAt: 2026-10-09T10:26:24.882Z
 gameMetadata:
-  alternativeNames:
-    - クライシス コア -ファイナルファンタジーVII- リユニオン
-  cover: https://media.rawg.io/media/games/f6c/f6cfffdb246351c35b6f07a8bcf6e748.jpg
-  description: |-
-    His legacy, gave life to FINAL FANTASY VII──
-
-    Since its original release in 2007, CRISIS CORE –FINAL FANTASY VII– has received wide acclaim for its deep and emotional story.
-
-    This new version enhances the graphics to HD and updates all of the 3D models in the game. Full voiceovers and new music arrangements present this epic tale of strife and heroism, presenting FINAL FANTASY VII in a brand-new light. Enjoy a more beautiful and accessible CRISIS CORE, going way beyond just a simple HD remaster.
+  platforms:
+    - Nintendo Switch
+    - PC
+    - PlayStation 4
+    - PlayStation 5
+    - Xbox Series X|S
+  selectedPlatforms:
+    - Xbox Series X|S
+  localizedName: ''
   developers:
     - Square Enix
-    - Tose Co
-  fieldSources:
-    alternativeNames: rawg
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - Adventure
-    - RPG
-  id: rawg:804751
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-  originalName: 'Crisis Core: Final Fantasy VII Reunion'
-  platforms:
-    - PC
-    - PlayStation 5
-    - Xbox Series S/X
-    - Nintendo Switch
-    - PlayStation 4
-    - Xbox One
-  publishers:
-    - Square Enix
-  releaseDate: 2022-12-13
   screenshots:
     - https://media.rawg.io/media/screenshots/665/665497458f27a97b32491a8f738ae746.jpg
     - https://media.rawg.io/media/screenshots/376/376ab5b89fe239903a075ef23348a184.jpg
@@ -68,16 +21,85 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/18b/18bc94f7d7c0d7a39b6f9ae87355f93c.jpg
     - https://media.rawg.io/media/screenshots/448/44864a0ba58d26871829a74b8d3d5752.jpg
     - https://media.rawg.io/media/screenshots/c79/c790e10ca9de6945ba376e9abe1875b9.jpg
-  selectedPlatforms:
-    - Xbox Series S/X
-  sources:
-    rawg:
-      id: '804751'
-      slug: crisis-core-final-fantasy-vii-reunion
-      url: https://rawg.io/games/804751
+  updatedAt: 2026-11-13T13:26:42.156Z
+  genres:
+    - Action
+    - Role-Playing
+  releaseDate: 2022-12-13
+  publishers:
+    - Square Enix
+  cover: https://cdn2.steamgriddb.com/grid/5b7f5ac976e218f368f8d7a749582d14.jpg
   title: 'Crisis Core: Final Fantasy VII Reunion'
-  updatedAt: 2026-10-09T10:26:54.353Z
-  website: https://ffvii.square-enix-games.com/en-us/games/crisis-core/
+  sources:
+    thegamesdb:
+      id: '102132'
+      url: https://thegamesdb.net/game.php?id=102132
+      versions:
+        - id: '106222'
+          platform: Nintendo Switch
+          releaseDate: 2022-12-13
+        - id: '128931'
+          platform: Nintendo Switch
+          releaseDate: 2022-12-13
+        - id: '104519'
+          platform: PC
+          releaseDate: 2022-12-13
+        - id: '105636'
+          platform: PlayStation 4
+          releaseDate: 2022-12-13
+        - id: '102132'
+          platform: PlayStation 5
+          releaseDate: 2022-12-13
+        - id: '108426'
+          platform: PlayStation 5
+          releaseDate: 2022-12-13
+        - id: '108526'
+          platform: PlayStation 5
+          releaseDate: 2022-12-13
+        - id: '113957'
+          platform: PlayStation 5
+          releaseDate: 2022-12-13
+        - id: '106778'
+          platform: Xbox Series X|S
+          releaseDate: 2022-12-13
+        - id: '107181'
+          platform: Xbox Series X|S
+          releaseDate: 2022-12-13
+  id: thegamesdb:102132
+  alternativeNames:
+    - Crisis Core -Final Fantasy VII- Reunion
+    - Crisis Core -Final Fantasy 7- Reunion
+  description: |-
+    His legacy, gave life to FINAL FANTASY VII──
+
+    Since its original release in 2007, CRISIS CORE –FINAL FANTASY VII– has received wide acclaim for its deep and emotional story.
+
+    This new version enhances the graphics to HD and updates all of the 3D models in the game. Full voiceovers and new music arrangements present this epic tale of strife and heroism, presenting FINAL FANTASY VII in a brand-new light. Enjoy a more beautiful and accessible CRISIS CORE, going way beyond just a simple HD remaster.
+  originalName: 'Crisis Core: Final Fantasy VII Reunion'
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    alternativeNames: thegamesdb
+    description: rawg
+    originalName: thegamesdb
+  manualFields:
+    - cover
+    - selectedPlatforms
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: |-
+    他的传奇，孕育了《最终幻想VII》——
+
+    《CRISIS CORE –FINAL FANTASY VII–》自2007年首次发售以来，其跌宕起伏且感人至深的剧情便广受好评。
+
+    在这个全新版本中，游戏画面提升至高清，并重制了所有的3D模型。通过全语音和全新的编曲，这部关于抗争与英雄主义的史诗将焕发新生，以全新的面貌展现《最终幻想VII》的世界。本作不仅是一款简单的高清复刻版，更带来了更加精美、更易上手的《CRISIS CORE》。
 manual:
   availabilityStatus: available
   officialStores:
@@ -85,6 +107,20 @@ manual:
       note: ''
       region: TW
       url: https://www.xbox.com/zh-tw/games/store/crisis-core-final-fantasy-vii-reunion-digital-deluxe-edition/9pcwv3fwjz18
+playTime:
+  hours: 11
+personalRating: 6.5
+hltb:
+  auto: true
+  id: 109435
+  snapshot:
+    completionist: 46.39
+    extras: 21.08
+    id: 109435
+    main: 13.86
+    updatedAt: 2026-10-09T10:26:24.882Z
+  title: 'Crisis Core: Final Fantasy VII Reunion'
+  url: https://howlongtobeat.com/game/109435
 events:
   - date: 2022-12-24
     title: 开始游戏

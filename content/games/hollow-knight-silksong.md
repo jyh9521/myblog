@@ -35,7 +35,7 @@ gameMetadata:
   releaseDate: 2025-09-04
   publishers:
     - Team Cherry
-  cover: https://media.rawg.io/media/games/27c/27cd8b7dead05a870f8a514a9a1915ad.jpg
+  cover: https://cdn2.steamgriddb.com/grid/352b19056ce934568b956d68cbcde3b5.png
   title: 'Hollow Knight: Silksong'
   sources:
     rawg:
@@ -81,12 +81,13 @@ gameMetadata:
     genres: thegamesdb
     releaseDate: thegamesdb
     publishers: thegamesdb
-    cover: rawg
+    cover: steamgriddb
     title: thegamesdb
     website: rawg
     originalName: thegamesdb
   manualFields:
     - selectedPlatforms
+    - cover
 summary:
   method: translate
   model: gemini-3.5-flash-lite

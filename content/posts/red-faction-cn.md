@@ -7,6 +7,7 @@ description: |-
   > Red Faction Simplified Chinese Patch
   > 《红色派系》简体中文汉化补丁
   > 基于 Alpine Faction 1.3.0
+resourceFolder: chinesetranslationpatch/red-faction-cn
 cover: /uploads/chinesetranslationpatch/redfaction/%E5%B0%81%E9%9D%A2%E5%9B%BE.avif
 tags:
   - 汉化

@@ -2,64 +2,69 @@
 title: 鬼武者：剑之道
 status:
   - 已通关
-hltb:
-  id: 160598
-  url: https://howlongtobeat.com/game/160598
-  title: 'Onimusha: Way of the Sword'
-  auto: true
-  snapshot:
-    id: 160598
-    main: 21.96
-    extras: 29.59
-    completionist: 48.28
-    updatedAt: 2026-10-08T04:25:51.797Z
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/48e/48ea2f7adb60615d658887899ffe4d1f.jpg
-  description: 本作是刀光血影、以牙还牙的极致动作游戏。在面目全非的“京都”，一位佩戴“鬼之笼手”的武士正四处奔波，斩杀猖獗肆虐的幻魔。在激烈的刀光剑影之中沐浴鲜血，不断寻求战斗的意义。前行的道路，终将通往何处？
+  platforms:
+    - Nintendo Switch 2
+    - PC
+    - PlayStation 5
+    - Xbox Series X|S
+  selectedPlatforms:
+    - PlayStation 5
+  localizedName: ''
   developers:
     - Capcom
-  fieldSources:
-    cover: rawg
-    description: manual
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    selectedPlatforms: manual
-  genres:
-    - Action
-    - Adventure
-    - RPG
-  id: rawg:994600
-  localizedName: ''
-  manualFields:
-    - description
-    - selectedPlatforms
-  originalName: 'Onimusha: Way Of The Sword'
-  platforms:
-    - Xbox Series S/X
-    - PlayStation 5
-    - PC
-  publishers:
-    - Capcom
-  releaseDate: 2026-09-04
   screenshots:
     - https://media.rawg.io/media/screenshots/a34/a3444739430f1b440bbef6d493a62585.jpg
     - https://media.rawg.io/media/screenshots/184/18431ea009b07288111a9fb3743a2830.jpg
     - https://media.rawg.io/media/screenshots/bb8/bb82117127b5839995ea4c7186354190.jpg
     - https://media.rawg.io/media/screenshots/965/9653d36f42d6a7a360c99963253384ff.jpg
+  updatedAt: 2026-11-13T13:30:21.155Z
+  genres:
+    - Action
+    - Adventure
+    - Role-Playing
+  releaseDate: 2026-09-04
+  publishers:
+    - Capcom
+  cover: https://cdn2.steamgriddb.com/grid/a3962c0ca7ca8033daaa9fac886e90b8.jpg
+  title: 'Onimusha: Way of the Sword'
   sources:
-    rawg:
-      id: '994600'
-  title: 'Onimusha: Way Of The Sword'
-  updatedAt: 2026-10-02T00:40:15.916Z
+    thegamesdb:
+      id: '137804'
+      url: https://thegamesdb.net/game.php?id=137804
+      versions:
+        - id: '137804'
+          platform: Nintendo Switch 2
+          releaseDate: 2026-09-04
+        - id: '139551'
+          platform: PC
+          releaseDate: 2026-09-04
+        - id: '139552'
+          platform: PlayStation 5
+          releaseDate: 2026-09-04
+        - id: '139553'
+          platform: Xbox Series X|S
+          releaseDate: 2026-09-04
   website: ''
-  selectedPlatforms:
-    - PlayStation 5
+  id: thegamesdb:137804
+  alternativeNames: []
+  description: 本作是刀光血影、以牙还牙的极致动作游戏。在面目全非的“京都”，一位佩戴“鬼之笼手”的武士正四处奔波，斩杀猖獗肆虐的幻魔。在激烈的刀光剑影之中沐浴鲜血，不断寻求战斗的意义。前行的道路，终将通往何处？
+  originalName: 'Onimusha: Way of the Sword'
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    description: manual
+    originalName: thegamesdb
+  manualFields:
+    - description
+    - selectedPlatforms
+    - cover
 manual:
   availabilityStatus: available
   officialStores:
@@ -67,6 +72,17 @@ manual:
       note: ''
       region: HK
       url: https://www.playstation.com/zh-hans-hk/games/onimusha-way-of-the-sword/
+hltb:
+  auto: true
+  id: 160598
+  snapshot:
+    completionist: 48.28
+    extras: 29.59
+    id: 160598
+    main: 21.96
+    updatedAt: 2026-10-08T04:25:51.797Z
+  title: 'Onimusha: Way of the Sword'
+  url: https://howlongtobeat.com/game/160598
 events:
   - date: 2026-09-05
     title: 开始游戏

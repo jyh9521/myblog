@@ -48,7 +48,8 @@ export default function NsGroupPage() {
             <span className="ns-track-art" aria-hidden="true">♪</span>
             <div><strong>常回家看看</strong><span>陈红</span></div>
           </div>
-          <audio controls preload="metadata" src="/ns/audio/changhuijiakankan.mp3">你的浏览器不支持音频播放。</audio>
+          <audio controls autoPlay preload="auto" src="/ns/audio/changhuijiakankan.mp3">你的浏览器不支持音频播放。</audio>
+          <p className="ns-card-hint">如果没有自动播放，请点上方的播放键。</p>
         </article>
 
         <aside className="ns-card ns-counter-card">

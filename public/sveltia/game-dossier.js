@@ -416,23 +416,6 @@
                   } }), ' ' + platform)))),
             details('封面与截图' + (value.cover ? ' · 已设封面' : ''), [
               h('div', { className: 'game-cover-field' }, field('cover', '封面图片 URL', 'url'),
-                h('label', { className: 'blog-media-primary blog-media-upload' }, '上传封面',
-                  h('input', { type: 'file', className: 'blog-media-file-input', 'aria-label': '上传游戏封面',
-                    accept: 'image/png,image/jpeg,image/webp,image/gif,image/avif', disabled: this.state.coverBusy,
-                    onChange: async event => {
-                      const file = event.target.files[0]; event.target.value = '';
-                      if (!file) return;
-                      this.setState({ coverBusy: true, coverMessage: '正在上传封面…' });
-                      try {
-                        if (!/\.(png|jpe?g|webp|gif|avif)$/i.test(file.name)) throw Error('请选择有效图片。');
-                        const folder = window.BlogResources.destination(this.props.entry);
-                        const result = await window.BlogResources.upload(file, folder, !!folder);
-                        this.update('cover', result.path, 'manual');
-                        this.setState({ coverMessage: '封面已上传。' });
-                      } catch (error) { this.setState({ coverMessage: error.message }); }
-                      finally { this.setState({ coverBusy: false }); }
-                    } })),
-                this.state.coverMessage && h('small', { role: 'status' }, this.state.coverMessage),
                 h(GameCoverPicker, { suggestedQuery: value.originalName || value.title || this.state.query, onSelect: url => this.update('cover', url, 'steamgriddb') }),
                 value.fieldSources?.cover === 'steamgriddb' && h('small', null, '已选 SteamGridDB 封面 · 刷新时保留')),
               field('screenshots', '截图 URL（逗号分隔）', 'text', true)], { 'data-dossier-media-disclosure': '' }),

@@ -2,54 +2,15 @@
 title: 魔幻战士
 status:
   - 考虑制作补丁
-hltb:
-  id: 9297
-  url: https://howlongtobeat.com/game/9297
-  title: Sudeki
-  auto: true
-  snapshot:
-    id: 9297
-    main: 11.59
-    extras: 18.43
-    completionist: 23.21
-    updatedAt: 2026-10-09T01:28:01.554Z
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/5f3/5f3e3b02d402653dd1d54e3871e92c08.jpg
-  description: |-
-    Sudeki, a world torn apart into light, shadow and dark. Rent asunder by deceit and betrayal, the land cries out for a peace that only four united heroes can bring.
-    Beyond the protective walls of Illumina Castle lie miles of pastoral, rolling countryside, though once a serene landscape, the Aklorian forces have transformed the countryside into a charred battlefield. Simply passing through the region is unsafe, as travellers must be ever alert for ambushes.
-    Four friends have joined together to aid their queen. Though destined to encounter ancient gods, primordial wonders, and marvellous inventions, foes and betrayal haunt their every step. A keen eye could prove vital, exposing essential clues. And as the companions make their way through darkness and light, they’ll discover that those two extremes have more in common than they once imagined...
-    Real-time, bone-crunching combat with incredible spells and combos.Control any one of the four champions at any time, and skip between them at will.Customise each character's armour, weapons and spells and evolve new powerful attacks.
-  developers:
-    - Climax Studios
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    selectedPlatforms: manual
-    title: manual
-  genres:
-    - Action
-    - Adventure
-    - RPG
-  id: rawg:17744
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-    - title
-  originalName: Sudeki
   platforms:
     - PC
     - Xbox
-  publishers:
-    - Climax Group
-  releaseDate: 2005-03-24
+  selectedPlatforms:
+    - PC
+  localizedName: ''
+  developers:
+    - Climax Studios
   screenshots:
     - https://media.rawg.io/media/screenshots/0a7/0a785f0b31a884489f32a0545ae01f56.jpg
     - https://media.rawg.io/media/screenshots/cd6/cd661fecd01fe84e64a7ed308f44261b.jpg
@@ -57,16 +18,79 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/792/792df93e02539450be5b21fbd701d681.jpg
     - https://media.rawg.io/media/screenshots/776/776ed436132f275a18c5f2a35c8304ec.jpg
     - https://media.rawg.io/media/screenshots/9c5/9c5c4497b532e32b90395ba9c95f4bde.jpg
-  selectedPlatforms:
-    - PC
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=138&jeuid=343322&media=sstitle%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=138&jeuid=343322&media=ss%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=138&jeuid=343322&media=screenmarquee%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=138&jeuid=343322&media=screenmarqueesmall%28wor%29
+  updatedAt: 2026-11-13T13:37:28.565Z
+  genres:
+    - Role-Playing
+    - Action
+    - Adventure
+    - RPG
+    - Action RPG
+    - Role Playing Game
+  releaseDate: 2005-03-25
+  publishers:
+    - Climax Group
+  cover: https://cdn2.steamgriddb.com/grid/a525cd102b157e7b7e69049fe0fa8e12.png
+  title: Sudeki
   sources:
     rawg:
       id: '17744'
       slug: sudeki
       url: https://rawg.io/games/17744
-  title: Sudeki
-  updatedAt: 2026-10-06T23:32:36.575Z
+    screenscraper:
+      id: '343322'
+      systemId: '138'
+      url: https://www.screenscraper.fr/index.php?gameid=343322&plateforme=138
+    thegamesdb:
+      id: '8478'
+      url: https://thegamesdb.net/game.php?id=8478
   website: ''
+  id: thegamesdb:8478
+  alternativeNames:
+    - Sudeki
+  description: |-
+    Sudeki, a world torn apart into light, shadow and dark. Rent asunder by deceit and betrayal, the land cries out for a peace that only four united heroes can bring.
+    Beyond the protective walls of Illumina Castle lie miles of pastoral, rolling countryside, though once a serene landscape, the Aklorian forces have transformed the countryside into a charred battlefield. Simply passing through the region is unsafe, as travellers must be ever alert for ambushes.
+    Four friends have joined together to aid their queen. Though destined to encounter ancient gods, primordial wonders, and marvellous inventions, foes and betrayal haunt their every step. A keen eye could prove vital, exposing essential clues. And as the companions make their way through darkness and light, they’ll discover that those two extremes have more in common than they once imagined...
+    Real-time, bone-crunching combat with incredible spells and combos.Control any one of the four champions at any time, and skip between them at will.Customise each character's armour, weapons and spells and evolve new powerful attacks.
+  originalName: Sudeki
+  fieldSources:
+    platforms: thegamesdb
+    selectedPlatforms: manual
+    developers: rawg
+    screenshots: rawg
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: rawg
+    cover: steamgriddb
+    title: manual
+    alternativeNames: screenscraper
+    description: rawg
+    originalName: thegamesdb
+  manualFields:
+    - selectedPlatforms
+    - title
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:17744:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/17744
+  text: |-
+    苏德基，一个四分五裂的世界，分化为光明、阴影与黑暗。这片土地饱受欺骗与背叛的撕裂，正呼唤着唯有四位英雄齐心协力方能带来的和平。
+
+    在伊鲁米娜城堡的保护高墙之外，是绵延数英里的田园风光与起伏的乡野。这里曾是一片宁静的景致，但阿克洛里安军队却将其变成了一处焦黑的战场。仅仅穿过这片区域也并不安全，旅行者必须时刻警惕伏击。
+
+    四位挚友携手同心，共同效忠女王。尽管他们注定将遭遇远古神明、原始奇观以及奇妙的发明，但敌人与背叛却如影随形。敏锐的目光至关重要，能够揭示关键的线索。当同伴们穿行于黑暗与光明之间时，他们将发现这两个极端其实比想象中有着更多的共同点……
+
+    酣畅淋漓、拳拳到肉的即时战斗，搭配不可思议的法术与连击。随时控制四位英雄中的任意一人，并随心所欲地在他们之间切换。自定义每个角色的盔甲、武器与法术，解锁并进化出强大的全新攻击招式。
 manual:
   availabilityStatus: available
   officialStores:
@@ -74,4 +98,15 @@ manual:
       note: ''
       region: ''
       url: https://www.gog.com/zh/game/sudeki
+hltb:
+  auto: true
+  id: 9297
+  snapshot:
+    completionist: 23.21
+    extras: 18.43
+    id: 9297
+    main: 11.59
+    updatedAt: 2026-10-09T01:28:01.554Z
+  title: Sudeki
+  url: https://howlongtobeat.com/game/9297
 ---

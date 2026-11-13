@@ -7,6 +7,7 @@ description: |-
   > The Operative: No One Lives Forever Simplified Chinese Patch
   > 《秘密特工：无人永生》简体中文汉化补丁
   > 基于 NOLF Modernizer v1.006 Patch 4
+resourceFolder: chinesetranslationpatch/nolf-cn
 cover: /uploads/chinesetranslationpatch/nolf/%E5%B0%81%E9%9D%A2.webp
 tags:
   - 汉化

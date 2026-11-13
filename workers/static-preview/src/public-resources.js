@@ -196,17 +196,29 @@ export async function resourceAdminRoute(request,env,ctx,accounts,fetcher=fetch)
       await env.PUBLIC_UPLOADS.delete('.deleted/'+key);
       return json({key,path:publicUrl(key),bytes:bytes.length,sha256,contentType:types[extension],reused:!object,folderWarning,...(scoped?{folder}:{}),...dimensions});
     }
-    if(path==='/delete'&&request.method==='POST') {
+    if((path==='/delete'||path==='/recycle-screenshot')&&request.method==='POST') {
+      const direct=path==='/recycle-screenshot';
       const input=await boundedJson(request,8192),key=publicKey(publicUrl(String(input.key||'')));
-      if(!key||!/^[a-f0-9]{64}$/.test(input.sha256||'')||!/^[a-f0-9]{40}$/.test(input.commit||''))return json({error:'INVALID_INPUT'},400);
-      const [catalog,snapshot]=await Promise.all([resourceCatalog(env),scanReferences(env,fetcher,request.headers.get('X-GitHub-Read-Token'))]);
-      if(snapshot.commit!==input.commit)return json({error:'REFERENCE_SOURCE_CHANGED'},409);
-      if(referencesFor(key,snapshot).length)return json({error:'RESOURCE_REFERENCED'},409);
-      const file=catalog.files.find(f=>f.key===key);if(!file||file.sha256!==input.sha256)return json({error:'RESOURCE_CHANGED'},409);
+      if(!key||!/^[a-f0-9]{64}$/.test(input.sha256||'')||(!direct&&!/^[a-f0-9]{40}$/.test(input.commit||'')))return json({error:'INVALID_INPUT'},400);
+      let file,commit;
+      if(direct){
+        file=await env.PUBLIC_UPLOADS.head(key);
+        const folder=folderPath(file?.customMetadata?.uploadFolder);
+        if(!key.startsWith('cms/')||!folder?.startsWith('Game Dossiers/')||!/^image\//.test(file?.httpMetadata?.contentType||''))
+          return json({error:'NOT_DOSSIER_SCREENSHOT'},409);
+        if(file.customMetadata.sha256!==input.sha256)return json({error:'RESOURCE_CHANGED'},409);
+      }else{
+        const [catalog,snapshot]=await Promise.all([resourceCatalog(env),scanReferences(env,fetcher,request.headers.get('X-GitHub-Read-Token'))]);
+        if(snapshot.commit!==input.commit)return json({error:'REFERENCE_SOURCE_CHANGED'},409);
+        if(referencesFor(key,snapshot).length)return json({error:'RESOURCE_REFERENCED'},409);
+        commit=snapshot.commit;
+        file=catalog.files.find(f=>f.key===key);
+        if(!file||file.sha256!==input.sha256)return json({error:'RESOURCE_CHANGED'},409);
+      }
       const object=await env.PUBLIC_UPLOADS.get(key,{onlyIf:{etagMatches:file.etag}});if(!object?.body)return json({error:'RESOURCE_CHANGED'},409);
       const trashKey='.trash/'+new Date().toISOString().replace(/[:.]/g,'-')+'/'+key;
       await env.PUBLIC_UPLOADS.put(trashKey,object.body,{httpMetadata:object.httpMetadata,customMetadata:{...object.customMetadata,originalKey:key,sha256:input.sha256}});
-      await env.PUBLIC_UPLOADS.put('.deleted/'+key,JSON.stringify({trashKey,commit:snapshot.commit}),{httpMetadata:{contentType:'application/json'}});
+      await env.PUBLIC_UPLOADS.put('.deleted/'+key,JSON.stringify({trashKey,commit}),{httpMetadata:{contentType:'application/json'}});
       await env.PUBLIC_UPLOADS.delete(key);return json({status:'archived',key,trashKey});
     }
     if(path==='/restore'&&request.method==='POST') {

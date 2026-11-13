@@ -120,3 +120,24 @@ test('entry uploads create the English two-level catalog and isolate identical f
  assert.equal((await resourceCatalog(e)).files.find(f=>f.key===uploadedAgain.key).folder,game);
  assert.deepEqual(new Uint8Array(await (await servePublicResource(req(a.path),e)).arrayBuffer()),png);
 });
+
+test('explicit dossier screenshot recycle needs no reference scan, but stays scoped and authenticated',async()=>{
+ const e=env();
+ const png=Uint8Array.from([137,80,78,71,13,10,26,10]);
+ const folder='Game Dossiers/Silksong';
+ const uploaded=await resourceAdminRoute(req('/ns/api/resources/upload?destination=entry&name=shot.png&folder='+encodeURIComponent(folder),'PUT',png),e,{},accounts);
+ const shot=await uploaded.json();
+ await pdf(e);
+ let scans=0;
+ const call=(data,extra={})=>resourceAdminRoute(req('/ns/api/resources/recycle-screenshot','POST',data,{'X-GitHub-Read-Token':'',...extra}),e,{},accounts,async()=>{scans++;throw Error('unexpected scan');});
+ assert.equal((await call(shot,{Cookie:''})).status,401);
+ assert.equal((await call({key:'source.pdf',sha256:'b'.repeat(64)})).status,409);
+ assert.equal((await call({...shot,sha256:'f'.repeat(64)})).status,409);
+ const archived=await call(shot);
+ assert.equal(archived.status,200);
+ assert.equal(scans,0);
+ const receipt=await archived.json();
+ assert.equal((await servePublicResource(req(shot.path),e)).status,404);
+ assert.equal((await resourceAdminRoute(req('/ns/api/resources/restore','POST',receipt),e,{},accounts)).status,200);
+ assert.deepEqual(new Uint8Array(await (await servePublicResource(req(shot.path),e)).arrayBuffer()),png);
+});

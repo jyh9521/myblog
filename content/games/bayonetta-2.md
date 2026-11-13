@@ -94,6 +94,12 @@ gameMetadata:
   manualFields:
     - cover
     - selectedPlatforms
+screenshotGallery:
+  enabled: true
+  englishName: bayonetta-2
+  folder: Game Dossiers/bayonetta-2
+  images:
+    - /uploads/cms/91a2155e8566705aa85743b0646bf2e660af99f40f1bebdb8a77213022d20818/fd2f2bb54206203a40b9769671c2401e91ebec1bac9873794411830bc0997fee/2022100618325800_c.jpg
 manual:
   availabilityStatus: available
   officialStores:

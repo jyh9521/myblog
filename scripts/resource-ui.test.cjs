@@ -25,13 +25,25 @@ test('linked article upload and game screenshot batch use scoped destinations an
  assert.equal(article.props.value,'/uploads/cover.png');
  assert.equal(urls[0].get('folder'),'Articles/My Article');assert.equal(urls[0].get('destination'),'entry');
  const gallery=mount('screenshot-gallery',{enabled:true,images:[]},'games',{title:'伊苏 IX',gameMetadata:{title:'Ys IX: Monstrum Nox'}});
- gallery.props.value.images=['/uploads/manually-ordered.png'];
- await gallery.addFiles([new File(['2'],'two.png',{lastModified:2000}),new File(['1'],'one.png',{lastModified:1000}),new File(['bad'],'invalid.pdf',{lastModified:1000})]);
- assert.equal(urls[1].get('name'),'one.png');
- assert.equal(urls[2].get('name'),'two.png');
- assert.deepEqual(Array.from(gallery.props.value.images),['/uploads/manually-ordered.png','/uploads/one.png','/uploads/two.png']);
+ gallery.props.value.images=['/uploads/manually-ordered.png','/uploads/20260909120000_1.jpg'];
+ await gallery.addFiles([
+   new File(['3'],'20261024152054_1.jpg',{lastModified:1000}),
+   new File(['1'],'2025091011152800_c.jpg',{lastModified:3000}),
+   new File(['2'],'2025-09-10_11-15-29.png',{lastModified:2000}),
+   new File(['bad'],'invalid.pdf',{lastModified:4000}),
+ ]);
+ assert.deepEqual(urls.slice(1).map(q=>q.get('name')),['2025091011152800_c.jpg','2025-09-10_11-15-29.png','20261024152054_1.jpg']);
+ assert.deepEqual(Array.from(gallery.props.value.images),[
+   '/uploads/manually-ordered.png','/uploads/2025091011152800_c.jpg','/uploads/2025-09-10_11-15-29.png','/uploads/20260909120000_1.jpg','/uploads/20261024152054_1.jpg',
+ ]);
  assert.equal(gallery.props.value.folder,'Game Dossiers/Ys IX - Monstrum Nox');
  assert.equal(urls[1].get('folder'),gallery.props.value.folder);
- assert.equal(urls[2].get('destination'),'entry');assert.equal(urls.length,3);
+ assert.equal(urls[2].get('destination'),'entry');assert.equal(urls.length,4);
  assert.match(gallery.state.message,/invalid.pdf/);
+ const fallback=mount('screenshot-gallery',{enabled:true,images:[]},'games',{title:'Fixture'});
+ await fallback.addFiles([
+   new File(['x'],'20250230120000_1.jpg',{lastModified:3000}),
+   new File(['x'],'custom-name.png',{lastModified:1000}),
+ ]);
+ assert.deepEqual(Array.from(fallback.props.value.images),['/uploads/custom-name.png','/uploads/20250230120000_1.jpg']);
 });

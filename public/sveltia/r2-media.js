@@ -4,6 +4,25 @@
   const element=(tag,text,className)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(className)e.className=className;return e;};
   const dossierScreenshot=file=>file.image&&file.uploadFolder?.startsWith('Game Dossiers/');
   const fileName=file=>{if(file.name)return file.name;try{return decodeURIComponent(file.path.split('/').pop());}catch{return file.path.split('/').pop();}};
+  // Read capture time from filenames, not upload time or the numeric Steam suffix.
+  function screenshotStamp(name){
+    const match=name.match(/^(?:(?:Screenshot|Screen[ _-]?Shot)[ _-]+)?(20\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{1,3})?(?=[_.-]|$)/i)
+      ||name.match(/^(?:(?:Screenshot|Screen[ _-]?Shot)[ _-]+)?(20\d{2})[-_.](\d{2})[-_.](\d{2})[T _-](\d{2})[-_.:](\d{2})[-_.:](\d{2})(?:[._](\d{1,3})(?=\.[^.]+$))?(?=[_.-]|$)/i);
+    if(!match)return null;
+    const [,y,m,d,h,min,sec,fraction='']=match;
+    const ms=Number(fraction.padEnd(3,'0'));
+    // Treat the filename as local wall time; UTC is only a neutral comparison axis.
+    const time=Date.UTC(+y,+m-1,+d,+h,+min,+sec,ms),date=new Date(time);
+    return date.getUTCFullYear()===+y&&date.getUTCMonth()===+m-1&&date.getUTCDate()===+d
+      &&date.getUTCHours()===+h&&date.getUTCMinutes()===+min&&date.getUTCSeconds()===+sec?time:null;
+  }
+  function orderDatedScreenshots(items,stamp){
+    const rows=items.map(item=>({item,time:stamp(item)}));
+    const dated=rows.filter(row=>row.time!==null).sort((a,b)=>a.time-b.time);
+    let i=0;
+    return rows.map(row=>row.time===null?row.item:dated[i++].item);
+  }
+  const screenshotPathStamp=path=>screenshotStamp(fileName({path:path.split(/[?#]/,1)[0]}));
   const size=bytes=>bytes<1024*1024?`${(bytes/1024).toFixed(1)} KB`:`${(bytes/1024/1024).toFixed(1)} MB`;
   const validateSelection=(file,mode)=>{if(mode==='image'&&!/\.(png|jpe?g|webp|gif|avif)$/i.test(file.name))throw Error('请选择 PNG、JPEG、WebP、GIF 或 AVIF 图片。');if(mode==='pdf'&&!/\.pdf$/i.test(file.name))throw Error('请选择 PDF 文件。');};
   async function api(path,options={}) {const response=await (path==='/catalog'?fetch:window.BlogAdminAuth.request)(ROOT+path,{...options,credentials:'same-origin',cache:'no-store',headers:{'X-Gaming-Admin':'1',...options.headers},signal:AbortSignal.timeout(120000)});let data;try{data=await response.json();}catch{throw Error('资源服务返回了非 JSON 响应（HTTP '+response.status+'）。');}if(!response.ok){const error=Error(errors[data.error]||data.error||'操作失败');error.status=response.status;error.code=data.error;throw error;}return data;}
@@ -87,6 +106,10 @@
         list.replaceChildren();const query=search.value.toLocaleLowerCase();const visible=files.filter(f=>(currentFolder===null||(query?f.folder===currentFolder||f.folder?.startsWith(currentFolder?currentFolder+'/':''):f.folder===currentFolder))&&(mode!=='image'||f.image)&&(mode!=='pdf'||f.pdf)&&fileName(f).toLocaleLowerCase().includes(query)&&(filter.value==='all'||filter.value==='image'&&f.image||filter.value==='pdf'&&f.pdf||f.contentType?.startsWith(filter.value+'/'))&&(!view||view==='unused'&&commit&&!f.references?.length||view==='duplicates'&&f.duplicates?.length));
         visibleFiles=visible;renderFolders();count.textContent=`${visible.length} 个文件${view==='unused'?' · 最新文章未引用':view==='duplicates'?' · 内容重复':''}`;
         const children=!query&&currentFolder!==null?folders.filter(folder=>folder.split('/').slice(0,-1).join('/')===currentFolder):[];for(const folder of children){const tile=element('div',undefined,'blog-media-card blog-media-folder-tile'),card=button('',()=>navigate(folder));card.className='blog-media-folder-card';card.setAttribute('aria-label','进入文件夹 '+folder);card.disabled=busy;card.append(element('span','📁','blog-media-folder-icon'),element('strong',folder.split('/').pop()),element('span',files.filter(f=>f.folder===folder||f.folder?.startsWith(folder+'/')).length+' 个文件'));const actions=element('div',undefined,'blog-media-item-actions'),renameItem=button('改名',()=>renameFolder(folder));renameItem.setAttribute('aria-label','改名文件夹 '+folder);renameItem.disabled=busy;actions.append(renameItem);tile.append(card,actions);list.append(tile);}
+        if(currentFolder?.startsWith('Game Dossiers/')){
+          const sorted=orderDatedScreenshots(visible,file=>file.image?screenshotStamp(fileName(file)):null);
+          visible.splice(0,visible.length,...sorted);
+        }
         if(!visible.length&&!children.length)list.append(element('p',view==='unused'&&!commit?'请先在管理面板检查最新引用。':'没有匹配的文件。可以上传新文件，或换个关键词。','blog-media-empty'));
         for(const file of visible){const card=element('div',undefined,'blog-media-card'),choose=element('button',undefined,'blog-media-choice'),preview=element('div',undefined,'blog-media-thumb');choose.type='button';choose.setAttribute('aria-label','选择 '+fileName(file));choose.onclick=()=>{if(selecting){checked.has(file.key)?checked.delete(file.key):checked.add(file.key);render();}else if(options.manage)window.open(file.path,'_blank','noopener');else select(file);};choose.disabled=busy;
           if(file.image){const image=element('img');image.src=file.path;image.alt='';image.loading='lazy';preview.append(image);}else preview.append(element('span',file.pdf?'PDF':file.contentType?.startsWith('audio/')?'音频':file.contentType?.startsWith('video/')?'视频':'文件','blog-media-file-icon'));
@@ -136,15 +159,15 @@
           const gallery=this.props.value||{},folder=gallery.folder||defaultGameFolder(this.props.entry,gallery);
           if(!folder)throw Error('请先填写英文游戏名，或选择包含英文名称的游戏资料。');
           const images=[...(gallery.images||[])],errors=[];
-          // Browsers expose lastModified, not the original file creation time.
-          for(const file of [...files].sort((a,b)=>a.lastModified-b.lastModified)){
+          const ordered=[...files].sort((a,b)=>(screenshotStamp(a.name)??a.lastModified)-(screenshotStamp(b.name)??b.lastModified));
+          for(const file of ordered){
             try{
               validateSelection(file,'image');
               const result=await upload(file,folder,true);
               if(!images.includes(result.path))images.push(result.path);
             }catch(error){errors.push(file.name+'：'+error.message);}
           }
-          if(images.length!==(gallery.images||[]).length)this.update({folder,images});
+          if(images.length!==(gallery.images||[]).length)this.update({folder,images:orderDatedScreenshots(images,screenshotPathStamp)});
           this.setState({message:errors.length?errors.join('；'):'上传完成。保存档案后发布截图。'});
         });
       },
@@ -159,7 +182,7 @@
             h('p',null,'截图目录：'+(folder||'请先填写英文游戏名')),
             h('div',{className:'blog-media-field-actions'},
               h('label',{className:'blog-media-primary blog-media-upload','aria-disabled':busy||!folder},'上传截图',h('input',{type:'file',multiple:true,accept:imageAccept,className:'blog-media-file-input','aria-label':'上传截图',disabled:busy||!folder,onChange:e=>{const files=[...e.target.files];e.target.value='';this.addFiles(files);}})),
-              button('从资源库选择',()=>this.run(async()=>{const selected=await picker('image',{folder});if(selected&&!images.includes(selected))this.update({folder,images:[...images,selected]});}),busy||!folder)),
+              button('从资源库选择',()=>this.run(async()=>{const selected=await picker('image',{folder});if(selected&&!images.includes(selected))this.update({folder,images:orderDatedScreenshots([...images,selected],screenshotPathStamp)});}),busy||!folder)),
             !!images.length&&h('ol',{className:'blog-media-gallery-list'},...images.map((src,i)=>h('li',{key:src},
               h('img',{src,alt:'截图 '+(i+1),loading:'lazy'}),
               h('div',{className:'blog-media-field-actions'},

@@ -45,7 +45,7 @@ gameMetadata:
     - selectedPlatforms
     - cover
 screenshotGallery:
-  enabled: true
+  enabled: false
   englishName: the-legend-of-zelda-ocarina-of-time
   folder: Game Dossiers/the-legend-of-zelda-ocarina-of-time
   images:

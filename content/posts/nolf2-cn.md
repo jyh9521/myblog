@@ -7,6 +7,7 @@ description: |-
   > No One Lives Forever 2: A Spy in H.A.R.M.'s Way Simplified Chinese Patch
   > 《无人永生2：H.A.R.M. 之道》简体中文汉化补丁
   > 基于 Modernizer2 Beta 2C
+resourceFolder: chinesetranslationpatch/nolf2-cn
 cover: /uploads/chinesetranslationpatch/nolf2/%E5%B0%81%E9%9D%A2%E5%9B%BE.png
 tags:
   - 汉化

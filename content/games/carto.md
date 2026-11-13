@@ -2,71 +2,66 @@
 title: 无尽旅图
 status:
   - 已通关
-playTime:
-  hours: 5.5
-personalRating: 8.5
-hltb:
-  id: 80570
-  url: https://howlongtobeat.com/game/80570
-  title: Carto
-  auto: true
-  snapshot:
-    id: 80570
-    main: 5.47
-    extras: 6.21
-    completionist: 6.6
-    updatedAt: 2026-10-08T23:57:44.193Z
 gameMetadata:
-  alternativeNames: []
-  cover: https://media.rawg.io/media/games/815/815087cd6bdf4792075031e469b8f1d0.jpg
-  description: Carto is a stunning puzzle game where you play a lost child, wandering around an even-changing island you create as you play.
-  developers:
-    - Sunhead Games
-  fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
-    title: rawg
-    website: rawg
-    selectedPlatforms: manual
-  genres:
-    - Adventure
-    - Indie
-    - Puzzle
-  id: rawg:270721
-  localizedName: ''
-  manualFields:
-    - selectedPlatforms
-  originalName: Carto
   platforms:
-    - PC
-    - Xbox One
     - Nintendo Switch
+    - PC
     - PlayStation 4
-  publishers:
-    - Humble Games
-    - X.D. Network
-  releaseDate: 2020-10-26
+    - Xbox One
+  selectedPlatforms:
+    - PC
+  localizedName: ''
   screenshots:
     - https://media.rawg.io/media/screenshots/ff7/ff7db417ee7af3acbf5c80ba1939df7c.jpg
     - https://media.rawg.io/media/screenshots/537/53751a5da493825899b7ecfb98e55449.jpg
     - https://media.rawg.io/media/screenshots/6e6/6e62c7b9a810e154750f10125ec116a3.jpg
     - https://media.rawg.io/media/screenshots/567/56799ae7d9228d9105cdd026ef0d7c41.jpg
-  selectedPlatforms:
-    - PC
-  sources:
-    rawg:
-      id: '270721'
-      slug: carto
-      url: https://rawg.io/games/270721
+  updatedAt: 2026-11-13T13:41:46.567Z
+  genres:
+    - Strategy
+  releaseDate: 2020-10-27
+  cover: https://cdn2.steamgriddb.com/grid/ae09daea643169b51e347c9122049ad4.png
   title: Carto
-  updatedAt: 2026-10-08T23:58:00.260Z
-  website: http://www.sunheadgames.com/
+  sources:
+    thegamesdb:
+      id: '77179'
+      url: https://thegamesdb.net/game.php?id=77179
+      versions:
+        - id: '77179'
+          platform: Nintendo Switch
+          releaseDate: 2020-10-27
+        - id: '94127'
+          platform: PC
+          releaseDate: 2020-10-27
+        - id: '88775'
+          platform: PlayStation 4
+          releaseDate: 2020-10-27
+        - id: '115363'
+          platform: PlayStation 4
+          releaseDate: 2020-10-27
+        - id: '83350'
+          platform: Xbox One
+          releaseDate: 2020-10-27
+  id: thegamesdb:77179
+  alternativeNames: []
+  description: Carto is a stunning puzzle game where you play a lost child, wandering around an even-changing island you create as you play.
+  originalName: Carto
+  fieldSources:
+    cover: steamgriddb
+    description: rawg
+    genres: thegamesdb
+    originalName: thegamesdb
+    platforms: thegamesdb
+    releaseDate: thegamesdb
+    selectedPlatforms: manual
+    title: thegamesdb
+  manualFields:
+    - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: 《无尽旅图》是一款精美的解谜游戏。在游戏中，你将扮演一名迷失的孩子，在一座由你亲手打造、千变万化的岛屿上四处漫游。
 manual:
   availabilityStatus: available
   officialStores:
@@ -74,6 +69,20 @@ manual:
       note: ''
       region: TW
       url: https://www.xbox.com/zh-tw/games/store/carto/9nj2xxpjvdrd
+playTime:
+  hours: 5.5
+personalRating: 8.5
+hltb:
+  auto: true
+  id: 80570
+  snapshot:
+    completionist: 6.6
+    extras: 6.21
+    id: 80570
+    main: 5.47
+    updatedAt: 2026-10-08T23:57:44.193Z
+  title: Carto
+  url: https://howlongtobeat.com/game/80570
 events:
   - date: 2021-10-30
     title: 开始游戏

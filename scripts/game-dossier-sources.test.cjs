@@ -38,7 +38,7 @@ test('CMS entry loads the versioned cover styles and updated admin/field scripts
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);
   assert.match(html, /admin-auth\.js\?v=game-brief-20261109/);
-  assert.match(html, /game-dossier\.js\?v=all-sources-20261112/);
+  assert.match(html, /game-dossier\.js\?v=xbox-platform-20261113/);
 });
 
 test('TheGamesDB option imports and refreshes game fields only, including after reopening', async () => {

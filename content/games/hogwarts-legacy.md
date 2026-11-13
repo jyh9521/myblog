@@ -53,7 +53,7 @@ gameMetadata:
   platforms:
     - PC
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - Nintendo Switch
     - Xbox One
@@ -69,7 +69,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/f35/f35c6bcc541808298288ba49e50c37d5.jpg
     - https://media.rawg.io/media/screenshots/fc6/fc6f976e1dd7225e4818b9f553ed23c0.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
     - Nintendo Switch
   sources:
     rawg:

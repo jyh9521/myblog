@@ -9,7 +9,6 @@ gameMetadata:
     - PlayStation 5
     - Xbox One
     - Xbox Series X|S
-    - Xbox Series S/X
   selectedPlatforms:
     - Xbox Series X|S
   localizedName: ''

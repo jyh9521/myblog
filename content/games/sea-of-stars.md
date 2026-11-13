@@ -20,12 +20,12 @@ gameMetadata:
   platforms:
     - PC
     - Xbox One
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - PlayStation 5
     - Nintendo Switch
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Sabotage Studio

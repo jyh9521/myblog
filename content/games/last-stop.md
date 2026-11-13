@@ -7,11 +7,11 @@ gameMetadata:
     - PC
     - PlayStation 5
     - Xbox One
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - Nintendo Switch
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Variable State

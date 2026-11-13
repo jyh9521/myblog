@@ -19,12 +19,12 @@ hltb:
 gameMetadata:
   platforms:
     - PC
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - Xbox One
     - PlayStation 5
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Ryu ga Gotoku Studio

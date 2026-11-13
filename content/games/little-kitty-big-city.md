@@ -18,12 +18,12 @@ hltb:
   url: https://howlongtobeat.com/game/94215
 gameMetadata:
   platforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PC
     - Xbox One
     - Nintendo Switch
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Double Dagger Studio

@@ -7,7 +7,7 @@ gameMetadata:
     - PC
     - PlayStation 4
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
     - Nintendo Switch
   selectedPlatforms:
     - PC

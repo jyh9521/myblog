@@ -45,7 +45,7 @@ gameMetadata:
   platforms:
     - PC
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
   publishers:
     - SEGA
   releaseDate: 2023-02-21
@@ -57,7 +57,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/171/171291d08d47aca1b75e3cfdb8c65c88.jpg
     - https://media.rawg.io/media/screenshots/77b/77b9dc638c2143f41bd2163bff31a4a6.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   sources:
     rawg:
       id: '850698'

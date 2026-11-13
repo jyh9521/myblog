@@ -7,7 +7,7 @@ gameMetadata:
     - Xbox One
     - PC
     - Nintendo Switch
-    - Xbox Series S/X
+    - Xbox Series X|S
   selectedPlatforms:
     - PC
   localizedName: ''

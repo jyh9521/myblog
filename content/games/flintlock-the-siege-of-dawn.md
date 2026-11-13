@@ -5,12 +5,12 @@ status:
 gameMetadata:
   platforms:
     - PC
-    - Xbox Series S/X
+    - Xbox Series X|S
     - Xbox One
     - PlayStation 5
     - PlayStation 4
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - A44

@@ -47,7 +47,7 @@ gameMetadata:
   originalName: 'Wo Long: Fallen Dynasty'
   platforms:
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PC
     - PlayStation 4
     - Xbox One
@@ -61,7 +61,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/ed8/ed857ca4b36f8029e97c2f4a2f729d37.jpg
     - https://media.rawg.io/media/screenshots/1e7/1e7d785892ea67a55f7dd21aa6c5f7f5.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   sources:
     rawg:
       id: '801638'

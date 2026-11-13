@@ -20,7 +20,7 @@ gameMetadata:
   platforms:
     - PC
     - Xbox One
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - PlayStation 5
   selectedPlatforms:

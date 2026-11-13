@@ -5,14 +5,14 @@ status:
 gameMetadata:
   platforms:
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
     - macOS
     - PlayStation 4
     - Nintendo Switch
     - PC
     - Xbox One
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - CD PROJEKT RED

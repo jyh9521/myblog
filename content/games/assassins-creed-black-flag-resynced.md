@@ -4,7 +4,7 @@ status:
   - AFK
 gameMetadata:
   platforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 5
     - PC
   selectedPlatforms:

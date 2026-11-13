@@ -20,11 +20,11 @@ gameMetadata:
   platforms:
     - PC
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - Xbox One
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Atlus

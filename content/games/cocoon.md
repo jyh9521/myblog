@@ -17,10 +17,10 @@ gameMetadata:
     - PC
     - PlayStation 4
     - Nintendo Switch
-    - Xbox Series S/X
+    - Xbox Series X|S
     - Xbox One
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Geometric Interactive

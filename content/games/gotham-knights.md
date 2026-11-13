@@ -20,9 +20,9 @@ gameMetadata:
   platforms:
     - PC
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Warner Bros. Interactive

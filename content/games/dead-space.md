@@ -7,7 +7,6 @@ gameMetadata:
     - PC
     - PlayStation 5
     - Xbox Series X|S
-    - Xbox Series S/X
   selectedPlatforms:
     - PlayStation 5
   localizedName: ''

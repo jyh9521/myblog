@@ -48,7 +48,7 @@ gameMetadata:
   originalName: Atomic Heart
   platforms:
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PC
     - PlayStation 4
     - Xbox One
@@ -63,7 +63,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/d89/d8962f1e7adedff4949092aaa30dee95.jpg
     - https://media.rawg.io/media/screenshots/134/134679b2092b40a761e44dfc4eb4bb03.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   sources:
     rawg:
       id: '50576'

@@ -20,11 +20,11 @@ gameMetadata:
   platforms:
     - PlayStation 4
     - Xbox One
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 5
     - PC
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - City Interactive

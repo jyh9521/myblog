@@ -5,13 +5,13 @@ status:
 gameMetadata:
   platforms:
     - PC
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - PlayStation 5
     - Xbox One
     - Nintendo Switch
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Focus Home Interactive

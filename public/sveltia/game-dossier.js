@@ -370,7 +370,7 @@
           h('section', { className: 'dossier-stack', 'data-dossier-pane': 'core', 'aria-label': '核对游戏版本' },
             edition && h('div', { className: 'dossier-card dossier-identity' },
               h('div', null, h('span', { className: 'dossier-kicker' }, '已关联版本'), h('strong', null, heading || '游戏版本'),
-                h('small', null, [String(value.releaseDate || '').slice(0, 4), listText(value.platforms, ' / '), listText(value.developers, '、')].filter(Boolean).join(' · ') || '发行资料待补充'),
+                h('small', null, [String(value.releaseDate || '').slice(0, 4), listText(normalizePlatforms(value.platforms), ' / '), listText(value.developers, '、')].filter(Boolean).join(' · ') || '发行资料待补充'),
                 h('small', null, sourceTags(value.sources)), platformRecordTags(value.sources)),
               externalLink(value.sources[edition.provider]?.url, '资料库')),
             h('details', { className: 'dossier-disclosure', open: this.state.searchOpen,

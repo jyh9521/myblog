@@ -47,7 +47,7 @@ gameMetadata:
   platforms:
     - PC
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
   publishers:
     - Electronic Arts
     - EA Originals
@@ -59,7 +59,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/ade/ade0c3bc89a4a3fd0baac4948c4eca57.jpg
     - https://media.rawg.io/media/screenshots/9cb/9cb533a14c4612db4c4309b3e529dd33.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   sources:
     rawg:
       id: '857636'

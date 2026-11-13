@@ -5,7 +5,7 @@ status:
 gameMetadata:
   platforms:
     - PC
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 5
   selectedPlatforms:
     - PC

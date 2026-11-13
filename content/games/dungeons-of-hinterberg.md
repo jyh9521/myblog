@@ -4,10 +4,10 @@ status:
   - AFK
 gameMetadata:
   platforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PC
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Microbird Games

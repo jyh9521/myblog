@@ -21,11 +21,11 @@ gameMetadata:
     - Nintendo Switch
     - PlayStation 4
     - PC
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 5
     - Xbox One
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PC
   localizedName: ''
   developers:

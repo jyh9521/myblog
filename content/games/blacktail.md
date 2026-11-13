@@ -6,7 +6,7 @@ gameMetadata:
   platforms:
     - PC
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
   selectedPlatforms:
     - PC
   localizedName: ''

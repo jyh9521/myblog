@@ -219,7 +219,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v8:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v9:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -417,7 +417,7 @@ test('TUNIC production catalog: verified 2022 ports group, unrelated and later e
     [123708, 'Tunic', '2023-01-29', 41, null],
     [999991, 'Tunic Deluxe Edition', '2022-09-27', 4971, [10838]],
   ].map(([id, game_title, release_date, platform, developers]) => ({ id, game_title, release_date, platform, developers }));
-  const names = { 1: 'PC', 4920: 'Microsoft Xbox One', 4981: 'Microsoft Xbox Series X', 4971: 'Nintendo Switch', 4980: 'Sony PlayStation 5', 41: 'Nintendo Game Boy Color' };
+  const names = { 1: 'PC', 4920: 'Microsoft Xbox One', 4981: 'Microsoft Xbox Series S/X', 4971: 'Nintendo Switch', 4980: 'Sony PlayStation 5', 41: 'Nintendo Game Boy Color' };
   const e = env();
   const fetcher = async url => {
     if (url.pathname.endsWith('/Developers')) return Response.json({code:200,data:{developers:{10838:{id:10838,name:'Isometricorp Games'}}}});

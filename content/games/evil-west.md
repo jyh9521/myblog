@@ -22,9 +22,9 @@ gameMetadata:
     - PlayStation 5
     - Xbox One
     - PlayStation 4
-    - Xbox Series S/X
+    - Xbox Series X|S
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Flying Wild Hog

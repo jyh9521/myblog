@@ -5,7 +5,7 @@ status:
 gameMetadata:
   platforms:
     - PlayStation 5
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - Xbox One
     - Nintendo Switch

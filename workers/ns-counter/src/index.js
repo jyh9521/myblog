@@ -35,7 +35,7 @@ export default {
       if (source === 'all' || source === 'identity') return searchDossierEditions(request, env, query);
       if (source === 'thegamesdb') return searchTheGamesDB(request, env, query);
       if (!['auto', 'rawg', 'screenscraper'].includes(source)) return jsonError("数据源选项无效。", 400);
-      const cacheKey = `game-search:v5:${source}:${query.toLocaleLowerCase()}`;
+      const cacheKey = `game-search:v6:${source}:${query.toLocaleLowerCase()}`;
       const cached = await readMetadataCache(env, cacheKey);
       if (cached) {
         const cacheTtl = cached.value.results?.length ? CACHE_SEARCH_MS : CACHE_EMPTY_SEARCH_MS;
@@ -79,7 +79,7 @@ export default {
       if (!rawgId && (!ssId || !systemId)) return jsonError("请先选择有明确编号及平台的候选游戏。", 400);
       const cacheIdentity = [source, rawgId, ssId, systemId].join(':');
       try {
-        const outcome = await cachedMetadata(env, `game-detail:v4:${cacheIdentity}`, CACHE_DETAIL_MS, async () => {
+        const outcome = await cachedMetadata(env, `game-detail:v5:${cacheIdentity}`, CACHE_DETAIL_MS, async () => {
           const errors = [];
           let result = null;
           if (rawgId) {

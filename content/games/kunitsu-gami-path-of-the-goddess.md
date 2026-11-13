@@ -4,14 +4,14 @@ status:
   - AFK
 gameMetadata:
   platforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - PC
     - Xbox One
     - Nintendo Switch
     - PlayStation 5
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   localizedName: ''
   developers:
     - Capcom

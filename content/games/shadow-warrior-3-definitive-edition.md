@@ -80,7 +80,7 @@ gameMetadata:
     - selectedPlatforms
   originalName: Shadow Warrior 3
   platforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
     - PlayStation 4
     - Xbox One
     - PC
@@ -95,7 +95,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/822/822091ccb076ce7ccd9c8ad1e00911ea.jpg
     - https://media.rawg.io/media/screenshots/0d5/0d51226966a6d3f43c41f12b50d5b355.jpg
   selectedPlatforms:
-    - Xbox Series S/X
+    - Xbox Series X|S
   sources:
     rawg:
       id: '462677'

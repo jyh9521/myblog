@@ -99,7 +99,7 @@ summary:
     url: https://thegamesdb.net/game.php?id=101643
   text: 在《空洞骑士：丝之歌》中探索一个广阔而闹鬼的王国！在这个由丝线与歌声统治的国度里，一路战斗、生存并登顶。
 screenshotGallery:
-  enabled: true
+  enabled: false
   englishName: hollow-knight-silksong
   folder: Game Dossiers/hollow-knight-silksong
   images:

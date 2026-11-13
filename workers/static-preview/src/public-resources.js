@@ -86,7 +86,8 @@ export async function resourceCatalog(env,folderState) {
     for(const object of page.objects){if(!publicKey(publicUrl(object.key)))continue;
       const seed=original.get(object.key),match=seed&&seed.bytes===object.size&&seed.md5===object.etag;
       const meta=object.customMetadata||{};
-      files.push({key:object.key,path:publicUrl(object.key),bytes:object.size,sha256:meta.sha256||(match?seed.sha256:undefined),contentType:object.httpMetadata?.contentType||'application/octet-stream',width:Number(meta.width)||(match?seed.width:undefined),height:Number(meta.height)||(match?seed.height:undefined),image:/^image\//.test(object.httpMetadata?.contentType||''),pdf:object.key.toLowerCase().endsWith('.pdf'),etag:object.etag,uploaded:object.uploaded.toISOString()});
+      const uploadFolder=object.key.startsWith('cms/')&&typeof meta.uploadFolder==='string' ? folderPath(meta.uploadFolder) : null;
+      files.push({...(uploadFolder!==null?{uploadFolder}:{}),key:object.key,path:publicUrl(object.key),bytes:object.size,sha256:meta.sha256||(match?seed.sha256:undefined),contentType:object.httpMetadata?.contentType||'application/octet-stream',width:Number(meta.width)||(match?seed.width:undefined),height:Number(meta.height)||(match?seed.height:undefined),image:/^image\//.test(object.httpMetadata?.contentType||''),pdf:object.key.toLowerCase().endsWith('.pdf'),etag:object.etag,uploaded:object.uploaded.toISOString()});
     }
     if(files.length>10000)throw Error('CATALOG_TOO_LARGE');
     if(!page.truncated)break;
@@ -95,7 +96,8 @@ export async function resourceCatalog(env,folderState) {
   const groups=new Map();for(const f of files)if(f.sha256){if(!groups.has(f.sha256))groups.set(f.sha256,[]);groups.get(f.sha256).push(f.path);}
   for(const f of files)f.duplicates=f.sha256?groups.get(f.sha256).filter(p=>p!==f.path):[];
   const {state,revision}=folderState||await readFolderState(env);
-  return {schema:1,storage:'r2',generatedAt:new Date().toISOString(),folderRevision:revision,...folderLayout(files,state)};
+  const layout=folderLayout(files,state);
+  return {schema:1,storage:'r2',generatedAt:new Date().toISOString(),folderRevision:revision,folders:layout.folders,files:layout.files};
 }
 function fileSignature(bytes,extension) {
   const start=new TextDecoder().decode(bytes.slice(0,16));
@@ -166,22 +168,33 @@ export async function resourceAdminRoute(request,env,ctx,accounts,fetcher=fetch)
       return json({...catalog,commit:snapshot.commit,files:catalog.files.map(f=>({...f,references:referencesFor(f.key,snapshot)}))});
     }
     if(path==='/upload'&&request.method==='PUT') {
-      const target=url.searchParams.get('folder'),folder=target===null?null:folderPath(target);let folderSnapshot;
-      if(target!==null){if(folder===null)return json({error:'INVALID_FOLDER'},400);folderSnapshot=await readFolderState(env);const catalog=await resourceCatalog(env,folderSnapshot);if(folder&&!catalog.folders.includes(folder))return json({error:'FOLDER_NOT_FOUND'},409);}
+      const target=url.searchParams.get('folder'),folder=target===null?null:folderPath(target);
+      const scoped=url.searchParams.get('destination')==='entry';let folderSnapshot;
+      if(scoped&&!folder)return json({error:'INVALID_FOLDER'},400);
+      if(!scoped&&target!==null){if(folder===null)return json({error:'INVALID_FOLDER'},400);folderSnapshot=await readFolderState(env);const catalog=await resourceCatalog(env,folderSnapshot);if(folder&&!catalog.folders.includes(folder))return json({error:'FOLDER_NOT_FOUND'},409);}
       if(Number(request.headers.get('Content-Length'))>MAX_UPLOAD)return json({error:'INPUT_TOO_LARGE'},413);
       const name=String(url.searchParams.get('name')||'').normalize('NFC').replace(/[\\/:*?"<>|#\x00-\x1f\x7f]/g,'_').replace(/^\.+/,'_').slice(0,150),extension=name.split('.').pop().toLowerCase();
       if(!types[extension]||!name||!name.includes('.'))return json({error:'INVALID_FILE_TYPE'},400);
       const bytes=await readBounded(request.body,MAX_UPLOAD);if(!bytes.length||!fileSignature(bytes,extension))return json({error:'INVALID_FILE_TYPE'},400);
-      const digest=await crypto.subtle.digest('SHA-256',bytes),sha256=hex(digest),key='cms/'+sha256+'/'+name;
+      const digest=await crypto.subtle.digest('SHA-256',bytes),sha256=hex(digest);
+      // A folder-specific key makes upload + initial placement one R2 write.
+      // Identical files in different destinations never move an existing asset.
+      const namespace=scoped?hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(folder)))+'/':'';
+      const base='cms/'+sha256+'/'+namespace;
+      let key=base+name;
+      if(scoped){
+        const {state}=await readFolderState(env);
+        if(Object.hasOwn(state.assignments,key)&&state.assignments[key]!==folder)key=base+crypto.randomUUID()+'/'+name;
+      }
       const width=Number(request.headers.get('X-Image-Width')),height=Number(request.headers.get('X-Image-Height'));
       const dimensions=Number.isInteger(width)&&Number.isInteger(height)&&width>0&&height>0&&width<=50000&&height<=50000?{width:String(width),height:String(height)}:{};
-      const object=await env.PUBLIC_UPLOADS.put(key,bytes,{onlyIf:{etagDoesNotMatch:'*'},sha256:digest,httpMetadata:{contentType:types[extension]},customMetadata:{sha256,name,...dimensions}});
+      const object=await env.PUBLIC_UPLOADS.put(key,bytes,{onlyIf:{etagDoesNotMatch:'*'},sha256:digest,httpMetadata:{contentType:types[extension]},customMetadata:{sha256,name,...dimensions,...(scoped?{uploadFolder:folder}:{})}});
       if(!object&&!(await env.PUBLIC_UPLOADS.head(key)))throw Error('UPLOAD_CONFLICT');
       // A duplicate upload reuses its existing location; moving it is explicit.
       let folderWarning;
-      if(object&&target!==null)try{const state={...folderSnapshot.state,assignments:{...folderSnapshot.state.assignments,[key]:folder}};await writeFolderState(env,state,folderSnapshot.revision);}catch(error){if(error.message!=='FOLDER_CHANGED')throw error;folderWarning='FOLDER_CHANGED';}
+      if(object&&!scoped&&target!==null)try{const state={...folderSnapshot.state,assignments:{...folderSnapshot.state.assignments,[key]:folder}};await writeFolderState(env,state,folderSnapshot.revision);}catch(error){if(error.message!=='FOLDER_CHANGED')throw error;folderWarning='FOLDER_CHANGED';}
       await env.PUBLIC_UPLOADS.delete('.deleted/'+key);
-      return json({key,path:publicUrl(key),bytes:bytes.length,sha256,contentType:types[extension],reused:!object,folderWarning,...dimensions});
+      return json({key,path:publicUrl(key),bytes:bytes.length,sha256,contentType:types[extension],reused:!object,folderWarning,...(scoped?{folder}:{}),...dimensions});
     }
     if(path==='/delete'&&request.method==='POST') {
       const input=await boundedJson(request,8192),key=publicKey(publicUrl(String(input.key||'')));

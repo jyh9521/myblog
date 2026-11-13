@@ -96,3 +96,27 @@ test('referenced resources are protected; unreferenced deletion archives and res
 test('stale reference commit cannot delete or overwrite a changed object',async()=>{
   const e=env();await pdf(e);const r=await resourceAdminRoute(req('/ns/api/resources/delete','POST',{key:'source.pdf',sha256:'b'.repeat(64),commit:'c'.repeat(40)}),e,{},accounts,github(''));assert.equal(r.status,409);assert.ok(await e.PUBLIC_UPLOADS.head('source.pdf'));
 });
+
+test('entry uploads create the English two-level catalog and isolate identical files per destination',async()=>{
+ const e=env(),game='Game Dossiers/Ys IX - Monstrum Nox',article='Articles/My Article';
+ const png=Uint8Array.from([137,80,78,71,13,10,26,10]);
+ const call=(folder,extra,bytes=png)=>resourceAdminRoute(req('/ns/api/resources/upload?destination=entry&name=fixture.png&folder='+encodeURIComponent(folder),'PUT',bytes,extra),e,{},accounts);
+ assert.equal((await call(game,{Cookie:''})).status,401);
+ assert.equal((await call(game,{Origin:'https://foreign.test'})).status,403);
+ assert.equal((await call('../test')).status,400);
+ assert.equal((await call(game,{},Uint8Array.of(1))).status,400);
+ assert.equal((await resourceCatalog(e)).folders.length,0);
+ const a=await (await call(game)).json(),b=await (await call(article)).json();
+ assert.equal(a.folder,game);assert.equal(b.folder,article);assert.notEqual(a.path,b.path);assert.equal(a.sha256,b.sha256);
+ assert.equal((await (await call(game)).json()).path,a.path);
+ const catalog=await resourceCatalog(e);
+ assert.deepEqual(catalog.folders,['Articles',article,'Game Dossiers',game]);
+ assert.equal(catalog.files.find(f=>f.key===a.key).folder,game);
+ const renamed='Game Dossiers/Ys IX';
+ const rename=await resourceAdminRoute(req('/ns/api/resources/folders','POST',{action:'rename',source:game,destination:renamed,revision:catalog.folderRevision}),e,{},accounts);
+ assert.equal(rename.status,200);assert.equal((await resourceCatalog(e)).files.find(f=>f.key===a.key).folder,renamed);
+ const uploadedAgain=await (await call(game)).json();
+ assert.notEqual(uploadedAgain.path,a.path);
+ assert.equal((await resourceCatalog(e)).files.find(f=>f.key===uploadedAgain.key).folder,game);
+ assert.deepEqual(new Uint8Array(await (await servePublicResource(req(a.path),e)).arrayBuffer()),png);
+});

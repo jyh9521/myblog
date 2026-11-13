@@ -36,6 +36,7 @@ collections:
         required: true
         default: '{{now}}'
       - { name: description, label: 摘要, widget: text, required: false }
+      - { name: resourceFolder, label: 关联资源库文件夹, widget: resource-folder, required: false, hint: "可选已有目录，也可填写新路径；首次上传时自动建立。封面、正文配图和公共附件均使用此目录。" }
       - { name: cover, label: 封面图片, widget: r2-image, required: false }
       - { name: tags, label: 标签, widget: list, required: false }
       - { name: pinned, label: 置顶文章, widget: boolean, required: false, default: false }
@@ -71,6 +72,8 @@ collections:
         hint: "可多选，例如已通关 + 已制作补丁。"
       - { name: gameMetadata, label: 游戏版本与资料, widget: game-metadata, required: false }
       - { name: summary, label: 中文游戏简介, widget: game-brief, required: false }
+      - { name: screenshotGallery, label: 游戏截图, widget: screenshot-gallery, required: false }
+      - { name: resourceFolder, label: 关联资源库文件夹, widget: resource-folder, required: false, hint: "用于事件配图及附件，可填写新目录。留空时，启用截图的档案沿用截图目录。" }
       - { name: manual, label: 正版渠道与获取状态, widget: game-manual, required: false }
       - name: playTime
         label: 我的游玩时长

@@ -15,7 +15,7 @@ export function resourceName(value) {
 const originalName=key=>key.split('/').pop();
 export function folderLayout(files,state={folders:[],assignments:{}}) {
   const folders=new Set(state.folders);
-  const rows=files.map(file=>({...file,name:Object.hasOwn(state.names||{},file.key)?state.names[file.key]:originalName(file.key),folder:Object.hasOwn(state.assignments,file.key)?state.assignments[file.key]:defaultFolder(file.key)}));
+  const rows=files.map(file=>({...file,name:Object.hasOwn(state.names||{},file.key)?state.names[file.key]:originalName(file.key),folder:Object.hasOwn(state.assignments,file.key)?state.assignments[file.key]:(file.uploadFolder??defaultFolder(file.key))}));
   for(const file of rows)if(file.folder)folders.add(file.folder);
   for(const folder of [...folders]){const parts=folder.split('/');for(let n=1;n<parts.length;n++)folders.add(parts.slice(0,n).join('/'));}
   return {files:rows,folders:[...folders].sort((a,b)=>a.localeCompare(b))};

@@ -15,6 +15,7 @@ const bundleUrl = 'https://unpkg.com/@sveltia/cms@0.256.1/dist/sveltia-cms.js';
 const bundle = process.env.SVELTIA_BUNDLE ? await readFile(process.env.SVELTIA_BUNDLE) : await (await fetch(bundleUrl)).text();
 const out = process.env.DOSSIER_SCREENSHOTS;
 const baseline = process.argv.includes('--baseline');
+const screenshotEditor = process.argv.includes('--screenshot-editor');
 const candidatesOnly = process.argv.includes('--candidates-only');
 const fromDatabase = process.argv.includes('--database-brief');
 const viewport = { width: Number(process.env.DOSSIER_TEST_WIDTH || 1440), height: Number(process.env.DOSSIER_TEST_HEIGHT || 1000) };
@@ -148,6 +149,33 @@ try {
     assert.equal(await page.getByRole('navigation', { name: '游戏档案编辑分区' }).count(), 0);
     await screenshot('baseline-desktop');
     console.log('BASELINE_UI search=visible hltb=visible dossier-tabs=0');
+  } else if (screenshotEditor) {
+    const uploads = [];
+    const originalLogin = await useFixtureLogin(page);
+    await page.route('**/ns/api/resources/upload?**', async route => {
+      const params = new URL(route.request().url()).searchParams;
+      uploads.push([params.get('name'), params.get('folder'), params.get('destination')]);
+      await route.fulfill({json: {path: '/uploads/' + params.get('name'), folder: params.get('folder')}});
+    });
+    const gallery = page.locator('[data-mode="edit"] [data-key-path="screenshotGallery"]');
+    await gallery.getByRole('checkbox').check();
+    await gallery.getByRole('textbox', {name: /英文游戏名/}).fill('Harbor: The Game');
+    await gallery.getByLabel('上传截图').setInputFiles(['one.png','two.png'].map(name => ({name,mimeType:'image/png',buffer:Buffer.from('local-fixture')})));
+    await gallery.getByText('上传完成。保存档案后发布截图。').waitFor().catch(async error => { console.error(await gallery.innerText(), uploads, errors); throw error; });
+    assert.deepEqual(uploads, [['one.png','Game Dossiers/Harbor - The Game','entry'],['two.png','Game Dossiers/Harbor - The Game','entry']]);
+    await gallery.getByRole('button',{name:'下移',exact:true}).first().click();
+    assert.deepEqual(await gallery.locator('li img').evaluateAll(images => images.map(img => img.getAttribute('src'))), ['/uploads/two.png','/uploads/one.png']);
+    await gallery.getByRole('checkbox').uncheck();
+    assert.equal(await gallery.getByLabel('上传截图').count(), 0);
+    await gallery.getByRole('checkbox').check();
+    assert.equal(await gallery.locator('li').count(), 2);
+    await page.evaluate(old => old === null ? localStorage.removeItem('sveltia-cms.user') : localStorage.setItem('sveltia-cms.user', old), originalLogin);
+    await page.getByRole('button', {name:/^(保存|Save)$/}).click();
+    await page.waitForFunction(() => (document.body.innerText.includes('已保存') || document.body.innerText.includes('Saved')));
+    await page.reload();
+    await gallery.getByLabel('上传截图').waitFor();
+    assert.deepEqual(await gallery.locator('li img').evaluateAll(images => images.map(img => img.getAttribute('src'))), ['/uploads/two.png','/uploads/one.png']);
+    console.log('SCREENSHOT_EDITOR enabled=1 uploaded=2 reordered=1 save_reload=ok folder=Game Dossiers/Harbor - The Game');
   } else if (candidatesOnly) {
     await page.getByRole('navigation', { name: '游戏档案编辑分区' }).waitFor();
     await useFixtureLogin(page);

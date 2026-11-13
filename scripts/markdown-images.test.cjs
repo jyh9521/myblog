@@ -81,6 +81,6 @@ test('every real article image is recognized in inline/list context and keeps it
 test('CMS and resources load the cache-busted image roundtrip implementation', () => {
   for (const name of ['index.html', 'resources.html']) {
     const source = fs.readFileSync(process.env.MARKDOWN_IMAGE_HTML_ROOT ? process.env.MARKDOWN_IMAGE_HTML_ROOT + '/' + name : 'public/sveltia/' + name, 'utf8');
-    assert.match(source, /r2-media\.js\?v=markdown-images-20261105/);
+    assert.match(source, /r2-media\.js\?v=entry-folders-20261113/);
   }
 });

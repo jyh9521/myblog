@@ -26,6 +26,12 @@ function dossierEditDates() {
 }
 const asText = (value: unknown) => String(value ?? '').trim();
 const asList = (value: unknown): string[] => Array.isArray(value) ? value.map(asText).filter(Boolean) : asText(value) ? [asText(value)] : [];
+const isDossierScreenshot = (src: string) => {
+  if (!/^\/uploads\/[^?#\\]+\.(?:png|jpe?g|webp|gif|avif)$/i.test(src)) return false;
+  try {
+    return decodeURIComponent(src).split('/').slice(2).every(part => part && !part.startsWith('.') && !/[\\?#\x00-\x1f\x7f]/.test(part));
+  } catch { return false; }
+};
 const asDate = (value: unknown) => value instanceof Date
   ? new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(value)
   : asText(value).slice(0, 10);
@@ -170,6 +176,7 @@ export function getGames(): GameRecord[] {
       updatedAt: dossierEditDates().get(`content/games/${file}`) || metadata.updatedAt,
       title: asText(data.title || metadata.localizedName || metadata.title), status: normalizeGameStatus(data.status),
       ...readGameSummary(data.summary, metadata.description), metadata: hasMetadata ? metadata : null, manual, platforms, events, projects: normalizeProjects(data.projects),
+      screenshots: data.screenshotGallery?.enabled === true ? [...new Set(asList(data.screenshotGallery.images).filter(isDossierScreenshot))] : [],
       playTime: normalizePlayTime(data.playTime), completionTimes: normalizeCompletionTimes(data.hltb),
       personalRating: normalizePersonalRating(data.personalRating),
     }];

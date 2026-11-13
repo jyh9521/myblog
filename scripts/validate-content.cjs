@@ -140,6 +140,15 @@ async function validateRepository(root = process.cwd()) {
     }
     for (const key of ['cover', 'audio', 'video', 'attachment']) checkUrl(data[key], filename, base, key);
     if (folder === 'games') {
+      const gallery = data.screenshotGallery;
+      if (gallery != null) {
+        if (typeof gallery !== 'object' || typeof gallery.enabled !== 'boolean' ||
+            (gallery.images != null && !Array.isArray(gallery.images))) error(filename, '截图设置必须包含启用状态，截图须为列表');
+        for (const src of Array.isArray(gallery.images) ? gallery.images : []) {
+          if (typeof src !== 'string' || !/^\/uploads\/[^?#\\]+\.(?:png|jpe?g|webp|gif|avif)$/i.test(src)) error(filename, '截图须使用资源库图片路径');
+          else checkUrl(src, filename, base, '游戏截图');
+        }
+      }
       if (data.summary != null && typeof data.summary !== 'string') {
         if (typeof data.summary?.text !== 'string' || !data.summary.text.trim()) error(filename, '简介须为正文字符串，或含 text 的简介对象');
         else checkUrl(data.summary.source?.url, filename, base, '简介来源');

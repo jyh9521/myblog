@@ -4,13 +4,48 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 function widget(fetcher, realWait = false) {
   const types = {};
-  const window = { h: () => null, createClass: x => x, CMS: { registerFieldType: (name, field) => { types[name] = field; } } };
+  const window = { h: (tag, props, ...children) => ({ tag, props, children }), createClass: x => x, CMS: { registerFieldType: (name, field) => { types[name] = field; } } };
   vm.runInNewContext(fs.readFileSync('public/sveltia/hltb.js', 'utf8'), { window, URL, AbortController, setTimeout, clearTimeout, fetch: fetcher });
   const field = types['hltb-game']; let value = { main: 55 };
   const instance = { ...field, state: field.getInitialState(), props: { value, onChange: next => { value = next; instance.props.value = next; } }, setState(patch) { Object.assign(this.state, patch); } };
   if (!realWait) instance.waitForRetry = async () => {};
   return { instance, value: () => value };
 }
+function searchInput(node) {
+  if (node.tag === 'label' && node.children[0]?.startsWith?.('搜索 HLTB 游戏')) return node.children[1].props;
+  for (const child of node.children) {
+    if (child?.children) {
+      const input = searchInput(child);
+      if (input) return input;
+    }
+  }
+}
+test('CMS prefills HLTB from the current catalog title until the query is edited or cleared', async () => {
+  const requests = [];
+  const control = widget(async url => { requests.push(new URL(url).searchParams.get('q')); return Response.json({ results: [] }); });
+  const { instance } = control;
+  const input = () => searchInput(instance.render());
+  const setMetadata = title => {
+    instance.props.entry = { getIn: path => path.join('.') === 'data.gameMetadata' ? { toJS: () => ({ title }) } : '档案显示名称' };
+  };
+  assert.equal(input().value, '');
+  setMetadata('Donkey Kong Bananza');
+  assert.equal(input().value, 'Donkey Kong Bananza');
+  assert.deepEqual(requests, []);
+  await instance.search();
+  assert.deepEqual(requests, ['Donkey Kong Bananza']);
+  setMetadata('Another Catalog Title');
+  assert.equal(input().value, 'Another Catalog Title');
+  input().onChange({ target: { value: 'Manual query' } });
+  setMetadata('New Catalog Title');
+  assert.equal(input().value, 'Manual query');
+  await instance.search();
+  input().onChange({ target: { value: '' } });
+  assert.equal(input().value, '');
+  await instance.search();
+  assert.deepEqual(requests, ['Donkey Kong Bananza', 'Manual query']);
+  assert.deepEqual(control.value(), { main: 55 });
+});
 test('CMS search does not auto-associate and explicit selection saves ID/snapshot preserving overrides', async () => {
   const game = { id: 68151, title: 'Elden Ring', url: 'https://howlongtobeat.com/game/68151' };
   const requests = [];

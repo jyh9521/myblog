@@ -5,7 +5,14 @@
     const api = 'https://blog.blfy.cc/ns/api/hltb';
     const inputStyle = { width: '100%', minHeight: '38px', padding: '8px', border: '1px solid #68707a', borderRadius: '6px', background: 'transparent', color: 'inherit' };
     const Hltb = window.createClass({
-      getInitialState() { return { query: '', results: [], busy: false, message: '' }; },
+      getInitialState() { return { query: null, results: [], busy: false, message: '' }; },
+      searchQuery() {
+        // Follow the current catalog name until the editor types or clears a query.
+        if (this.state.query !== null) return this.state.query;
+        const metadata = this.props.entry?.getIn?.(['data', 'gameMetadata']);
+        const title = (metadata?.toJS?.() ?? metadata)?.title;
+        return typeof title === 'string' ? title.trim() : '';
+      },
       componentWillUnmount() { this.disposed = true; this.controller?.abort(); },
       change(patch) { this.props.onChange({ ...(this.props.value || {}), ...patch }); },
       waitForRetry(seconds, signal) {
@@ -34,7 +41,7 @@
       },
       async search() {
         if (this.state.busy) return;
-        const query = this.state.query.trim();
+        const query = this.searchQuery().trim();
         if (query.length < 2 || query.length > 100) { this.setState({ message: '请输入 2–100 个字符，建议使用游戏原名。' }); return; }
         this.controller?.abort(); this.controller = new AbortController();
         this.setState({ busy: true, results: [], message: '' });
@@ -70,7 +77,7 @@
           h('details', { className: 'dossier-disclosure' },
             h('summary', null, value.url || value.id ? '管理关联与参考时间' : '关联 HLTB 或手填参考时间'),
             h('div', { className: 'dossier-stack' },
-          h('label', null, '搜索 HLTB 游戏（支持名称片段、商店名称）', h('input', { style: inputStyle, value: this.state.query, onChange: e => this.setState({ query: e.target.value }), onKeyDown: e => { if (e.key === 'Enter' && !e.nativeEvent?.isComposing && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); this.search(); } } })),
+          h('label', null, '搜索 HLTB 游戏（支持名称片段、商店名称）', h('input', { style: inputStyle, value: this.searchQuery(), onChange: e => this.setState({ query: e.target.value }), onKeyDown: e => { if (e.key === 'Enter' && !e.nativeEvent?.isComposing && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); this.search(); } } })),
           h('button', { type: 'button', disabled: this.state.busy, onClick: () => this.search() }, this.state.busy ? '正在查询…' : '搜索并选择 HLTB 游戏'),
           this.state.busy && h('button', { type: 'button', onClick: () => this.controller?.abort() }, '取消查询'),
           h('div', { style: { display: 'grid', gap: '6px' } }, ...this.state.results.map(game => h('button', { key: game.id, type: 'button', disabled: this.state.busy, onClick: () => this.select(game), style: { ...inputStyle, textAlign: 'left' } }, `${game.title} · ID ${game.id} · ${game.type} · ${game.platforms}`))),

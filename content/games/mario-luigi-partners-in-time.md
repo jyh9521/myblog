@@ -2,24 +2,10 @@
 title: 马力欧与路易吉RPG2
 status:
   - 已通关
-playTime:
-  hours: 17
-personalRating: 7.5
-hltb:
-  auto: true
-  id: 5621
-  snapshot:
-    completionist: 26.29
-    extras: 20.18
-    id: 5621
-    main: 17.73
-    updatedAt: 2026-10-16T09:03:54.176Z
-  title: 'Mario & Luigi: Partners in Time'
-  url: https://howlongtobeat.com/game/5621
 gameMetadata:
   platforms:
-    - Wii U
     - Nintendo DS
+    - Wii U
   selectedPlatforms:
     - Nintendo DS
   localizedName: ''
@@ -32,21 +18,25 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/012/0121e20dcb7f2d224eb70740ab712b12.jpg
     - https://media.rawg.io/media/screenshots/ac2/ac2c3334fbeab618f06e1157194a0415.jpg
     - https://media.rawg.io/media/screenshots/572/572483eed674fcda46e3d0cb2fe07719.jpg
-  updatedAt: 2026-10-16T09:04:14.031Z
+  updatedAt: 2026-11-14T00:47:02.802Z
   genres:
+    - Role-Playing
     - RPG
   releaseDate: 2005-11-28
   publishers:
-    - Nintendo
-  cover: https://media.rawg.io/media/screenshots/572/572483eed674fcda46e3d0cb2fe07719.jpg
+    - Nintendo of America, Inc.
+  cover: https://cdn2.steamgriddb.com/grid/d2aee8cf73e7d9862ba68833167a6ff5.png
   title: 'Mario & Luigi: Partners in Time'
   sources:
     rawg:
       id: '27620'
       slug: mario-luigi-partners-in-time
       url: https://rawg.io/games/27620
+    thegamesdb:
+      id: '6835'
+      url: https://thegamesdb.net/game.php?id=6835
   website: ''
-  id: rawg:27620
+  id: thegamesdb:6835
   alternativeNames: []
   description: |-
     In this quest of lunatic proportions, the Mario bros. team up with none
@@ -66,20 +56,51 @@ gameMetadata:
     This classic game is part of the Virtual Console service, which brings you great games created for consoles such as NES™, Super NES™ and Game Boy™ Advance. We hope you'll enjoy the new features (including off-TV play) that have been added to this title. See more Virtual Console games for Wii U.
   originalName: 'Mario & Luigi: Partners in Time'
   fieldSources:
-    platforms: rawg
+    platforms: thegamesdb
     selectedPlatforms: manual
-    developers: rawg
-    genres: rawg
-    releaseDate: rawg
-    publishers: rawg
-    cover: rawg
-    title: rawg
+    developers: thegamesdb
+    screenshots: rawg
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
     description: rawg
-    originalName: rawg
+    originalName: thegamesdb
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:27620:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/27620
+  text: |-
+    在这场疯狂至极的冒险中，马力欧兄弟将与……他们自己小时候的模样并肩作战！在这款妙趣横生、笑料不断并带领你超越蘑菇王国的动作RPG中，同时控制两组兄弟。跨越时空探索马力欧的世界，击败邪恶的外星侵略者——史菇比！
+
+    作为《马力欧与路易吉RPG：库巴内幕故事》的前传，兄弟俩为了找回碧姬公主而回溯到过去，却意外与婴儿时期的自己、公主以及库巴本尊碰个正着。在同时控制蘑菇王国英雄们的成年版和婴儿版时，你将使出强力的攻击，并通过特殊技巧穿梭于各种环境，以富有创意的方式解开谜题。要同时掌控四位兄弟，这场冒险注定会彻底失控！
+
+    这款经典游戏是Virtual Console服务的一部分，该服务为您带来为NES™、Super NES™和Game Boy™ Advance等主机打造的精彩游戏。我们希望您能喜欢本作新增的功能（包括Off-TV游戏功能）。了解更多适用于Wii U的Virtual Console游戏。
 manual:
   availabilityStatus: physical-only
+playTime:
+  hours: 17
+personalRating: 7.5
+hltb:
+  auto: true
+  id: 5621
+  snapshot:
+    completionist: 26.29
+    extras: 20.18
+    id: 5621
+    main: 17.73
+    updatedAt: 2026-10-16T09:03:54.176Z
+  title: 'Mario & Luigi: Partners in Time'
+  url: https://howlongtobeat.com/game/5621
 events:
   - date: 2023-04-24
     title: 开始游戏

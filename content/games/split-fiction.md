@@ -81,8 +81,28 @@ summary: |-
 
   叫上搭档，准备好克服前进过程中遇到的任何障碍。
 screenshotGallery:
-  enabled: false
+  enabled: true
   englishName: ''
+  folder: Game Dossiers/split-fiction
+  images:
+    - /uploads/cms/4e27625322ed798ef3f550cc26afb6a3d3bb1c173bb4f72e512971036ab941f1/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0001.jpg
+    - /uploads/cms/634ed61d034e2c656d6bbc8f138d6e514e2175cc7582e6e2e7fd63c3ac2af435/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0002.jpg
+    - /uploads/cms/7921ecba65bb37defa25c4a50d8e734ce4c2c034b1bbc4ef49fad9dfc3e43864/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0003.jpg
+    - /uploads/cms/9919085bf8ec45430a8bc0745700a599b99d40ce74b441e79b2f00ea62a4435b/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0004.jpg
+    - /uploads/cms/43846b8281c0a7334bbc19c85f26d4d7c5fc3d543ac5c3af03e7f79974ab0e85/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0005.jpg
+    - /uploads/cms/ce321b1bf225e4e913e6fd170524a350b2a3ad3b5ed389e30a2d0ac5fc5a63f6/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0006.jpg
+    - /uploads/cms/c18882e3cba29df1672cc39ddafcd9baceb6c9e335e39efe660fac977e303505/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0007.jpg
+    - /uploads/cms/bb9f2eef8596fcd86d16259793b0bf81a038530279da53da11282487de8d7a97/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0008.jpg
+    - /uploads/cms/b7d6bb5329b1113e53e44ec5f4dd38a6cad87abf99ab50808009f11ddb51aee3/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0009.jpg
+    - /uploads/cms/82623fe2156d5883e9cd012fcc45e510748c323daef2fd92ea566f8b165e5f0e/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0010.jpg
+    - /uploads/cms/c2a4b8aabe1d01033abcb4b36bbc59a494c267f88f2e096ead8119f95e214f8a/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0011.jpg
+    - /uploads/cms/a728f0336e3a55f05a47eb528000a3c9cd4aaf77fe4c202b985d411cab15e283/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0012.jpg
+    - /uploads/cms/1ce1be1cf21a09ca7d611880210f84c57b97a32888da9a58929ee8f236e4a0d9/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0013.jpg
+    - /uploads/cms/2a8db5a8135a966df3bacd6b040f8b4987e277cf95cb8d99061229e71d9ce582/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0014.jpg
+    - /uploads/cms/dd556c8887a0603be2c31aba3c91376383d5cadbd5518403b8a395abdcbe70ed/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0015.jpg
+    - /uploads/cms/b71d636a6bfa3f2c2fc50a5cf9f55909c9e8dc0b4d4aca0b624450358fdc94a8/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0016.jpg
+    - /uploads/cms/9f27e1c2e132a7678370cc94bb91cb670600b8f8344e339cb9cedfb8fdf1f8c6/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0017.jpg
+    - /uploads/cms/c36f5cd5f861c6a55f5229d51522c6788209cb386efff6d25be7f0fbf8dfeac9/d3d851d474edb66eaffdbbbb0ed79a5d3ebad202ef67e385e496ddbd5bf2e937/Split%20Fiction_0018.jpg
 manual:
   availabilityStatus: available
   officialStores:

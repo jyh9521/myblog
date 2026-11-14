@@ -2,20 +2,6 @@
 title: 病房2
 status:
   - 已制作补丁
-playTime:
-  hours: 3.5
-personalRating: 7.3
-hltb:
-  auto: true
-  id: 2427
-  snapshot:
-    completionist: 6
-    extras: 4.84
-    id: 2427
-    main: 4.47
-    updatedAt: 2026-10-21T05:59:42.933Z
-  title: Dementium II
-  url: https://howlongtobeat.com/game/2427
 gameMetadata:
   platforms:
     - Nintendo DS
@@ -25,31 +11,44 @@ gameMetadata:
   localizedName: ''
   developers:
     - Renegade Kid
-    - Memetic Games
   screenshots:
-    - https://media.rawg.io/media/screenshots/a30/a30da520e338a6c2f71958ae1bf2e742.jpg
-    - https://media.rawg.io/media/screenshots/edd/eddcde41b6a9233a4c5962b69b16f517.jpg
-    - https://media.rawg.io/media/screenshots/d7d/d7dc1f7025ec5b968fa920424fa4a044.jpg
-    - https://media.rawg.io/media/screenshots/2f4/2f4634f843025280187ed96e54d2eb68.jpg
-    - https://media.rawg.io/media/screenshots/8ac/8acc63018839fd96d2e132ba7472aa0a.jpg
-    - https://media.rawg.io/media/screenshots/41f/41f277a6733404ba5a7ef5acb9dd04d3.jpg
-  updatedAt: 2026-10-21T06:00:14.178Z
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=15&jeuid=6147&media=sstitle%28jp%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=15&jeuid=6147&media=sstitle%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=15&jeuid=6147&media=ss%28jp%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=15&jeuid=6147&media=ss%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=15&jeuid=6147&media=screenmarquee%28wor%29
+    - https://blog.blfy.cc/ns/api/games/media?systemeid=15&jeuid=6147&media=screenmarqueesmall%28wor%29
+  updatedAt: 2026-11-14T01:15:53.842Z
   genres:
     - Action
-  releaseDate: 2009-07-06
+    - Adventure
+    - Action / Adventure
+  releaseDate: 2010-05-04
   publishers:
-    - South Peak Interactive
-    - Digital Tribe Games
-  cover: https://media.rawg.io/media/screenshots/9f4/9f48cb72f5996013992eb55d31b1ba72.jpg
+    - SouthPeak Interactive, LLC
+  cover: https://cdn2.steamgriddb.com/grid/53a88ec1859bde920315c706a3f8e29d.png
   title: Dementium II
   sources:
-    rawg:
-      id: '25991'
-      slug: dementium-ii
-      url: https://rawg.io/games/25991
-  website: http://www.dementium.com/
-  id: rawg:25991
-  alternativeNames: []
+    screenscraper:
+      id: '6147'
+      systemId: '15'
+      url: https://www.screenscraper.fr/index.php?gameid=6147&plateforme=15
+    thegamesdb:
+      id: '11219'
+      url: https://thegamesdb.net/game.php?id=11219
+      versions:
+        - id: '11219'
+          platform: Nintendo DS
+          releaseDate: 2010-05-04
+        - id: '69255'
+          platform: PC
+          releaseDate: 2013-12-17
+  id: thegamesdb:11219
+  alternativeNames:
+    - 'Heisa Byoutou: Dementium II'
+    - Dementium 2
+    - Dementium II
+    - 'Heisa Byoutou : Dementium II'
   description: |-
     You are William Redmoor, recent recipient of a radical brain operation
     intended to cure psychosis and current inmate at a clandestine treatment
@@ -68,19 +67,28 @@ gameMetadata:
     how demented are you?
   originalName: Dementium II
   fieldSources:
-    platforms: rawg
+    platforms: thegamesdb
     selectedPlatforms: manual
-    developers: rawg
-    genres: rawg
-    releaseDate: rawg
-    publishers: rawg
-    cover: rawg
-    title: rawg
-    website: rawg
+    developers: thegamesdb
+    screenshots: screenscraper
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    cover: steamgriddb
+    title: thegamesdb
+    alternativeNames: thegamesdb
     description: rawg
-    originalName: rawg
+    originalName: thegamesdb
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  text: |-
+    你是威廉·雷德莫尔（William Redmoor），刚刚接受了一项旨在治疗精神病的激进脑部手术，目前是某秘密 criminally insane（精神病罪犯）治疗中心的囚犯。你的记忆有些模糊，但似乎你的妻子遭到了谋杀，而种种证据都将你指向了凶手。在这座“黎明曙光治疗中心”（Bright Dawn Treatment Center）里，你正接受一位被称为“医生”（The Doctor）的神秘人物的治疗。
+
+    无论这位医生的治疗方法是什么，它们似乎都起效了——你的精神病消失了……真的是这样吗？你曾经与之战斗过的恶魔再次出现了。更糟糕的是，这位医生似乎有着某种恶毒的计划，要对大批其他犯人进行实验性手术。你不仅必须在恐怖野兽的狂轰滥炸中活下来，还要阻止医生达成他的目的。面对周围的一切疯狂，你已经分不清究竟是你自己，还是你身边的世界真正失去了理智。你究竟病得有多深？
 manual:
   availabilityStatus: available
   officialStores:
@@ -88,6 +96,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/5342930/
+playTime:
+  hours: 3.5
+personalRating: 7.3
+hltb:
+  auto: true
+  id: 2427
+  snapshot:
+    completionist: 6
+    extras: 4.84
+    id: 2427
+    main: 4.47
+    updatedAt: 2026-10-21T05:59:42.933Z
+  title: Dementium II
+  url: https://howlongtobeat.com/game/2427
 events:
   - date: 2026-10-21
     title: 开始汉化工作

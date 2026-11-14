@@ -89,6 +89,17 @@ manual:
 playTime:
   hours: 16.42
 personalRating: 9.5
+hltb:
+  auto: true
+  id: 5953
+  snapshot:
+    completionist: 17.77
+    extras: 15.91
+    id: 5953
+    main: 13.84
+    updatedAt: 2026-11-14T23:00:28.092Z
+  title: Metroid Prime
+  url: https://howlongtobeat.com/game/5953
 events:
   - date: 2025-07-01
     title: 开始游戏

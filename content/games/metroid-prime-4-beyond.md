@@ -53,6 +53,13 @@ screenshotGallery:
   folder: Game Dossiers/metroid-prime-4-beyond
   images:
     - /uploads/cms/a9ec3bac47765b38d85a7ba411b8319cd6b63aa393a3c3f028f6b1221605d59d/eb04c442be4ba69e532bb9f021f79039ce798f05d7f3cc0fe2d7377d8cbf2f43/2025120819032200_c.jpg
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: Nintendo eShop
+      note: Switch2版
+      region: JP
+      url: https://store-jp.nintendo.com/item/software/D70010000104848
 playTime:
   hours: 20
 personalRating: 8

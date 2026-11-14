@@ -6,7 +6,7 @@ const yaml = require('js-yaml');
 
 test('the games Slug template follows the catalog title and remains editable', async () => {
   const games = yaml.load(fs.readFileSync('public/sveltia/config.yml', 'utf8')).collections.find(c => c.name === 'games');
-  assert.equal(games.slug.template, '{{gameMetadata.title | game_dossier_slug}}');
+  assert.equal(games.slug.template, "{{gameMetadata.title | default('{{title}}') | game_dossier_slug}}");
   assert.equal(games.slug.editable, true);
   const transformations = {};
   const fields = {};

@@ -1,13 +1,36 @@
 import { ArchiveProviderError, TheGamesDBProvider, SteamGridDBProvider, externalId, MAX_GRID_PAGE, MAX_THEGAMESDB_VERSIONS } from './archive-providers.js';
 import { RAWGProvider, ScreenScraperProvider } from './game-providers.js';
 import { rankEditions, releaseYear } from './game-identity.js';
-import { cachedMetadata } from './metadata-cache.js';
+import { cachedMetadata, readMetadataCache, writeMetadataCache } from './metadata-cache.js';
+import gamePlatforms from '../../../public/sveltia/game-platforms.js';
 import { preferTheGamesDBVersion } from './thegamesdb-versions.js';
 import { combineDossierSources, matchesCatalogEdition, supplementCatalog } from './dossier-source-merge.js';
 
 const HOUR = 60 * 60 * 1000;
 const searchTtl = value => value.results.length ? HOUR : 5 * 60 * 1000;
 const partialTtl = value => value.incomplete ? 5 * 60 * 1000 : searchTtl(value);
+// Match the exact catalog group and provider record, independent of which
+// platform the search hints made primary. Never accept platform data from the client.
+function searchPlatformKey(catalog, provider, source) {
+  const ids = [...new Set([catalog.id, ...(catalog.versions || []).map(row => row.id)])].sort();
+  return `dossier:search-platforms:v1:${ids.join(',')}:${provider}:${source.id}:${source.systemId || ''}`;
+}
+
+async function rememberSearchPlatforms(env, base, candidate, provider) {
+  if (!candidate.platforms.some(platform => !base.platforms.includes(platform))) return;
+  // Store only the evidence needed to recheck identity and recover the list.
+  const { title, originalName, localizedName, alternativeNames, releaseDate, developers, publishers,
+    platforms, platformReleaseDates, sources } = candidate;
+  await writeMetadataCache(env, searchPlatformKey(base.sources.thegamesdb, provider, sources[provider]),
+    { title, originalName, localizedName, alternativeNames, releaseDate, developers, publishers,
+      platforms, platformReleaseDates, sources: { [provider]: sources[provider] } });
+}
+
+async function recoverSearchPlatforms(env, base, provider, source) {
+  const snapshot = await readMetadataCache(env, searchPlatformKey(base.sources.thegamesdb, provider, source));
+  if (!snapshot || Date.now() - snapshot.cachedAt >= HOUR || !matchesCatalogEdition(base, snapshot.value)) return null;
+  return snapshot.value;
+}
 export const archiveJson = (body, status = 200, headers = {}) => Response.json(body, { status, headers: {
   'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', ...headers,
 } });
@@ -82,7 +105,7 @@ async function cachedTheGamesDBSearch(env, query, fetcher) {
 export function searchDossierEditions(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
     const hints = editionHints(request, query);
-    const outcome = await cachedMetadata(env, 'dossier:all:v8:' + query.toLowerCase(), partialTtl, async () => {
+    const outcome = await cachedMetadata(env, 'dossier:all:v9:' + query.toLowerCase(), partialTtl, async () => {
       const [catalog, rawg, screen] = await Promise.allSettled([
         cachedTheGamesDBSearch(env, query, fetcher), new RAWGProvider(env, fetcher).search(query),
         new ScreenScraperProvider(env, fetcher).search(query),
@@ -98,7 +121,10 @@ export function searchDossierEditions(request, env, query, fetcher = fetch) {
         ...(providers.rawg === 'unavailable' ? ['RAWG 暂不可用'] : []),
         ...(providers.screenscraper === 'unavailable' ? ['ScreenScraper 暂不可用'] : []),
       ];
-      const results = combineDossierSources(catalogValue?.results || [], rawg.value || [], screen.value || []).map(metadataOnly);
+      const snapshots = [];
+      const results = combineDossierSources(catalogValue?.results || [], rawg.value || [], screen.value || [],
+        (base, candidate, provider) => snapshots.push(rememberSearchPlatforms(env, base, candidate, provider))).map(metadataOnly);
+      await Promise.all(snapshots);
       return { results, providers, warnings, incomplete: Object.values(providers).some(status => status !== 'ok') };
     });
     return rankedCatalog(outcome, hints);
@@ -136,8 +162,8 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch, supplement
     const refresh = body.refresh === true;
     const loadCatalog = async () => metadataOnly(await loadBase());
     const outcome = !rawg && !ss ? await cachedMetadata(env, baseKey, detailTtl, loadCatalog, refresh)
-      : await cachedMetadata(env, `dossier:all:detail:v2:${baseKey}:${rawg}:${ss}:${system}`,
-        value => value.incomplete ? 5 * 60 * 1000 : detailTtl, async () => {
+      : await cachedMetadata(env, `dossier:all:detail:v3:${baseKey}:${rawg}:${ss}:${system}`,
+        value => value.incomplete ? 0 : detailTtl, async () => {
           const jobs = [
             ...(rawg ? [['rawg', 'RAWG', new RAWGProvider(env, fetcher).getById(rawg)]] : []),
             ...(ss ? [['screenscraper', 'ScreenScraper', new ScreenScraperProvider(env, fetcher).getById(ss, system)]] : []),
@@ -146,12 +172,21 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch, supplement
           if (catalog.status !== 'fulfilled') throw catalog.reason;
           const base = catalog.value, warnings = [...(base.warnings || [])];
           let game = base, incomplete = false;
-          secondary.forEach((result, index) => {
+          for (const [index, result] of secondary.entries()) {
             const [provider, label] = jobs[index];
-            if (result.status !== 'fulfilled') { incomplete = true; warnings.push(label + ' 详情暂不可用'); }
+            if (result.status !== 'fulfilled') {
+              incomplete = true;
+              const snapshot = await recoverSearchPlatforms(env, base, provider,
+                provider === 'rawg' ? { id: rawg } : { id: ss, systemId: system });
+              if (snapshot) {
+                game = { ...game, platforms: gamePlatforms.normalizePlatformList([...game.platforms, ...snapshot.platforms]),
+                  sources: { ...game.sources, [provider]: snapshot.sources[provider] } };
+                warnings.push(label + ' 详情暂不可用，已保留搜索时核对的平台');
+              } else warnings.push(label + ' 详情暂不可用');
+            }
             else if (!matchesCatalogEdition(base, result.value)) warnings.push(label + ' 详情未通过版本核对，已略过');
             else game = supplementCatalog(game, result.value, provider);
-          });
+          }
           return { ...game, warnings, incomplete };
         }, refresh);
     return archiveJson(cacheResult(outcome));

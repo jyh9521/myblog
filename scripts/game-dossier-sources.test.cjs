@@ -34,6 +34,19 @@ const game = { id: 'thegamesdb:35', title: 'Fixture Quest', originalName: 'Fixtu
   releaseDate: '2011-04-19', platforms: ['PC'], developers: ['Fixture Dev'], publishers: ['Fixture Pub'], genres: ['Puzzle'],
   sources: { thegamesdb: { id: '35' } }, fieldSources: { title: 'thegamesdb' }, cover: 'must-not-be-used', screenshots: ['must-not-be-used'] };
 
+test('a supplemental PC platform returned by detail can be checked without typing it', async () => {
+  const detail = { ...game, platforms: ['PlayStation 4', 'PC', 'macOS'],
+    sources: { ...game.sources, rawg: { id: '41' } }, warnings: ['RAWG 详情暂不可用，已保留搜索时核对的平台'] };
+  const { field } = cms({}, async () => Response.json(detail));
+  await field.selectGame(detail);
+  const label = descendants(field.render()).find(node => node.type === 'label' && node.props.key === 'PC');
+  assert.ok(label, 'PC checkbox is available immediately');
+  const checkbox = label.children[0];
+  assert.equal(checkbox.props.checked, false);
+  checkbox.props.onChange({ target: { checked: true } });
+  assert.deepEqual(Array.from(field.props.value.selectedPlatforms), ['PC']);
+});
+
 test('CMS entry loads the versioned cover styles and updated admin/field scripts', () => {
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);

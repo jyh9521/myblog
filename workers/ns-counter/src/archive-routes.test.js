@@ -391,6 +391,66 @@ test('all-source search fans out concurrently, anchors to catalog versions, and 
   assert.ok([...e.cache.values()].every(row => !row.payload.includes('Never import source prose')));
 });
 
+test('detail retains server-verified search platforms during a provider outage, but never crosses editions', async () => {
+  const e = { ...env(), RAWG_API_KEY: 'fixture' };
+  const title = 'Archive Coast: Definitive Edition';
+  const base = { ...tgRecord, id: 31, game_title: title, release_date: '2014-10-14' };
+  const original = { ...base, id: 32, game_title: 'Archive Coast', release_date: '2012-08-14' };
+  const raw = { id: 41, name: title, released: '2014-10-08',
+    platforms: ['PlayStation 4', 'PC', 'macOS'].map(name => ({ platform: { name } })),
+    website: 'https://search-only.example/' };
+  let mode = 'outage', detailCalls = 0;
+  const fetcher = async url => {
+    const endpoint = url.pathname.split('/').at(-1);
+    if (endpoint === 'ByGameName' || endpoint === 'ByGameID') {
+      const games = endpoint === 'ByGameName' ? [base, original] : [base, original].filter(row =>
+        url.searchParams.get('id').split(',').includes(String(row.id)));
+      return Response.json({ code: 200, data: { games }, include: { platform: { 24: { name: 'PlayStation 4' } } } });
+    }
+    if (catalog[endpoint]) {
+      const [field, id, name] = catalog[endpoint];
+      return Response.json({ code: 200, data: { [field]: { [id]: { id, name } } } });
+    }
+    if (endpoint === 'games') return Response.json({ results: [raw] });
+    if (endpoint === '41') {
+      detailCalls++;
+      return mode === 'outage' ? new Response('', { status: 503 })
+        : Response.json(mode === 'conflict' ? { ...raw, name: original.game_title, released: original.release_date } : raw);
+    }
+    if (endpoint === 'screenshots') return Response.json({ results: [] });
+    assert.fail('unexpected provider request: ' + endpoint);
+  };
+  const search = new Request(root + '/search', { headers: auth });
+  const { results } = await (await searchDossierEditions(search, e, 'Archive Coast', fetcher)).json();
+  const picked = results.find(row => row.title === title);
+  assert.deepEqual(picked.platforms, ['PlayStation 4', 'PC', 'macOS']);
+  assert.equal(results.find(row => row.title === original.game_title).sources.rawg, undefined);
+  const request = new Request(root + '/detail', { method: 'POST', headers: auth });
+  const detail = async (sources = picked.sources, refresh = false) => (await detailTheGamesDB(request, e, {
+    sources, refresh, platforms: ['Xbox One'], title: original.game_title,
+  }, fetcher, true)).json();
+  const partial = await detail();
+  assert.deepEqual(partial.platforms, picked.platforms);
+  assert.equal(partial.sources.rawg.id, '41');
+  assert.equal(partial.website || '', '', 'do not copy unrelated search metadata');
+  assert.equal(partial.incomplete, true);
+  assert.match(partial.warnings.join(), /RAWG.*搜索/);
+  assert.equal((await detail({ thegamesdb: { id: '32' }, rawg: { id: '41' } })).platforms.includes('PC'), false);
+  mode = 'ok';
+  const retried = await detail();
+  assert.deepEqual(retried.platforms, picked.platforms);
+  assert.equal(retried.incomplete, false, 'a normal selection retries a partial cached response');
+  mode = 'conflict';
+  const conflict = await detail(picked.sources, true);
+  assert.equal(conflict.platforms.includes('PC'), false, 'live contradiction must not use search fallback');
+  assert.equal(conflict.sources.rawg, undefined);
+  mode = 'ok';
+  const recovered = await detail(picked.sources, true);
+  assert.deepEqual(recovered.platforms, picked.platforms);
+  assert.equal(recovered.incomplete, false);
+  assert.equal(detailCalls, 5);
+});
+
 test('all-source search retains available candidates and reports unavailable providers', async () => {
   const e = { ...env(), RAWG_API_KEY: 'rawg-fixture', SCREENSCRAPER_DEV_ID: 'ss-fixture', SCREENSCRAPER_DEV_PASSWORD: 'ss-fixture' };
   const fetcher = async url => url.hostname === 'api.screenscraper.fr' ? Response.json({ response: { jeux: [

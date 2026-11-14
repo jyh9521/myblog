@@ -97,7 +97,7 @@ export function supplementCatalog(base, candidate, provider) {
   return merged;
 }
 
-export function combineDossierSources(catalog, rawg, screen) {
+export function combineDossierSources(catalog, rawg, screen, onMatch = () => {}) {
   const supplements = { rawg, screenscraper: screen };
   const used = new Set();
   const merged = catalog.map(base => {
@@ -107,6 +107,7 @@ export function combineDossierSources(catalog, rawg, screen) {
       const unique = matches.filter(row => catalog.filter(other => matchesCatalogEdition(other, row)).length === 1);
       if (matches.length === 1 && unique.length === 1) {
         used.add(unique[0]);
+        onMatch(base, unique[0], provider);
         result = supplementCatalog(result, unique[0], provider);
         continue;
       }

@@ -2,20 +2,6 @@
 title: CHASM
 status:
   - AFK
-playTime:
-  hours: 14
-personalRating: 8
-hltb:
-  auto: true
-  id: 20079
-  snapshot:
-    completionist: 13.66
-    extras: 11.15
-    id: 20079
-    main: 8.87
-    updatedAt: 2026-10-21T06:08:30.901Z
-  title: Chasm
-  url: https://howlongtobeat.com/game/20079
 gameMetadata:
   platforms:
     - PC
@@ -50,7 +36,7 @@ gameMetadata:
     - Bit Kid
     - Leadman Games
     - didigames
-  cover: https://media.rawg.io/media/games/440/44033fc85538bdc53498d10cca25079d.jpg
+  cover: https://cdn2.steamgriddb.com/grid/9c04e24ccde45a5419fabc2e918e750c.png
   title: Chasm
   sources:
     rawg:
@@ -75,13 +61,14 @@ gameMetadata:
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     website: rawg
     description: rawg
     originalName: rawg
   manualFields:
     - selectedPlatforms
+    - cover
 manual:
   availabilityStatus: available
   officialStores:
@@ -89,6 +76,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/312200/
+playTime:
+  hours: 14
+personalRating: 8
+hltb:
+  auto: true
+  id: 20079
+  snapshot:
+    completionist: 13.66
+    extras: 11.15
+    id: 20079
+    main: 8.87
+    updatedAt: 2026-10-21T06:08:30.901Z
+  title: Chasm
+  url: https://howlongtobeat.com/game/20079
 events:
   - date: 2024-06-30
     title: 开始游戏

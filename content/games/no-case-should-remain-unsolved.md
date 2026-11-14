@@ -71,6 +71,17 @@ manual:
 playTime:
   hours: 2
 personalRating: 8.7
+hltb:
+  auto: true
+  id: 143372
+  snapshot:
+    completionist: 3.01
+    extras: 2.74
+    id: 143372
+    main: 2.71
+    updatedAt: 2026-11-14T00:35:49.678Z
+  title: No Case Should Remain Unsolved
+  url: https://howlongtobeat.com/game/143372
 events:
   - date: 2025-10-24
     title: 开始游戏

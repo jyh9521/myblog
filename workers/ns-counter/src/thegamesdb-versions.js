@@ -90,7 +90,16 @@ function editionGroups(rows) {
 // Verified catalog relationships, not title-wide overrides. The IDs, platforms,
 // and release dates must all match; additional editions are never admitted.
 // Sources: https://finji.co/games/tunic/ and the platform release announcements.
+// Bit Kid confirms these ports belong to one game. The dates below are
+// TheGamesDB record fingerprints, not official launch dates.
+// https://bitkidgames.com/?p=3819 and https://bitkidgames.com/?cat=5
+export const chasmCatalogRows = new Map([
+  ['61219', ['PC', '2018-07-21']], ['73935', ['Xbox One', '2018-11-09']],
+  ['62691', ['Nintendo Switch', '2020-10-09']], ['62294', ['PlayStation 4', '2018-07-31']],
+  ['75725', ['PS Vita', '2018-07-31']],
+]);
 const verifiedPorts = new Map([
+  ['chasm', chasmCatalogRows],
   ['tunic', new Map([
     ['66459', ['PC', '2022-03-16']],
     ['99191', ['Xbox One', '2022-03-16']],

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { searchDossierEditions, searchTheGamesDB, detailTheGamesDB, steamGridDBRoute } from './archive-routes.js';
 import { groupTheGamesDBVersions } from './thegamesdb-versions.js';
-import { matchesCatalogEdition } from './dossier-source-merge.js';
+import { combineDossierSources, matchesCatalogEdition } from './dossier-source-merge.js';
 
 const root = 'https://blog.example/ns/api/games';
 const auth = { 'X-Gaming-Admin': '1', Cookie: 'other=do-not-forward; __Host-gaming_admin=fixture-session' };
@@ -219,7 +219,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v9:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v10:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -538,4 +538,37 @@ test('Ys IX sparse PS5 record is revalidated in both search and detail without m
   assert.deepEqual(detail.platforms,base.platforms);
   assert.deepEqual(detail.sources,base.sources);
   assert.equal(detail.releaseDate,'2021-02-02');
+});
+
+test('Chasm merges verified PC and console rows without absorbing the same-name J2ME game', () => {
+  const base = (id, platform, releaseDate, credits = []) => ({credits, game: {
+    title: 'Chasm', platforms: [platform], releaseDate, sources: {thegamesdb:{id}},
+  }});
+  const rows = [
+    base('61219','PC','2018-07-21'), base('73935','Xbox One','2018-11-09'),
+    base('62691','Nintendo Switch','2020-10-09',['name:bitkid']),
+    base('62294','PlayStation 4','2018-07-31',['name:bitkid']),
+    base('75725','PS Vita','2018-07-31',['name:bitkid']),
+  ];
+  const ss = (id,systemId,platform,developers=[]) => ({
+    title:'Chasm', platforms:[platform], developers, sources:{screenscraper:{id,systemId}},
+  });
+  const rawg = {title:'Chasm', releaseDate:'2018-07-30', platforms:['PC','Nintendo Switch','macOS','Linux'],
+    sources:{rawg:{id:'15507'}}};
+  const screen = [ss('359312','225','Nintendo Switch'),ss('216699','34','Xbox One'),
+    ss('386388','60','PlayStation 4'),ss('283692','138','PC'),ss('523472','302','J2ME',['Wireless Wizards'])];
+  const groups = groupTheGamesDBVersions(rows);
+  assert.equal(groups.length,1);
+  const results = combineDossierSources(groups,[rawg],screen);
+  assert.equal(results.length,2);
+  const [merged,mobile] = results;
+  assert.deepEqual(merged.sources.thegamesdb.versions.map(v=>v.id).sort(), ['61219','62294','62691','73935','75725']);
+  assert.equal(merged.sources.rawg.id,'15507');
+  assert.equal(merged.sources.screenscraper.id,'283692');
+  assert.equal(mobile.sources.screenscraper.id,'523472');
+  assert.ok(merged.platforms.includes('macOS') && merged.platforms.includes('PS Vita'));
+  assert.ok(matchesCatalogEdition(merged,rawg));
+  assert.ok(!matchesCatalogEdition(merged,{...rawg,title:'Chasm Deluxe Edition'}));
+  assert.ok(!matchesCatalogEdition(merged,mobile));
+  assert.equal(groupTheGamesDBVersions(rows,'62294')[0].sources.thegamesdb.id,'62294');
 });

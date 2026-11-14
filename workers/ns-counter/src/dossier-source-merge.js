@@ -1,6 +1,7 @@
 import gamePlatforms from '../../../public/sveltia/game-platforms.js';
 import { developerKey, editionEvidence } from './game-identity.js';
 import { combineCandidates } from './game-providers.js';
+import { chasmCatalogRows } from './thegamesdb-versions.js';
 import { reviewedCrossCatalogPorts } from './reviewed-cross-catalog-ports.js';
 
 function releaseViews(game) {
@@ -18,6 +19,30 @@ const editionTags = game => [...new Set((game.originalName || game.title || '').
 
 const exactTitle = game => (game.originalName || game.title || '').normalize('NFKC')
   .toLowerCase().replace(/[™®©]/gu, '').replace(/[^\p{L}\p{N}]+/gu, '');
+
+// The provider rows below refer to Bit Kid's Chasm, not the same-name J2ME game.
+// https://bitkidgames.com/presskit/sheet.php?p=chasm
+const chasmScreenRows = [
+  ['283692', '138', 'PC'], ['359312', '225', 'Nintendo Switch'],
+  ['216699', '34', 'Xbox One'], ['386388', '60', 'PlayStation 4'],
+];
+function reviewedChasmSource(base, candidate) {
+  const catalog = base.sources?.thegamesdb;
+  if (!catalog || exactTitle(base) !== 'chasm' || exactTitle(candidate) !== 'chasm') return false;
+  const rows = catalog.versions || [{ id: catalog.id, platform: base.platforms?.[0], releaseDate: base.releaseDate }];
+  if (!rows.length || !rows.every(({ id, platform, releaseDate }) => {
+    const expected = chasmCatalogRows.get(id);
+    return expected && expected[0] === platform && expected[1] === releaseDate;
+  })) return false;
+  const compatibleStudio = game => !game.developers?.length || game.developers.some(name => developerKey(name) === 'bitkid');
+  if (!compatibleStudio(base) || !compatibleStudio(candidate)) return false;
+  const rawg = candidate.sources?.rawg;
+  if (rawg?.id === '15507') return ['2018-07-30', '2018-07-31'].includes(candidate.releaseDate) &&
+    candidate.platforms?.includes('PC');
+  const screen = candidate.sources?.screenscraper;
+  return chasmScreenRows.some(([id, systemId, platform]) => screen?.id === id && screen.systemId === systemId &&
+    candidate.platforms?.length === 1 && candidate.platforms[0] === platform);
+}
 
 function reviewedPortEvidence(base, candidate, reviews) {
   const source = base.sources?.thegamesdb;
@@ -40,7 +65,8 @@ function reviewedPortEvidence(base, candidate, reviews) {
 export function matchesCatalogEdition(base, candidate, reviews = reviewedCrossCatalogPorts) {
   // Do not let an alias bridge an explicitly named edition and the base game.
   if (editionTags(base) !== editionTags(candidate)) return false;
-  return !!reviewedPortEvidence(base, candidate, reviews) || releaseViews(base).some(a => releaseViews(candidate).some(b => editionEvidence(a, b).strong));
+  return reviewedChasmSource(base, candidate) || !!reviewedPortEvidence(base, candidate, reviews) ||
+    releaseViews(base).some(a => releaseViews(candidate).some(b => editionEvidence(a, b).strong));
 }
 
 const present = value => Array.isArray(value) ? value.length > 0 : Boolean(value);
@@ -81,6 +107,16 @@ export function combineDossierSources(catalog, rawg, screen) {
   const merged = catalog.map(base => {
     let result = base;
     for (const [provider, rows] of Object.entries(supplements)) {
+      const reviewed = provider === 'screenscraper' ? rows.filter(row => reviewedChasmSource(base, row) &&
+        catalog.filter(other => reviewedChasmSource(other, row)).length === 1) : [];
+      if (reviewed.length) {
+        // The source schema has one ScreenScraper link. Prefer the PC record
+        // for enrichment; the other verified ports already have TGDB records.
+        const primary = chasmScreenRows.map(([id]) => reviewed.find(row => row.sources.screenscraper.id === id)).find(Boolean);
+        result = supplementCatalog(result, primary, provider);
+        reviewed.forEach(row => used.add(row));
+        continue;
+      }
       const matches = rows.filter(row => matchesCatalogEdition(base, row));
       if (matches.length !== 1 || catalog.filter(other => matchesCatalogEdition(other, matches[0])).length !== 1) continue;
       used.add(matches[0]);

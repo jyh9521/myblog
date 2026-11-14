@@ -413,3 +413,27 @@ test('Gemini retries a lost or changed source link and rejects a fabricated URL'
     assert.equal(calls, 2);
   }
 });
+
+test('a blank primary regional entry borrows only an exact same-release sibling and cites it', async () => {
+  const { env } = environment();
+  const calls = [];
+  const response = await dossierBriefRoute(post({ action: 'draft',
+    edition: { provider: 'thegamesdb', id: '137773' }, alternateIds: ['1', '2', '3', '144567'] }), env, async url => {
+    if (url.hostname === 'generativelanguage.googleapis.com') return geminiResponse(approved);
+    if (url.pathname.endsWith('/Developers')) return Response.json({ code: 200, data: { developers: {} } });
+    assert.equal(url.pathname, '/v1/Games/ByGameID');
+    const id = url.searchParams.get('id');
+    calls.push(id);
+    const platform = id === '1' ? 2 : 1;
+    return Response.json({ code: 200, data: { games: [{
+      id: Number(id), game_title: id === '3' ? 'Harbor Deluxe' : 'Harbor', platform,
+      release_date: id === '2' ? '1998-11-05' : '2026-11-05',
+      developers: ['Studio'], overview: id === '137773' ? '' : shortEn,
+    }] }, include: { platform: { data: { 1: { name: 'Nintendo Switch 2' }, 2: { name: 'Nintendo 64' } } } } });
+  });
+  const result = await response.json();
+  assert.equal(response.status, 200, JSON.stringify(result));
+  assert.equal(result.source.edition, 'thegamesdb:144567:');
+  assert.equal(result.source.url, 'https://thegamesdb.net/game.php?id=144567');
+  assert.deepEqual(calls, ['137773', '1', '2', '3', '144567']);
+});

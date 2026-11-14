@@ -227,9 +227,11 @@ try {
     assert.equal(dataRequests.find(request => request.pathname.endsWith('/detail')).body.sources.thegamesdb.id, '36');
     assert.equal(await summary.inputValue(), '');
 
-    const readsBeforeDraft = catalogReads;
-    assert.equal(aiCalls, 0);
-    await page.getByRole('button', { name: fromDatabase ? '翻译资料库简介' : '用 Gemini 翻译现有简介', exact: true }).click();
+    const readsBeforeDraft = 1; // The preceding selection performs one detail lookup.
+    if (!fromDatabase) {
+      assert.equal(aiCalls, 0);
+      await page.getByRole('button', { name: '用 Gemini 翻译现有简介', exact: true }).click();
+    }
     const review = page.getByLabel('待审核草稿');
     await review.waitFor();
     assert.equal(await review.inputValue(), draft);

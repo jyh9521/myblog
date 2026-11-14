@@ -331,7 +331,7 @@
           next.selectedPlatforms = normalizePlatforms(current.selectedPlatforms);
           this.props.onChange(next);
           this.setState({ results: [], searchOpen: false, pendingRefresh: null,
-            message: (changedEdition ? '已更换游戏版本；原简介仍保留，请复核。' : '已确认游戏版本。接下来可翻译简介。') + (warning ? ' ' + warning : '') });
+            message: (changedEdition ? '已更换游戏版本；原简介仍保留，请复核。' : '已关联游戏资料。资料库的主条目不代表你选了该地区。') + (warning ? ' ' + warning : '') });
         });
       },
       applyRefresh() {
@@ -446,6 +446,12 @@
     const briefContext = props => {
       const metadata = entryValue(props, 'gameMetadata') || {};
       const edition = getEdition(metadata);
+      const versions = edition?.provider === 'thegamesdb'
+        ? (Array.isArray(metadata.sources.thegamesdb.versions) ? metadata.sources.thegamesdb.versions : []) : [];
+      const primary = versions.find(version => idString(version?.id) === edition.id);
+      const alternateIds = primary?.platform && primary?.releaseDate ? [...new Set(versions
+        .filter(version => version?.platform === primary.platform && version?.releaseDate === primary.releaseDate)
+        .map(version => idString(version.id)).filter(id => id && id !== edition.id))].slice(0, 5) : [];
       const current = summaryText(props.value).trim();
       const legacy = !current && typeof metadata.description === 'string' ? metadata.description.trim() : '';
       const provider = metadata.fieldSources?.description;
@@ -457,17 +463,22 @@
       const gameTitle = entryValue(props, 'title') || metadata.title || '';
       const officialTitle = metadata.localizedName || '';
       const text = current || legacy;
-      const key = JSON.stringify([editionRefKey(edition), gameTitle, officialTitle, text, source]);
-      return { metadata, edition, current, legacy, text, source, gameTitle, officialTitle, key };
+      const key = JSON.stringify([editionRefKey(edition), alternateIds, gameTitle, officialTitle, text, source]);
+      return { metadata, edition, alternateIds, current, legacy, text, source, gameTitle, officialTitle, key };
     };
     const GameBrief = createClass({
       getInitialState() {
         return { busy: false, context: '', draft: '', result: null, error: false, message: '' };
       },
       componentDidUpdate(previous) {
-        if (briefContext(previous).key !== briefContext(this.props).key) {
-          this.revision = (this.revision || 0) + 1;
-          if (this.state.context) this.setState(this.getInitialState());
+        const before = briefContext(previous), next = briefContext(this.props);
+        if (before.key === next.key) return;
+        this.revision = (this.revision || 0) + 1;
+        const newlyLinked = !before.edition && next.edition && !next.text;
+        if (this.state.context || newlyLinked) {
+          this.setState(this.getInitialState(), () => {
+            if (newlyLinked && briefContext(this.props).key === next.key) this.generate();
+          });
         }
       },
       componentWillUnmount() { this.disposed = true; },
@@ -482,7 +493,7 @@
           const response = await archiveRequest('/ns/api/games/brief', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'draft', gameTitle: reference.gameTitle, officialTitle: reference.officialTitle,
-              ...(reference.text ? { text: reference.text } : { edition: reference.edition }) }),
+              ...(reference.text ? { text: reference.text } : { edition: reference.edition, alternateIds: reference.alternateIds }) }),
           });
           const data = await response.json();
           if (!response.ok) throw new Error(data.error === 'ADMIN_LOGIN_REQUIRED' ? '请重新登录博客后台。' : data.error || '简介翻译失败。');
@@ -517,12 +528,13 @@
         if (text !== summaryText(current)) this.props.onChange(text.trim() && typeof current?.text === 'string' ? { ...current, text } : text);
       },
       render() {
-        const { metadata, edition, text: referenceText, legacy, source } = briefContext(this.props);
+        const { metadata, edition, alternateIds, text: referenceText, legacy, source } = briefContext(this.props);
         const text = summaryText(this.props.value);
         const { busy, draft, result } = this.state;
         const savedSource = usableSource(this.props.value?.source);
         const stale = savedSource?.edition && !Object.keys(metadata.sources || {})
-          .some(provider => editionRefKey(editionFor(metadata, provider)) === savedSource.edition);
+          .some(provider => editionRefKey(editionFor(metadata, provider)) === savedSource.edition)
+          && !alternateIds.some(id => savedSource.edition === 'thegamesdb:' + id + ':');
         const draftSource = usableSource(result?.source) || source;
         return h('div', { className: 'dossier-stack' },
           labelInput('公开简介正文', { id: this.props.forID, multiline: true, rows: 4, value: text,
@@ -580,7 +592,7 @@
             editionLine && h('small', null, editionLine))),
         h('section', { style: { borderTop: '1px solid color-mix(in srgb, currentColor 25%, transparent)', paddingTop: '12px' } },
           h('strong', null, '游戏简介'),
-          h('p', { style: { whiteSpace: 'pre-wrap', margin: '7px 0' } }, summary || '还没有填写简介。'),
+          h('p', { style: { whiteSpace: 'pre-wrap', margin: '7px 0' } }, summary || (getEdition(metadata) ? '尚未采用公开简介。请在编辑区查看或生成简介草稿。' : '还没有填写简介。')),
           value?.source && externalLink(value.source.url, '简介参考：' + value.source.label)));
     };
     window.CMS.registerPreviewTemplate?.('games', GameDossierPreview);

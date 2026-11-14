@@ -44,6 +44,14 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - cover
+summary:
+  text: 加侬多夫企图从圣地夺走传说中的三角神力，借此统治世界。为了阻止他的阴谋，林克必须成为时之勇者，拯救海拉鲁王国。这一版本登陆 Nintendo Switch 2。
+  source:
+    url: https://thegamesdb.net/game.php?id=144567
+    label: TheGamesDB
+    language: en
+    kind: overview
+    edition: 'thegamesdb:144567:'
 screenshotGallery:
   enabled: true
   englishName: the-legend-of-zelda-ocarina-of-time

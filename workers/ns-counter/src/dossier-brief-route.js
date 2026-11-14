@@ -2,6 +2,7 @@ import { ArchiveProviderError, TheGamesDBProvider, externalId } from './archive-
 import { archiveJson, withArchiveAdmin } from './archive-routes.js';
 import { BodyTooLarge, boundedText } from './bounded-body.js';
 import { RAWGProvider, ScreenScraperProvider } from './game-providers.js';
+import { developerKey } from './game-identity.js';
 import { geminiDraft } from './gemini-game-summary.js';
 import { charCount, plainReference, synopsisMaterial } from './summary-language.js';
 
@@ -41,6 +42,33 @@ async function readSource(edition, env, fetcher) {
   } };
 }
 
+const titleKey = title => (title || '').normalize('NFKC').toLowerCase()
+  .replace(/[™®©]/gu, '').replace(/[^\p{L}\p{N}]+/gu, '');
+
+function sameRelease(a, b) {
+  const title = titleKey(a.title);
+  return Boolean(title && title === titleKey(b.title) && a.releaseDate && a.releaseDate === b.releaseDate &&
+    a.platforms?.length === 1 && b.platforms?.length === 1 && a.platforms[0] === b.platforms[0] &&
+    a.developers?.map(developerKey).some(key => key && b.developers?.map(developerKey).includes(key)));
+}
+
+async function readDraftSource(edition, alternateIds, env, fetcher) {
+  const primary = await readSource(edition, env, fetcher);
+  if (primary.material || edition.provider !== 'thegamesdb' || !Array.isArray(alternateIds)) return primary;
+  const ids = [...new Set(alternateIds.slice(0, 5).map(externalId))].filter(id => id && id !== edition.id);
+  let upstreamError;
+  for (const id of ids) {
+    try {
+      const alternative = await readSource({ provider: edition.provider, id }, env, fetcher);
+      if (alternative.material && sameRelease(primary.identity, alternative.identity)) return alternative;
+    } catch (error) {
+      if (!(error instanceof ArchiveProviderError) || error.status >= 500) upstreamError ||= error;
+    }
+  }
+  if (upstreamError) throw upstreamError;
+  return primary;
+}
+
 export function dossierBriefRoute(request, env, fetcher = fetch) {
   if (request.method !== 'POST') return archiveJson({ error: '只支持 POST 请求。' }, 405, { Allow: 'POST' });
   return withArchiveAdmin(request, env, async () => {
@@ -60,12 +88,12 @@ export function dossierBriefRoute(request, env, fetcher = fetch) {
     // missing excerpt can trigger a lookup, and only by the confirmed ID.
     const hasText = typeof input.text === 'string' && input.text.trim();
     if (!hasText && !edition) return archiveJson({ error: '请先填写简介，或确认资料库中的游戏版本。' }, 400);
-    const fetched = !hasText ? await readSource(edition, env, fetcher) : null;
+    const fetched = !hasText ? await readDraftSource(edition, input.alternateIds, env, fetcher) : null;
     const material = fetched ? fetched.material : checkedMaterial(input.text, 'archive', '');
     if (!material) return archiveJson({ error: '这份资料没有可翻译的简介正文。' }, 422);
     const source = fetched && material.url ? {
       url: material.url, label: material.label, language: material.language, kind: material.kind,
-      edition: [edition.provider, edition.id, edition.systemId || ''].join(':'),
+      edition: [fetched.edition.provider, fetched.edition.id, fetched.edition.systemId || ''].join(':'),
     } : null;
     const reference = { originalLanguage: material.language, ...(source ? { source } : {}) };
     if (material.mode === 'manual') {

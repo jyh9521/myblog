@@ -68,6 +68,17 @@ manual:
 playTime:
   hours: 4.25
 personalRating: 7.5
+hltb:
+  auto: true
+  id: 6768
+  snapshot:
+    completionist: 12.06
+    extras: 5.67
+    id: 6768
+    main: 4.54
+    updatedAt: 2026-11-14T23:00:38.159Z
+  title: 'Onimusha: Warlords'
+  url: https://howlongtobeat.com/game/6768
 events:
   - date: 2025-06-29
     title: 开始游戏

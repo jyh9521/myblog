@@ -85,6 +85,17 @@ manual:
 playTime:
   hours: 52.85
 personalRating: 8.5
+hltb:
+  auto: true
+  id: 118225
+  snapshot:
+    completionist: 117.84
+    extras: 64.14
+    id: 118225
+    main: 35.69
+    updatedAt: 2026-11-14T23:00:18.127Z
+  title: 'Death Stranding 2: On The Beach'
+  url: https://howlongtobeat.com/game/118225
 events:
   - date: 2025-07-26
     title: 开始游戏

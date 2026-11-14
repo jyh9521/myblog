@@ -2,22 +2,74 @@
 title: 霍格沃茨之遗
 status:
   - 已通关
-playTime:
-  hours: 38
-hltb:
-  id: 83145
-  url: https://howlongtobeat.com/game/83145
-  title: Hogwarts Legacy
-  auto: true
-  snapshot:
-    id: 83145
-    main: 26.72
-    extras: 45.28
-    completionist: 72.22
-    updatedAt: 2026-10-09T15:28:35.916Z
 gameMetadata:
+  platforms:
+    - Nintendo Switch
+    - Nintendo Switch 2
+    - PC
+    - PlayStation 4
+    - PlayStation 5
+    - Xbox One
+    - Xbox Series X|S
+  selectedPlatforms:
+    - Xbox Series X|S
+    - Nintendo Switch
+  localizedName: ''
+  developers:
+    - Avalanche Software LLC
+  screenshots:
+    - https://media.rawg.io/media/screenshots/723/7230cc1be966c19d2470a19d277b31e9.jpg
+    - https://media.rawg.io/media/screenshots/8d4/8d43231c67e82914891ac81c4a413d12.jpg
+    - https://media.rawg.io/media/screenshots/9c4/9c48270e9f6b1cdc6e2fa92c0f7a1da8.jpg
+    - https://media.rawg.io/media/screenshots/057/057e7fffd4798fdb336e6aaca40204ba.jpg
+    - https://media.rawg.io/media/screenshots/f35/f35c6bcc541808298288ba49e50c37d5.jpg
+    - https://media.rawg.io/media/screenshots/fc6/fc6f976e1dd7225e4818b9f553ed23c0.jpg
+  updatedAt: 2026-11-14T00:21:58.886Z
+  genres:
+    - Action
+    - Adventure
+    - Role-Playing
+  releaseDate: 2023-02-07
+  publishers:
+    - Warner Bros. Interactive Entertainment
+  title: Hogwarts Legacy
+  sources:
+    thegamesdb:
+      id: '98840'
+      url: https://thegamesdb.net/game.php?id=98840
+      versions:
+        - id: '104571'
+          platform: Nintendo Switch
+          releaseDate: 2023-11-14
+        - id: '141358'
+          platform: Nintendo Switch 2
+          releaseDate: 2025-06-05
+        - id: '98840'
+          platform: PC
+          releaseDate: 2023-02-07
+        - id: '109594'
+          platform: PlayStation 4
+          releaseDate: 2023-05-05
+        - id: '113227'
+          platform: PlayStation 4
+          releaseDate: 2023-05-05
+        - id: '113447'
+          platform: PlayStation 5
+          releaseDate: 2023-02-07
+        - id: '121229'
+          platform: PlayStation 5
+          releaseDate: 2023-02-07
+        - id: '105360'
+          platform: Xbox One
+          releaseDate: 2023-05-05
+        - id: '106452'
+          platform: Xbox Series X|S
+          releaseDate: 2023-02-07
+        - id: '115355'
+          platform: Xbox Series X|S
+          releaseDate: 2023-02-07
+  id: thegamesdb:98840
   alternativeNames: []
-  cover: https://media.rawg.io/media/games/044/044b2ee023930ca138deda151f40c18c.jpg
   description: "Hogwarts Legacy is an immersive, open-world action RPG set in the world first introduced in the Harry Potter books. Now you can take control of the action and be at the center of your own adventure in the wizarding world. Embark on a journey through familiar and new locations as you explore and discover fantastic beasts, customize your character and craft potions, master spell casting, upgrade talents, and become the wizard you want to be.\r
 
     \r
@@ -27,58 +79,26 @@ gameMetadata:
     \r
 
     Discover the feeling of living at Hogwarts as you make allies, battle Dark wizards, and ultimately decide the fate of the wizarding world. Your legacy is what you make of it."
-  developers:
-    - Avalanche Software
-    - Portkey Games
+  originalName: Hogwarts Legacy
   fieldSources:
-    cover: rawg
-    description: rawg
-    developers: rawg
-    genres: rawg
-    originalName: rawg
-    platforms: rawg
-    publishers: rawg
-    releaseDate: rawg
+    platforms: thegamesdb
     selectedPlatforms: manual
-    title: rawg
-    website: rawg
-  genres:
-    - Action
-    - RPG
-  id: rawg:906547
-  localizedName: ''
+    developers: thegamesdb
+    genres: thegamesdb
+    releaseDate: thegamesdb
+    publishers: thegamesdb
+    title: thegamesdb
+    description: rawg
+    originalName: thegamesdb
   manualFields:
     - selectedPlatforms
-  originalName: Hogwarts Legacy
-  platforms:
-    - PC
-    - PlayStation 5
-    - Xbox Series X|S
-    - PlayStation 4
-    - Nintendo Switch
-    - Xbox One
-  publishers:
-    - Warner Bros. Interactive
-    - Wizarding World
-  releaseDate: 2023-02-10
-  screenshots:
-    - https://media.rawg.io/media/screenshots/723/7230cc1be966c19d2470a19d277b31e9.jpg
-    - https://media.rawg.io/media/screenshots/8d4/8d43231c67e82914891ac81c4a413d12.jpg
-    - https://media.rawg.io/media/screenshots/9c4/9c48270e9f6b1cdc6e2fa92c0f7a1da8.jpg
-    - https://media.rawg.io/media/screenshots/057/057e7fffd4798fdb336e6aaca40204ba.jpg
-    - https://media.rawg.io/media/screenshots/f35/f35c6bcc541808298288ba49e50c37d5.jpg
-    - https://media.rawg.io/media/screenshots/fc6/fc6f976e1dd7225e4818b9f553ed23c0.jpg
-  selectedPlatforms:
-    - Xbox Series X|S
-    - Nintendo Switch
-  sources:
-    rawg:
-      id: '906547'
-      slug: hogwarts-legacy
-      url: https://rawg.io/games/906547
-  title: Hogwarts Legacy
-  updatedAt: 2026-10-09T15:28:51.389Z
-  website: https://www.hogwartslegacy.com/
+screenshotGallery:
+  enabled: true
+  englishName: hogwarts-legacy
+  folder: Game Dossiers/hogwarts-legacy
+  images:
+    - /uploads/cms/59af4838fde5bcfbc2ac20c637a3c0bd9d00b2ac8947e5129e686e5e7861bc39/9f63d4c3962da8fa9b439bbd4395e8442e0fdb5167ad15e213dfed61f40b725c/2025061323482100_c.jpg
+    - /uploads/cms/8ac38d8ebf2c243d122929de1efec8a4fc4605188022020ea9a60439ec00ab68/9f63d4c3962da8fa9b439bbd4395e8442e0fdb5167ad15e213dfed61f40b725c/2025061411483300_c.jpg
 manual:
   availabilityStatus: available
   notes: ''
@@ -91,6 +111,19 @@ manual:
       note: ''
       region: JP
       url: https://store-jp.nintendo.com/item/software/D70010000095416
+playTime:
+  hours: 38
+hltb:
+  auto: true
+  id: 83145
+  snapshot:
+    completionist: 72.22
+    extras: 45.28
+    id: 83145
+    main: 26.72
+    updatedAt: 2026-10-09T15:28:35.916Z
+  title: Hogwarts Legacy
+  url: https://howlongtobeat.com/game/83145
 events:
   - date: 2023-02-24
     title: 开始游戏

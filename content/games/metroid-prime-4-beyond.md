@@ -53,6 +53,20 @@ screenshotGallery:
   folder: Game Dossiers/metroid-prime-4-beyond
   images:
     - /uploads/cms/a9ec3bac47765b38d85a7ba411b8319cd6b63aa393a3c3f028f6b1221605d59d/eb04c442be4ba69e532bb9f021f79039ce798f05d7f3cc0fe2d7377d8cbf2f43/2025120819032200_c.jpg
+playTime:
+  hours: 20
+personalRating: 8
+hltb:
+  auto: true
+  id: 46437
+  snapshot:
+    completionist: 17.92
+    extras: 16.08
+    id: 46437
+    main: 13.3
+    updatedAt: 2026-11-14T06:47:17.204Z
+  title: 'Metroid Prime 4: Beyond'
+  url: https://howlongtobeat.com/game/46437
 events:
   - date: 2025-12-04
     title: 开始游戏

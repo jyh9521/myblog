@@ -22,7 +22,7 @@ gameMetadata:
   releaseDate: 2025-03-20
   publishers:
     - Nintendo
-  cover: https://blog.blfy.cc/ns/api/games/media?systemeid=225&jeuid=492653&media=box-2D%28eu%29
+  cover: https://cdn2.steamgriddb.com/grid/cdbc3879830f9869766206c798af1645.png
   title: 'Xenoblade Chronicles X: Definitive Edition'
   sources:
     screenscraper:
@@ -62,12 +62,34 @@ gameMetadata:
     genres: thegamesdb
     releaseDate: thegamesdb
     publishers: thegamesdb
-    cover: screenscraper
+    cover: steamgriddb
     title: thegamesdb
     alternativeNames: screenscraper
     originalName: thegamesdb
   manualFields:
     - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'thegamesdb:129975:'
+    kind: overview
+    label: TheGamesDB
+    language: other
+    url: https://thegamesdb.net/game.php?id=129975
+  text: |-
+    我们的未来就此开始
+    公元2054年。两支外星种族之间的星际冲突毁灭了地球，人类濒临灭绝。一小群幸存者乘坐“白鲸号”飞船，坠毁在一颗名为米拉的未开发星球上。现在，作为一名BLADE组织特工，拯救人类免于灭绝的重任就落在了你的肩上。
+
+    探索蛮荒星球
+    米拉是一个巨大的外星世界，拥有无垠的海洋、广袤的平原、巍峨的山脉、异域风情的丛林等多样环境，每一处都隐藏着各自的秘密与危险。在旅途中，你可以在星球表面无缝穿梭，探索辽阔的区域，观察各种生态系统的生命形式，并遭遇各种巨大的未知野兽，通过与它们的战斗来获取实用的资源。
+
+    准备好战斗
+    从海量的特殊攻击、技能和职业中进行选择，体验深度而又易上手的战斗系统。当你证明了自己具备BLADE特工的潜质后，便会赢得驾驶和定制Skell的资格——这是一种强大的机甲，能够飞行、变形为可在星球上快速移动的载具，并在战斗中爆发出巨大的威力。
+
+    建设新洛杉矶社区
+    在推进重建、结识新洛杉矶居民的过程中，你将加深与同伴的羁绊，并解锁能够获取稀有装备及其他奖励的任务。加入你心仪的BLADE军事组织以挑战更多任务，或者在联机任务、在线任务以及极具挑战性的世界宿敌战中，与来自世界各地的其他玩家组建最多32人的小队！
 screenshotGallery:
   enabled: true
   englishName: xenoblade-chronicles-x-definitive-edition-nintendo-switch-2-edition

@@ -71,6 +71,17 @@ manual:
       region: JP
       url: https://store-jp.nintendo.com/item/software/D70010000016893
 personalRating: 3
+hltb:
+  auto: true
+  id: 83164
+  snapshot:
+    completionist: 140.68
+    extras: 60.14
+    id: 83164
+    main: 41.37
+    updatedAt: 2026-11-14T22:59:56.752Z
+  title: 'Monster Hunter Stories 2: Wings of Ruin'
+  url: https://howlongtobeat.com/game/83164
 events:
   - date: 2025-08-13
     title: 开始游戏

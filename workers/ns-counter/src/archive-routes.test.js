@@ -397,7 +397,8 @@ test('detail retains server-verified search platforms during a provider outage, 
   const base = { ...tgRecord, id: 31, game_title: title, release_date: '2014-10-14' };
   const original = { ...base, id: 32, game_title: 'Archive Coast', release_date: '2012-08-14' };
   const raw = { id: 41, name: title, released: '2014-10-08',
-    platforms: ['PlayStation 4', 'PC', 'macOS'].map(name => ({ platform: { name } })),
+    platforms: ['PlayStation 4', 'PC', 'macOS'].map(name => ({ platform: { name },
+      ...(name === 'PC' ? { released_at: '2014-10-08' } : {}) })),
     website: 'https://search-only.example/' };
   let mode = 'outage', detailCalls = 0;
   const fetcher = async url => {
@@ -424,6 +425,8 @@ test('detail retains server-verified search platforms during a provider outage, 
   const { results } = await (await searchDossierEditions(search, e, 'Archive Coast', fetcher)).json();
   const picked = results.find(row => row.title === title);
   assert.deepEqual(picked.platforms, ['PlayStation 4', 'PC', 'macOS']);
+  const records = [{ platform: 'PC', releaseDate: '2014-10-08' }, { platform: 'macOS' }];
+  assert.deepEqual(picked.sources.rawg.platformRecords, records);
   assert.equal(results.find(row => row.title === original.game_title).sources.rawg, undefined);
   const request = new Request(root + '/detail', { method: 'POST', headers: auth });
   const detail = async (sources = picked.sources, refresh = false) => (await detailTheGamesDB(request, e, {
@@ -432,6 +435,7 @@ test('detail retains server-verified search platforms during a provider outage, 
   const partial = await detail();
   assert.deepEqual(partial.platforms, picked.platforms);
   assert.equal(partial.sources.rawg.id, '41');
+  assert.deepEqual(partial.sources.rawg.platformRecords, records);
   assert.equal(partial.website || '', '', 'do not copy unrelated search metadata');
   assert.equal(partial.incomplete, true);
   assert.match(partial.warnings.join(), /RAWG.*搜索/);
@@ -439,6 +443,7 @@ test('detail retains server-verified search platforms during a provider outage, 
   mode = 'ok';
   const retried = await detail();
   assert.deepEqual(retried.platforms, picked.platforms);
+  assert.deepEqual(retried.sources.rawg.platformRecords, records);
   assert.equal(retried.incomplete, false, 'a normal selection retries a partial cached response');
   mode = 'conflict';
   const conflict = await detail(picked.sources, true);

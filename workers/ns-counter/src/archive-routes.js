@@ -4,7 +4,7 @@ import { rankEditions, releaseYear } from './game-identity.js';
 import { cachedMetadata, readMetadataCache, writeMetadataCache } from './metadata-cache.js';
 import gamePlatforms from '../../../public/sveltia/game-platforms.js';
 import { preferTheGamesDBVersion } from './thegamesdb-versions.js';
-import { combineDossierSources, matchesCatalogEdition, supplementCatalog } from './dossier-source-merge.js';
+import { combineDossierSources, matchesCatalogEdition, supplementCatalog, withSupplementalPlatformRecords } from './dossier-source-merge.js';
 
 const HOUR = 60 * 60 * 1000;
 const searchTtl = value => value.results.length ? HOUR : 5 * 60 * 1000;
@@ -105,7 +105,7 @@ async function cachedTheGamesDBSearch(env, query, fetcher) {
 export function searchDossierEditions(request, env, query, fetcher = fetch) {
   return withArchiveAdmin(request, env, async () => {
     const hints = editionHints(request, query);
-    const outcome = await cachedMetadata(env, 'dossier:all:v9:' + query.toLowerCase(), partialTtl, async () => {
+    const outcome = await cachedMetadata(env, 'dossier:all:v10:' + query.toLowerCase(), partialTtl, async () => {
       const [catalog, rawg, screen] = await Promise.allSettled([
         cachedTheGamesDBSearch(env, query, fetcher), new RAWGProvider(env, fetcher).search(query),
         new ScreenScraperProvider(env, fetcher).search(query),
@@ -162,7 +162,7 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch, supplement
     const refresh = body.refresh === true;
     const loadCatalog = async () => metadataOnly(await loadBase());
     const outcome = !rawg && !ss ? await cachedMetadata(env, baseKey, detailTtl, loadCatalog, refresh)
-      : await cachedMetadata(env, `dossier:all:detail:v3:${baseKey}:${rawg}:${ss}:${system}`,
+      : await cachedMetadata(env, `dossier:all:detail:v4:${baseKey}:${rawg}:${ss}:${system}`,
         value => value.incomplete ? 0 : detailTtl, async () => {
           const jobs = [
             ...(rawg ? [['rawg', 'RAWG', new RAWGProvider(env, fetcher).getById(rawg)]] : []),
@@ -180,7 +180,7 @@ export function detailTheGamesDB(request, env, body, fetcher = fetch, supplement
                 provider === 'rawg' ? { id: rawg } : { id: ss, systemId: system });
               if (snapshot) {
                 game = { ...game, platforms: gamePlatforms.normalizePlatformList([...game.platforms, ...snapshot.platforms]),
-                  sources: { ...game.sources, [provider]: snapshot.sources[provider] } };
+                  sources: { ...game.sources, [provider]: withSupplementalPlatformRecords(base, snapshot, provider) } };
                 warnings.push(label + ' 详情暂不可用，已保留搜索时核对的平台');
               } else warnings.push(label + ' 详情暂不可用');
             }

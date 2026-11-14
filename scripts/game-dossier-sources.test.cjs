@@ -36,9 +36,16 @@ const game = { id: 'thegamesdb:35', title: 'Fixture Quest', originalName: 'Fixtu
 
 test('a supplemental PC platform returned by detail can be checked without typing it', async () => {
   const detail = { ...game, platforms: ['PlayStation 4', 'PC', 'macOS'],
-    sources: { ...game.sources, rawg: { id: '41' } }, warnings: ['RAWG 详情暂不可用，已保留搜索时核对的平台'] };
+    sources: { ...game.sources, rawg: { id: '41', platformRecords: [
+      { platform: 'PC', releaseDate: '2011-04-20' }, { platform: 'macOS' },
+    ] } }, warnings: ['RAWG 详情暂不可用，已保留搜索时核对的平台'] };
   const { field } = cms({}, async () => Response.json(detail));
+  field.state.results = [detail];
+  const platformText = () => descendants(field.render()).filter(node =>
+    node.type === 'small' && String(node.children[0]).startsWith('平台记录：')).map(node => node.children[0]);
+  assert.deepEqual(platformText(), ['平台记录：PC 2011-04-20 RAWG #41；macOS RAWG #41']);
   await field.selectGame(detail);
+  assert.deepEqual(platformText(), ['平台记录：PC 2011-04-20 RAWG #41；macOS RAWG #41']);
   const label = descendants(field.render()).find(node => node.type === 'label' && node.props.key === 'PC');
   assert.ok(label, 'PC checkbox is available immediately');
   const checkbox = label.children[0];
@@ -51,7 +58,7 @@ test('CMS entry loads the versioned cover styles and updated admin/field scripts
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);
   assert.match(html, /admin-auth\.js\?v=game-brief-20261109/);
-  assert.match(html, /game-dossier\.js\?v=catalog-slug-20261114/);
+  assert.match(html, /game-dossier\.js\?v=platform-records-20261115/);
 });
 
 test('CMS sends catalog English and the editor Chinese title as distinct Gemini inputs', async () => {

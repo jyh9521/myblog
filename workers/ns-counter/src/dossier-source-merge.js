@@ -68,13 +68,24 @@ export function matchesCatalogEdition(base, candidate, reviews = reviewedCrossCa
 const present = value => Array.isArray(value) ? value.length > 0 : Boolean(value);
 const listKey = value => value.normalize('NFKC').toLowerCase().trim();
 
+export function withSupplementalPlatformRecords(base, candidate, provider, source = candidate.sources[provider]) {
+  if (provider !== 'rawg') return source;
+  const platformRecords = gamePlatforms.normalizePlatformList(candidate.platforms)
+    .filter(platform => !base.platforms.includes(platform))
+    .map(platform => {
+      const date = candidate.platformReleaseDates?.[platform];
+      return { platform, ...(date ? { releaseDate: date } : {}) };
+    });
+  return platformRecords.length ? { ...source, platformRecords } : source;
+}
+
 export function supplementCatalog(base, candidate, provider) {
   const review = reviewedPortEvidence(base, candidate, reviewedCrossCatalogPorts);
   const release = review?.port.provider === provider ? review.port.displayRelease : null;
   const source = release && review.port.releaseDates.includes(release.releaseDate)
     ? { ...candidate.sources[provider], platformRelease: { platform: review.port.platform, ...release, evidence: review.evidence } }
     : candidate.sources[provider];
-  const merged = { ...base, sources: { ...base.sources, [provider]: source },
+  const merged = { ...base, sources: { ...base.sources, [provider]: withSupplementalPlatformRecords(base, candidate, provider, source) },
     fieldSources: { ...base.fieldSources } };
   const fill = (key, value) => {
     if (!present(merged[key]) && present(value)) {

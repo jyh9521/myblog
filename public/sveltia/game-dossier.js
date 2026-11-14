@@ -222,9 +222,17 @@
           (sourceLabels[provider] || provider) + ' #' + source.id + (source.systemId ? '/' + source.systemId : ''),
           '官方发行资料'].join(' ')];
       });
-      if (versions.length < 2 && !verified.length) return null;
+      const rawg = sources?.rawg;
+      const supplemental = idString(rawg?.id) && Array.isArray(rawg.platformRecords)
+        ? rawg.platformRecords.flatMap(row => {
+          const platform = normalizePlatforms([row?.platform])[0];
+          if (!platform || versions.some(version => version.platform === platform)) return [];
+          const date = /^\d{4}-\d{2}-\d{2}$/.test(row.releaseDate) ? row.releaseDate : '';
+          return [[platform, date, 'RAWG #' + rawg.id].filter(Boolean).join(' ')];
+        }) : [];
+      if (versions.length < 2 && !verified.length && !supplemental.length) return null;
       return h('small', null, '平台记录：' + [...versions.map(version =>
-        [version.platform, version.releaseDate, '#' + version.id].filter(Boolean).join(' ')), ...verified].join('；'));
+        [version.platform, version.releaseDate, '#' + version.id].filter(Boolean).join(' ')), ...verified, ...supplemental].join('；'));
     };
     const formatFields = {
       title: '资料库名称', localizedName: '中文本地化名称', originalName: '原始名称', alternativeNames: '别名 / Alternative Names',

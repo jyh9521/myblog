@@ -51,6 +51,10 @@ const contentFilters = new Set(['SAFETY', 'BLOCKLIST', 'PROHIBITED_CONTENT', 'SP
 // A standalone "<3" from an archived blurb is plain text, not markup.
 const unsupportedDraftFormat = /(?:^#{1,6}\s|https?:\/\/|<(?!3\b)|>|[\x60]{3}|\[[^\]]+\]\(|\*\*|^(?:翻译结果|简体中文简介)[：:])/im;
 
+// Imported store descriptions sometimes wrap notices in asterisks on their
+// own lines. Turn only those decorative dividers into paragraph breaks.
+const plainDividers = text => text.replace(/^[ \t]*(?:\*[ \t]*){3,}$/gm, '');
+
 function plainSourceHeadings(text) {
   // Imported blurbs also use compact headings such as "###Gameplay".
   // Keep single-hash tags, issue numbers and inline hashes as text.
@@ -109,19 +113,20 @@ function checkDraft(payload, sourceLinks) {
   }
   const text = (Array.isArray(candidate.content?.parts) ? candidate.content.parts : [])
     .map(part => !part?.thought && typeof part?.text === 'string' ? part.text : '').join('')
-    .replace(/\r\n?/g, '\n').replace(/[^\S\n]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
-  const language = detectSynopsisLanguage(text);
+    .replace(/\r\n?/g, '\n');
+  const normalized = plainDividers(text).replace(/[^\S\n]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  const language = detectSynopsisLanguage(normalized);
   let issue;
-  if (!text) {
+  if (!normalized) {
     issue = ['Gemini 草稿为空', '请根据原文输出完整的简体中文译文，不要只输出标题或空文本。'];
   } else if (!['zh-Hans', 'zh-und'].includes(language)) {
     issue = ['Gemini 草稿未通过简体中文校验', '正文必须用简体字和简体中文表达，不得混用繁体字或输出其他语言，原文专名可保留。'];
-  } else if (unsupportedDraftFormat.test(text)) {
+  } else if (unsupportedDraftFormat.test(normalized)) {
     issue = ['Gemini 草稿含链接、标题或不支持的格式', '只输出纯文本译文，保留自然分段，去掉额外的标题、链接、HTML 和 Markdown。原文的链接占位符须原样保留。'];
-  } else if (!sourceLinks.valid(text)) {
+  } else if (!sourceLinks.valid(normalized)) {
     issue = ['Gemini 草稿未保留原文链接', '请将原文的每个链接占位符原样保留一次，不要改写、省略、重复或添加占位符。'];
   }
-  return { text, language, issue };
+  return { text: normalized, language, issue };
 }
 
 export async function geminiDraft(env, material, { gameTitle = '', officialTitle = '' }, fetcher = fetch) {
@@ -130,7 +135,7 @@ export async function geminiDraft(env, material, { gameTitle = '', officialTitle
   const model = env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
   if (!/^gemini-[a-z0-9][a-z0-9.-]{1,63}$/.test(model)) throw new ArchiveProviderError('Gemini 模型设置有误。', 503);
   const url = new URL('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent');
-  const sourceLinks = protectSourceLinks(plainSourceHeadings(material.text));
+  const sourceLinks = protectSourceLinks(plainDividers(plainSourceHeadings(material.text)).replace(/\n{3,}/g, '\n\n').trim());
   const linkInstruction = sourceLinks.hasLinks
     ? '\n\n原文中的双中括号链接占位符代表原有网址，每个都必须原样保留一次，只翻译周围文字（包括链接的可见名称）。不要输出实际网址，不要添加新的链接。'
     : '';

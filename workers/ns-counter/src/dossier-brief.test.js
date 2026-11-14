@@ -196,6 +196,26 @@ const multiParagraphEn = [
 const geminiResponse = (text, finishReason = 'STOP') =>
   Response.json({ candidates: [{ finishReason, content: { parts: [{ text }] } }] });
 
+test('Ace Attorney store dividers do not reject a translation or lose the source URL', async () => {
+  const { env, writes } = environment();
+  const url = 'http://www.us.capcommobile.com/ace-attorney-investigations-compatibility';
+  const divider = '*'.repeat(45);
+  const text = ['Description', divider, 'Before purchasing please check device compatibility.', divider,
+    'Investigate crime scenes and uncover the truth.', 'Compatible Models:', url].join('\n');
+  const calls = [];
+  const response = await dossierBriefRoute(post({ action: 'draft', gameTitle: '逆转检察官', text }), env, async (_, options) => {
+    calls.push(JSON.parse(JSON.parse(options.body).contents[0].parts[0].text).originalText);
+    return geminiResponse(['游戏简介', divider, '购买前请确认设备是否兼容。', '* * *',
+      '调查犯罪现场并揭开真相。', '兼容机型：[[SOURCE_LINK_1]]'].join('\n'));
+  });
+  const result = await response.json();
+  assert.equal(response.status, 200, result.error);
+  assert.equal(calls.length, 1);
+  assert.ok(!calls[0].includes(divider));
+  assert.equal(result.text, '游戏简介\n\n购买前请确认设备是否兼容。\n\n调查犯罪现场并揭开真相。\n兼容机型：' + url);
+  assert.equal(writes.size, 0);
+});
+
 test('Salt and Sanctuary sends plain heading text and preserves the archived synopsis paragraphs', async () => {
   const { env, writes } = environment();
   // Freeze the imported heading style independently of live CMS content.

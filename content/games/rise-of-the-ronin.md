@@ -65,6 +65,13 @@ summary:
     塑造动态故事
 
     作为一名无主武士——浪人，你的命运由你自己主宰。根据你的选择以及一路上结交的盟友，故事将以不同的方式展开。面对刺杀还是保护关键人物等生死攸关的任务抉择，通过丰富多样的多重选择系统来塑造历史的走向。
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: PlayStation Store
+      note: ''
+      region: HK
+      url: https://store.playstation.com/zh-hant-hk/product/HP9000-PPSA04558_00-RONINFULLGAME001
 playTime:
   hours: 42
 personalRating: 7.5

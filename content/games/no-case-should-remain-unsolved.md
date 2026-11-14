@@ -54,6 +54,16 @@ gameMetadata:
   manualFields:
     - cover
     - selectedPlatforms
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'thegamesdb:134335:'
+    kind: overview
+    label: TheGamesDB
+    language: en
+    url: https://thegamesdb.net/game.php?id=134335
+  text: 资深警督全京退休十二年后，一名年轻的女警找上门来，恳请她重新调查西院（Seowon）的案件。然而，随着尘封的记忆一点点被揭开，真相逐渐变得清晰：西院周围的每一个人都在撒谎。
 screenshotGallery:
   enabled: true
   englishName: no-case-should-remain-unsolved

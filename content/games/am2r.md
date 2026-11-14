@@ -4,6 +4,7 @@ status:
   - 已通关
 gameMetadata:
   platforms:
+    - Android
     - PC
   selectedPlatforms:
     - PC
@@ -15,7 +16,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/558/558ba4cf15e1d3615cd3e732fa4590af.jpg
     - https://media.rawg.io/media/screenshots/d5c/d5c6f87bd9b337367e0552231f26cddf.jpg
     - https://media.rawg.io/media/screenshots/d3f/d3f761d5025fc4a0424d6489dfd5ca36.jpg
-  updatedAt: 2026-11-09T04:43:06.996Z
+  updatedAt: 2026-11-14T01:17:52.379Z
   genres:
     - Adventure
     - Puzzle
@@ -30,6 +31,13 @@ gameMetadata:
     thegamesdb:
       id: '29865'
       url: https://thegamesdb.net/game.php?id=29865
+      versions:
+        - id: '131292'
+          platform: Android
+          releaseDate: 2017-06-08
+        - id: '29865'
+          platform: PC
+          releaseDate: 2017-08-06
   id: thegamesdb:29865
   alternativeNames:
     - AM2R

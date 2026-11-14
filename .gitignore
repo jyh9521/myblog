@@ -2,6 +2,7 @@ node_modules/
 .next/
 out/
 reports/
+public/sveltia/sveltia-cms-*-draft-slug.js
 public/sveltia/assets.json
 public/sveltia/r2-assets.json
 public/sveltia/social-icon-catalog.json

@@ -28,18 +28,21 @@
   async function api(path,options={}) {const response=await (path==='/catalog'?fetch:window.BlogAdminAuth.request)(ROOT+path,{...options,credentials:'same-origin',cache:'no-store',headers:{'X-Gaming-Admin':'1',...options.headers},signal:AbortSignal.timeout(120000)});let data;try{data=await response.json();}catch{throw Error('资源服务返回了非 JSON 响应（HTTP '+response.status+'）。');}if(!response.ok){const error=Error(errors[data.error]||data.error||'操作失败');error.status=response.status;error.code=data.error;throw error;}return data;}
   const imageAccept='image/png,image/jpeg,image/webp,image/gif,image/avif';
   const get=(entry,key)=>{const value=entry?.getIn?.(['data',key]);return value?.toJS?.()??value;};
-  const defaultGameFolder=(entry,gallery=get(entry,'screenshotGallery'))=>{
+  const folderName=value=>String(value||'').normalize('NFKD').replace(/\p{M}/gu,'').replace(/[\\/:*?"<>|#]/g,' - ').replace(/[^\x20-\x7e]/g,' ').replace(/^[. ]+|[. ]+$/g,'').replace(/\s+/g,' ').trim();
+  const defaultGameFolder=(entry,gallery=get(entry,'screenshotGallery'),draftSlug)=>{
     const metadata=get(entry,'gameMetadata')||{};
-    const english=[gallery?.englishName,metadata.title,metadata.originalName,get(entry,'title')].map(value=>String(value||'').normalize('NFKD').replace(/\p{M}/gu,'').replace(/[\\/:*?"<>|#]/g,' - ').replace(/[^\x20-\x7e]/g,' ').replace(/^[. ]+|[. ]+$/g,'').replace(/\s+/g,' ').trim()).find(value=>/[a-z]/i.test(value));
-    const slug=String(entry?.get?.('slug')||'').replace(/[^a-z0-9-]/gi,'');
-    return english||slug ? 'Game Dossiers/'+(english||slug).slice(0,100).trim() : null;
+    const custom=folderName(gallery?.englishName);
+    const slug=draftSlug||entry?.get?.('slug');
+    const fallback=[metadata.title,metadata.originalName,get(entry,'title')].map(folderName).find(value=>/[a-z]/i.test(value));
+    const name=custom||(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug||'')?slug:fallback);
+    return name ? 'Game Dossiers/'+name.slice(0,100).trim() : null;
   };
-  const destination=entry=>{
+  const destination=(entry,draftSlug)=>{
     const folder=get(entry,'resourceFolder');
     if(typeof folder==='string'&&folder)return folder;
     if(entry?.get?.('collection')==='games'){
       const gallery=get(entry,'screenshotGallery');
-      return gallery?.folder || (gallery?.enabled ? defaultGameFolder(entry) : null);
+      return gallery?.folder || (gallery?.enabled ? defaultGameFolder(entry,gallery,draftSlug) : null);
     }
     return null;
   };
@@ -156,8 +159,8 @@
       async addFiles(files){
         if(!files.length)return;
         await this.run(async()=>{
-          const gallery=this.props.value||{},folder=gallery.folder||defaultGameFolder(this.props.entry,gallery);
-          if(!folder)throw Error('请先填写英文游戏名，或选择包含英文名称的游戏资料。');
+          const gallery=this.props.value||{},folder=gallery.folder||defaultGameFolder(this.props.entry,gallery,this.props.draftSlug);
+          if(!folder)throw Error('请先设置 Slug 或填写自定义截图文件夹名。');
           const images=[...(gallery.images||[])],errors=[];
           const ordered=[...files].sort((a,b)=>(screenshotStamp(a.name)??a.lastModified)-(screenshotStamp(b.name)??b.lastModified));
           for(const file of ordered){
@@ -172,14 +175,14 @@
         });
       },
       render(){
-        const gallery=this.props.value||{},images=gallery.images||[],folder=gallery.folder||defaultGameFolder(this.props.entry,gallery),busy=this.state.busy;
+        const gallery=this.props.value||{},images=gallery.images||[],folder=gallery.folder||defaultGameFolder(this.props.entry,gallery,this.props.draftSlug),busy=this.state.busy;
         const move=(index,to)=>{const next=[...images];[next[index],next[to]]=[next[to],next[index]];this.update({images:next});};
         return h('div',{className:'blog-media-field'},
           h('label',null,h('input',{id:this.props.forID,type:'checkbox',checked:!!gallery.enabled,disabled:busy,onChange:e=>this.update({enabled:e.target.checked})}),' 启用截图展示'),
           gallery.enabled&&h('div',{className:'blog-media-gallery-editor'},
-            !gallery.folder&&h('label',null,'英文游戏名（可选，覆盖自动命名）',
+            !gallery.folder&&h('label',null,'自定义截图文件夹名（可选，留空时跟随 Slug）',
               h('input',{value:gallery.englishName||'',maxLength:100,disabled:busy,onChange:e=>this.update({englishName:e.target.value})})),
-            h('p',null,'截图目录：'+(folder||'请先填写英文游戏名')),
+            h('p',null,'截图目录：'+(folder||'请先设置 Slug 或填写自定义名称')),
             h('div',{className:'blog-media-field-actions'},
               h('label',{className:'blog-media-primary blog-media-upload','aria-disabled':busy||!folder},'上传截图',h('input',{type:'file',multiple:true,accept:imageAccept,className:'blog-media-file-input','aria-label':'上传截图',disabled:busy||!folder,onChange:e=>{const files=[...e.target.files];e.target.value='';this.addFiles(files);}})),
               button('从资源库选择',()=>this.run(async()=>{const selected=await picker('image',{folder});if(selected&&!images.includes(selected))this.update({folder,images:orderDatedScreenshots([...images,selected],screenshotPathStamp)});}),busy||!folder)),
@@ -196,8 +199,8 @@
     window.CMS.registerFieldType('screenshot-gallery',GalleryControl,()=>null);
     const Control=window.createClass({
       getInitialState(){return {busy:false,message:''};},
-      async sendFile(file){if(!file||this.state.busy)return;this.setState({busy:true,message:'正在上传 '+file.name+'…'});try{validateSelection(file,this.props.field.get('widget')==='r2-image'?'image':String(this.props.field.get('accept')||'').includes('pdf')?'pdf':'all');const folder=destination(this.props.entry);const result=await upload(file,folder,!!folder);this.props.onChange(result.path);this.setState({message:'上传完成'});}catch(error){this.setState({message:error.message});}finally{this.setState({busy:false});}},
-      render(){const image=this.props.field.get('widget')==='r2-image',pdf=String(this.props.field.get('accept')||'').includes('pdf'),value=this.props.value||'',uploadLabel=image?'上传图片':pdf?'上传 PDF':'上传文件';return h('div',{className:'blog-media-field',onDragOver:e=>e.preventDefault(),onDrop:e=>{e.preventDefault();this.sendFile(e.dataTransfer?.files?.[0]);},onPaste:e=>{if(e.clipboardData?.files?.length){e.preventDefault();this.sendFile(e.clipboardData.files[0]);}}},image&&value?h('img',{src:value,alt:'图片预览',className:'blog-media-field-preview'}):value?h('p',{className:'blog-media-current-file'},fileName({path:value})):h('p',{className:'blog-media-placeholder'},image?'把图片拖到这里，也可以粘贴截图':'把文件拖到这里'),h('div',{className:'blog-media-field-actions'},h('label',{className:'blog-media-primary blog-media-upload','aria-disabled':this.state.busy},uploadLabel,h('input',{type:'file',className:'blog-media-file-input','aria-label':uploadLabel,disabled:this.state.busy,accept:image?'image/png,image/jpeg,image/webp,image/gif,image/avif':pdf?'.pdf':undefined,onChange:e=>{const file=e.target.files[0];e.target.value='';this.sendFile(file);}})),h('button',{type:'button',disabled:this.state.busy,onClick:async()=>{this.setState({busy:true});try{const selected=await picker(image?'image':pdf?'pdf':'all',{folder:destination(this.props.entry)});if(selected)this.props.onChange(selected);}finally{this.setState({busy:false});}}},image?'选择已有图片':pdf?'选择已有 PDF':'选择已有文件'),value&&h('button',{type:'button',disabled:this.state.busy,onClick:()=>this.props.onChange('')},'移除引用')),this.state.message&&h('p',{role:'status'},this.state.message),h('details',{},h('summary',{},'链接 / 外部地址'),h('input',{id:this.props.forID,value,placeholder:'/uploads/… 或已有网址',onChange:e=>this.props.onChange(e.target.value)})));}
+      async sendFile(file){if(!file||this.state.busy)return;this.setState({busy:true,message:'正在上传 '+file.name+'…'});try{validateSelection(file,this.props.field.get('widget')==='r2-image'?'image':String(this.props.field.get('accept')||'').includes('pdf')?'pdf':'all');const folder=destination(this.props.entry,this.props.draftSlug);const result=await upload(file,folder,!!folder);this.props.onChange(result.path);this.setState({message:'上传完成'});}catch(error){this.setState({message:error.message});}finally{this.setState({busy:false});}},
+      render(){const image=this.props.field.get('widget')==='r2-image',pdf=String(this.props.field.get('accept')||'').includes('pdf'),value=this.props.value||'',uploadLabel=image?'上传图片':pdf?'上传 PDF':'上传文件';return h('div',{className:'blog-media-field',onDragOver:e=>e.preventDefault(),onDrop:e=>{e.preventDefault();this.sendFile(e.dataTransfer?.files?.[0]);},onPaste:e=>{if(e.clipboardData?.files?.length){e.preventDefault();this.sendFile(e.clipboardData.files[0]);}}},image&&value?h('img',{src:value,alt:'图片预览',className:'blog-media-field-preview'}):value?h('p',{className:'blog-media-current-file'},fileName({path:value})):h('p',{className:'blog-media-placeholder'},image?'把图片拖到这里，也可以粘贴截图':'把文件拖到这里'),h('div',{className:'blog-media-field-actions'},h('label',{className:'blog-media-primary blog-media-upload','aria-disabled':this.state.busy},uploadLabel,h('input',{type:'file',className:'blog-media-file-input','aria-label':uploadLabel,disabled:this.state.busy,accept:image?'image/png,image/jpeg,image/webp,image/gif,image/avif':pdf?'.pdf':undefined,onChange:e=>{const file=e.target.files[0];e.target.value='';this.sendFile(file);}})),h('button',{type:'button',disabled:this.state.busy,onClick:async()=>{this.setState({busy:true});try{const selected=await picker(image?'image':pdf?'pdf':'all',{folder:destination(this.props.entry,this.props.draftSlug)});if(selected)this.props.onChange(selected);}finally{this.setState({busy:false});}}},image?'选择已有图片':pdf?'选择已有 PDF':'选择已有文件'),value&&h('button',{type:'button',disabled:this.state.busy,onClick:()=>this.props.onChange('')},'移除引用')),this.state.message&&h('p',{role:'status'},this.state.message),h('details',{},h('summary',{},'链接 / 外部地址'),h('input',{id:this.props.forID,value,placeholder:'/uploads/… 或已有网址',onChange:e=>this.props.onChange(e.target.value)})));}
     });
     window.CMS.registerFieldType('r2-image',Control);
     window.CMS.registerFieldType('r2-file',Control);

@@ -96,7 +96,7 @@ test('all admin entry pages load the adapter first and CMS compatibility version
     assert.equal(html.match(/<script[^>]+src="([^"]+)/)[1].split('?')[0],'/sveltia/admin-auth.js');
     assert.doesNotMatch(html,/github-token|login-form/);
   }
-  assert.match(fs.readFileSync('public/sveltia/index.html','utf8'),/@sveltia\/cms@0\.256\.1\/dist/);
+  assert.match(fs.readFileSync('public/sveltia/index.html','utf8'),/\/sveltia\/sveltia-cms-0\.256\.1-draft-slug\.js/);
   for(const file of ['r2-media.js','article-access.js','accounts.js'])assert.match(fs.readFileSync('public/sveltia/'+file,'utf8'),/window\.BlogAdminAuth\.request/);
   assert.doesNotMatch(fs.readFileSync('public/sveltia/r2-media.js','utf8'),/token\.type|readToken|requestLogin/);
 });

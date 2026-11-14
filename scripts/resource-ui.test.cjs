@@ -47,3 +47,35 @@ test('linked article upload and game screenshot batch use scoped destinations an
  ]);
  assert.deepEqual(Array.from(fallback.props.value.images),['/uploads/custom-name.png','/uploads/20250230120000_1.jpg']);
 });
+
+test('game screenshot destination follows the draft slug until a folder is saved',async()=>{
+ const components={},folders=[];
+ const context={window:{CMS:{registerFieldType:(name,value)=>components[name]=value,registerEditorComponent(){},registerEventListener(){}},createClass:c=>c,h:(tag,props,...children)=>({tag,props,children}),BlogAdminAuth:{request:async url=>{
+   const folder=new URL(url,'https://fixture.test').searchParams.get('folder');folders.push(folder);
+   return {ok:true,json:async()=>({path:'/uploads/shot.png',folder})};
+ }}},File,Blob,AbortSignal};
+ vm.runInNewContext(fs.readFileSync(process.env.R2_MEDIA_SOURCE||'public/sveltia/r2-media.js','utf8'),context);
+ let slug='split-fiction';
+ const entry={get:key=>key==='slug'?'original-slug':key==='collection'?'games':undefined,getIn:([,key])=>({gameMetadata:{title:'Split Fiction'},screenshotGallery:g.props.value})[key]};
+ const mount=(type,value)=>{
+   const c=components[type],instance={...c,state:c.getInitialState(),props:{field:{get:()=>type},entry,get draftSlug(){return slug;},value,onChange:v=>instance.props.value=v},setState:p=>Object.assign(instance.state,p)};
+   return instance;
+ };
+ const g=mount('screenshot-gallery',{enabled:true,images:[]});
+ const rendered=()=>JSON.stringify(g.render());
+ assert.ok(rendered().includes('截图目录：Game Dossiers/split-fiction'),rendered().match(/截图目录：[^"]+/)?.[0]);
+ slug='split-fiction-pc';
+ assert.ok(rendered().includes('截图目录：Game Dossiers/split-fiction-pc'));
+ g.update({englishName:'Co-op Album'});
+ assert.ok(rendered().includes('截图目录：Game Dossiers/Co-op Album'));
+ g.update({englishName:'  '});
+ const image=mount('r2-image','');
+ await image.sendFile(new File(['x'],'cover.png',{type:'image/png'}));
+ await g.addFiles([new File(['x'],'shot.png',{type:'image/png'})]);
+ assert.deepEqual(folders,['Game Dossiers/split-fiction-pc','Game Dossiers/split-fiction-pc']);
+ assert.equal(g.props.value.folder,'Game Dossiers/split-fiction-pc');
+ slug='another-slug';
+ assert.ok(rendered().includes('截图目录：Game Dossiers/split-fiction-pc'));
+ g.update({folder:'Game Dossiers/Existing Album'});
+ assert.ok(rendered().includes('截图目录：Game Dossiers/Existing Album'));
+});

@@ -79,6 +79,17 @@ screenshotGallery:
     - /uploads/cms/bd6ca5765997fa28afac49228269ed63a8739927608ef3d57f89d9833b0ca3b5/1eefa7597118135774833b99b756a95a88317393396412a7eb5f3c23b75f39c5/2026022618402700_c.jpg
     - /uploads/cms/cb6ddffcd69a3ba0e7740bba4d2dde46dc21990d30c0e468e1442113da69628c/1eefa7597118135774833b99b756a95a88317393396412a7eb5f3c23b75f39c5/2026030216533400_c.jpg
     - /uploads/cms/175b4154a94499d68f7bb202db16cd8979798be29d9b781b865e69c1dec0ea9b/1eefa7597118135774833b99b756a95a88317393396412a7eb5f3c23b75f39c5/2026030318521700_c.jpg
+hltb:
+  auto: true
+  id: 158672
+  snapshot:
+    completionist: 151.57
+    extras: 99.71
+    id: 158672
+    main: 65.43
+    updatedAt: 2026-11-14T00:37:36.887Z
+  title: 'Xenoblade Chronicles X: Definitive Edition'
+  url: https://howlongtobeat.com/game/158672
 events:
   - date: 2026-02-26
     title: 开始游戏

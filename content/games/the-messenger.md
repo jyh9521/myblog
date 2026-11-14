@@ -4,10 +4,14 @@ status:
   - AFK
 gameMetadata:
   platforms:
+    - Nintendo Switch
     - PC
+    - PlayStation 4
   selectedPlatforms:
     - PC
   localizedName: 信使
+  developers:
+    - Devolver Digital
   screenshots:
     - https://media.rawg.io/media/screenshots/a66/a6636b53f9f51b390c03f2dfb2717325.jpg
     - https://media.rawg.io/media/screenshots/cf2/cf21b710ac8b2a1cd4a0f9dd47f42c3f.jpg
@@ -15,18 +19,33 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/08d/08dee02cffcf8d02a758dc15ddda3429.jpg
     - https://media.rawg.io/media/screenshots/693/69387ae21b5369e486c0e9d75963540c.jpg
     - https://media.rawg.io/media/screenshots/70f/70f5094d1fbdf17be9b83eeb6589af2a.jpg
-  updatedAt: 2026-11-09T04:42:25.835Z
+  updatedAt: 2026-11-14T01:16:51.861Z
   genres:
     - Action
     - Platform
   releaseDate: 2018-08-30
+  publishers:
+    - Special Reserve Games
   cover: https://cdn2.steamgriddb.com/grid/c695eff33a12dad5d029f6c36a63fc78.jpg
   title: The Messenger
   sources:
     thegamesdb:
-      id: '66673'
-      url: https://thegamesdb.net/game.php?id=66673
-  id: thegamesdb:66673
+      id: '60782'
+      url: https://thegamesdb.net/game.php?id=60782
+      versions:
+        - id: '60782'
+          platform: Nintendo Switch
+          releaseDate: 2018-08-30
+        - id: '88749'
+          platform: Nintendo Switch
+          releaseDate: 2018-08-30
+        - id: '66673'
+          platform: PC
+          releaseDate: 2018-08-30
+        - id: '64569'
+          platform: PlayStation 4
+          releaseDate: 2018-08-30
+  id: thegamesdb:60782
   alternativeNames: []
   description: The game moves between 8-bit and 16-bit art styles, allowing the player to move between the two by going forward or backwards in time. As a demon army besieges his village, a young ninja ventures through a cursed world, to deliver a scroll paramount to his clan’s survival. What begins as a classic action platformer soon unravels into an expansive time-traveling adventure full of thrills, surprises, and humor.
   originalName: The Messenger
@@ -34,8 +53,10 @@ gameMetadata:
     platforms: thegamesdb
     selectedPlatforms: manual
     localizedName: manual
+    developers: thegamesdb
     genres: thegamesdb
     releaseDate: thegamesdb
+    publishers: thegamesdb
     cover: steamgriddb
     title: thegamesdb
     description: rawg

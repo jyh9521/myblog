@@ -1,5 +1,5 @@
 import gamePlatforms from '../../../public/sveltia/game-platforms.js';
-import { developerKey, editionEvidence } from './game-identity.js';
+import { developerKey, editionEvidence, exactGameTitle, sameEditionLabel } from './game-identity.js';
 import { combineCandidates } from './game-providers.js';
 import { chasmCatalogRows } from './thegamesdb-versions.js';
 import { reviewedCrossCatalogPorts } from './reviewed-cross-catalog-ports.js';
@@ -12,10 +12,6 @@ function releaseViews(game) {
   }));
   return [game];
 }
-
-const editionWords = /\b(?:remaster(?:ed)?|remake|deluxe|premium|collector(?:['’]s)?|definitive|limited|special|memoire|ultimate|pact|steelbook)\b/gi;
-const editionTags = game => [...new Set((game.originalName || game.title || '').toLowerCase().match(editionWords) || [])]
-  .map(tag => tag.replace(/['’]s$/, '').replace(/remastered$/, 'remaster')).sort().join(',');
 
 const exactTitle = game => (game.originalName || game.title || '').normalize('NFKC')
   .toLowerCase().replace(/[™®©]/gu, '').replace(/[^\p{L}\p{N}]+/gu, '');
@@ -64,7 +60,7 @@ function reviewedPortEvidence(base, candidate, reviews) {
 
 export function matchesCatalogEdition(base, candidate, reviews = reviewedCrossCatalogPorts) {
   // Do not let an alias bridge an explicitly named edition and the base game.
-  if (editionTags(base) !== editionTags(candidate)) return false;
+  if (!sameEditionLabel(base, candidate)) return false;
   return reviewedChasmSource(base, candidate) || !!reviewedPortEvidence(base, candidate, reviews) ||
     releaseViews(base).some(a => releaseViews(candidate).some(b => editionEvidence(a, b).strong));
 }
@@ -107,20 +103,28 @@ export function combineDossierSources(catalog, rawg, screen) {
   const merged = catalog.map(base => {
     let result = base;
     for (const [provider, rows] of Object.entries(supplements)) {
-      const reviewed = provider === 'screenscraper' ? rows.filter(row => reviewedChasmSource(base, row) &&
-        catalog.filter(other => reviewedChasmSource(other, row)).length === 1) : [];
-      if (reviewed.length) {
-        // The source schema has one ScreenScraper link. Prefer the PC record
-        // for enrichment; the other verified ports already have TGDB records.
-        const primary = chasmScreenRows.map(([id]) => reviewed.find(row => row.sources.screenscraper.id === id)).find(Boolean);
-        result = supplementCatalog(result, primary, provider);
-        reviewed.forEach(row => used.add(row));
+      const matches = rows.filter(row => matchesCatalogEdition(base, row));
+      const unique = matches.filter(row => catalog.filter(other => matchesCatalogEdition(other, row)).length === 1);
+      if (matches.length === 1 && unique.length === 1) {
+        used.add(unique[0]);
+        result = supplementCatalog(result, unique[0], provider);
         continue;
       }
-      const matches = rows.filter(row => matchesCatalogEdition(base, row));
-      if (matches.length !== 1 || catalog.filter(other => matchesCatalogEdition(other, matches[0])).length !== 1) continue;
-      used.add(matches[0]);
-      result = supplementCatalog(result, matches[0], provider);
+      // Collapse independently verified ScreenScraper ports already represented
+      // by the catalog. Never choose between two records for the same platform.
+      if (provider !== 'screenscraper' || !base.sources?.thegamesdb?.versions?.length) continue;
+      const ports = unique.filter(row => row.platforms?.length === 1 &&
+        exactGameTitle(row) && exactGameTitle(row) === exactGameTitle(base) &&
+        base.sources.thegamesdb.versions.some(version => version.platform === row.platforms[0]) &&
+        !matches.some(other => other !== row && other.platforms?.includes(row.platforms[0])));
+      if (ports.length < 2) continue;
+      // The schema stores one enrichment link; all platform IDs/dates remain
+      // in the catalog versions. Prefer the selected catalog platform.
+      const primaryPlatform = base.sources.thegamesdb.versions.find(version => version.id === base.sources.thegamesdb.id)?.platform;
+      const primary = ports.find(row => row.platforms[0] === primaryPlatform) ||
+        [...ports].sort((a, b) => a.platforms[0].localeCompare(b.platforms[0]))[0];
+      result = supplementCatalog(result, primary, provider);
+      ports.forEach(row => used.add(row));
     }
     return result;
   });

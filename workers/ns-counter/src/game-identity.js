@@ -7,6 +7,12 @@ const key = value => text(value).normalize('NFKC').toLowerCase()
   .replace(/[™®©]/gu, '').replace(/[^\p{L}\p{N}]+/gu, '');
 const aliasKey = value => key(value).replace(/バイオハザード|biohazard/g, 'residentevil');
 const aliases = game => [game?.title, game?.originalName, game?.localizedName, ...(game?.alternativeNames || [])].map(aliasKey).filter(Boolean);
+const editionWords = /\b(?:remaster(?:ed)?|remake|deluxe|premium|collector(?:['’]s)?|definitive|limited|special|memoire|ultimate|pact|steelbook)\b|重制|重製|复刻|復刻|豪华|豪華|典藏|决定版|決定版/giu;
+const editionTags = game => [...new Set([game?.title, game?.originalName].flatMap(name =>
+  (text(name).normalize('NFKC').toLowerCase().match(editionWords) || [])
+    .map(tag => tag.replace(/['’]s$/, '').replace(/^remastered$/, 'remaster'))))].sort().join(',');
+export const sameEditionLabel = (a, b) => editionTags(a) === editionTags(b);
+export const exactGameTitle = game => key(game?.title || game?.originalName);
 export const releaseYear = value => text(value).match(/(?:19|20)\d{2}/)?.[0] || '';
 const overlap = (a, b) => a.some(item => b.includes(item));
 const compare = (a, b) => !a.length || !b.length ? 0 : overlap(a, b) ? 1 : -1;
@@ -33,7 +39,7 @@ export function editionEvidence(reference, candidate) {
     developer: compare(developerKeys(reference?.developers), developerKeys(candidate?.developers)),
   };
   const independent = [evidence.year, evidence.platform, evidence.developer].filter(result => result === 1).length;
-  const conflict = Object.values(evidence).includes(-1);
+  const conflict = !sameEditionLabel(reference, candidate) || Object.values(evidence).includes(-1);
   return { ...evidence, independent, conflict, strong: !conflict && evidence.title === 1 && independent >= 2 };
 }
 

@@ -37,7 +37,7 @@ function tgMock(calls) {
     if (endpoint === 'ByGameName' || endpoint === 'ByGameID') {
       assert.equal(url.searchParams.get(endpoint === 'ByGameName' ? 'name' : 'id'), endpoint === 'ByGameName' ? 'Fixture & Test' : '97');
       assert.equal(url.searchParams.get('include'), 'platform');
-      assert.equal(url.searchParams.get('fields'), endpoint === 'ByGameID' ? 'overview,genres,publishers,alternates' : 'genres,publishers,alternates');
+      assert.equal(url.searchParams.get('fields'), 'overview,genres,publishers,alternates');
       return Response.json({ code: 200, data: { games: [tgRecord] }, pages: { next: url.href },
         ...(endpoint === 'ByGameName' ? { include: { platform: { 24: { id: 24, name: 'Sony PlayStation 2' } } } } : {}) });
     }
@@ -219,7 +219,7 @@ test('provider failure returns stale data or a redacted error, never an authenti
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /tg-fixture-key|apikey/);
   await searchTheGamesDB(req, e, 'Fixture & Test', tgMock([]));
-  e.cache.get('thegamesdb:search:v10:fixture & test').cached_at = 0;
+  e.cache.get('thegamesdb:search:v11:fixture & test').cached_at = 0;
   response = await searchTheGamesDB(req, e, 'Fixture & Test', fetcher);
   assert.equal(response.status, 200);
   const stale = await response.json();
@@ -571,4 +571,40 @@ test('Chasm merges verified PC and console rows without absorbing the same-name 
   assert.ok(!matchesCatalogEdition(merged,{...rawg,title:'Chasm Deluxe Edition'}));
   assert.ok(!matchesCatalogEdition(merged,mobile));
   assert.equal(groupTheGamesDBVersions(rows,'62294')[0].sources.thegamesdb.id,'62294');
+});
+
+test('generic port grouping uses synopsis and distinct platform evidence without bridging namesakes or editions', () => {
+  const title = 'Untitled Harbor';
+  const description = 'A lighthouse keeper follows a missing ship across the coast. Explore the islands, talk to the crew, discover the flooded engine room, and repair the old beacon before the storm reaches the harbor.';
+  const row = (id, platform, releaseDate, developers, name = title, prose = description) => ({
+    credits: developers.map(studio => 'name:' + studio.toLowerCase()), game: {
+      title:name, description:prose, developers, platforms:[platform], releaseDate, sources:{thegamesdb:{id}},
+    },
+  });
+  const input = [
+    row('10','PC','2018-07-21',[]), row('11','PlayStation 4','2018-07-31',['Studio']),
+    row('12','Nintendo Switch','2020-10-09',['Studio']),
+    row('13','PC','2018-07-21',['Other'],title,'Different game'),
+    row('14','PC','2018-07-21',['Studio'],title+' Deluxe Edition'),
+    row('15','PC','2018-07-21',['Studio'],title+' Remastered'),
+  ];
+  const grouped = groupTheGamesDBVersions(input);
+  const card = grouped.find(game => game.sources.thegamesdb.versions?.length === 3);
+  assert.ok(card);
+  assert.equal(grouped.length,4);
+  assert.deepEqual(card.sources.thegamesdb.versions.map(v=>v.id).sort(), ['10','11','12']);
+  const screen = (id, platform, releaseDate, name = title, developers = ['Studio']) => ({
+    title:name, originalName:title, alternativeNames:[title], developers, platforms:[platform], releaseDate,
+    sources:{screenscraper:{id,systemId:id}},
+  });
+  const ports = [screen('20','PlayStation 4','2018-07-31'),screen('21','Nintendo Switch','2020-10-09')];
+  const deluxe = screen('22','PlayStation 4','2018-07-31',title+' Deluxe Edition');
+  const remaster = screen('23','PlayStation 4','2018-07-31',title+' Remastered');
+  assert.deepEqual(combineDossierSources([card],[],[...ports,deluxe,remaster]).map(g=>g.sources.screenscraper.id), ['21','22','23']);
+  const duplicate = screen('24','PlayStation 4','2018-07-31');
+  assert.equal(combineDossierSources([card],[],[...ports,duplicate]).length,4);
+  const conflict = row('16','Xbox One','2018-07-30',['Other']);
+  assert.equal(groupTheGamesDBVersions([...input, conflict]).find(g=>g.sources.thegamesdb.versions?.some(v=>v.id==='10')),undefined);
+  const sparseNamesakes = [row('30','PC','2018-07-21',[],title,''), row('31','PS Vita','2018-07-21',[],title,'')];
+  assert.equal(groupTheGamesDBVersions(sparseNamesakes).length,2);
 });

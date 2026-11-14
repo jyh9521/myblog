@@ -17,6 +17,11 @@ const developerAliases = new Map([
 const studio = credit => developerAliases.get(credit) || credit;
 const sharesDeveloper = (a, b) => a.credits.some(credit => b.credits.some(other => studio(credit) === studio(other)));
 const releaseDistance = (a, b) => Math.abs(Date.parse(a.game.releaseDate) - Date.parse(b.game.releaseDate)) / 86400000;
+const synopsisKey = row => (row.game.description || '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
+function sharesSynopsis(a, b) {
+  const key = synopsisKey(a);
+  return key.length >= 120 && key === synopsisKey(b);
+}
 
 function compatible(a, b, titleRows) {
   const ap = a.game.platforms[0], bp = b.game.platforms[0];
@@ -31,6 +36,7 @@ function compatible(a, b, titleRows) {
       other.game.platforms[0] && other.game.platforms[0] !== ap &&
       sharesDeveloper(a, other) && sharesDeveloper(b, other) &&
       releaseDistance(a, other) <= 366 && releaseDistance(b, other) <= 366));
+  if (sharesSynopsis(a, b) && (sameDeveloper || releaseDistance(a, b) <= 366 * 3)) return true;
   const ay = releaseYear(ad), by = releaseYear(bd);
   if (!ay || !by) return sameDeveloper;
   return Math.abs(Number(ay) - Number(by)) <= (sameDeveloper ? 3 : 1);
@@ -59,7 +65,8 @@ function fitsSparseRelease(row, core, titleRows) {
   if (!platform || !date || !core.every(other => other.game.platforms[0] !== platform || other.game.releaseDate === date)) return false;
   // One exact dated port can corroborate a missing developer even when
   // another already-confirmed platform came out years later.
-  return core.some(other => other.game.platforms[0] && other.game.platforms[0] !== platform && other.game.releaseDate === date)
+  return core.some(other => other.game.platforms[0] && other.game.platforms[0] !== platform &&
+    (other.game.releaseDate === date || (releaseDistance(row, other) <= 366 * 3 && sharesSynopsis(row, other))))
     || core.every(other => compatible(row, other, titleRows));
 }
 
@@ -70,7 +77,10 @@ function editionGroups(rows) {
   const proposals = new Map(cores.map(core => [core, []]));
   const remainder = [];
   for (const row of sparse) {
-    const candidates = cores.filter(core => fitsSparseRelease(row, core, rows));
+    const possible = cores.filter(core => fitsSparseRelease(row, core, rows));
+    const bySynopsis = possible.filter(core => core.some(other => row.game.platforms[0] !== other.game.platforms[0] &&
+      releaseDistance(row, other) <= 366 * 3 && sharesSynopsis(row, other)));
+    const candidates = bySynopsis.length ? bySynopsis : possible;
     if (candidates.length === 1) proposals.get(candidates[0]).push(row);
     else if (candidates.length) remainder.push([row]); // Ambiguous; don't bridge or reassign.
   }
@@ -82,7 +92,10 @@ function editionGroups(rows) {
     }
   }
   const order = new Map(rows.map((row, i) => [row, i]));
-  return [...cores, ...remainder, ...completeLink(sparse.filter(row => !eligible.has(row)), (a, b) => compatible(a, b, rows))]
+  // Without studio credits, dates alone do not identify a work. Keep
+  // uncorroborated namesakes separate rather than joining sparse clusters.
+  return [...cores, ...remainder, ...completeLink(sparse.filter(row => !eligible.has(row)),
+    (a, b) => sharesSynopsis(a, b) && compatible(a, b, rows))]
     .map(group => group.sort((a, b) => order.get(a) - order.get(b)))
     .sort((a, b) => order.get(a[0]) - order.get(b[0]));
 }

@@ -126,7 +126,7 @@ export class TheGamesDBProvider extends GameMetadataProvider {
     for (let page = 1; page <= TG_SEARCH_PAGES; page++) {
       try {
         const payload = await this.request('Games/ByGameName', {
-          name: query, fields: 'genres,publishers,alternates', include: 'platform', ...(page > 1 ? { page } : {}),
+          name: query, fields: TG_FIELDS, include: 'platform', ...(page > 1 ? { page } : {}),
         });
         if (!Array.isArray(payload.data.games)) throw new ArchiveProviderError('TheGamesDB 搜索结果格式异常。');
         for (const game of payload.data.games.slice(0, TG_PAGE_SIZE)) {

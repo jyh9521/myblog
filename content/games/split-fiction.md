@@ -24,7 +24,7 @@ gameMetadata:
   releaseDate: 2025-03-06
   publishers:
     - Electronic Arts
-  cover: https://blog.blfy.cc/ns/api/games/media?systemeid=296&jeuid=494303&media=box-2D%28eu%29
+  cover: https://cdn2.steamgriddb.com/grid/ab0a754f102512c25cd0004830ff133c.png
   title: Split Fiction
   sources:
     screenscraper:
@@ -68,12 +68,13 @@ gameMetadata:
     genres: thegamesdb
     releaseDate: thegamesdb
     publishers: thegamesdb
-    cover: screenscraper
+    cover: steamgriddb
     title: thegamesdb
     alternativeNames: screenscraper
     originalName: thegamesdb
   manualFields:
     - selectedPlatforms
+    - cover
 summary: |-
   深入《双影奇境》的多重世界，体验惊心动魄的时刻。这是由 2021 年度最佳游戏《双人成行》工作室打造的又一款创新合作类动作冒险游戏。米欧和佐伊是两位风格截然不同的作家，她们一个擅长科幻小说，另一个专注于奇幻题材。被骗进入一台意在窃取创意的机器后，她们陷入了自己创作的故事之中。她们必须相互依靠，保护自己的记忆不受侵害，进而赢得自由；同时她们还必须共同努力掌握各种技能，在科幻与奇幻的世界间穿梭，在意外萌生的友情中共同克服挑战。
 

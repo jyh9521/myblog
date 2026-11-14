@@ -38,7 +38,7 @@ test('CMS entry loads the versioned cover styles and updated admin/field scripts
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);
   assert.match(html, /admin-auth\.js\?v=game-brief-20261109/);
-  assert.match(html, /game-dossier\.js\?v=editor-title-20261114/);
+  assert.match(html, /game-dossier\.js\?v=catalog-slug-20261114/);
 });
 
 test('CMS sends catalog English and the editor Chinese title as distinct Gemini inputs', async () => {

@@ -55,6 +55,7 @@ collections:
     format: yaml-frontmatter
     create: true
     slug:
+      template: '{{gameMetadata.title | game_dossier_slug}}'
       editable: true
       pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', '只允许小写英文字母、数字和连字符']
     preview_path: /games/{{filename}}/

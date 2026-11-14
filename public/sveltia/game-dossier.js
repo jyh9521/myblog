@@ -599,6 +599,11 @@
           value?.source && externalLink(value.source.url, '简介参考：' + value.source.label)));
     };
     window.CMS.registerPreviewTemplate?.('games', GameDossierPreview);
+    // Sveltia uses this template for new drafts unless an explicit slug was entered.
+    window.CMS.registerStringTransformation?.('game_dossier_slug', title => String(title ?? '')
+      .normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase()
+      .replace(/['\u2018\u2019\u02bc]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
     window.CMS.registerFieldType('game-dossier-nav', DossierNavigation, () => null);
     window.CMS.registerFieldType('game-metadata', GameMetadata);
     window.CMS.registerFieldType('game-manual', GameManual);

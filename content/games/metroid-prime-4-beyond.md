@@ -47,6 +47,23 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'thegamesdb:134007:'
+    kind: overview
+    label: TheGamesDB
+    language: en
+    url: https://thegamesdb.net/game.php?id=134007
+  text: |-
+    《密特罗德 究极4 穿越未知 Nintendo Switch 2 Edition》是由 Retro Studios 开发、任天堂发行并登陆 Nintendo Switch 与 Nintendo Switch 2 的第一人称动作冒险游戏。它是《密特罗德》系列的正统续作。
+
+    在游戏中，玩家将扮演标志性的赏金猎人萨姆斯·阿兰，她被传送到了一颗名为“Viewros”的外星。在那里，她必须在充满敌意的生物中生存下来，调查失落文明的遗迹，并直面她的宿敌西鲁克斯（Sylux），在融合了探索、战斗与发现的任务中前行。
+
+    本作保留了前作标志性的第一人称探索与扫描机制，同时引入了全新的能力——尤其是能让萨姆斯操控物体和光束的超能力，以及用于穿越全新中心世界的载具 Vi-0-La。
+
+    《密特罗德 究极4 穿越未知》将氛围感十足的探索、基于能力解锁的成长以及科幻动作融为一体，在致敬经典的同为《密特罗德》系列开启了全新的篇章。
 screenshotGallery:
   enabled: true
   englishName: metroid-prime-4-beyond

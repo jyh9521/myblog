@@ -120,6 +120,17 @@ manual:
 playTime:
   hours: 27.5
 personalRating: 9.3
+hltb:
+  auto: true
+  id: 152016
+  snapshot:
+    completionist: 68.95
+    extras: 46.28
+    id: 152016
+    main: 29.31
+    updatedAt: 2026-11-14T23:00:05.198Z
+  title: 'Clair Obscur: Expedition 33'
+  url: https://howlongtobeat.com/game/152016
 events:
   - date: 2025-08-08
     title: 开始游戏

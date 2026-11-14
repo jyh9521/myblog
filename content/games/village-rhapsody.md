@@ -2,24 +2,11 @@
 title: 乡村狂想曲
 status:
   - 已通关
-playTime:
-  hours: 5
-personalRating: 9.8
-hltb:
-  auto: true
-  id: 125671
-  snapshot:
-    completionist: 9.79
-    extras: 9.43
-    id: 125671
-    main: 6.48
-    updatedAt: 2026-10-21T06:09:35.057Z
-  title: VillageRhapsody
-  url: https://howlongtobeat.com/game/125671
 gameMetadata:
   platforms:
     - PC
-  selectedPlatforms: []
+  selectedPlatforms:
+    - PC
   localizedName: ''
   developers:
     - YooGame
@@ -30,7 +17,7 @@ gameMetadata:
     - https://media.rawg.io/media/screenshots/c09/c09e9bd09c57768678534c5c1418275e.jpg
     - https://media.rawg.io/media/screenshots/724/72473a075777a9c81a81c920e6c3eae1.jpg
     - https://media.rawg.io/media/screenshots/f0e/f0e00020dfafe896986e8c91db2e4ef8.jpg
-  updatedAt: 2026-10-21T06:09:53.845Z
+  updatedAt: 2026-11-14T01:14:43.777Z
   genres:
     - RPG
     - Simulation
@@ -39,7 +26,7 @@ gameMetadata:
   releaseDate: 2022-10-05
   publishers:
     - YooGame
-  cover: https://media.rawg.io/media/screenshots/f0e/f0e00020dfafe896986e8c91db2e4ef8.jpg
+  cover: https://cdn2.steamgriddb.com/grid/9d5a34a337a679932827f0e02ffb3d6e.png
   title: VillageRhapsody
   sources:
     rawg:
@@ -61,15 +48,35 @@ gameMetadata:
   originalName: VillageRhapsody
   fieldSources:
     platforms: rawg
+    selectedPlatforms: manual
     developers: rawg
+    screenshots: rawg
     genres: rawg
     releaseDate: rawg
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: rawg
     description: rawg
     originalName: rawg
-  manualFields: []
+  manualFields:
+    - selectedPlatforms
+    - cover
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:861402:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/861402
+  text: |-
+    玩家将在游戏中扮演一位有抱负的青年，参与新农村的建设。你将运用自己的生活技能，帮助村民完成各种请求，满足女孩们的需求，提升她们对你的好感度，并为争当“敢给寡妇挑水”的纯爷们而努力。
+
+    在游戏中，你可以体验到播种、每天给韭菜浇水并看着它们快乐生长的乐趣。
+    探索地图的每一个区域，享受钓鱼的闲情逸趣。
+    肆意探寻他人家庭的秘密。
+    通过任务与剧情，了解每个角色背后的故事。
 manual:
   availabilityStatus: available
   officialStores:
@@ -77,6 +84,20 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/2109460/
+playTime:
+  hours: 5
+personalRating: 9.8
+hltb:
+  auto: true
+  id: 125671
+  snapshot:
+    completionist: 9.79
+    extras: 9.43
+    id: 125671
+    main: 6.48
+    updatedAt: 2026-10-21T06:09:35.057Z
+  title: VillageRhapsody
+  url: https://howlongtobeat.com/game/125671
 events:
   - date: 2024-07-04
     title: 开始游戏

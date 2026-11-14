@@ -164,6 +164,17 @@ screenshotGallery:
 playTime:
   hours: 45
 personalRating: 9.8
+hltb:
+  auto: true
+  id: 166252
+  snapshot:
+    completionist: 49.95
+    extras: 30.27
+    id: 166252
+    main: 18.99
+    updatedAt: 2026-11-14T00:37:22.156Z
+  title: Donkey Kong Bananza
+  url: https://howlongtobeat.com/game/166252
 events:
   - date: 2025-07-17
     title: 开始游戏

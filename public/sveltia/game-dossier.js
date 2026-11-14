@@ -460,11 +460,14 @@
         url: metadata.sources[provider]?.url, label: sourceLabels[provider], kind: 'overview', edition: editionRefKey(importedEdition),
       };
       const source = usableSource(current ? props.value?.source : importedSource);
-      const gameTitle = entryValue(props, 'title') || metadata.title || '';
-      const officialTitle = metadata.localizedName || '';
+      const displayTitle = entryValue(props, 'title');
+      const titles = [metadata.title, metadata.originalName, displayTitle];
+      const englishTitle = titles.find(title => typeof title === 'string' && /[a-z]/i.test(title) && !/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(title)) || '';
+      const preferredChineseTitle = [displayTitle, metadata.localizedName]
+        .find(title => typeof title === 'string' && /\p{Script=Han}/u.test(title)) || '';
       const text = current || legacy;
-      const key = JSON.stringify([editionRefKey(edition), alternateIds, gameTitle, officialTitle, text, source]);
-      return { metadata, edition, alternateIds, current, legacy, text, source, gameTitle, officialTitle, key };
+      const key = JSON.stringify([editionRefKey(edition), alternateIds, englishTitle, preferredChineseTitle, text, source]);
+      return { metadata, edition, alternateIds, current, legacy, text, source, englishTitle, preferredChineseTitle, key };
     };
     const GameBrief = createClass({
       getInitialState() {
@@ -492,7 +495,7 @@
         try {
           const response = await archiveRequest('/ns/api/games/brief', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'draft', gameTitle: reference.gameTitle, officialTitle: reference.officialTitle,
+            body: JSON.stringify({ action: 'draft', englishTitle: reference.englishTitle, preferredChineseTitle: reference.preferredChineseTitle,
               ...(reference.text ? { text: reference.text } : { edition: reference.edition, alternateIds: reference.alternateIds }) }),
           });
           const data = await response.json();

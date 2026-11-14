@@ -25,7 +25,7 @@ function cms(value, request) {
   const cover = nodes.find(node => node.props.className === 'game-cover-field');
   assert.ok(cover);
   const picker = descendants(cover).find(node => node.type?.loadGrids);
-  return { field, picker: instance(picker.type, picker.props), updates: () => updates, nodes };
+  return { field, brief: props => instance(fields['game-brief'], props), picker: instance(picker.type, picker.props), updates: () => updates, nodes };
 }
 
 const originalCover = 'https://example.com/original.png';
@@ -38,7 +38,23 @@ test('CMS entry loads the versioned cover styles and updated admin/field scripts
   const html = fs.readFileSync('public/sveltia/index.html', 'utf8');
   assert.match(html, /game-cover-search\.css\?v=20261109/);
   assert.match(html, /admin-auth\.js\?v=game-brief-20261109/);
-  assert.match(html, /game-dossier\.js\?v=linked-summary-20261114/);
+  assert.match(html, /game-dossier\.js\?v=editor-title-20261114/);
+});
+
+test('CMS sends catalog English and the editor Chinese title as distinct Gemini inputs', async () => {
+  const bodies = [];
+  const c = cms(game, async (path, options) => {
+    assert.equal(path, '/ns/api/games/brief');
+    bodies.push(JSON.parse(options.body));
+    return Response.json({ mode: 'translate', text: '译稿' });
+  });
+  for (const [displayTitle, localizedName] of [['自订游戏名', '资料库中文名'], ['Fixture Quest', '我填的中文名']]) {
+    const brief = c.brief({ entry: { getIn: ([, key]) => key === 'title' ? displayTitle : { ...game, localizedName } },
+      onChange() { assert.fail('generating must not save the draft'); } });
+    await brief.generate();
+  }
+  assert.deepEqual(bodies.map(({ englishTitle, preferredChineseTitle }) => [englishTitle, preferredChineseTitle]),
+    [['Fixture Quest', '自订游戏名'], ['Fixture Quest', '我填的中文名']]);
 });
 
 test('TheGamesDB option imports and refreshes game fields only, including after reopening', async () => {

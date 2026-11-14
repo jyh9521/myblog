@@ -99,8 +99,12 @@ export function dossierBriefRoute(request, env, fetcher = fetch) {
     if (material.mode === 'manual') {
       return archiveJson({ text: material.text, mode: 'manual', language: material.language, ...reference });
     }
-    const gameTitle = plainReference(input.gameTitle || material.title, 160).replace(/\s+/g, ' ');
-    const officialTitle = plainReference(input.officialTitle, 160).replace(/\s+/g, ' ');
-    return archiveJson({ ...await geminiDraft(env, material, { gameTitle, officialTitle }, fetcher), ...reference });
+    const title = value => plainReference(value, 160).replace(/\s+/g, ' ');
+    const legacyTitle = title(input.gameTitle);
+    const englishTitle = [title(input.englishTitle), legacyTitle, title(material.title)]
+      .find(name => /[a-z]/i.test(name) && !/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(name)) || '';
+    const preferredChineseTitle = title(input.preferredChineseTitle) ||
+      (/\p{Script=Han}/u.test(legacyTitle) ? legacyTitle : title(input.officialTitle));
+    return archiveJson({ ...await geminiDraft(env, material, { englishTitle, preferredChineseTitle }, fetcher), ...reference });
   });
 }

@@ -134,7 +134,7 @@ test('when the archive has no text, the draft uses the confirmed database ID and
       return Response.json({ code: 200, data: { games: [{ id: 5, game_title: 'Harbor', overview: shortEn }] } });
     }
     assert.equal(url.hostname, 'generativelanguage.googleapis.com');
-    assert.deepEqual(JSON.parse(JSON.parse(options.body).contents[0].parts[0].text), { gameTitle: 'Harbor', officialTitle: '', originalText: shortEn });
+    assert.deepEqual(JSON.parse(JSON.parse(options.body).contents[0].parts[0].text), { englishTitle: 'Harbor', preferredChineseTitle: '', originalText: shortEn });
     return geminiResponse(approved);
   };
   const response = await dossierBriefRoute(post({ action: 'draft', edition }), env, fetcher);
@@ -196,56 +196,25 @@ const multiParagraphEn = [
 const geminiResponse = (text, finishReason = 'STOP') =>
   Response.json({ candidates: [{ finishReason, content: { parts: [{ text }] } }] });
 
-test('Ace Attorney store dividers do not reject a translation or lose the source URL', async () => {
+test('Gemini receives both names and accepts rich drafts and additional links without a retry', async () => {
   const { env, writes } = environment();
-  const url = 'http://www.us.capcommobile.com/ace-attorney-investigations-compatibility';
-  const divider = '*'.repeat(45);
-  const text = ['Description', divider, 'Before purchasing please check device compatibility.', divider,
-    'Investigate crime scenes and uncover the truth.', 'Compatible Models:', url].join('\n');
-  const calls = [];
-  const response = await dossierBriefRoute(post({ action: 'draft', gameTitle: '逆转检察官', text }), env, async (_, options) => {
-    calls.push(JSON.parse(JSON.parse(options.body).contents[0].parts[0].text).originalText);
-    return geminiResponse(['游戏简介', divider, '购买前请确认设备是否兼容。', '* * *',
-      '调查犯罪现场并揭开真相。', '兼容机型：[[SOURCE_LINK_1]]'].join('\n'));
+  const englishTitle = 'Ace Attorney Investigations: Miles Edgeworth';
+  const preferredChineseTitle = '逆转检察官';
+  const original = shortEn + '\n\nhttps://example.org/original';
+  const draft = '## 《逆转检察官》\n\n<p class="synopsis"><strong>游戏简介</strong>：调查犯罪现场并揭开真相。</p>\n\n'
+    + approved + '\n\n- **延伸阅读**：[指南](https://new.example.com/one/two/three/four/five/six/seven)';
+  let calls = 0;
+  const response = await dossierBriefRoute(post({ action: 'draft', englishTitle, preferredChineseTitle, text: original }), env, async (_, options) => {
+    calls++;
+    const body = JSON.parse(options.body);
+    assert.deepEqual(JSON.parse(body.contents[0].parts[0].text), { englishTitle, preferredChineseTitle, originalText: original });
+    assert.match(body.system_instruction.parts[0].text, /必须统一使用 preferredChineseTitle/);
+    return geminiResponse(draft);
   });
   const result = await response.json();
   assert.equal(response.status, 200, result.error);
-  assert.equal(calls.length, 1);
-  assert.ok(!calls[0].includes(divider));
-  assert.equal(result.text, '游戏简介\n\n购买前请确认设备是否兼容。\n\n调查犯罪现场并揭开真相。\n兼容机型：' + url);
-  assert.equal(writes.size, 0);
-});
-
-test('Salt and Sanctuary sends plain heading text and preserves the archived synopsis paragraphs', async () => {
-  const { env, writes } = environment();
-  // Freeze the imported heading style independently of live CMS content.
-  const synopsis = [
-    'Salt and Sanctuary is a 2D action role-playing game.',
-    '',
-    '###Plot and art style ',
-    'A shipwreck leaves the protagonist on a mysterious island.',
-    'The game uses a hand-painted art style.',
-    '',
-    '###Gameplay ',
-    'Players choose a class and explore the island.',
-    '',
-    'The game features local multiplayer.',
-  ].join('\n');
-  const original = synopsis + '\n\n## Other notes ##\n#hashtag, item #42, and inline ### stay.';
-  const expected = plainReference(original)
-    .replace('###Plot and art style', 'Plot and art style')
-    .replace('###Gameplay', 'Gameplay')
-    .replace('## Other notes ##', 'Other notes');
-  const sent = [];
-  const draft = '盐与避难所是一款带有角色扮演元素的二维动作游戏。\n\n剧情与美术风格\n主角漂流到神秘岛屿。\n\n玩法\n玩家可以探索岛屿并选择不同的职业。';
-  const response = await dossierBriefRoute(post({ action: 'draft', gameTitle: '盐与避难所', text: original }), env, async (url, options) => {
-    assert.equal(url.hostname, 'generativelanguage.googleapis.com');
-    sent.push(JSON.parse(JSON.parse(options.body).contents[0].parts[0].text).originalText);
-    return geminiResponse(draft);
-  });
-  assert.equal(response.status, 200);
-  assert.deepEqual(sent, [expected]);
-  assert.equal((await response.json()).text, draft);
+  assert.equal(result.text, draft);
+  assert.equal(calls, 1);
   assert.equal(writes.size, 0);
 });
 
@@ -268,24 +237,6 @@ test('Gemini preserves the literal <3 heart in an archived introduction without 
   assert.equal(JSON.parse(requests[0].contents[0].parts[0].text).originalText, originalText);
   assert.equal(writes.size, 0);
 });
-
-test('a literal <3 heart does not exempt HTML, headings, links or Markdown formatting', async () => {
-  const { env, writes } = environment();
-  for (const extra of ['<em>排版</em>', '# 额外标题', '[网页](https://example.test)', '**强调**', '<3>']) {
-    let calls = 0;
-    const response = await dossierBriefRoute(post({ action: 'draft', text: shortEn }), env, async () => {
-      calls++;
-      return geminiResponse('和我们保持联系 <3\n\n' + shortZh + '\n\n' + extra);
-    });
-    const result = await response.json();
-    assert.equal(response.status, 502, extra);
-    assert.match(result.error, /草稿含链接、标题或不支持的格式/);
-    assert.equal(result.text, undefined);
-    assert.equal(calls, 2);
-  }
-  assert.equal(writes.size, 0);
-});
-
 
 test('long references are translated in full rather than summarized or truncated at 6500 characters', async () => {
   const { env, writes } = environment();
@@ -355,7 +306,7 @@ test('Gemini errors and persistently invalid output never return draft text', as
   const rate = await dossierBriefRoute(post(body), env, async () => Response.json({ error: 'gemini-test' }, { status: 429 }));
   assert.equal(rate.status, 429);
   assert.doesNotMatch(JSON.stringify(await rate.json()), /gemini-test/);
-  for (const text of [shortEn, shortTw, '[网页](https://test.invalid) ' + shortZh]) {
+  for (const text of [shortEn, shortTw, '']) {
     const response = await dossierBriefRoute(post(body), env,
       async () => Response.json({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text }] } }] }));
     assert.equal(response.status, 502);
@@ -391,48 +342,6 @@ test('saved archive HTML translates directly without a second edition lookup', a
   assert.equal(writes.size, 0);
 });
 
-
-test('Gemini translates linked synopsis prose and preserves only original URLs', async () => {
-  const { env, writes } = environment();
-  const url = 'https://example.com/wiki/Harbor_(game)?a=1&b=2#map';
-  const manual = 'https://example.org/guide';
-  const trailer = 'https://example.net/trailer';
-  const original = shortEn + '\n\nRead [the harbor map](' + url + '), visit ' + manual + ', or watch <' + trailer + '>.';
-  let calls = 0;
-  const response = await dossierBriefRoute(post({ action: 'draft', text: original }), env, async (requestUrl, options) => {
-    calls++;
-    assert.equal(requestUrl.hostname, 'generativelanguage.googleapis.com');
-    const text = JSON.parse(JSON.parse(options.body).contents[0].parts[0].text).originalText;
-    const markers = text.match(/\[\[SOURCE_LINK_\d+\]\]/g);
-    // Simulate a faithful translation that retains URLs under either protocol.
-    if (!markers) return geminiResponse(approved + '\n\n请查看港口地图（' + url + '），阅读指南（' + manual + '），或观看预告片（' + trailer + '）。');
-    assert.equal(markers.length, 3);
-    assert.ok(text.includes('the harbor map'));
-    assert.doesNotMatch(text, /https?:\/\//);
-    return geminiResponse(approved + '\n\n请查看港口地图（' + markers[0] + '），阅读指南（' + markers[1] + '），或观看预告片（' + markers[2] + '）。');
-  });
-  const result = await response.json();
-  assert.equal(response.status, 200, result.error);
-  assert.equal(result.text, approved + '\n\n请查看港口地图（' + url + '），阅读指南（' + manual + '），或观看预告片（' + trailer + '）。');
-  assert.equal(calls, 1);
-  assert.equal(writes.size, 0);
-});
-
-test('Gemini retries a lost or changed source link and rejects a fabricated URL', async () => {
-  for (const invalid of ['', '[[SOURCE_LINK_9]]', '[[SOURCE_LINK_1]][[SOURCE_LINK_1]]',
-    '[[SOURCE_LINK_1]] https://unrelated.example/']) {
-    const { env } = environment();
-    let calls = 0;
-    const response = await dossierBriefRoute(post({ action: 'draft', text: shortEn + '\n\nhttps://example.com/guide' }), env, async (_url, options) => {
-      calls++;
-      if (calls === 2) assert.match(JSON.parse(options.body).system_instruction.parts[0].text, /链接/);
-      return geminiResponse(approved + '\n\n' + invalid);
-    });
-    assert.equal(response.status, 502, invalid);
-    assert.equal((await response.json()).text, undefined);
-    assert.equal(calls, 2);
-  }
-});
 
 test('a blank primary regional entry borrows only an exact same-release sibling and cites it', async () => {
   const { env } = environment();

@@ -66,6 +66,13 @@ screenshotGallery:
   folder: Game Dossiers/pokemon-scarlet
   images:
     - /uploads/cms/00a1d401a2eeba484e9700ece78d30dc4146370046e5337865c0246f1c923230/9bc9105fe2139471f7e81f636e58d5b4422983f558fe6e23cfc3a099aea872a4/2025102122541100_c.jpg
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: Nintendo eShop
+      note: ''
+      region: JP
+      url: https://store-jp.nintendo.com/item/software/D70010000053965
 hltb:
   auto: true
   id: 104683

@@ -396,9 +396,9 @@ test('detail retains server-verified search platforms during a provider outage, 
   const title = 'Archive Coast: Definitive Edition';
   const base = { ...tgRecord, id: 31, game_title: title, release_date: '2014-10-14' };
   const original = { ...base, id: 32, game_title: 'Archive Coast', release_date: '2012-08-14' };
-  const raw = { id: 41, name: title, released: '2014-10-08',
+  const raw = { id: 41, name: title, released: '2014-10-09',
     platforms: ['PlayStation 4', 'PC', 'macOS'].map(name => ({ platform: { name },
-      ...(name === 'PC' ? { released_at: '2014-10-08' } : {}) })),
+      released_at: name === 'PC' ? '2014-10-08' : '2014-10-09' })),
     website: 'https://search-only.example/' };
   let mode = 'outage', detailCalls = 0;
   const fetcher = async url => {

@@ -74,7 +74,12 @@ export function withSupplementalPlatformRecords(base, candidate, provider, sourc
     .filter(platform => !base.platforms.includes(platform))
     .map(platform => {
       const date = candidate.platformReleaseDates?.[platform];
-      return { platform, ...(date ? { releaseDate: date } : {}) };
+      // RAWG can repeat the game-wide date in every platform row, even for
+      // later ports. Only show a date distinct from the shared date or dates
+      // RAWG itself gives the already matched catalog platforms.
+      const shared = date === candidate.releaseDate ||
+        base.platforms.some(name => date === candidate.platformReleaseDates?.[name]);
+      return { platform, ...(date && !shared ? { releaseDate: date } : {}) };
     });
   return platformRecords.length ? { ...source, platformRecords } : source;
 }

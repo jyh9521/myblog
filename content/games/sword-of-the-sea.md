@@ -24,7 +24,7 @@ gameMetadata:
   releaseDate: 2025-02-01
   publishers:
     - Giant Squid
-  cover: https://media.rawg.io/media/games/96b/96bb45a0f2d767dc62f44ae77f5a2387.jpg
+  cover: https://cdn2.steamgriddb.com/grid/7a894d24cd12fc3a6ea30faf4c0da209.jpg
   title: Sword of the Sea
   sources:
     rawg:
@@ -52,12 +52,13 @@ gameMetadata:
     genres: thegamesdb
     releaseDate: thegamesdb
     publishers: rawg
-    cover: rawg
+    cover: steamgriddb
     title: thegamesdb
     website: rawg
     originalName: thegamesdb
   manualFields:
     - selectedPlatforms
+    - cover
 manual:
   availabilityStatus: available
   notes: |-

@@ -291,29 +291,15 @@ value = 0x480001bc
 
 在此，要特别感谢为这个项目提供过帮助的所有开发者与同好：
 
-\- \*\*核心与渲染支持：\*\*  
+- 核心与渲染支持：感谢 [Xenia​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fxenia-project%2Fxenia&spm_id_from=333.1369.0.0) 和 [Xenia Canary​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fxenia-canary%2Fxenia-canary&spm_id_from=333.1369.0.0) 的开发者，以及 boma 提供的 60 帧（60 FPS）与分块渲染修复思路。
+- 逆向与工具生态：感谢 [UEViewer​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fgildor2%2FUEViewer&spm_id_from=333.1369.0.0)、[libmspack​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fkyz%2Flibmspack&spm_id_from=333.1369.0.0)、[ZArchive​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2FExzap%2FZArchive&spm_id_from=333.1369.0.0)。
+- 感谢以下开源字体项目及其作者，为本汉化项目提供优秀的中文字形资源：
+    - [朱雀仿宋（Zhuque Fangsong）​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2FTrionesType%2Fzhuque&spm_id_from=333.1369.0.0)
+    - [思源黑体 / 思源宋体（Noto Sans CJK / Noto Serif CJK）​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fnotofonts%2Fnoto-cjk&spm_id_from=333.1369.0.0)
+    - [霞鹜臻楷（LXGW ZhenKai）​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Flxgw%2FLxgwZhenKai&spm_id_from=333.1369.0.0)
+- 测试人员：特别感谢测试人员 going、夜书墨，以及所有在测试阶段帮忙截图、反馈 Bug 的玩家们。
 
-  感谢 [Xenia\](https://github.com/xenia-project/xenia) 与 [Xenia Canary\](https://github.com/xenia-canary/xenia-canary) 的开发者，以及 boma 提供的 60 帧（60 FPS）与分块渲染修复思路。
-
-\- \*\*逆向与工具生态：\*\*  
-
-  感谢 [UEViewer\](https://github.com/gildor2/UEViewer)、[libmspack\](https://github.com/kyz/libmspack)、[ZArchive\](https://github.com/Exzap/ZArchive) 以及相关开源字体项目的作者。
-
-\- \*\*开源字体项目：\*\*  
-
-  感谢以下开源字体项目及其作者，为本汉化项目提供优秀的中文字形资源：  
-
-  \- [朱雀仿宋（Zhuque Fangsong）\](https://github.com/TrionesType/zhuque)  
-
-  \- [思源黑体 / 思源宋体（Noto Sans CJK / Noto Serif CJK）\](https://github.com/notofonts/noto-cjk)  
-
-  \- [霞鹜臻楷（LXGW ZhenKai）\](https://github.com/lxgw/LxgwZhenKai)  
-
-\- \*\*测试人员：\*\*  
-
-  特别感谢测试人员 going、夜书墨，以及所有在测试阶段帮忙截图、反馈 Bug 的玩家们。
-
-具体的代码来源、第三方组件及授权协议，请直接查阅仓库根目录下的 [NOTICE.md\](./NOTICE.md)、[LICENSING.md\](./LICENSING.md) 与其他相关文档。
+具体的代码来源、第三方组件及授权协议，请直接查阅仓库根目录下的 NOTICE.md、LICENSING.md 与其他相关文档。
 
 版权与开源声明 本项目为非官方简体中文汉化补丁。项目中的原创代码部分采用 MIT 许可证开源，原创译文部分采用 CC BY-SA 4.0 许可证共享；原游戏本体及相关音画素材的版权均归各自权利人所有。
 

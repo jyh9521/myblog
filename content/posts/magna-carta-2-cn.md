@@ -77,7 +77,7 @@ access:
 | 输出格式 | 怎么用 |
 | --- | --- |
 | ZAR | 用支持 ZArchive 的 Xenia 构建打开 `MagnaCarta2_CN_Disc1.zar`。\n\n![输出目录（ZAR）](/uploads/cms/4ece443fad6a594cb0de5d9e0027ecf0858197fe1c1e5a694dfb11444b57d807/%E8%BE%93%E5%87%BA%E7%9B%AE%E5%BD%95%EF%BC%88zar%EF%BC%89.png) |
-| XEX | 用 Xenia 打开 `Disc1/default.xex`。\n\nRGH / JTAG 主机用户也可以参考随包说明部署两盘，实机兼容性仍待验证。\n\n![输出目录（XEX）](/uploads/cms/253b3298fd14d63887ca94179eaf3a016aff45947c69a2c974aafb28f9d1fb27/%E8%BE%93%E5%87%BA%E7%9B%AE%E5%BD%95%20%EF%BC%88xex%EF%BC%89.png) |
+| XEX | 用 Xenia 打开 `Disc1/default.xex`。RGH / JTAG 主机用户也可以参考随包说明部署两盘，实机兼容性仍待验证。\n\n![输出目录（XEX）](/uploads/cms/253b3298fd14d63887ca94179eaf3a016aff45947c69a2c974aafb28f9d1fb27/%E8%BE%93%E5%87%BA%E7%9B%AE%E5%BD%95%20%EF%BC%88xex%EF%BC%89.png) |
 
 8. DLC 需要另行导入。 生成后，在 Xenia Canary 里打开 Content → Install Content，分别导入输出目录 Content 下的短剧包和特殊武器包。两份 DLC 都是独立的文件，选 ZAR 和 XEX 都一样。![安装 DLC](/uploads/cms/3d3fc8b0e3738e3936eb2dac17357b915fec62b29312bac7395a2d4d519def65/%E5%AE%89%E8%A3%85DLC.png)![短剧包](/uploads/cms/97f7baaa8af5a75e090cc591616bf2347b2c6326cb711fc989eb15624667bbd4/%E7%9F%AD%E5%89%A7%E5%8C%85.png)![特殊武器包](/uploads/cms/1e09c7754e056f82581286fc93bdb6933eafa5a82f93f4577069e4535bd37f81/%E7%89%B9%E6%AE%8A%E6%AD%A6%E5%99%A8%E5%8C%85.png)
 

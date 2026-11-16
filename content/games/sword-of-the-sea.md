@@ -75,6 +75,12 @@ summary: |-
 
   艺术、设计与音乐传奇的延续
   由知名独立团队Giant Squid工作室倾力打造，《Sword of the Sea》展现了创意总监马特·纳瓦（Matt Nava）的独特艺术魅力，以及奥斯汀·温特里（Austin Wintory）创作的优美旋律。这对长期合作的创意伙伴，曾携手打造出备受喜爱的独立游戏《ABZÛ》、《无路之旅》，以及已成传奇且获奖无数的《风之旅人》。
+screenshotGallery:
+  enabled: true
+  folder: Game Dossiers/sword-of-the-sea
+  images:
+    - /uploads/cms/28c48cfecd11894e4d9fedf39108c7e580cb121bbbd60a57aeeab8642b4e3f8c/8fad38a2edaf365b38eb5c061104841502a9aff42a580287e7fa461719c0c468/Sword%20Of%20The%20Sea_20250928213346.jpg
+    - /uploads/cms/2fa9d258bbb36e938bab803d9550f8edd04fe0ec16ecb530288f2c1fa0b4b735/8fad38a2edaf365b38eb5c061104841502a9aff42a580287e7fa461719c0c468/Sword%20Of%20The%20Sea_20250928212426.jpg
 manual:
   availabilityStatus: available
   notes: |-

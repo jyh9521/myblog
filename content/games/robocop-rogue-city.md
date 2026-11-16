@@ -85,6 +85,16 @@ summary:
     - 装备你信赖的Auto-9手枪、原厂打造的力量、多年的警队经验以及各种触手可及的工具，在这场全新的第一人称火爆真相追寻之旅中，对抗企图摧毁你家园城市的邪恶势力。
     - 你有权决定以自己的方式执行核心指令，但随着剧情展开，请务必小心行事，因为腐败和贪婪向来贪得无厌。
     - 准备好……保护无辜，捍卫法律！
+screenshotGallery:
+  enabled: true
+  folder: Game Dossiers/robocop-rogue-city
+  images:
+    - /uploads/cms/5d9d7150f4994766efcfee5f12d233f9df71a3ecfa8c23ec4b74bbbc011c9935/539ea2f184326259a289016615171b06a02081f01da75f09a34a05956fe434af/Robocop_%20Rogue%20City_20250925144128.jpg
+    - /uploads/cms/444c5763b9679dad6962805978306824b1f98f6da57bac1b3b8aa967f19d84f2/539ea2f184326259a289016615171b06a02081f01da75f09a34a05956fe434af/Robocop_%20Rogue%20City_20250925143032.jpg
+    - /uploads/cms/c157476daf4b93ef209855f57a13999203dc42129802bc0834ab1530c443caa0/539ea2f184326259a289016615171b06a02081f01da75f09a34a05956fe434af/Robocop_%20Rogue%20City_20250925142818.jpg
+    - /uploads/cms/39c6d8547d1b2f84624f5b997906216f31fccbee7d8d5a516549e3e721b2d522/539ea2f184326259a289016615171b06a02081f01da75f09a34a05956fe434af/Robocop_%20Rogue%20City_20250925142523.jpg
+    - /uploads/cms/39dd114a29231324d93fb549c80603ad1ef076f3e32ee21c82eb16082cf5c582/539ea2f184326259a289016615171b06a02081f01da75f09a34a05956fe434af/Robocop_%20Rogue%20City_20250925142309.jpg
+    - /uploads/cms/e5cab56a154b390e26cee681058ec46776a9f32d6b6514d3fea8256c266a6073/539ea2f184326259a289016615171b06a02081f01da75f09a34a05956fe434af/Robocop_%20Rogue%20City_20250925142004.jpg
 manual:
   availabilityStatus: available
   officialStores:

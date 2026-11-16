@@ -1,6 +1,6 @@
 ---
 title: XBOX 360《真名法典2》简体中文汉化补丁
-date: 2026-11-03
+date: 2026-11-16
 description: |-
   > MagnaCarta II Simplified Chinese Patch
   > 《真名法典2》简体中文汉化补丁
@@ -64,11 +64,11 @@ access:
 
 因为双盘镜像文件较大，而且不清楚玩家需要哪种格式，所以这次做成了汉化补丁而非直接发布游戏文件的形式，汉化补丁支持生成 `ZAR` 与 `XEX` 两种格式，如有其他格式的需求，请使用 [XGDTool](https://github.com/wiredopposite/XGDTool)、[xVerter](https://github.com/blank-query/xverter) 等项目自行转换。
 
-请先准备韩版 Disc 1 和 Disc 2 的原版 ISO。如果不确定手上的镜像是不是对应版本，可以到[安装器文档](https://github.com/jyh9521/Magna-Carta-2-CN/blob/v1.0/docs/INSTALLER.md#输入)核对。安装器适用于 Windows 10 / 11 x64，可以离线运行，自带所需组件，以普通用户权限运行即可。输出目录选自己有写入权限的位置。
+请先准备韩版 Disc 1 和 Disc 2 的原版 ISO。如果不确定手上的镜像是不是对应版本，可以到[安装器文档](https://github.com/jyh9521/Magna-Carta-2-CN/blob/main/docs/INSTALLER.md#输入)核对。安装器适用于 Windows 10 / 11 x64，可以离线运行，自带所需组件，以普通用户权限运行即可。输出目录选自己有写入权限的位置。
 
 1. 下载韩版双盘镜像、DLC 包与汉化补丁。
-2. 解压DLC包。
-3. 打开 `MC2-CN-v1.0.exe`，按盘号选择两张 ISO。如果只玩本体，把「同时汉化 DLC」关掉。要装 DLC 的话则打开，解压后选择存放两份原版 DLC 文件的目录，然后点「检查文件并继续」。![选择镜像与 DLC](/uploads/cms/ca55437ba67c35d459c274da5379aaddfb88aeab02104fbe186b6910b2d5b674/%E9%80%89%E6%8B%A9%E9%95%9C%E5%83%8F%E5%92%8CDLC.png)
+2. 解压 DLC 包。
+3. 打开 `MC2-CN-v1.0.exe`，按盘号选择两张 ISO。选中「同时汉化 DLC」关掉，选择存放两份原版 DLC 文件的目录，然后点「检查文件并继续」。![选择镜像与 DLC](/uploads/cms/ca55437ba67c35d459c274da5379aaddfb88aeab02104fbe186b6910b2d5b674/%E9%80%89%E6%8B%A9%E9%95%9C%E5%83%8F%E5%92%8CDLC.png)
 4. 选一个新的输出目录，再选 `ZAR` 或 `XEX`，点「开始安装」。![选择格式](/uploads/cms/5b7c9689f2d336067e4b6774a150c07b242e291e8e72e73d3222efbadf22fa76/%E9%80%89%E6%8B%A9%E6%A0%BC%E5%BC%8F.png)
 5. 等待安装……![安装中……](/uploads/cms/9c5a6e82735e05b37822bd2b19973dad31885c6bb288fe90863cfe6833946590/%E7%AD%89%E5%BE%85%E5%AE%89%E8%A3%85.png)
 6. 安装完成后从第一盘启动。建议在通关游戏以前，保留好原版 ISO 和 DLC 文件，避免后续有更新以后需要重新构建时重复下载。换碟时按输出目录里的「使用说明.txt」操作，安装器里的「部署与换碟说明」也能打开对应的步骤。![安装完成](/uploads/cms/f7f5308a9cef55de825202564205f22c74cd81ad0ff68c8a0f4cd5edcd3763b8/%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90.png)
@@ -95,11 +95,11 @@ access:
 
 下载以后，将模拟器解压至一个没有中文的目录中，双击运行`xenia_canary.exe`后，目录根目录会生成一个`xenia-canary.config.toml`文件，关闭模拟器，打开此文件。
 
-搜索`gpu = `，在后面的冒号内输入`d3d12`，如图所示：
+搜索`gpu = `，在后面的引号内输入`d3d12`，如图所示：
 
 ![GPU 设置](/uploads/cms/b54acddc6c84681b968326d9daeb6449f5bf0723bfb4bc63f5eb45ddcee05918/d3d12.png)
 
-随后搜索`render_target_path_d3d12 = `，在后面的冒号内输入`rtv`，如图所示：
+随后搜索`render_target_path_d3d12 = `，在后面的引号内输入`rtv`，如图所示：
 
 ![rtv](/uploads/cms/cdf9f7ca69c9af0764d683193e97eafb36150ba61e6bf8d681a186a91b9d6c46/rtv.png)
 
@@ -113,11 +113,13 @@ x 轴和 y 轴可以进行数字混搭，并不一定非要是两个相同的数
 
 修改完毕后，保存，关闭此文件即可。
 
-其他相关问题，如创建 Profile、Console settings等，请问 AI，不要问我，我<span data-text-color="#dc2626" data-text-size="18">不会回答</span>任何相关问题。
+其他相关问题，如创建 Profile、Console settings 等，请问 AI，不要问我，我<span data-text-color="#dc2626" data-text-size="18">不会回答</span>任何相关问题。
 
 ### 图形补丁
 
-补丁目前实现60帧、MSAA 阴影渲染错误和后处理，稳定性有待测试，默认关闭，如有需要请参考下文使用。
+目前提供三项可选图形补丁：60 帧解锁、MSAA 相关光照与阴影异常修复，以及实验性的后处理链关闭功能。
+
+稳定性有待测试，默认关闭，如有需要请参考下文使用。
 
 三项默认都是关闭的，可以单独开启。
 
@@ -291,12 +293,12 @@ value = 0x480001bc
 
 在此，要特别感谢为这个项目提供过帮助的所有开发者与同好：
 
-- 核心与渲染支持：感谢 [Xenia​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fxenia-project%2Fxenia&spm_id_from=333.1369.0.0) 和 [Xenia Canary​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fxenia-canary%2Fxenia-canary&spm_id_from=333.1369.0.0) 的开发者，以及 boma 提供的 60 帧（60 FPS）与分块渲染修复思路。
-- 逆向与工具生态：感谢 [UEViewer​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fgildor2%2FUEViewer&spm_id_from=333.1369.0.0)、[libmspack​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fkyz%2Flibmspack&spm_id_from=333.1369.0.0)、[ZArchive​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2FExzap%2FZArchive&spm_id_from=333.1369.0.0)。
+- 核心与渲染支持：感谢 [Xenia​](https://github.com/xenia-project/xenia) 和 [Xenia Canary​](https://github.com/xenia-canary/xenia-canary) 的开发者，以及 boma 提供的 60 帧（60 FPS）与分块渲染修复思路。
+- 逆向与工具生态：感谢 [UEViewer​](https://github.com/gildor2/UEViewer)、[libmspack​](https://github.com/kyz/libmspack)、[ZArchive​](https://github.com/Exzap/ZArchive)。
 - 感谢以下开源字体项目及其作者，为本汉化项目提供优秀的中文字形资源：
-    - [朱雀仿宋（Zhuque Fangsong）​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2FTrionesType%2Fzhuque&spm_id_from=333.1369.0.0)
-    - [思源黑体 / 思源宋体（Noto Sans CJK / Noto Serif CJK）​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Fnotofonts%2Fnoto-cjk&spm_id_from=333.1369.0.0)
-    - [霞鹜臻楷（LXGW ZhenKai）​](https://www.bilibili.com/york/link-middle-page?navhide=1&rid=1271141007765798913&r_type=0&redirect_url=https%3A%2F%2Fgithub.com%2Flxgw%2FLxgwZhenKai&spm_id_from=333.1369.0.0)
+    - [朱雀仿宋（Zhuque Fangsong）​](https://github.com/TrionesType/zhuque)
+    - [思源黑体 / 思源宋体（Noto Sans CJK / Noto Serif CJK）​](https://github.com/notofonts/noto-cjk)
+    - [霞鹜臻楷（LXGW ZhenKai）​](https://github.com/lxgw/LxgwZhenKai)
 - 测试人员：特别感谢测试人员 going、夜书墨，以及所有在测试阶段帮忙截图、反馈 Bug 的玩家们。
 
 具体的代码来源、第三方组件及授权协议，请直接查阅仓库根目录下的 NOTICE.md、LICENSING.md 与其他相关文档。

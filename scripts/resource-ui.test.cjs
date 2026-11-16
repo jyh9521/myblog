@@ -79,3 +79,70 @@ test('game screenshot destination follows the draft slug until a folder is saved
  g.update({folder:'Game Dossiers/Existing Album'});
  assert.ok(rendered().includes('截图目录：Game Dossiers/Existing Album'));
 });
+
+function screenshotUploadHarness(respond){
+ const components={},calls=[],waits=[];
+ const window={
+   CMS:{registerFieldType:(name,component)=>components[name]=component,registerEditorComponent(){},registerEventListener(){}},
+   createClass:c=>c,h:(tag,props,...children)=>({tag,props,children}),
+   BlogAdminAuth:{request:async(url,options)=>{
+     const query=new URL(url,'https://fixture.test').searchParams;
+     calls.push({name:query.get('name'),folder:query.get('folder'),destination:query.get('destination'),body:options.body});
+     return respond(query,calls.length);
+   }},
+ };
+ const context={window,File,Blob,AbortSignal,setTimeout:(next,ms)=>{waits.push(ms);next();}};
+ vm.runInNewContext(fs.readFileSync(process.env.R2_MEDIA_SOURCE||'public/sveltia/r2-media.js','utf8'),context);
+ const component=components['screenshot-gallery'];
+ let slug='upload-fixture';
+ const gallery={...component,state:component.getInitialState(),props:{
+   value:{enabled:true,images:[]},get draftSlug(){return slug;},onChange:v=>gallery.props.value=v,
+ },setState:patch=>Object.assign(gallery.state,patch)};
+ return {gallery,calls,waits,setSlug:value=>{slug=value;}};
+}
+const shot=name=>new File(['fixture'],name,{type:'image/png',lastModified:1});
+const uploadOK=query=>Response.json({path:'/uploads/'+encodeURIComponent(query.get('name')),folder:query.get('folder')});
+
+test('screenshot upload recovers from a plain HTTP 503 without reselecting the file',async()=>{
+ const {gallery,calls,waits}=screenshotUploadHarness((q,n)=>n===1
+   ?new Response('Service Unavailable',{status:503,headers:{'Retry-After':'3'}}):uploadOK(q));
+ const file=shot('浪人崛起_20250329111459.png');
+ await gallery.addFiles([file]);
+ assert.equal(calls.length,2,'HTTP 503 must retry the same screenshot');
+ assert.equal(calls[0].body,file);assert.equal(calls[1].body,file);
+ assert.deepEqual(calls.map(c=>c.destination),['entry','entry']);
+ assert.equal(waits.length,1);assert.ok(waits[0]>=3000);
+ assert.deepEqual(Array.from(gallery.props.value.images),['/uploads/'+encodeURIComponent(file.name)]);
+ assert.match(gallery.state.message,/上传完成/);
+});
+
+test('screenshot upload pauses a sustained outage, keeps the successes and resumes only the pending files',async()=>{
+ let recovered=false;
+ const {gallery,calls,waits,setSlug}=screenshotUploadHarness((q,n)=>n===1||recovered
+   ?uploadOK(q):new Response('Service Unavailable',{status:503,headers:{'cf-ray':'fixture-ray'}}));
+ const files=['one.png','two.png','three.png'].map(shot);
+ await gallery.addFiles(files);
+ assert.deepEqual(calls.map(c=>c.name),['one.png','two.png','two.png','two.png','two.png']);
+ assert.deepEqual(Array.from(gallery.props.value.images),['/uploads/one.png']);
+ assert.match(gallery.state.message,/已暂停/);assert.match(gallery.state.message,/fixture-ray/);assert.equal(waits.length,3);
+ const retry=gallery.render().children[1].children[2].children.find(node=>node?.children?.[0]==='继续上传（2 张）');
+ assert.equal(typeof retry?.props?.onClick,'function');
+ setSlug('another-slug');recovered=true;
+ await retry.props.onClick();
+ assert.deepEqual(calls.slice(5).map(c=>c.name),['two.png','three.png']);
+ assert.ok(calls.every(c=>c.folder==='Game Dossiers/upload-fixture'));
+ assert.deepEqual(Array.from(gallery.props.value.images),files.map(file=>'/uploads/'+file.name));
+ assert.match(gallery.state.message,/上传完成/);
+});
+
+test('screenshot upload does not retry permanent validation errors or replay other resource mutations',async()=>{
+ const {gallery,calls,waits}=screenshotUploadHarness((q,n)=>n===1
+   ?Response.json({error:'INVALID_FILE_TYPE'},{status:400}):uploadOK(q));
+ await gallery.addFiles([shot('invalid.png'),shot('good.png')]);
+ assert.deepEqual(calls.map(c=>c.name),['invalid.png','good.png']);assert.equal(waits.length,0);
+ assert.match(gallery.state.message,/invalid.png/);
+ assert.deepEqual(Array.from(gallery.props.value.images),['/uploads/good.png']);
+ const offline=control(async()=>{calls.push('single');return new Response('Service Unavailable',{status:503});});
+ await offline.sendFile(shot('unscoped.png'));
+ assert.equal(calls.length,3);
+});

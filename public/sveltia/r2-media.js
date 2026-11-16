@@ -25,7 +25,29 @@
   const screenshotPathStamp=path=>screenshotStamp(fileName({path:path.split(/[?#]/,1)[0]}));
   const size=bytes=>bytes<1024*1024?`${(bytes/1024).toFixed(1)} KB`:`${(bytes/1024/1024).toFixed(1)} MB`;
   const validateSelection=(file,mode)=>{if(mode==='image'&&!/\.(png|jpe?g|webp|gif|avif)$/i.test(file.name))throw Error('请选择 PNG、JPEG、WebP、GIF 或 AVIF 图片。');if(mode==='pdf'&&!/\.pdf$/i.test(file.name))throw Error('请选择 PDF 文件。');};
-  async function api(path,options={}) {const response=await (path==='/catalog'?fetch:window.BlogAdminAuth.request)(ROOT+path,{...options,credentials:'same-origin',cache:'no-store',headers:{'X-Gaming-Admin':'1',...options.headers},signal:AbortSignal.timeout(120000)});let data;try{data=await response.json();}catch{throw Error('资源服务返回了非 JSON 响应（HTTP '+response.status+'）。');}if(!response.ok){const error=Error(errors[data.error]||data.error||'操作失败');error.status=response.status;error.code=data.error;throw error;}return data;}
+  async function api(path,options={}) {
+    const response=await (path==='/catalog'?fetch:window.BlogAdminAuth.request)(ROOT+path,{...options,credentials:'same-origin',cache:'no-store',headers:{'X-Gaming-Admin':'1',...options.headers},signal:AbortSignal.timeout(120000)});
+    let data,invalid=false;
+    try{data=await response.json();}catch{invalid=true;}
+    if(!response.ok||invalid){
+      const code=data?.error;
+      const message=invalid?'资源服务返回了非 JSON 响应（HTTP '+response.status+'）。':errors[code]||code||'操作失败';
+      throw Object.assign(Error(message),{status:response.status,code,ray:response.headers?.get('cf-ray'),retryAfter:response.headers?.get('retry-after')});
+    }
+    return data;
+  }
+  const interruptedUpload=error=>[408,429,502,503,504].includes(error.status)||['TimeoutError','TypeError'].includes(error.name);
+  const uploadNeedsLogin=error=>error.status===401||['CMS_LOGIN_REQUIRED','ADMIN_LOGIN_FAILED','ADMIN_ONLY','CMS_LOGIN_CHANGED','LOGIN_RATE_LIMIT'].includes(error.code);
+  const uploadIssue=error=>{
+    const reason=interruptedUpload(error)?'资源服务暂时不可用'+(error.status?'（HTTP '+error.status+'）':'（连接中断或超时）')+'。':error.message;
+    return reason+(error.ray?' 诊断编号：'+error.ray+'。':'');
+  };
+  const retryDelays=[1000,2500,6000];
+  function retryDelay(error,attempt){
+    const value=error.retryAfter?.trim();
+    const requested=value&&/^\d+$/.test(value)?Number(value)*1000:value?Date.parse(value)-Date.now():0;
+    return Math.max(retryDelays[attempt]+Math.floor(Math.random()*500),requested||0);
+  }
   const imageAccept='image/png,image/jpeg,image/webp,image/gif,image/avif';
   const get=(entry,key)=>{const value=entry?.getIn?.(['data',key]);return value?.toJS?.()??value;};
   const folderName=value=>String(value||'').normalize('NFKD').replace(/\p{M}/gu,'').replace(/[\\/:*?"<>|#]/g,' - ').replace(/[^\x20-\x7e]/g,' ').replace(/^[. ]+|[. ]+$/g,'').replace(/\s+/g,' ').trim();
@@ -46,11 +68,23 @@
     }
     return null;
   };
-  async function upload(file,folder=null,scoped=false) {
+  async function upload(file,folder=null,scoped=false,onRetry=()=>{}) {
     if(file.size>20*1024*1024)throw Error(errors.INPUT_TOO_LARGE);
     let dimensions={};if(file.type.startsWith('image/'))try{const bitmap=await createImageBitmap(file);dimensions={'X-Image-Width':String(bitmap.width),'X-Image-Height':String(bitmap.height)};bitmap.close();}catch{}
     const send=()=>api('/upload?name='+encodeURIComponent(file.name)+(folder===null?'':'&folder='+encodeURIComponent(folder))+(scoped&&folder?'&destination=entry':''),{method:'PUT',headers:{'Content-Type':file.type||'application/octet-stream',...dimensions},body:file});
-    const result=await send();
+    let result;
+    // Scoped uploads use a content-addressed key and a conditional R2 write.
+    // Other mutations (including unscoped folder assignment) are not replayed here.
+    for(let attempt=0;;attempt++){
+      try{result=await send();break;}
+      catch(error){
+        if(!scoped||!folder||!interruptedUpload(error)||attempt>=retryDelays.length)throw error;
+        const delay=retryDelay(error,attempt);
+        if(delay>30000)throw error;
+        onRetry(attempt+1,Math.ceil(delay/1000));
+        await new Promise(resolve=>setTimeout(resolve,delay));
+      }
+    }
     if(scoped&&folder&&result.folder!==folder.normalize('NFC'))throw Error('资源服务未确认上传目录，请刷新后重试。');
     return result;
   }
@@ -153,46 +187,62 @@
       }
     });
     const GalleryControl=window.createClass({
-      getInitialState(){return {busy:false,message:''};},
+      getInitialState(){return {busy:false,message:'',pending:null};},
       update(patch){this.props.onChange({...this.props.value,...patch});},
       async run(task){if(this.state.busy)return;this.setState({busy:true,message:''});try{await task();}catch(error){this.setState({message:error.message});}finally{this.setState({busy:false});}},
       async addFiles(files){
-        if(!files.length)return;
+        if(!files.length||this.state.pending)return;
+        const folder=this.props.value?.folder||defaultGameFolder(this.props.entry,this.props.value,this.props.draftSlug);
+        if(!folder){this.setState({message:'请先设置 Slug 或填写自定义截图文件夹名。'});return;}
+        const ordered=[...files].sort((a,b)=>(screenshotStamp(a.name)??a.lastModified)-(screenshotStamp(b.name)??b.lastModified));
+        await this.uploadBatch({folder,files:ordered,errors:[]});
+      },
+      async uploadBatch(batch){
         await this.run(async()=>{
-          const gallery=this.props.value||{},folder=gallery.folder||defaultGameFolder(this.props.entry,gallery,this.props.draftSlug);
-          if(!folder)throw Error('请先设置 Slug 或填写自定义截图文件夹名。');
-          const images=[...(gallery.images||[])],errors=[];
-          const ordered=[...files].sort((a,b)=>(screenshotStamp(a.name)??a.lastModified)-(screenshotStamp(b.name)??b.lastModified));
-          for(const file of ordered){
+          const {folder,files}=batch,gallery=this.props.value||{};
+          const images=[...(gallery.images||[])],errors=[...batch.errors];
+          let pending=null,pause='';
+          for(const [i,file] of files.entries()){
             try{
               validateSelection(file,'image');
-              const result=await upload(file,folder,true);
+              const progress='正在上传截图 '+(i+1)+'/'+files.length+'：'+file.name;
+              this.setState({message:progress});
+              const result=await upload(file,folder,true,(attempt,seconds)=>this.setState({message:progress+'（'+seconds+' 秒后自动重试 '+attempt+'/'+retryDelays.length+'）'}));
               if(!images.includes(result.path))images.push(result.path);
-            }catch(error){errors.push(file.name+'：'+error.message);}
+            }catch(error){
+              if(interruptedUpload(error)||uploadNeedsLogin(error)){
+                pending={folder,files:files.slice(i),errors};
+                pause='上传已暂停，'+pending.files.length+' 张待上传；已完成的截图已保留。'+uploadIssue(error);
+                break;
+              }
+              errors.push(file.name+'：'+uploadIssue(error));
+            }
           }
           if(images.length!==(gallery.images||[]).length)this.update({folder,images:orderDatedScreenshots(images,screenshotPathStamp)});
-          this.setState({message:errors.length?errors.join('；'):'上传完成。保存档案后发布截图。'});
+          this.setState({pending,message:[pause,...errors].filter(Boolean).join('；')||'上传完成。保存档案后发布截图。'});
         });
       },
       render(){
-        const gallery=this.props.value||{},images=gallery.images||[],folder=gallery.folder||defaultGameFolder(this.props.entry,gallery,this.props.draftSlug),busy=this.state.busy;
+        const gallery=this.props.value||{},images=gallery.images||[],{busy,pending,message}=this.state,folder=pending?.folder||gallery.folder||defaultGameFolder(this.props.entry,gallery,this.props.draftSlug);
         const move=(index,to)=>{const next=[...images];[next[index],next[to]]=[next[to],next[index]];this.update({images:next});};
         return h('div',{className:'blog-media-field'},
-          h('label',null,h('input',{id:this.props.forID,type:'checkbox',checked:!!gallery.enabled,disabled:busy,onChange:e=>this.update({enabled:e.target.checked})}),' 启用截图展示'),
+          h('label',null,h('input',{id:this.props.forID,type:'checkbox',checked:!!gallery.enabled,disabled:busy||!!pending,onChange:e=>this.update({enabled:e.target.checked})}),' 启用截图展示'),
           gallery.enabled&&h('div',{className:'blog-media-gallery-editor'},
             !gallery.folder&&h('label',null,'自定义截图文件夹名（可选，留空时跟随 Slug）',
-              h('input',{value:gallery.englishName||'',maxLength:100,disabled:busy,onChange:e=>this.update({englishName:e.target.value})})),
+              h('input',{value:gallery.englishName||'',maxLength:100,disabled:busy||!!pending,onChange:e=>this.update({englishName:e.target.value})})),
             h('p',null,'截图目录：'+(folder||'请先设置 Slug 或填写自定义名称')),
             h('div',{className:'blog-media-field-actions'},
-              h('label',{className:'blog-media-primary blog-media-upload','aria-disabled':busy||!folder},'上传截图',h('input',{type:'file',multiple:true,accept:imageAccept,className:'blog-media-file-input','aria-label':'上传截图',disabled:busy||!folder,onChange:e=>{const files=[...e.target.files];e.target.value='';this.addFiles(files);}})),
-              button('从资源库选择',()=>this.run(async()=>{const selected=await picker('image',{folder});if(selected&&!images.includes(selected))this.update({folder,images:orderDatedScreenshots([...images,selected],screenshotPathStamp)});}),busy||!folder)),
+              h('label',{className:'blog-media-primary blog-media-upload','aria-disabled':busy||!!pending||!folder},'上传截图',h('input',{type:'file',multiple:true,accept:imageAccept,className:'blog-media-file-input','aria-label':'上传截图',disabled:busy||!!pending||!folder,onChange:e=>{const files=[...e.target.files];e.target.value='';this.addFiles(files);}})),
+              button('从资源库选择',()=>this.run(async()=>{const selected=await picker('image',{folder});if(selected&&!images.includes(selected))this.update({folder,images:orderDatedScreenshots([...images,selected],screenshotPathStamp)});}),busy||!!pending||!folder),
+              pending&&button('继续上传（'+pending.files.length+' 张）',()=>this.uploadBatch(pending),busy),
+              pending&&button('清除待上传队列',()=>this.setState({pending:null,message:'已清除待上传队列；已完成的截图仍保留。'}),busy)),
             !!images.length&&h('ol',{className:'blog-media-gallery-list'},...images.map((src,i)=>h('li',{key:src},
               h('img',{src,alt:'截图 '+(i+1),loading:'lazy'}),
               h('div',{className:'blog-media-field-actions'},
                 button('上移',()=>move(i,i-1),busy||i===0),
                 button('下移',()=>move(i,i+1),busy||i===images.length-1),
                 button('移除引用',()=>this.update({images:images.filter(path=>path!==src)}),busy)))))),
-          h('p',{role:'status'},busy?'正在处理截图…':this.state.message));
+          h('p',{role:'status'},message||(busy?'正在处理截图…':'')));
       }
     });
     window.CMS.registerFieldType('resource-folder',FolderControl,()=>null);

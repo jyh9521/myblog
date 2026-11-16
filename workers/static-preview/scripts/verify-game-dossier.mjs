@@ -16,6 +16,7 @@ const bundle = process.env.SVELTIA_BUNDLE ? await readFile(process.env.SVELTIA_B
 const out = process.env.DOSSIER_SCREENSHOTS;
 const baseline = process.argv.includes('--baseline');
 const screenshotEditor = process.argv.includes('--screenshot-editor');
+const screenshotUploadRecovery = process.argv.includes('--screenshot-upload-recovery');
 const candidatesOnly = process.argv.includes('--candidates-only');
 const fromDatabase = process.argv.includes('--database-brief');
 const viewport = { width: Number(process.env.DOSSIER_TEST_WIDTH || 1440), height: Number(process.env.DOSSIER_TEST_HEIGHT || 1000) };
@@ -149,6 +150,37 @@ try {
     assert.equal(await page.getByRole('navigation', { name: '游戏档案编辑分区' }).count(), 0);
     await screenshot('baseline-desktop');
     console.log('BASELINE_UI search=visible hltb=visible dossier-tabs=0');
+  } else if (screenshotUploadRecovery) {
+    await useFixtureLogin(page);
+    const uploads = [];
+    let recovered = false;
+    const names = Array.from({ length: 19 }, (_, i) => `截图_${String(i + 1).padStart(2, '0')}.png`);
+    await page.route('**/ns/api/resources/upload?**', route => {
+      const { searchParams } = new URL(route.request().url());
+      const name = searchParams.get('name');
+      uploads.push(name);
+      assert.equal(searchParams.get('folder'), 'Game Dossiers/Harbor - The Game');
+      assert.equal(searchParams.get('destination'), 'entry');
+      if (!recovered && name === names[1]) return route.fulfill({ status: 503, contentType: 'text/plain', body: 'Service Unavailable', headers: { 'cf-ray': 'fixture-ray' } });
+      return route.fulfill({ json: { path: '/uploads/' + encodeURIComponent(name), folder: searchParams.get('folder') } });
+    });
+    await page.getByRole('button', { name: '资料与渠道', exact: true }).click();
+    await page.locator('[data-dossier-media-disclosure] > summary').click();
+    const gallery = page.locator('[data-mode="edit"] [data-key-path="screenshotGallery"]');
+    await gallery.getByRole('checkbox').check();
+    await gallery.getByRole('textbox', { name: /自定义截图文件夹名/ }).fill('Harbor: The Game');
+    await gallery.getByLabel('上传截图').setInputFiles(names.map(name => ({ name, mimeType: 'image/png', buffer: Buffer.from('fixture') })));
+    const resume = gallery.getByRole('button', { name: '继续上传（18 张）' });
+    await resume.waitFor({ timeout: 20000 });
+    assert.equal(await gallery.locator('li img').count(), 1);
+    assert.deepEqual(uploads, [names[0], ...Array(4).fill(names[1])]);
+    assert.match(await gallery.getByRole('status').innerText(), /503.*fixture-ray/);
+    recovered = true;
+    await resume.click();
+    await gallery.getByText('上传完成。保存档案后发布截图。').waitFor();
+    assert.deepEqual(uploads.slice(5), names.slice(1));
+    assert.equal(await gallery.locator('li img').count(), 19);
+    console.log('SCREENSHOT_UPLOAD_RECOVERY 503_retries=3 paused_pending=18 preserved=1 resumed=18 total=19 PASS');
   } else if (screenshotEditor) {
     const uploads = [];
     const originalLogin = await useFixtureLogin(page);

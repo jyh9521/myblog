@@ -76,10 +76,10 @@ access:
 
 | 输出格式 | 怎么用 |
 | --- | --- |
-| ZAR | 用支持 ZArchive 的 Xenia 构建打开 `MagnaCarta2_CN_Disc1.zar`。![输出目录（ZAR）](/uploads/cms/4ece443fad6a594cb0de5d9e0027ecf0858197fe1c1e5a694dfb11444b57d807/%E8%BE%93%E5%87%BA%E7%9B%AE%E5%BD%95%EF%BC%88zar%EF%BC%89.png) |
-| XEX | 用 Xenia 打开 `Disc1/default.xex`。RGH / JTAG 主机用户也可以参考随包说明部署两盘，实机兼容性仍待验证。![输出目录（XEX）](/uploads/cms/253b3298fd14d63887ca94179eaf3a016aff45947c69a2c974aafb28f9d1fb27/%E8%BE%93%E5%87%BA%E7%9B%AE%E5%BD%95%20%EF%BC%88xex%EF%BC%89.png) |
+| ZAR | 用支持 ZArchive 的 Xenia 构建打开 `MagnaCarta2_CN_Disc1.zar`。\n\n![输出目录（ZAR）](/uploads/cms/4ece443fad6a594cb0de5d9e0027ecf0858197fe1c1e5a694dfb11444b57d807/%E8%BE%93%E5%87%BA%E7%9B%AE%E5%BD%95%EF%BC%88zar%EF%BC%89.png) |
+| XEX | 用 Xenia 打开 `Disc1/default.xex`。\n\nRGH / JTAG 主机用户也可以参考随包说明部署两盘，实机兼容性仍待验证。\n\n![输出目录（XEX）](/uploads/cms/253b3298fd14d63887ca94179eaf3a016aff45947c69a2c974aafb28f9d1fb27/%E8%BE%93%E5%87%BA%E7%9B%AE%E5%BD%95%20%EF%BC%88xex%EF%BC%89.png) |
 
-7. DLC 需要另行导入。 生成后，在 Xenia Canary 里打开 Content → Install Content，分别导入输出目录 `Content` 下的短剧包和特殊武器包。两份 DLC 都是独立的文件，选 `ZAR` 和 `XEX` 都一样。。![安装 DLC](/uploads/cms/3d3fc8b0e3738e3936eb2dac17357b915fec62b29312bac7395a2d4d519def65/%E5%AE%89%E8%A3%85DLC.png)![短剧包](/uploads/cms/97f7baaa8af5a75e090cc591616bf2347b2c6326cb711fc989eb15624667bbd4/%E7%9F%AD%E5%89%A7%E5%8C%85.png)![特殊武器包](/uploads/cms/1e09c7754e056f82581286fc93bdb6933eafa5a82f93f4577069e4535bd37f81/%E7%89%B9%E6%AE%8A%E6%AD%A6%E5%99%A8%E5%8C%85.png)
+8. DLC 需要另行导入。 生成后，在 Xenia Canary 里打开 Content → Install Content，分别导入输出目录 Content 下的短剧包和特殊武器包。两份 DLC 都是独立的文件，选 ZAR 和 XEX 都一样。![安装 DLC](/uploads/cms/3d3fc8b0e3738e3936eb2dac17357b915fec62b29312bac7395a2d4d519def65/%E5%AE%89%E8%A3%85DLC.png)![短剧包](/uploads/cms/97f7baaa8af5a75e090cc591616bf2347b2c6326cb711fc989eb15624667bbd4/%E7%9F%AD%E5%89%A7%E5%8C%85.png)![特殊武器包](/uploads/cms/1e09c7754e056f82581286fc93bdb6933eafa5a82f93f4577069e4535bd37f81/%E7%89%B9%E6%AE%8A%E6%AD%A6%E5%99%A8%E5%8C%85.png)
 
 
 
@@ -291,11 +291,29 @@ value = 0x480001bc
 
 在此，要特别感谢为这个项目提供过帮助的所有开发者与同好：
 
-- 核心与渲染支持：感谢 Xenia 和 Xenia Canary 的开发者，以及 boma 提供的 60 帧（60 FPS）与分块渲染修复思路。
-- 逆向与工具生态：感谢 UEViewer、libmspack、ZArchive 以及相关开源字体项目的作者。
-- 测试人员：特别感谢测试人员 going、夜书墨，以及所有在测试阶段帮忙截图、反馈 Bug 的玩家们。
+\- \*\*核心与渲染支持：\*\*  
 
-具体的代码来源、第三方组件及授权协议，请直接查阅仓库根目录下的 NOTICE 文件。
+  感谢 [Xenia\](https://github.com/xenia-project/xenia) 与 [Xenia Canary\](https://github.com/xenia-canary/xenia-canary) 的开发者，以及 boma 提供的 60 帧（60 FPS）与分块渲染修复思路。
+
+\- \*\*逆向与工具生态：\*\*  
+
+  感谢 [UEViewer\](https://github.com/gildor2/UEViewer)、[libmspack\](https://github.com/kyz/libmspack)、[ZArchive\](https://github.com/Exzap/ZArchive) 以及相关开源字体项目的作者。
+
+\- \*\*开源字体项目：\*\*  
+
+  感谢以下开源字体项目及其作者，为本汉化项目提供优秀的中文字形资源：  
+
+  \- [朱雀仿宋（Zhuque Fangsong）\](https://github.com/TrionesType/zhuque)  
+
+  \- [思源黑体 / 思源宋体（Noto Sans CJK / Noto Serif CJK）\](https://github.com/notofonts/noto-cjk)  
+
+  \- [霞鹜臻楷（LXGW ZhenKai）\](https://github.com/lxgw/LxgwZhenKai)  
+
+\- \*\*测试人员：\*\*  
+
+  特别感谢测试人员 going、夜书墨，以及所有在测试阶段帮忙截图、反馈 Bug 的玩家们。
+
+具体的代码来源、第三方组件及授权协议，请直接查阅仓库根目录下的 [NOTICE.md\](./NOTICE.md)、[LICENSING.md\](./LICENSING.md) 与其他相关文档。
 
 版权与开源声明 本项目为非官方简体中文汉化补丁。项目中的原创代码部分采用 MIT 许可证开源，原创译文部分采用 CC BY-SA 4.0 许可证共享；原游戏本体及相关音画素材的版权均归各自权利人所有。
 

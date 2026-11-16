@@ -82,4 +82,15 @@ manual:
       note: ''
       region: ''
       url: https://store.steampowered.com/app/35140/
+hltb:
+  auto: true
+  id: 14443
+  snapshot:
+    completionist: 25.33
+    extras: 15.53
+    id: 14443
+    main: 11.09
+    updatedAt: 2026-11-16T04:43:22.043Z
+  title: 'Batman: Arkham Asylum GOTY'
+  url: https://howlongtobeat.com/game/14443
 ---

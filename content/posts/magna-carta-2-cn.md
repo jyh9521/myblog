@@ -61,6 +61,8 @@ access:
 
 ## 四、安装方法
 
+因为双盘镜像文件较大，而且不清楚玩家需要哪种格式，所以这次做成了汉化补丁而非直接发布游戏文件的形式，汉化补丁支持生成 `ZAR` 与 `XEX` 两种格式，如有其他格式的需求，请使用 [XGDTool](https://github.com/wiredopposite/XGDTool)、[xVerter](https://github.com/blank-query/xverter) 等项目自行转换。
+
 请先准备韩版 Disc 1 和 Disc 2 的原版 ISO。如果不确定手上的镜像是不是对应版本，可以到[安装器文档](https://github.com/jyh9521/Magna-Carta-2-CN/blob/v1.0/docs/INSTALLER.md#输入)核对。安装器适用于 Windows 10 / 11 x64，可以离线运行，自带所需组件，以普通用户权限运行即可。输出目录选自己有写入权限的位置。
 
 1. 下载韩版双盘镜像、DLC 包与汉化补丁。

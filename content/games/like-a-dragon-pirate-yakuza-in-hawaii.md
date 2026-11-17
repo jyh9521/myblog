@@ -138,4 +138,15 @@ hltb:
     updatedAt: 2026-11-17T12:11:57.524Z
   title: 'Like a Dragon: Pirate Yakuza in Hawaii'
   url: https://howlongtobeat.com/game/157123
+events:
+  - date: 2026-02-24
+    title: 开始游戏
+  - date: 2026-03-01
+    title: 通关游戏
+    note: |-
+      因为是基于8代夏威夷的地图加上两个主要岛屿和零星小岛组成的游戏，整体体量比7外传大非常多，毕竟夏威夷比苍天堀可大太多了。
+
+      整体没有7外传赤目情报网那种非常无聊的通马桶剧情，不过也有通缉犯系统这类比较无聊的环节。
+
+      整体节奏蛮紧凑的，剧情写的也还可以，浪漫的海盗之旅。
 ---

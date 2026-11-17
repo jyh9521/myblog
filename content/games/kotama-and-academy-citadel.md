@@ -42,6 +42,15 @@ summary:
     language: en
     url: https://thegamesdb.net/game.php?id=135018
   text: 在《少女与学院城》这款 2.5D 横版银河恶魔城游戏中，实力就是学院城里至高无上的法则：唯有强者方能生存与崛起。在这座高科技学院中杀出一条血路，努力夺取学生所能获得的最高殊荣，并揭开深藏的秘密，在学院面临生死存亡的危急关头拯救它。
+screenshotGallery:
+  enabled: true
+  folder: Game Dossiers/kotama-and-academy-citadel
+  images:
+    - /uploads/cms/95f094800c8c795a6728cc88933d4f2d85b1b320e8f29b388321369fec20ed1b/b1f6365ec35c617d60ed374516c5016e57c4992d772ab7b37b4fd3bb9fa8897c/20260204111741_1.jpg
+    - /uploads/cms/b65cc44047aada9b13acd52eb57b2e2cbbf1a16f70a7d5e4989eac2a8d3e0126/b1f6365ec35c617d60ed374516c5016e57c4992d772ab7b37b4fd3bb9fa8897c/20260204120346_1.jpg
+    - /uploads/cms/3cfafe5b9b8787dceb0d407e4d0309ae5913fc0340d80da620d470a96ac48ed4/b1f6365ec35c617d60ed374516c5016e57c4992d772ab7b37b4fd3bb9fa8897c/20260204215052_1.jpg
+    - /uploads/cms/f98b52e6103244a144b7d138ba31a357daec99aa42d7dbed1ce0d4905a1022e2/b1f6365ec35c617d60ed374516c5016e57c4992d772ab7b37b4fd3bb9fa8897c/20260205103149_1.jpg
+    - /uploads/cms/9ddc1dd5d60be98c5e76959a6ed5f5b1a53337ab5741ab67e91415fb324248aa/b1f6365ec35c617d60ed374516c5016e57c4992d772ab7b37b4fd3bb9fa8897c/20260205194409_1.jpg
 manual:
   availabilityStatus: available
   officialStores:

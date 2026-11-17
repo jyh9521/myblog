@@ -1,5 +1,5 @@
 ---
-title: PICROSS S4
+title: Picross S4
 status:
   - 已通关
 gameMetadata:

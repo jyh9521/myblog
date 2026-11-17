@@ -85,6 +85,7 @@ screenshotGallery:
     - /uploads/cms/ffef6c3b4216f1892e59198f054738fdbf8370d23d4c7143ce513f6f1a8f93bb/ddef1c036f076ec002246af22b436ebe0271bc1776d5d908dfdda46c485465ad/2021031421573600_c.jpg
     - /uploads/cms/529b4de3065c049b66d1cd874b71a46c0ccb2e5384ae3d4fd1348b950a50a4d3/ddef1c036f076ec002246af22b436ebe0271bc1776d5d908dfdda46c485465ad/2021032811043800_c.jpg
     - /uploads/cms/a1c4de80697b5f5d9bfbf595d95589630a03c97d748a3672b84109f4a010b34c/ddef1c036f076ec002246af22b436ebe0271bc1776d5d908dfdda46c485465ad/2021032811044100_c.jpg
+resourceFolder: Game Dossiers/picross-s2
 manual:
   availabilityStatus: available
   officialStores:

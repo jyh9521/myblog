@@ -1,7 +1,7 @@
 ---
 title: 第二视界
 status:
-  - 考虑制作补丁
+  - 正在制作补丁
 gameMetadata:
   platforms:
     - GameCube

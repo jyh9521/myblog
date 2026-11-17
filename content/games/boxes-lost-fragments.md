@@ -8,13 +8,13 @@ gameMetadata:
   selectedPlatforms:
     - PC
   developers:
-    - Unknown
+    - Big Loop Studios
   updatedAt: 2026-11-14T21:03:02.587Z
   genres:
     - Puzzle
   releaseDate: 2024-02-01
   publishers:
-    - Unknown
+    - Snapbreak
   cover: https://cdn2.steamgriddb.com/grid/7b195b8665a9544f676ec2f0ae989ff8.png
   title: 'Boxes: Lost Fragments'
   sources:
@@ -26,16 +26,18 @@ gameMetadata:
   fieldSources:
     platforms: thegamesdb
     selectedPlatforms: manual
-    developers: thegamesdb
+    developers: manual
     genres: thegamesdb
     releaseDate: thegamesdb
-    publishers: thegamesdb
+    publishers: manual
     cover: steamgriddb
     title: thegamesdb
     originalName: thegamesdb
   manualFields:
     - selectedPlatforms
     - cover
+    - developers
+    - publishers
 summary:
   method: translate
   model: gemini-3.5-flash-lite

@@ -106,4 +106,7 @@ hltb:
     updatedAt: 2026-10-08T04:22:32.588Z
   title: Second Sight
   url: https://howlongtobeat.com/game/8206
+events:
+  - date: 2026-11-17
+    title: 开始汉化工作
 ---

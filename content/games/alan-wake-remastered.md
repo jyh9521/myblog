@@ -123,6 +123,13 @@ screenshotGallery:
     - /uploads/cms/bc56c4c97d9ec2cdce500314ba67376007f4d4e301e674b32f8dbe4cc51e65e7/7456d66e40a051cbb630114226a77919c6e3cdc7a8bdc2b23fbb64ee0fdf7fe3/Alan%20Wake%20Remastered_20260817190922.jpg
     - /uploads/cms/0a61f74add49fecb5b6879c15d4c483ce80330f29a066dd4b240edf274ddd127/7456d66e40a051cbb630114226a77919c6e3cdc7a8bdc2b23fbb64ee0fdf7fe3/Alan%20Wake%20Remastered_20260817184547.jpg
     - /uploads/cms/b353f44d548f58c08e6792c5fde8b19ea82a1e731281497eb26cb032dab0b76a/7456d66e40a051cbb630114226a77919c6e3cdc7a8bdc2b23fbb64ee0fdf7fe3/Alan%20Wake%20Remastered_20260817183031.jpg
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: PlayStation Store
+      note: ''
+      region: HK
+      url: https://store.playstation.com/zh-hans-hk/product/UP1477-PPSA01924_00-AWREMASTERED0001
 playTime:
   hours: 12.5
 personalRating: 8.3

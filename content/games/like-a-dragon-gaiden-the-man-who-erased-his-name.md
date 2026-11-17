@@ -1,5 +1,5 @@
 ---
-title: 人中之龙7外传 无名之龙
+title: 人中之龙7外传：无名之龙
 status:
   - 已通关
 gameMetadata:

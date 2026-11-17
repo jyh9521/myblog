@@ -7,7 +7,9 @@
   // Read capture time from filenames, not upload time or the numeric Steam suffix.
   function screenshotStamp(name){
     const match=name.match(/^(?:(?:Screenshot|Screen[ _-]?Shot)[ _-]+)?(20\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{1,3})?(?=[_.-]|$)/i)
-      ||name.match(/^(?:(?:Screenshot|Screen[ _-]?Shot)[ _-]+)?(20\d{2})[-_.](\d{2})[-_.](\d{2})[T _-](\d{2})[-_.:](\d{2})[-_.:](\d{2})(?:[._](\d{1,3})(?=\.[^.]+$))?(?=[_.-]|$)/i);
+      ||name.match(/^(?:(?:Screenshot|Screen[ _-]?Shot)[ _-]+)?(20\d{2})[-_.](\d{2})[-_.](\d{2})[T _-](\d{2})[-_.:](\d{2})[-_.:](\d{2})(?:[._](\d{1,3})(?=\.[^.]+$))?(?=[_.-]|$)/i)
+      // PS5 exports use <game title>_YYYYMMDDhhmmss.ext, including localized titles.
+      ||name.match(/^.+_(20\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\.(?:png|jpe?g|webp|gif|avif)$/i);
     if(!match)return null;
     const [,y,m,d,h,min,sec,fraction='']=match;
     const ms=Number(fraction.padEnd(3,'0'));

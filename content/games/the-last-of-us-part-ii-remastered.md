@@ -92,9 +92,9 @@ screenshotGallery:
   enabled: true
   folder: Game Dossiers/the-last-of-us-part-ii-remastered
   images:
-    - /uploads/cms/8b23fa9148e59628647f21520c48c80248e54a02158bf0d2b4403495ccb80f51/f1ef248a161efa9f72b4fc9328a8ffa1984ba11360259a8b6c67a2921711de08/The%20Last%20of%20Us%E2%84%A2%20Part%20II%20Remastered_20260402171951.jpg
-    - /uploads/cms/4bfcd43a4303b34ce3b8180b11169b82ee949c7ba7494fd591f1ea8ee84d91e4/f1ef248a161efa9f72b4fc9328a8ffa1984ba11360259a8b6c67a2921711de08/The%20Last%20of%20Us%E2%84%A2%20Part%20II%20Remastered_20260402171332.jpg
     - /uploads/cms/35bcca4fcd476a109b6064bd51c4b812611ceedffc205cc53cf0a613d32f91b2/f1ef248a161efa9f72b4fc9328a8ffa1984ba11360259a8b6c67a2921711de08/The%20Last%20of%20Us%E2%84%A2%20Part%20II%20Remastered_20260402171055.jpg
+    - /uploads/cms/4bfcd43a4303b34ce3b8180b11169b82ee949c7ba7494fd591f1ea8ee84d91e4/f1ef248a161efa9f72b4fc9328a8ffa1984ba11360259a8b6c67a2921711de08/The%20Last%20of%20Us%E2%84%A2%20Part%20II%20Remastered_20260402171332.jpg
+    - /uploads/cms/8b23fa9148e59628647f21520c48c80248e54a02158bf0d2b4403495ccb80f51/f1ef248a161efa9f72b4fc9328a8ffa1984ba11360259a8b6c67a2921711de08/The%20Last%20of%20Us%E2%84%A2%20Part%20II%20Remastered_20260402171951.jpg
 manual:
   availabilityStatus: available
   officialStores:

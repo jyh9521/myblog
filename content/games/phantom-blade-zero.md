@@ -9,7 +9,7 @@ gameMetadata:
     - PlayStation 5
   localizedName: ''
   developers:
-    - Unknown
+    - S-GAME Studio
   screenshots:
     - https://media.rawg.io/media/screenshots/908/9082f658383685fc50abb03a260c424c.jpg
     - https://media.rawg.io/media/screenshots/2f6/2f6a17ad1a8133fd19f3eb99dd634ca9.jpg
@@ -23,7 +23,7 @@ gameMetadata:
     - Role-Playing
   releaseDate: 2026-10-29
   publishers:
-    - Unknown
+    - S-GAME Publishing
   cover: https://cdn2.steamgriddb.com/grid/e1600ca3892e2d6f80a180e429ec0119.jpg
   title: Phantom Blade Zero
   sources:
@@ -37,10 +37,10 @@ gameMetadata:
   originalName: Phantom Blade Zero
   fieldSources:
     platforms: thegamesdb
-    developers: thegamesdb
+    developers: manual
     genres: thegamesdb
     releaseDate: thegamesdb
-    publishers: thegamesdb
+    publishers: manual
     cover: steamgriddb
     title: rawg
     description: rawg
@@ -49,6 +49,8 @@ gameMetadata:
     - selectedPlatforms
     - title
     - cover
+    - developers
+    - publishers
 summary:
   method: translate
   model: gemini-3.5-flash-lite

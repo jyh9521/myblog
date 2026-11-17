@@ -1,5 +1,5 @@
 ---
-title: 人中之龙０ 誓约的场所 导演剪辑版
+title: 人中之龙0：誓约的场所 导演剪辑版
 status:
   - 已通关
 gameMetadata:

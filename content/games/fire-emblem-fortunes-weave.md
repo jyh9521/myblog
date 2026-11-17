@@ -1,4 +1,5 @@
 ---
+title: 火焰之纹章：万缕千丝
 status:
   - AFK
 gameMetadata:

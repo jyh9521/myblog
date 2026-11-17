@@ -1,0 +1,153 @@
+---
+title: 生化危机：安魂曲
+status:
+  - 已通关
+gameMetadata:
+  platforms:
+    - PlayStation 5
+    - Xbox Series X|S
+    - PC
+  selectedPlatforms:
+    - PC
+  developers:
+    - Capcom
+  screenshots:
+    - https://media.rawg.io/media/screenshots/7ea/7ea1b2a87e47df90eaf5ae6847b7c6f5.jpg
+    - https://media.rawg.io/media/screenshots/22c/22c0b1bab65fc16a2da31963fdf81ca5.jpg
+    - https://media.rawg.io/media/screenshots/00f/00f3bd2acd50dfba3033704a7eacdfe7.jpg
+    - https://media.rawg.io/media/screenshots/280/280ce5a48659d0f7739342e9d598803f.jpg
+    - https://media.rawg.io/media/screenshots/cd5/cd51046ddebe53b6faae1787305e52b1.jpg
+  updatedAt: 2026-11-17T12:15:04.801Z
+  genres:
+    - Action
+  releaseDate: 2026-02-27
+  publishers:
+    - Capcom
+  cover: https://cdn2.steamgriddb.com/grid/956adefb0eb473d0cd054107659ab6fd.jpg
+  title: Resident Evil Requiem
+  sources:
+    rawg:
+      id: '1004511'
+      slug: resident-evil-9-requiem
+      url: https://rawg.io/games/1004511
+  id: rawg:1004511
+  originalName: Resident Evil Requiem
+  fieldSources:
+    platforms: rawg
+    selectedPlatforms: manual
+    developers: rawg
+    screenshots: rawg
+    genres: rawg
+    releaseDate: rawg
+    publishers: rawg
+    cover: steamgriddb
+    title: manual
+    originalName: manual
+  manualFields:
+    - selectedPlatforms
+    - cover
+    - title
+    - originalName
+summary:
+  method: translate
+  model: gemini-3.5-flash-lite
+  source:
+    edition: 'rawg:1004511:'
+    kind: overview
+    label: RAWG
+    language: en
+    url: https://rawg.io/games/1004511
+  text: |-
+    《生化危机：安魂曲》是《生化危机》正统系列的第九部作品。
+
+    准备好在一场惊心动魄、深入骨髓的体验中逃离死亡吧。
+
+    尖端科技与开发团队深厚经验的完美结合，铸就了一部拥有饱满人物塑造以及前所未有沉浸感的精彩剧情。
+
+    生存恐怖的新纪元将于2026年开启。亡者安魂，生者噩梦。
+screenshotGallery:
+  enabled: true
+  folder: Game Dossiers/resident-evil-requiem
+  images:
+    - /uploads/cms/c6a9a921aab4d44160573937f6b19663a652dee95a6d0da3c5933f747e43bf88/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260301130616_1.jpg
+    - /uploads/cms/092da92493d924c6474bd179abee0d7f4c460802167b9ada10e94a2e300518e9/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260301132200_1.jpg
+    - /uploads/cms/e9e74531a565f484113b060409c29ba6989199c2e619cfc6f11ef03be21fd0f6/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260301133454_1.jpg
+    - /uploads/cms/2cd6da432b8c4097f468c49d8f1c7259803812448c63f80549efeb440c50d620/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260301135302_1.jpg
+    - /uploads/cms/203373ac799172ec8eb4699f67faf7efb5f9ac62093caa09d71987570b7211c2/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260301135828_1.jpg
+    - /uploads/cms/10aed09eb0222e27a90e05047e91801b80bc867d85163edff9f1e4d31b0dbcc2/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260301140404_1.jpg
+    - /uploads/cms/ae75562955e8cd35503e4ff2e15048e333a575ce0a3b34d52ea201092939441b/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260301140531_1.jpg
+    - /uploads/cms/24fa2a0915958a74d1985fa689859979ec39a7b3fb9468904522aaf102c44129/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304191235_1.jpg
+    - /uploads/cms/7ca4c104ea63d7df153fec551fb7db751b676212c2beb3700e8e883f12cd1bd1/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304191513_1.jpg
+    - /uploads/cms/de8520ae21db6312c1093374b1832f732203383f38aca449da3a649b33910fb9/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304193908_1.jpg
+    - /uploads/cms/096c8c7d552947efa073a1f561df4791e8c99d2bd9dd513fc3da6fc9f21fd592/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304201537_1.jpg
+    - /uploads/cms/92ab6bebcbbb3248f3d74f43aa73ee6fcb8c34b46d10acb38600dbf79a56a346/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304212505_1.jpg
+    - /uploads/cms/e11b700f78dcf4f3cdbeb5ff73868c1e768b25a5cb1ef425ad8733f966001f1e/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304212920_1.jpg
+    - /uploads/cms/8672db8316add42e32ac4649a6d783e19bf975c200a92baf01ca363381a8a7bf/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304212928_1.jpg
+    - /uploads/cms/8c338df346f5b991b94f14f7a6795387ac98657536387918d47e17fc4d17c47a/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304220024_1.jpg
+    - /uploads/cms/eda096d393451c1de06f76738d6742e11f3351f45fffd8cc760dc6ea1da6453c/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304221402_1.jpg
+    - /uploads/cms/7c588aa22dd2d4564cad283bcae8ebafa9ad8235fa610f84d87652c41c22a94d/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304222432_1.jpg
+    - /uploads/cms/2e2be0096a35f0eb80fb39cf1bef626937de8178ef7ee179237898db07e46b64/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260304223756_1.jpg
+    - /uploads/cms/e693efe6a1a8d31ff337000615bbc1033f7fc9644785ce345c569697321927bc/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306131303_1.jpg
+    - /uploads/cms/faa790d1f8ad96b556697bbedc7af49e100fe1e57a933a994c27a7b430616dbc/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306133924_1.jpg
+    - /uploads/cms/0cbdf83275d11068d303a7f1519871dd5d9917cc867535582e0d6377776bfe9d/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306133942_1.jpg
+    - /uploads/cms/dfd6edd5d1898531927069f48fa96c1c64efd82819a79b33e77676d8a252fbe0/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306142330_1.jpg
+    - /uploads/cms/0c3915e4bd937052dcfcc01a1de0eee6439fab3b7047f3457ba7ad244199f4f2/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306142501_1.jpg
+    - /uploads/cms/723ad1bba20ff88a78be75dc866814563a1d5d52a4c715558699e361d24ea27b/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306152750_1.jpg
+    - /uploads/cms/d06e1601c9a7757e1ba80a2c5e1c23105c4fb451a389c4b0eb82b97e1c041d8f/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306161841_1.jpg
+    - /uploads/cms/15ff8505e81f2c40df94e3037b4904b6897dd80476f67dc10072915ff71fb3de/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306165639_1.jpg
+    - /uploads/cms/bf316ef1eeb49e4c8a6e6cc51496ae17f0785efa9c368d1b6ed3a0ad30ec33eb/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306171629_1.jpg
+    - /uploads/cms/9a3c4b293623fc34f21a8effbcdbaa421902a36841422b5f525f43797c4cfac8/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306172018_1.jpg
+    - /uploads/cms/01c2afb48030271ef56416a3416d6f0a788399d84077b5e346f6eddcf32ac057/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306172801_1.jpg
+    - /uploads/cms/7cf21f796fff12b72533f0522c4f09553f020405fad0ee5a085fa4f462e179e1/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306173125_1.jpg
+    - /uploads/cms/78e81a3f877b7eb1bf4bc2280d5140bd8049097368aaa7e566ace39e441f2bac/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306173133_1.jpg
+    - /uploads/cms/72848a7685671010a1c5d94d4dc0e876d5ff785ff623e5d2bf35b13057347f81/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306173825_1.jpg
+    - /uploads/cms/b8044aee7af919d0060ce3f1554c8f2a453a69f02993f5d62f260ee8146ca737/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306175320_1.jpg
+    - /uploads/cms/3f34f872c3573b4b01036a65e82182225913cb8910db9d705b597e36b0a31aa3/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306175520_1.jpg
+    - /uploads/cms/2aa10251abdcea7c547842a3716c973e22d33811329a45c83a46e005bea73d49/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306180456_1.jpg
+    - /uploads/cms/f7dfeb42cf2e200ccae3ffd5577ac561d5ed77e84554fddc00c7cba47481e6ee/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306180542_1.jpg
+    - /uploads/cms/0be8471f705eda2e4b86140274ad9ffa2fa60fc46b943386a8d941db2768f5b9/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306183453_1.jpg
+    - /uploads/cms/ac847447605984dd0b29116133318184089d35392a641c32344f19eb5106c2dd/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306184101_1.jpg
+    - /uploads/cms/993d46b45e6611ec94d4e9e71de5087c3b4d54b31e9ef332bf102a3549e06ed8/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306184917_1.jpg
+    - /uploads/cms/bcab860fad0939f92cb166b412717c06d7b3aba7649e1c3771fd4ca3e87f5316/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306184924_1.jpg
+    - /uploads/cms/d7fbed7c32434622660f3e66f95e5f749c2ff63c48f054d76a788b56ff0ef5d3/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306193242_1.jpg
+    - /uploads/cms/015d26ec028a3f32d151b92b11ec7e64d177032aac19d6989f96963b9d08939b/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306204233_1.jpg
+    - /uploads/cms/d18aad7748a2c765b41f5872509a1eec9ea6a49db3411259cb408300343243fb/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306205447_1.jpg
+    - /uploads/cms/f4324aa33eba98c7facc0d0bd53a0263deb686efbd418515de76e03f8c2f84ac/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306205842_1.jpg
+    - /uploads/cms/7142a014af97fb38a242a0b06941b71ec4d7f6d9671b16c754e9d2fc91263ee5/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306210206_1.jpg
+    - /uploads/cms/f651bbe22f054ff740148fb9e85259e3fe51652e5eb4d534d7e6d215e60d86ad/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306210622_1.jpg
+    - /uploads/cms/a15c99c07f2bd66bacd7338ea015abdbfb022a4189b0b33ede82fda7e4c3a1b2/fb8ccb81d6c1308bf0833a5727248b12301b1ea699981c8de15b7f7e0fcf94ba/20260306210710_1.jpg
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: Steam
+      note: ''
+      region: ''
+      url: https://store.steampowered.com/app/3764200/
+playTime:
+  hours: 9
+personalRating: 9.2
+hltb:
+  auto: true
+  id: 169267
+  snapshot:
+    completionist: 31.89
+    extras: 14.03
+    id: 169267
+    main: 11.11
+    updatedAt: 2026-11-17T12:14:55.273Z
+  title: Resident Evil Requiem
+  url: https://howlongtobeat.com/game/169267
+events:
+  - date: 2026-03-01
+    title: 开始游戏
+  - date: 2026-03-06
+    title: 通关游戏
+    note: |-
+      格蕾丝部分算是生化7的风格，因为没体术加上背包格子紧张，需要时刻注意资源管理。
+
+      里昂部分基本就是生化4，人物性能强大、背包充足，就是没有异次元箱子用。
+
+      游戏整体设计最好的部分是疗养院，精巧的箱庭关卡，其次是浣熊市，到后面方舟就有点敷衍了。
+
+      里面塞了不少2代彩蛋，老玩家懂的都懂。
+---

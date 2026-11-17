@@ -8,7 +8,7 @@ gameMetadata:
   selectedPlatforms:
     - PC
   developers:
-    - Unknown
+    - Questing Goose Studio
   updatedAt: 2026-11-09T02:33:46.265Z
   genres:
     - Construction and Management Simulation
@@ -27,7 +27,7 @@ gameMetadata:
   fieldSources:
     platforms: thegamesdb
     selectedPlatforms: manual
-    developers: thegamesdb
+    developers: manual
     genres: thegamesdb
     releaseDate: thegamesdb
     publishers: thegamesdb
@@ -38,6 +38,7 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - cover
+    - developers
 summary:
   method: translate
   model: gemini-3.5-flash-lite

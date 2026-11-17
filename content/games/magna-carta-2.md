@@ -1,7 +1,7 @@
 ---
 title: 真名法典2
 status:
-  - 考虑制作补丁
+  - 已制作补丁
 gameMetadata:
   platforms:
     - Xbox 360

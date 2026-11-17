@@ -124,6 +124,13 @@ screenshotGallery:
     - /uploads/cms/f29b58ac41a7a70b417edbeb53d5b4ade0a70da857051c30c615ba97562f55cc/7abe508ce4f026b08c0694edcd5e3c30a9dc8f228f9162279beb9248dccd598f/007%20%E5%88%9D%E9%9C%B2%E9%94%8B%E8%8A%92_20260601031405.png
     - /uploads/cms/4a36b88ed5d9c04b83fb3f4144bb29de72a1cb42f2942cd4947aec27d32ed687/7abe508ce4f026b08c0694edcd5e3c30a9dc8f228f9162279beb9248dccd598f/007%20%E5%88%9D%E9%9C%B2%E9%94%8B%E8%8A%92_20260531200427.png
     - /uploads/cms/089d99391445d6c74b3ce3f54b22927dfa0a7d2d89008e5ce065693b10711526/7abe508ce4f026b08c0694edcd5e3c30a9dc8f228f9162279beb9248dccd598f/007%20%E5%88%9D%E9%9C%B2%E9%94%8B%E8%8A%92_20260531194319.png
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: PlayStation Store
+      note: ''
+      region: HK
+      url: https://store.playstation.com/en-hk/product/EP3969-PPSA11386_00-007FIRSTLIGHT000
 playTime:
   hours: 22
 personalRating: 9.1

@@ -1,5 +1,5 @@
 ---
-title: 斯普拉遁 涂击队
+title: 斯普拉遁：涂击队
 status:
   - 已通关
 gameMetadata:

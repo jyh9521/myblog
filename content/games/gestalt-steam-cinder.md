@@ -8,7 +8,7 @@ gameMetadata:
   selectedPlatforms:
     - PC
   developers:
-    - Unknown
+    - Metamorphosis Games
   updatedAt: 2026-11-17T11:26:31.661Z
   genres:
     - Action
@@ -28,7 +28,7 @@ gameMetadata:
   fieldSources:
     platforms: thegamesdb
     selectedPlatforms: manual
-    developers: thegamesdb
+    developers: manual
     genres: thegamesdb
     releaseDate: thegamesdb
     publishers: thegamesdb
@@ -38,6 +38,7 @@ gameMetadata:
   manualFields:
     - selectedPlatforms
     - cover
+    - developers
 summary:
   method: translate
   model: gemini-3.5-flash-lite

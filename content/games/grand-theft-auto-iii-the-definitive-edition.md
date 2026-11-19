@@ -1,5 +1,5 @@
 ---
-title: GTA III 终极版
+title: 侠盗猎车手 III 终极版
 status:
   - 已通关
 gameMetadata:

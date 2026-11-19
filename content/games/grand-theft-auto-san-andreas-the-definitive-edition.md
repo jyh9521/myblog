@@ -1,5 +1,5 @@
 ---
-title: GTA：圣安地列斯 终极版
+title: 侠盗猎车手：圣安地列斯 终极版
 status:
   - 想玩
 gameMetadata:

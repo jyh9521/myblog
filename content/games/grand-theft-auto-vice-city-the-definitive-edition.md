@@ -1,5 +1,5 @@
 ---
-title: GTA：罪恶都市 终极版
+title: 侠盗猎车手：罪恶都市 终极版
 status:
   - 已通关
 gameMetadata:

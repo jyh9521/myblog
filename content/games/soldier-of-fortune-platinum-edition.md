@@ -1,7 +1,7 @@
 ---
 title: 命运战士：白金版
 status:
-  - 考虑制作补丁
+  - 想玩
 gameMetadata:
   platforms:
     - PC

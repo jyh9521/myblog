@@ -3,14 +3,36 @@ title: Picross S8
 status:
   - 已通关
 gameMetadata:
+  platforms:
+    - Nintendo Switch
+  selectedPlatforms:
+    - Nintendo Switch
+  developers:
+    - Jupiter
+  releaseDate: 2022-09-29
+  publishers:
+    - Jupiter
   cover: https://cdn2.steamgriddb.com/grid/5598c2c0070f7c047987aab3925f2d9c.png
+  title: Picross S8
+  originalName: Picross S8
   fieldSources:
     cover: steamgriddb
+    developers: manual
+    originalName: manual
+    platforms: manual
+    publishers: manual
     releaseDate: manual
+    selectedPlatforms: manual
+    title: manual
   manualFields:
     - cover
     - releaseDate
-  releaseDate: 2022-09-29
+    - developers
+    - publishers
+    - title
+    - originalName
+    - platforms
+    - selectedPlatforms
 screenshotGallery:
   enabled: true
   folder: Game Dossiers/picross-s8

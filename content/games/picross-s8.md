@@ -9,6 +9,8 @@ gameMetadata:
     - Nintendo Switch
   developers:
     - Jupiter
+  genres:
+    - Puzzle
   releaseDate: 2022-09-29
   publishers:
     - Jupiter
@@ -16,14 +18,15 @@ gameMetadata:
   title: Picross S8
   originalName: Picross S8
   fieldSources:
-    cover: steamgriddb
-    developers: manual
-    originalName: manual
     platforms: manual
-    publishers: manual
-    releaseDate: manual
     selectedPlatforms: manual
+    developers: manual
+    genres: manual
+    releaseDate: manual
+    publishers: manual
+    cover: steamgriddb
     title: manual
+    originalName: manual
   manualFields:
     - cover
     - releaseDate
@@ -33,6 +36,7 @@ gameMetadata:
     - originalName
     - platforms
     - selectedPlatforms
+    - genres
 screenshotGallery:
   enabled: true
   folder: Game Dossiers/picross-s8

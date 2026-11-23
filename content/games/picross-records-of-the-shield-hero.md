@@ -9,6 +9,8 @@ gameMetadata:
     - Nintendo Switch
   developers:
     - Jupiter
+  genres:
+    - Puzzle
   releaseDate: 2024-10-03
   publishers:
     - Jupiter
@@ -16,6 +18,7 @@ gameMetadata:
   originalName: Picross Records of The Shield Hero
   fieldSources:
     developers: manual
+    genres: manual
     originalName: manual
     platforms: manual
     publishers: manual
@@ -30,6 +33,7 @@ gameMetadata:
     - publishers
     - platforms
     - selectedPlatforms
+    - genres
 manual:
   availabilityStatus: available
   officialStores:

@@ -70,6 +70,12 @@ summary:
     创造历史：你身为盗贼做出的种种决定，将通过多条分支剧情决定你的未来。
 
     绝妙身法：通过潜行玩法避开敌人的搜查，建立你作为大盗的名声！
+screenshotGallery:
+  enabled: true
+  folder: Game Dossiers/kamiwaza-way-of-the-thief
+  images:
+    - /uploads/cms/8f822fad75c1e8f7cb6a6bd986d2ede3b4b0b1e7a596cd1befb3d0ed81cc8d6d/805e8668468e509b0d0c71e2fb37d33982ff2e0add07ace1a427f96c319c4106/2026071819031600_c.jpg
+    - /uploads/cms/0ba612e7f6f6ad7cfb491db66a2773ad48c2c17e4cd65d375f1a992ed4e20a8a/805e8668468e509b0d0c71e2fb37d33982ff2e0add07ace1a427f96c319c4106/2026071823371200_c.jpg
 manual:
   availabilityStatus: available
   officialStores:

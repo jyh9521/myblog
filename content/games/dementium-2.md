@@ -1,6 +1,7 @@
 ---
 title: 病房2
 status:
+  - 已通关
   - 已制作补丁
 gameMetadata:
   platforms:

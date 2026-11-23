@@ -47,6 +47,13 @@ screenshotGallery:
     - /uploads/cms/fccc0614a1828c0088b304b87f7149b39f4689aa60f68c0092dcd32b85b64d8d/3bb2dc6518ab7f9e622b0d212ce6a65e9308dc031511f43fc68b3d1433182a44/2023040513212600_c.jpg
     - /uploads/cms/95fd2c09f0150137935cd88de59b3f7f5d5a21ca38a83ca3081d418b4b721b99/3bb2dc6518ab7f9e622b0d212ce6a65e9308dc031511f43fc68b3d1433182a44/2023040714023800_c.jpg
     - /uploads/cms/23c45cb43b65af96f5d3c9c1784cd7a3b000f627739d170c664e36d61343243b/3bb2dc6518ab7f9e622b0d212ce6a65e9308dc031511f43fc68b3d1433182a44/2023040714024100_c.jpg
+manual:
+  availabilityStatus: available
+  officialStores:
+    - name: Nintendo eShop
+      note: ''
+      region: JP
+      url: https://store-jp.nintendo.com/item/software/D70010000051576
 hltb:
   auto: true
   id: 113850

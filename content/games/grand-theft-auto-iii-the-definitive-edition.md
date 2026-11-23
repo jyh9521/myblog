@@ -1,5 +1,5 @@
 ---
-title: 侠盗猎车手 III 终极版
+title: 侠盗猎车手III 终极版
 status:
   - 已通关
 gameMetadata:
@@ -78,6 +78,13 @@ summary:
     体验开创先河的史诗级开放世界冒险，现已针对新一代平台全面升级。全方位增强包括耀眼的全新光照和环境升级、高分辨率纹理、更远的视距、《Grand Theft Auto V》风格的操作与瞄准方式，以及更多精彩内容，让这些备受喜爱的世界焕发出前所未有的细节生机。
 
     一切都从自由城开始。《GTA III 终极版》赋予你革命性的自由，想去哪就去哪，想劫谁就劫谁，将地下犯罪世界的核心交由你掌控——前提是你有足够的胆量去夺取它。
+screenshotGallery:
+  enabled: true
+  folder: Game Dossiers/grand-theft-auto-iii-the-definitive-edition
+  images:
+    - /uploads/cms/e1e807ff1fc52aa3f3c7654e2023d3bef03c3e35ba6b56891500041379ed23df/38c1e4b55f2f34b9884b2f42b175d1f387f459081a381f3298f678f10a800269/20200615234151_1.jpg
+    - /uploads/cms/7574a38c5ab265f2b4a36e8bab02abd04e86b9b5db4f68c8c61a8d11d1ee7584/38c1e4b55f2f34b9884b2f42b175d1f387f459081a381f3298f678f10a800269/2015-02-18_00002.jpg
+    - /uploads/cms/55ad4b73762d6af1e98b3ae797808246791399b475011f4585dacd40f2dfd763/38c1e4b55f2f34b9884b2f42b175d1f387f459081a381f3298f678f10a800269/2015-02-18_00001.jpg
 manual:
   availabilityStatus: available
   officialStores:

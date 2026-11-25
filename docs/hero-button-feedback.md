@@ -1,4 +1,14 @@
-# Flat CTA feedback
+# CTA feedback history
+
+The flat-opacity revision below records the first fix, not the current motion
+contract. It removed the abrupt legacy shadows but the user found its response
+too subtle. The current [continuous interaction system](motion-system.md#continuous-native-style-interaction-revision)
+uses coupled hover/press spatial and effects springs, 10% hover/14% press tint,
+soft neutral elevation and a perceptible 2px/1.2% control hover response. Both
+browser scripts now validate physical intermediate frames; CSS opacity transitions
+are only the no-JavaScript fallback.
+
+## First flat-opacity revision
 
 The homepage CTA retained a legacy `:hover` rule with an 11px solid red shadow and
 a second large blurred shadow. The motion layer removed `box-shadow` from the

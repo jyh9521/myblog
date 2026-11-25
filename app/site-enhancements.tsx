@@ -30,10 +30,16 @@ export function ThemeToggle() {
 export function ReadingProgress() {
   const bar = useRef<HTMLSpanElement>(null);
   useEffect(() => {
-    let frame = 0, max = 0;
-    const paint = () => { frame = 0; if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0})`; };
+    let frame = 0, max = 0, needsMeasure = true;
+    const paint = () => {
+      frame = 0;
+      // Read outside ResizeObserver delivery: WebKit can otherwise re-enter
+      // layout while shared-transition content is changing the body's size.
+      if (needsMeasure) { max = document.documentElement.scrollHeight - innerHeight; needsMeasure = false; }
+      if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0})`;
+    };
     const update = () => { if (!frame) frame = requestAnimationFrame(paint); };
-    const measure = () => { max = document.documentElement.scrollHeight - innerHeight; update(); };
+    const measure = () => { needsMeasure = true; update(); };
     const observer = new ResizeObserver(measure); observer.observe(document.body);
     measure(); addEventListener('scroll', update, { passive: true }); addEventListener('resize', measure);
     return () => { observer.disconnect(); removeEventListener('scroll', update); removeEventListener('resize', measure); cancelAnimationFrame(frame); };

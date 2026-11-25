@@ -14,18 +14,34 @@ async function run(engine){
  const homeTitle=await page.title();assert.ok(homeTitle.includes('伯翎飞云'));
  const source=page.locator('.m3-feature'),href=await source.getAttribute('href');
  await source.click();await page.waitForURL('**'+href);await page.locator('.article-header h1').waitFor();await page.waitForTimeout(800);
- assert.equal(await page.locator('#site-content').evaluate(e=>document.activeElement===e),await page.evaluate(()=>!!document.startViewTransition));
- const snapshots=await page.evaluate(()=>window.__transitions);if(await page.evaluate(()=>!!document.startViewTransition)){assert.ok(snapshots.some(x=>x.before===1&&x.after===1&&x.ready),'shared cover snapshot pair');assert.ok(!snapshots.some(x=>x.error),'no rejected snapshot');}
+ assert.equal(await page.locator('#site-content').evaluate(e=>document.activeElement===e),true);
+ let snapshots=await page.evaluate(()=>window.__transitions);fs.mkdirSync(output,{recursive:true});fs.writeFileSync(path.join(output,engine+'-snapshots.json'),JSON.stringify(snapshots,null,2));if(await page.evaluate(()=>!!document.startViewTransition)){
+  // A cold route can intentionally exceed the input-suppression budget. Prove
+  // that it remains functional, then require a real shared pair on the warm route.
+  if(!snapshots.some(x=>x.before===1&&x.after===1&&x.ready)&&snapshots.every(x=>x.error==='AbortError')){
+    await page.goBack();await page.waitForURL(origin+'/');await page.waitForTimeout(800);
+    await source.click();await page.waitForURL('**'+href);await page.locator('.article-header h1').waitFor();await page.waitForTimeout(800);
+    snapshots=await page.evaluate(()=>window.__transitions);fs.writeFileSync(path.join(output,engine+'-snapshots.json'),JSON.stringify(snapshots,null,2));
+  }
+  assert.ok(snapshots.some(x=>x.before===1&&x.after===1&&x.ready),'shared cover snapshot pair on a ready route');
+  assert.ok(!snapshots.some(x=>x.error&&x.error!=='AbortError'),'no unexpected rejected snapshot');
+}
  await page.evaluate(()=>scrollTo({top:900,behavior:'instant'}));await page.waitForTimeout(200);
  assert.equal(await page.locator('.reading-progress span').evaluate(e=>e.style.width),'');
  assert.match(await page.locator('.reading-progress span').evaluate(e=>e.style.transform),/scaleX\(0\./);
  // Unmount/reopen during exit, Escape, focus restoration and focus trap.
  const cover=page.locator('.article-cover-viewport button').first();
  if(await cover.count()){
-  await cover.click();await page.getByRole('dialog').waitFor();await page.keyboard.press('Escape');await page.waitForTimeout(60);await cover.click();await page.waitForTimeout(500);assert.equal(await page.getByRole('dialog').count(),1);await page.keyboard.press('Shift+Tab');assert.ok(await page.getByRole('dialog').evaluate(e=>e.contains(document.activeElement)));await page.keyboard.press('Escape');await page.waitForTimeout(500);assert.equal(await page.locator('.image-lightbox').count(),0);assert.ok(await cover.evaluate(e=>document.activeElement===e));
+  await cover.click();await page.getByRole('dialog').waitFor();await page.keyboard.press('Escape');await page.waitForTimeout(60);await cover.click();await page.waitForTimeout(500);assert.equal(await page.getByRole('dialog').count(),1);await page.keyboard.press('Shift+Tab');assert.ok(await page.getByRole('dialog').evaluate(e=>e.contains(document.activeElement)));await page.keyboard.press('Escape');await page.locator('.image-lightbox').waitFor({state:'detached',timeout:1500});assert.equal(await page.locator('.image-lightbox').count(),0);assert.ok(await cover.evaluate(e=>document.activeElement===e));
  }
  const initial=await page.evaluate(()=>document.documentElement.dataset.theme);
  await page.evaluate(()=>{const button=document.querySelector('.theme-toggle');let count=0;return new Promise(resolve=>{const timer=setInterval(()=>{button.click();if(++count===8){clearInterval(timer);resolve();}},25);});});await page.waitForTimeout(800);assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),initial);
+ // Native pointer input must also reach the live control, not a frozen snapshot.
+ await page.locator('.theme-toggle').scrollIntoViewIfNeeded();await page.waitForTimeout(350);
+ await page.evaluate(()=>{window.__nativeThemeHits=0;document.addEventListener('click',e=>{if(e.target.closest?.('.theme-toggle'))window.__nativeThemeHits++;},true);});
+ const toggle=await page.locator('.theme-toggle').boundingBox();
+ for(let i=0;i<6;i++){await page.mouse.click(toggle.x+toggle.width/2,toggle.y+toggle.height/2);await page.waitForTimeout(70);}
+ await page.waitForTimeout(400);assert.equal(await page.evaluate(()=>window.__nativeThemeHits),6,'every rapid physical click reaches the theme button');assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),initial);
  // Real observer batch: delayed cards must not flash fully visible before starting.
  await page.evaluate(()=>{const host=document.createElement('section');host.id='motion-reveal-fixture';host.style.cssText='position:fixed;top:70vh;left:0;width:90px;z-index:100';for(let i=0;i<5;i++){const card=document.createElement('article');card.className='post-card';card.style.cssText='height:20px;margin:0';host.append(card);}document.body.append(host);});
  await page.waitForFunction(()=>document.querySelector('#motion-reveal-fixture')?.lastElementChild.getAnimations().length>0);
@@ -36,7 +52,10 @@ async function run(engine){
  await page.emulateMedia({reducedMotion:'no-preference'});
  await page.locator('.site-header nav a[href="/posts/"]').click();await page.waitForURL('**/posts/');await page.locator('.archive-search input').fill('zzzz-no-matching-article');await page.getByText('没有找到匹配的文章').waitFor();await page.locator('.search-clear').click();assert.ok(await page.locator('.post-card').count()>0);
  const count=await page.locator('.post-card').count();await page.locator('.tag-filters button').nth(1).click();assert.ok(await page.locator('.post-card').count()<=count);await page.locator('.tag-filters button').first().click();
- await page.evaluate(()=>{document.querySelector('.site-header nav a[href="/about/"]').click();setTimeout(()=>document.querySelector('.site-header nav a[href="/games/"]').click(),35);});await page.waitForURL('**/games/');await page.waitForTimeout(2100);assert.equal(await page.locator('[style*="view-transition-name: article-cover"]').count(),0);assert.ok(await page.locator('main').isVisible());
+ await page.locator('.site-header nav').scrollIntoViewIfNeeded();
+ const aboutBox=await page.locator('.site-header nav a[href="/about/"]').boundingBox(),gamesBox=await page.locator('.site-header nav a[href="/games/"]').boundingBox();
+ await page.mouse.click(aboutBox.x+aboutBox.width/2,aboutBox.y+aboutBox.height/2);await page.waitForTimeout(50);await page.mouse.click(gamesBox.x+gamesBox.width/2,gamesBox.y+gamesBox.height/2);
+ await page.waitForURL('**/games/');await page.waitForTimeout(800);assert.equal(await page.locator('[style*="view-transition-name: article-cover"]').count(),0);assert.ok(await page.locator('main').isVisible());
  await page.goBack();await page.waitForTimeout(1000);assert.ok(await page.locator('main').isVisible());
  // Engine without View Transitions still gets functional router/content.
  await page.addInitScript(()=>{Object.defineProperty(document,'startViewTransition',{value:undefined,configurable:true});});

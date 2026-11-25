@@ -3,6 +3,7 @@
 import { startTransition, useEffect, useLayoutEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { installMotion, reducedMotion, skipTransition, transition } from './motion-runtime';
+import { motion, springFrames } from '../lib/motion';
 
 type Pending = { path: string; finish: () => void; cover?: string; origin: HTMLElement | null };
 const postSlug=(path:string)=>path.match(/^\/posts\/([^/]+)\/?$/)?.[1];
@@ -22,9 +23,12 @@ export default function MotionProvider(){
   useLayoutEffect(()=>{
     document.querySelectorAll<HTMLAnchorElement>('.site-header nav a').forEach(a=>{const selected=a.pathname==='/'?pathname==='/':pathname.startsWith(a.pathname);if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
     const job=pending.current;
-    if(previousPath.current!==pathname&&!job&&!reducedMotion()){
+    if(previousPath.current!==pathname)document.getElementById('site-content')?.focus({preventScroll:true});
+    if(previousPath.current!==pathname&&!reducedMotion()){
       entrance.current?.cancel();
-      entrance.current=document.getElementById('site-content')?.animate([{opacity:.85,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:220,easing:'cubic-bezier(.2,0,0,1)'})||null;
+      // Keep the shared cover's destination geometry fixed. Its own snapshot
+      // provides spatial continuity while the surrounding live content fades in.
+      entrance.current=document.getElementById('site-content')?.animate(springFrames(motion.spatial.default).map(value=>({opacity:Math.min(1,.35+.65*value),transform:job?.cover?'none':`translateY(${12*(1-value)}px)`})),{duration:600,easing:'linear'})||null;
     }
     previousPath.current=pathname;
     if(job&&pathname.replace(/\/$/,'')===job.path.replace(/\/$/,'')){
@@ -39,15 +43,23 @@ export default function MotionProvider(){
       const link=event.target.closest<HTMLAnchorElement>('a[href]');if(!link||link.hasAttribute('download')||link.target&&link.target!=='_self'||link.hasAttribute('data-motion-native'))return;
       const url=new URL(link.href,location.href);
       if(url.origin!==location.origin||url.pathname===location.pathname||url.hash||url.search||!/^\/(?:$|posts\/|games\/|about\/|ns\/|chronicles\/)/.test(url.pathname))return;
-      if(reducedMotion()||typeof document.startViewTransition!=='function')return;
       const id=++generation.current;
       event.preventDefault();pending.current?.finish();pending.current=null;skipTransition();clearNames();
-      const cover=postSlug(url.pathname)||postSlug(location.pathname);
+      const cover=postSlug(url.pathname)||(/^\/(?:$|posts\/?)$/.test(url.pathname)?postSlug(location.pathname):undefined);
+      // Ordinary routes never need a snapshot or a rendering-suppressed update.
+      // Keep SPA navigation in reduced-motion / API-less browsers as well.
+      if(!cover||reducedMotion()||typeof document.startViewTransition!=='function'){
+        startTransition(()=>router.push(url.pathname));return;
+      }
       const source=link.querySelector<HTMLElement>('[data-motion-cover]')||link.closest('.post-card')?.querySelector<HTMLElement>('[data-motion-cover]')||(cover?coverFor(cover):null);
       nameCover(source||null);
       let job:Pending;
-      const done=new Promise<void>(resolve=>{let timer:ReturnType<typeof setTimeout>;job={path:url.pathname,cover,origin:link,finish:()=>{clearTimeout(timer);resolve();}};pending.current=job;timer=setTimeout(()=>{if(pending.current===job)pending.current=null;resolve();skipTransition();clearNames();},1800);});
-      const view=transition(async()=>{if(pending.current!==job)return;startTransition(()=>router.push(url.pathname));await done;});
+      let navigated=false;
+      const navigate=()=>{if(navigated||generation.current!==id)return;navigated=true;startTransition(()=>router.push(url.pathname));};
+      // Do not freeze input while waiting on a slow network/React commit. The
+      // route keeps loading normally if its optional shared capture times out.
+      const done=new Promise<void>(resolve=>{let timer:ReturnType<typeof setTimeout>;job={path:url.pathname,cover,origin:link,finish:()=>{clearTimeout(timer);resolve();}};pending.current=job;timer=setTimeout(()=>{navigate();if(pending.current===job)pending.current=null;resolve();skipTransition();clearNames();},180);});
+      const view=transition(async()=>{if(generation.current!==id)return;navigate();await done;},'route');
       view?.finished.catch(()=>{}).finally(()=>{if(generation.current===id&&!pending.current)clearNames();});
     }
     const preference=matchMedia('(prefers-reduced-motion: reduce)');

@@ -36,10 +36,8 @@
 .m3-site .game-shelf-item .game-platform-link-xbox{--shelf-button:#107c10;--shelf-hover:#0a620b}
 .m3-site .game-shelf-item .game-platform-link-nintendo{--shelf-button:#c40012;--shelf-hover:#a0000f}
 .m3-site .game-shelf-item .game-platform-link:hover{background:var(--shelf-hover)}
-.m3-site .game-shelf-item .game-platform-link:active{border-radius:10px}
 .m3-site :is(.hero-button,.m3-directory-intro>a,.game-platform-link,.game-pagination button,.m3-quick a){transition:transform var(--motion-duration-medium) var(--m3-spring),border-radius var(--motion-duration-medium) var(--m3-spring),background-color var(--motion-duration-medium)}
 .m3-site :is(.hero-button,.m3-directory-intro>a,.game-platform-link,.m3-quick a):active{transform:scale(.97)}
-.m3-site :is(.m3-directory-intro>a,.game-platform-link):active{border-radius:14px}
 .m3-shelf-badges{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px;flex:none;max-width:min(48%,240px)}
 .m3-shelf-badge{--badge-bg:#e7e1ff;--badge-ink:#442683;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;padding:5px 9px;border-radius:100px 100px 7px 100px;background:var(--badge-bg);color:var(--badge-ink);font-size:12px;font-weight:850;line-height:1.45}
 .m3-shelf-badge[data-tone=playing]{--badge-bg:#d9eaff;--badge-ink:#004784}

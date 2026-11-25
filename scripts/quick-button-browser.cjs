@@ -46,7 +46,7 @@ async function run(engine) {
       await page.locator('.m3-quick').screenshot({ path: path.join(output, engine + '-quick-' + i + '.png') });
       assert.equal(hover.shadow, 'none', 'quick-entry hover must not introduce an inset shadow');
       assert.equal(hover.radius, idle.radius);
-      assert.equal(hover.opacity, .08);
+      assert.ok(hover.opacity > .09 && hover.opacity <= .1);
       const samples = await page.evaluate(() => window.__quickFade);
       observations.push({ button: i, label: 'fade-samples', values: samples });
       assert.ok(samples.some(x => x > 0 && x < .079), 'state layer fades instead of appearing instantly');

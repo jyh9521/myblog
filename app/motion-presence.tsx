@@ -6,6 +6,7 @@ import { motion, stepSpring } from '../lib/motion';
 export default function MotionPresence({ children, returnFocus }: { children: ReactElement | null; returnFocus?: RefObject<HTMLElement> }) {
   const open=Boolean(children),last=useRef(children),node=useRef<HTMLDivElement>(null);
   const state=useRef({value:0,velocity:0});
+  const spatial=useRef({value:0,velocity:0});
   const opener=useRef<HTMLElement|null>(null);
   const [retained,setRetained]=useState(open);
   if(children)last.current=children;
@@ -16,9 +17,9 @@ export default function MotionPresence({ children, returnFocus }: { children: Re
     if(open)element.removeAttribute('aria-hidden');else element.setAttribute('aria-hidden','true');
     const preference=matchMedia('(prefers-reduced-motion: reduce)');
     let frame=0,lastTime=performance.now();
-    const paint=()=>{element.style.opacity=String(state.current.value);const panel=element.querySelector<HTMLElement>('.lightbox-content');if(panel)panel.style.scale=String(.985+.015*state.current.value);};
-    const finish=()=>{cancelAnimationFrame(frame);state.current={value:open?1:0,velocity:0};paint();if(!open)setRetained(false);};
-    const tick=(time:number)=>{state.current=stepSpring(state.current,open?1:0,Math.min((time-lastTime)/1000,.064),motion.effects.default);lastTime=time;paint();if(Math.abs(state.current.value-(open?1:0))<.001&&Math.abs(state.current.velocity)<.01)finish();else frame=requestAnimationFrame(tick);};
+    const paint=()=>{element.style.opacity=String(Math.min(1,Math.max(0,state.current.value)));const panel=element.querySelector<HTMLElement>('.lightbox-content');if(panel){panel.style.scale=String(.96+.04*spatial.current.value);panel.style.translate=`0 ${20*(1-spatial.current.value)}px`;}};
+    const finish=()=>{cancelAnimationFrame(frame);state.current={value:open?1:0,velocity:0};spatial.current={value:open?1:0,velocity:0};paint();if(!open)setRetained(false);};
+    const tick=(time:number)=>{const dt=Math.min((time-lastTime)/1000,.064);state.current=stepSpring(state.current,open?1:0,dt,motion.effects.default);spatial.current=stepSpring(spatial.current,open?1:0,dt,motion.spatial.default);lastTime=time;paint();if([state.current,spatial.current].every(s=>Math.abs(s.value-(open?1:0))<.001&&Math.abs(s.velocity)<.01))finish();else frame=requestAnimationFrame(tick);};
     if(preference.matches)finish();else{paint();frame=requestAnimationFrame(tick);}
     preference.addEventListener('change',finish);
     return()=>{cancelAnimationFrame(frame);preference.removeEventListener('change',finish);};

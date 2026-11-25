@@ -8,7 +8,7 @@ Three layers share the same intent:
 
 1. Exact damped oscillator integration in a single requestAnimationFrame loop for pointer and keyboard press/release, and card hover. Retargeting retains position and velocity, including reversals; the loop stops when idle and writes individual scale/translate properties, not layout.
 2. Compositor-owned WAAPI samples of that oscillator for one-shot viewport entry. IntersectionObserver watches newly inserted card subtrees, never article paragraphs. Batch delays are bounded, and `fill: backwards` prevents a visible-before-delay flash. Server HTML is visible before hydration and with JavaScript disabled.
-3. Native same-document View Transitions around Next router commits. A persistent coordinator owns pending snapshots, timeout, rapid navigation generations, focus and cleanup. Only the selected cover is named, avoiding duplicate featured/grid names. Theme changes share the same snapshot owner. Browser back/forward and engines without the API use a short content entrance, without blocking navigation.
+3. Native same-document View Transitions only for the selected shared cover around Next router commits. Root and header never participate in snapshots. A persistent coordinator owns the optional capture, a 180ms commit budget, rapid navigation generations, focus and cleanup. Slow captures are skipped while routing continues. Ordinary routes, browser history and API-less engines use live WAAPI content arrival; theme changes use live palette transitions rather than input-blocking snapshots.
 
 ## Tokens
 
@@ -21,7 +21,7 @@ The physics values follow [AndroidX ExpressiveMotionTokens v0_14_0](https://raw.
 | Effects stiffness | 3800 | 1600 | 800 |
 | Effects damping ratio | 1 | 1 | 1 |
 
-Spatial motion can overshoot; opacity/effects are critically damped. Generic CSS fallback durations are 120/220/360ms, standard easing `cubic-bezier(.2,0,0,1)`, exit easing `cubic-bezier(.3,0,1,1)`. Spring samples cover 600ms; the live physical loop settles by displacement < .001 and velocity < .01. These web duration/stagger choices are project adaptations, not claimed official Android tokens. Stagger is 35ms, capped at 140ms. Controls compress 3.5%; cards lift 3px; reveals translate 12px. There are no infinite decorative loops or `transition: all` additions.
+Spatial motion can overshoot; opacity/effects are critically damped. Generic CSS fallback durations are 160/260/420ms, standard easing `cubic-bezier(.2,0,0,1)`, exit easing `cubic-bezier(.3,0,1,1)`. Spring samples cover 600ms; the live physical loop settles by displacement < .001 and velocity < .01. These web duration/stagger choices are project adaptations, not claimed official Android tokens. Stagger is 35ms, capped at 140ms. Controls lift 2px/expand 1.2% on fine-pointer hover and compress 3.5% on press; cards lift 4px and compress .8%; reveals translate 12px. There are no infinite decorative loops or `transition: all` additions.
 
 ## Existing implementation and reference audit
 
@@ -74,7 +74,7 @@ motion and keyboard/touch behavior in scripts/motion-browser.cjs, and compare a
 production CDP trace before and after changing scroll or page transition paths.
 ```
 
-## Validation results (2026-11-25)
+## Initial rollout results (historical, 2026-11-25)
 
 - Full local suite: 458 tests pass (275 source/CMS, 61 counter, 93 gaming accounts, 29 static preview). Baseline: 454 tests. Type check, content validation and production export pass; 237 static pages in this local content snapshot. Shared first-load JS remains 103kB; the homepage first-load total changes from 108kB to 110kB.
 - Playwright: Chromium 159, Firefox 153 and WebKit 26.5 pass desktop/mobile touch, snapshot pairing, live reduced-motion, reversal, focus, search, route and no-JS checks. WebKit required explicit trigger-based focus restoration because pointer activation does not necessarily focus a button.
@@ -85,3 +85,77 @@ production CDP trace before and after changing scroll or page transition paths.
 ## Rollback
 
 Revert the dedicated motion commit, not unrelated content/editor commits. The task evidence additionally contains original SHA256 hashes, a changed-file bundle, unified diff and executable rollback script. That script restores only enumerated changed files in a caller-selected copy after verifying their modified hashes; it never resets the repository or cleans user files.
+
+## Continuous native-style interaction revision
+
+The earlier quick-button fix removed abrupt legacy shadows but only provided a
+small, fast tint fade. That did not satisfy the user's perceptual goal. The revised
+model coordinates spatial response, tint and soft elevation rather than claiming
+that endpoint assertions or absence of reflow prove a native-quality feel.
+
+- `createInteraction`, `stepInteraction`, `interactionVisuals` and
+  `interactionSettled` in `lib/motion.ts` model four independent channels: hover
+  spatial, press spatial, hover effects and press effects. Their velocities persist
+  through retargeting. Hover uses default spatial/slow effects, while press uses
+  fast spatial/fast effects. Press suppresses hover lift and elevation; release
+  returns to the still-active hover target instead of restarting from rest.
+- Controls use one tint and one constant-geometry shadow pseudo-layer. Ready-state
+  opacity is driven by the effects channels, with no competing CSS tween. Each
+  control/card initializes its own variables so parent hover cannot leak into a
+  nested or disabled button. Cards use a bounded neutral shadow alpha; this may
+  repaint the hovered card, unlike compositor-only control opacity. It is not
+  advertised as paint-free.
+- The runtime handles mouse, primary touch, pointer cancellation, window blur,
+  disabled/ARIA-disabled changes, DOM removal and live reduced-motion changes.
+  Space on an anchor retains its native scroll semantics. Text and native inputs
+  do not get blanket displacement. No perpetual RAF remains after settlement.
+- Existing layout transforms are preserved. In particular, the lightbox arrows'
+  `translateY(-50%)` must never be replaced by a blanket button hover override.
+- Routes have a distinct 12px spring arrival while the live header stays still.
+  During a shared-cover transition, the surrounding text only fades so its parent
+  transform cannot disturb the cover's destination geometry. Ordinary routes and
+  API-less engines retain SPA navigation. Theme colors interpolate on live surfaces,
+  not in a whole-document snapshot that suppresses pointer hit testing.
+  Dialogs separately animate opacity and a 4%/20px panel arrival, retaining the
+  existing inert exit, focus trap, focus restoration and interruption handling.
+- Reading progress marks its range dirty in ResizeObserver, then measures once
+  in the next RAF before painting. Reading scrollHeight inside observer delivery
+  caused a reproducible WebKit resize-loop error during shared-cover navigation.
+  Scrolling alone still reuses the cached range rather than forcing layout.
+
+Verification additionally runs `node scripts/native-motion-browser.cjs`, which
+records real interaction video and frame samples. `--capture-only` skips final
+perceptual assertions for recording a comparison build. Blue pointer markers and
+the nested-control fixture exist only in the test recording, not the site. The
+regular three-engine `motion-browser.cjs`, hero/quick regressions and production
+profiler remain required. These checks are evidence of implemented behavior;
+Pixel/iPhone hardware equivalence and personal visual acceptance are not asserted.
+
+The profiler now uses six fixed-hit-point mouse clicks with 70ms spacing, verifies
+that all six actually reach the theme control, and records the interaction elapsed
+time. `locator.click()` silently waits for stable animated bounds and therefore
+cannot be used to compare a fixed-rate input scenario across motion models. The
+old full-document capture dropped physical clicks even though programmatic
+`button.click()` checks passed. The capture behavior is specified in
+[CSS View Transitions hit testing](https://www.w3.org/TR/css-view-transitions-1/#lifecycle).
+
+Sources: [Material motion](https://m3.material.io/styles/motion),
+[Android interruptible spring guidance](https://developer.android.com/develop/ui/compose/animation/quick-guide?hl=en).
+
+### Revision validation (2026-11-25)
+
+- 480 automated tests pass (297 source, 61 counter, 93 gaming accounts, 29
+  static preview); type check, content validation and 358-page production export
+  pass. No new runtime dependency; shared first-load JavaScript remains 102 kB.
+- Chromium, Firefox and WebKit pass the full route/shared-cover, native rapid
+  input, dialog, reduced-motion, touch and no-JavaScript suite. All three also
+  pass the focused hero and three quick-link frame-sampling checks. NS audio
+  pause, repeat navigation and history lifecycle checks pass.
+- The native-motion recording exercises actual hover, press, release, rapid
+  reversal and settlement. Independent review also verified the delayed capture
+  deadline/navigation regression and the deferred reading-progress measurement.
+- CDP traces and the visible demo are retained in the local revision evidence.
+  The previous live snapshot implementation delivered only 2 of 6 rapid theme
+  clicks; the revision delivers all 6. Total scenario CPU time is not an equal-work
+  comparison when the old version discards four interactions. Scroll frame
+  intervals are host samples, not an iPhone/Pixel or high-refresh-device guarantee.

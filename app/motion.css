@@ -1,27 +1,34 @@
 /* Motion layer only: palette, typography and layout remain owned by the site. */
-:root { --motion-control-ease: var(--motion-ease-standard); }
+:root { --motion-control-ease: var(--motion-ease-standard);--motion-route-ease:var(--motion-ease-standard); }
 @supports (animation-timing-function:linear(0,1)) {
-  :root { --motion-control-ease: var(--motion-spatial-fast); }
+  :root { --motion-control-ease: var(--motion-spatial-fast);--motion-route-ease:var(--motion-spatial-default); }
 }
 .m3-site :is(button,a,input,select) { -webkit-tap-highlight-color: transparent; }
 .m3-site :is(.site-header nav a,.tag-filters button,.card-tag,.tag-link,.share-button,.theme-toggle,.game-pagination button,.game-platform-link,.hero-button,.m3-quick a,.random-post-button,.game-section-nav a) {
   transition: background-color var(--motion-duration-short) var(--motion-ease-standard),color var(--motion-duration-short) var(--motion-ease-standard),border-color var(--motion-duration-short) var(--motion-ease-standard),border-radius var(--motion-duration-medium) var(--motion-ease-standard);
 }
+/* One spatial/effects owner. Fallback CSS works before hydration; once ready,
+   the physics channels drive opacity directly without a second CSS tween. */
+.m3-site :is(button,.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.card-tag,.game-platform-link,.game-section-nav a,.m3-directory-intro>a,.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card) { --motion-shade:0;--motion-elevation:0; }
+:is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a) { position:relative;isolation:isolate; }
+:is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a)::before { content:'';position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;transition:opacity var(--motion-duration-medium) var(--motion-ease-standard); }
+/* Soft, neutral elevation is an opacity layer, not an expanding solid edge.
+   Its geometry is constant; no box-shadow interpolation is needed for controls. */
+:is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link)::after { content:'';position:absolute;inset:1px 2px;border-radius:inherit;z-index:-1;pointer-events:none;box-shadow:0 6px 16px #00000022,0 1px 3px #00000016;opacity:0;transition:opacity var(--motion-duration-medium) var(--motion-ease-standard); }
+@media(hover:hover) and (pointer:fine) {
+  .m3-site:not([data-motion=ready]) :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):not(:disabled):not([aria-disabled=true]):hover::before { opacity:.1; }
+  .m3-site:not([data-motion=ready]) :is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link):not(:disabled):not([aria-disabled=true]):hover::after { opacity:1; }
+}
+.m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a)::before { opacity:var(--motion-shade,0);transition:none; }
+.m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link)::after { opacity:var(--motion-elevation,0);transition:none; }
+.m3-site :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):focus-visible::before { opacity:max(var(--motion-shade,0),.12); }
+.m3-site .site-header nav a:not([aria-current=page]):hover { background:transparent; }
 /* Physics owns displacement. Never run a CSS transform tween over its writes. */
-/* Flat CTA state layer: fade opacity instead of bringing back the legacy solid
-   red extrusion. Keep hit bounds and silhouette stable; physics owns press. */
-:is(.hero-button,.m3-quick a)::before { content:'';position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;transition:opacity var(--motion-duration-short) var(--motion-ease-standard); }
-@media(hover:hover) and (pointer:fine) {
-  :is(.hero-button,.m3-quick a):not(:disabled):hover::before { opacity:.08; }
-}
-:is(.hero-button,.m3-quick a):not(:disabled):focus-visible::before { opacity:.1; }
-/* Touch browsers may retain :active after a tap. Their press feedback comes
-   from the pointerup/pointercancel-aware spring, not a sticky CSS state. */
-@media(hover:hover) and (pointer:fine) {
-  :is(.hero-button,.m3-quick a):not(:disabled):active::before { opacity:.12; }
-}
-.m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.hero-button,.share-button,.theme-toggle,.m3-quick a,.game-platform-link):is(:hover,:active) { transform:none; }
-.m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card) { transition:border-color var(--motion-duration-short) var(--motion-ease-standard); }
+.m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card,.hero-button,.share-button,.theme-toggle,.random-post-button,.tag-filters button,.game-pagination button,.site-header nav a,.m3-quick a,.game-platform-link,.game-section-nav a,.m3-directory-intro>a,.tag-cloud a):is(:hover,:active) { transform:none; }
+.m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card) { box-shadow:0 8px 24px rgb(0 0 0 / calc(var(--motion-elevation,0) * .12));transition:border-color var(--motion-duration-medium) var(--motion-ease-standard); }
+/* Live color transitions keep every control interactive during theme changes.
+   Never transition geometry or use transition:all for this surface palette. */
+.m3-site,.m3-site :is(.hero-shell,.hero,.m3-quick,.article-shell,.article-header,.article-content,.post-toc,.site-footer,.daily-pick,.game-platform-panel,.game-filters,.archive-search,.archive-empty,.gaming-profile-card,.lore-chronology),.m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card) { transition:background-color var(--motion-duration-medium) var(--motion-ease-standard),color var(--motion-duration-medium) var(--motion-ease-standard),border-color var(--motion-duration-medium) var(--motion-ease-standard); }
 .m3-site .post-visual img { transition:transform var(--motion-spring-duration) var(--motion-control-ease); }
 .m3-site .post-card:hover img { transform:scale(1.025); }
 .m3-site .visual-arrow { transition:rotate var(--motion-spring-duration) var(--motion-control-ease); }
@@ -29,7 +36,6 @@
 .m3-site .site-header nav a[aria-current=page] { background:#3b000023; }
 .archive-search { transition:border-color var(--motion-duration-short) var(--motion-ease-standard),box-shadow var(--motion-duration-short) var(--motion-ease-standard); }
 .archive-search:focus-within { border-color:var(--m3-primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--m3-primary) 12%,transparent); }
-.m3-site .tag-filters button:active,.m3-site .site-header nav a:active { border-radius:12px; }
 .theme-toggle { transition:rotate var(--motion-spring-duration) var(--motion-control-ease) !important; }
 :root[data-theme=dark] .theme-toggle { rotate:18deg; }
 .reading-progress span { width:100%;transform:scaleX(0);transform-origin:left;transition:none; }
@@ -49,14 +55,10 @@
   .post-toc.is-open .toc-disclosure { grid-template-rows:1fr;visibility:visible;transition-delay:0s; }
   .post-toc.is-open .post-toc-list { opacity:1;translate:0 0; }
 }
-/* Persistent chrome stays steady. A single selected image is named at runtime,
-   so duplicate featured/list cards cannot invalidate the transition. */
-.site-header { view-transition-name:site-header; }
-::view-transition-group(*) { animation-duration:var(--motion-spring-duration);animation-timing-function:var(--motion-control-ease); }
-::view-transition-group(root),::view-transition-group(site-header) { animation:none; }
-::view-transition-old(site-header),::view-transition-new(site-header) { animation:none; }
-::view-transition-old(root) { animation:motion-out var(--motion-duration-short) var(--motion-ease-exit) both; }
-::view-transition-new(root) { animation:motion-in var(--motion-duration-medium) var(--motion-ease-standard) both; }
+/* Capture only the selected cover, never the document or navigation. Captured
+   elements cannot be hit-tested even when the snapshot overlay ignores input. */
+:root,.site-header { view-transition-name:none; }
+::view-transition-group(*) { animation-duration:var(--motion-spring-duration);animation-timing-function:var(--motion-route-ease); }
 ::view-transition-old(article-cover),::view-transition-new(article-cover) { height:100%;object-fit:cover;mix-blend-mode:normal; }
 ::view-transition-old(article-cover) { animation:motion-out var(--motion-duration-short) both; }
 ::view-transition-new(article-cover) { animation:motion-in var(--motion-duration-short) both; }
@@ -71,4 +73,8 @@
   ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*) { animation:none!important; }
   .m3-site :is(.post-visual img,.visual-arrow,.theme-toggle,.toc-toggle svg) { transform:none!important;rotate:none!important; }
   .back-to-top { translate:none; }
+  .m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link)::after { opacity:0; }
+}
+@media(prefers-reduced-motion:reduce) and (hover:hover) and (pointer:fine) {
+  .m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):not(:disabled):not([aria-disabled=true]):hover::before { opacity:.1; }
 }

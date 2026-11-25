@@ -1,7 +1,7 @@
-import { motion, springFrames, staggerDelay, stepSpring, type SpringState } from '../lib/motion';
+import { motion, springFrames, staggerDelay, createInteraction, stepInteraction, interactionSettled, interactionVisuals, type InteractionState, type InteractionTargets } from '../lib/motion';
 
-const controls = '.site-header nav a,button:not([disabled]),.hero-button,.m3-quick a,.tag-link,.card-tag,.game-platform-link';
-const cards = '.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card';
+const controls = '.site-header nav a,button:not([disabled]),.hero-button,.m3-quick a,.card-tag,.game-platform-link,.tag-cloud a,.game-section-nav a,.m3-directory-intro>a';
+const cards = '.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card';
 const revealTargets = '.post-card,.game-shelf-item,.timeline-directory-card,.related-card,.gaming-profile-card';
 export const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -9,38 +9,60 @@ export const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)'
 export function installMotion(root: HTMLElement) {
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
-  type Item = { state: SpringState; target: number; card: boolean };
+  type Item = { state: InteractionState; target: InteractionTargets; card: boolean };
   const states = new Map<HTMLElement, Item>();
+  let records = new WeakMap<HTMLElement, Item>();
+  const painted = new Set<HTMLElement>();
   const animations = new Set<Animation>();
   const seen = new WeakSet<Element>();
-  let frame = 0, last = 0, pressed: HTMLElement | null = null, hovered: HTMLElement | null = null;
+  let frame = 0, last = 0, pressed: HTMLElement | null = null;
+  let hovered: HTMLElement[] = [], pointer: number | null = null;
+  const disabled=(element:HTMLElement)=>element.matches(':disabled,[aria-disabled=true]');
+  function clear(element:HTMLElement){for(const property of ['scale','translate','--motion-shade','--motion-elevation'])element.style.removeProperty(property);painted.delete(element);states.delete(element);records.delete(element);}
   function tick(time: number) {
-    const dt = last ? Math.min((time-last)/1000,.064) : 1/60; last=time;
+    const dt = Math.min((time-last)/1000,.064); last=time;
     for (const [element,item] of states) {
-      if (!element.isConnected) { states.delete(element); continue; }
-      item.state=stepSpring(item.state,item.target,dt,motion.spatial.fast);
-      const settled=Math.abs(item.state.value-item.target)<.001&&Math.abs(item.state.velocity)<.01;
-      const value=settled?item.target:item.state.value;
-      element.style.setProperty('--motion-press',String(value));
+      if (!element.isConnected || disabled(element)) { clear(element); continue; }
+      item.state=stepInteraction(item.state,item.target,dt);
+      const settled=interactionSettled(item.state,item.target);
+      if(settled)item.state=createInteraction(item.target.hover,item.target.press);
+      const value=interactionVisuals(item.state,item.card);
+      element.style.setProperty('--motion-shade',String(value.shade));
+      element.style.setProperty('--motion-elevation',String(value.elevation));
       // Individual transform properties don't overwrite layout transforms (e.g. arrows).
-      if (item.card) element.style.translate=`0 ${-3*value}px`;
-      else element.style.scale=String(1-.035*value);
-      if(settled){states.delete(element);if(item.target===0){element.style.removeProperty('scale');element.style.removeProperty('translate');element.style.removeProperty('--motion-press');}}
+      element.style.translate=`0 ${value.lift}px`;
+      element.style.scale=String(value.scale);
+      if(settled){states.delete(element);if(item.target.hover===0&&item.target.press===0)clear(element);}
     }
     if(states.size)frame=requestAnimationFrame(tick);else{frame=0;last=0;}
   }
-  function aim(element: HTMLElement | null,target: number,card=false) {
-    if(!element||preference.matches)return;
-    const item=states.get(element)||{state:{value:Number(element.style.getPropertyValue('--motion-press'))||0,velocity:0},target,card};
-    item.target=target;states.set(element,item);if(!frame)frame=requestAnimationFrame(tick);
+  function aim(element: HTMLElement | null,channel:keyof InteractionTargets,target: number) {
+    if(!element||!element.isConnected||disabled(element)||preference.matches)return;
+    const item=records.get(element)||{state:createInteraction(),target:{hover:0,press:0},card:element.matches(cards)};
+    item.target[channel]=target;records.set(element,item);states.set(element,item);painted.add(element);
+    if(!frame){last=performance.now();frame=requestAnimationFrame(tick);}
   }
   const elementFor=(event: Event,selector:string) => event.target instanceof Element ? event.target.closest<HTMLElement>(selector):null;
-  const down=(event:PointerEvent)=>{if(event.button!==0)return;pressed=elementFor(event,controls);aim(pressed,1);};
-  const up=()=>{aim(pressed,0);pressed=null;};
-  const over=(event:PointerEvent)=>{if(!finePointer.matches||event.pointerType==='touch')return;const next=elementFor(event,cards);if(next===hovered)return;aim(hovered,0,true);hovered=next;aim(hovered,1,true);};
-  const out=(event:PointerEvent)=>{if(hovered&&(!(event.relatedTarget instanceof Node)||!hovered.contains(event.relatedTarget))){aim(hovered,0,true);hovered=null;}};
-  const keydown=(event:KeyboardEvent)=>{if(!event.repeat&&(event.key==='Enter'||event.key===' ')&&!(event.target instanceof HTMLInputElement)&&!(event.target instanceof HTMLTextAreaElement)){pressed=elementFor(event,controls);aim(pressed,1);}};
-  const keyup=(event:KeyboardEvent)=>{if(event.key==='Enter'||event.key===' ')up();};
+  const release=()=>{aim(pressed,'press',0);pressed=null;pointer=null;};
+  const down=(event:PointerEvent)=>{if(event.button!==0||!event.isPrimary)return;release();pointer=event.pointerId;pressed=elementFor(event,controls)||elementFor(event,cards);aim(pressed,'press',1);};
+  const up=(event:PointerEvent)=>{if(pointer===event.pointerId)release();};
+  function setHover(target:EventTarget|null){
+    const next:HTMLElement[]=[];
+    if(target instanceof Element && root.contains(target))for(const selector of [controls,cards]){const element=target.closest<HTMLElement>(selector);if(element&&!disabled(element)&&!next.includes(element))next.push(element);}
+    for(const element of hovered)if(!next.includes(element))aim(element,'hover',0);
+    for(const element of next)if(!hovered.includes(element))aim(element,'hover',1);
+    hovered=next;
+  }
+  const over=(event:PointerEvent)=>{if(finePointer.matches&&event.pointerType!=='touch')setHover(event.target);};
+  const out=(event:PointerEvent)=>{if(finePointer.matches&&event.pointerType!=='touch')setHover(event.relatedTarget);};
+  const cancel=(event:PointerEvent)=>{up(event);setHover(null);};
+  const keydown=(event:KeyboardEvent)=>{
+    if(event.repeat||event.defaultPrevented||!['Enter',' '].includes(event.key)||event.target instanceof HTMLInputElement||event.target instanceof HTMLTextAreaElement)return;
+    const element=elementFor(event,controls)||elementFor(event,cards);
+    if(!element||event.key===' '&&!element.matches('button,[role=button]'))return;
+    release();pressed=element;aim(pressed,'press',1);
+  };
+  const keyup=(event:KeyboardEvent)=>{if(pointer===null&&(event.key==='Enter'||event.key===' '))release();};
   const observe = new IntersectionObserver(entries=>{
     let index=0;
     for(const entry of entries){if(!entry.isIntersecting)continue;observe.unobserve(entry.target);
@@ -56,27 +78,29 @@ export function installMotion(root: HTMLElement) {
   }
   scan(root);
   // Only newly inserted subtrees, never a full DOM scan on each input or frame.
-  const mutations=new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)if(node instanceof Element)scan(node);});
-  mutations.observe(root,{childList:true,subtree:true});
-  function reset(){cancelAnimationFrame(frame);frame=0;last=0;for(const [element] of states){element.style.removeProperty('scale');element.style.removeProperty('translate');element.style.removeProperty('--motion-press');}for(const element of [pressed,hovered]){element?.style.removeProperty('scale');element?.style.removeProperty('translate');element?.style.removeProperty('--motion-press');}states.clear();pressed=null;hovered=null;for(const animation of animations)animation.cancel();animations.clear();}
+  const mutations=new MutationObserver(changes=>{for(const record of changes){if(record.type==='attributes'&&record.target instanceof HTMLElement&&disabled(record.target))clear(record.target);for(const node of record.addedNodes)if(node instanceof Element)scan(node);}for(const element of painted)if(!element.isConnected)clear(element);});
+  mutations.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled','aria-disabled']});
+  function reset(){cancelAnimationFrame(frame);frame=0;last=0;for(const element of painted)clear(element);states.clear();records=new WeakMap();pressed=null;hovered=[];pointer=null;for(const animation of animations)animation.cancel();animations.clear();}
   root.dataset.motion='ready';
   root.addEventListener('pointerdown',down);root.addEventListener('pointerover',over);root.addEventListener('pointerout',out);
-  window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);window.addEventListener('blur',reset);
-  root.addEventListener('keydown',keydown);root.addEventListener('keyup',keyup);preference.addEventListener('change',reset);
-  return()=>{reset();observe.disconnect();mutations.disconnect();delete root.dataset.motion;root.removeEventListener('pointerdown',down);root.removeEventListener('pointerover',over);root.removeEventListener('pointerout',out);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',up);window.removeEventListener('blur',reset);root.removeEventListener('keydown',keydown);root.removeEventListener('keyup',keyup);preference.removeEventListener('change',reset);};
+  window.addEventListener('pointerup',up);window.addEventListener('pointercancel',cancel);window.addEventListener('blur',reset);
+  root.addEventListener('keydown',keydown);window.addEventListener('keyup',keyup);preference.addEventListener('change',reset);finePointer.addEventListener('change',reset);
+  return()=>{reset();observe.disconnect();mutations.disconnect();delete root.dataset.motion;root.removeEventListener('pointerdown',down);root.removeEventListener('pointerover',over);root.removeEventListener('pointerout',out);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',cancel);window.removeEventListener('blur',reset);root.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);preference.removeEventListener('change',reset);finePointer.removeEventListener('change',reset);};
 }
 
 export type NativeTransition = { finished: Promise<void>; ready: Promise<void>; skipTransition(): void };
 type TransitionDocument = Document & { startViewTransition?: (update:()=>void|Promise<void>)=>NativeTransition };
 let active: NativeTransition | undefined;
-/** Theme and routing share one snapshot owner. Never stack view transitions. */
-export function transition(update:()=>void|Promise<void>): NativeTransition | undefined {
+/** Only shared elements use snapshots. Whole-page theme snapshots suppress native
+ * hit testing and lose rapid pointer input even with pointer-events:none. */
+export function transition(update:()=>void|Promise<void>,kind:'route'|'theme'='theme'): NativeTransition | undefined {
   active?.skipTransition();
   const doc=document as TransitionDocument;
-  if(reducedMotion()||!doc.startViewTransition){void update();return;}
+  if(kind==='theme'||reducedMotion()||!doc.startViewTransition){void update();return;}
+  document.documentElement.dataset.motionTransition=kind;
   const current=doc.startViewTransition(update);active=current;
   current.ready.catch(()=>{});
-  current.finished.catch(()=>{}).finally(()=>{if(active===current)active=undefined;});
+  current.finished.catch(()=>{}).finally(()=>{if(active===current){active=undefined;delete document.documentElement.dataset.motionTransition;}});
   return current;
 }
 export function skipTransition(){active?.skipTransition();}

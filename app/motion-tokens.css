@@ -18,9 +18,9 @@
   --motion-effects-slow-stiffness: 800;
   --motion-effects-slow-damping: 1;
   --motion-effects-slow: linear(0,0.0332,0.11074,0.20875,0.31244,0.41306,0.50584,0.58853,0.66046,0.72193,0.77372,0.81687,0.85249,0.88167,0.90543,0.92467,0.94016,0.9526,0.96253,0.97045,0.97674,0.98173,0.98567,0.98878,0.99122,0.99315,0.99465,0.99583,0.99676,0.99748,0.99804,0.99848,0.99882,0.99909,0.99929,0.99945,0.99958,0.99967,0.99975,0.99981,0.99985,0.99988,0.99991,0.99993,0.99995,0.99996,0.99997,0.99998,0.99998,0.99999,0.99999,0.99999,0.99999,1,1,1,1,1,1,1,1);
-  --motion-duration-short: 120ms;
-  --motion-duration-medium: 220ms;
-  --motion-duration-long: 360ms;
+  --motion-duration-short: 160ms;
+  --motion-duration-medium: 260ms;
+  --motion-duration-long: 420ms;
   --motion-ease-standard: cubic-bezier(.2,0,0,1);
   --motion-ease-exit: cubic-bezier(.3,0,1,1);
   --motion-stagger: 35ms;

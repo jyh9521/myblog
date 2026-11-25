@@ -39,7 +39,7 @@ async function run(engine) {
     assert.equal(hover.transform, 'none');
     assert.equal(hover.radius, idle.radius);
     assert.ok(hover.opacity > 0 && hover.opacity <= .1, 'hover uses a restrained state layer');
-    assert.match(hover.transition, /opacity/);
+    assert.equal(hover.transition, 'none', 'physics owns opacity without a competing CSS tween');
     const fade = await page.evaluate(() => window.__heroFade);
     observations.push({ label: 'fade-samples', values: fade });
     assert.ok(fade.some(value => value > 0 && value < .079), 'hover fades through intermediate opacity values');
@@ -72,6 +72,7 @@ async function run(engine) {
     const fallback = await nojs.newPage(); await fallback.goto(origin);
     const fallbackButton = fallback.locator('.m3-home .hero-button'); await fallbackButton.hover();
     assert.equal(await fallbackButton.evaluate(e => getComputedStyle(e).boxShadow), 'none', 'flat fallback before hydration');
+    assert.match(await fallbackButton.evaluate(e => getComputedStyle(e, '::before').transitionProperty), /opacity/, 'no-JS fallback retains a CSS transition');
     console.log(engine + ': HERO_BUTTON PASS');
   } finally {
     fs.writeFileSync(path.join(output, engine + '.json'), JSON.stringify(observations, null, 2));

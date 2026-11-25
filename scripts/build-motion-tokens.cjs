@@ -12,4 +12,4 @@ for(const [name,value] of Object.entries(motion.duration))lines.push(`  --motion
 for(const [name,value] of Object.entries(motion.easing))lines.push(`  --motion-ease-${name}: ${value};`);
 lines.push(`  --motion-stagger: ${motion.stagger.step}ms;`,`  --motion-stagger-max: ${motion.stagger.max}ms;`,'  --motion-spring-duration: 600ms;','  --m3-spring: var(--motion-spatial-fast);','}', '');
 const output=lines.join('\n'),target=path.join(__dirname,'../app/motion-tokens.css');
-if(process.argv.includes('--check')){if(fs.readFileSync(target,'utf8')!==output)throw Error('Motion tokens are stale');console.log('Motion tokens match the physical model');}else{fs.writeFileSync(target,output);console.log('Generated motion tokens');}
+if(process.argv.includes('--check')){if(fs.readFileSync(target,'utf8').replace(/\r\n/g,'\n')!==output)throw Error('Motion tokens are stale');console.log('Motion tokens match the physical model');}else{fs.writeFileSync(target,output);console.log('Generated motion tokens');}

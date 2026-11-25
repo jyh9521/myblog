@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './ns.css';
 import NsVisitorCounter from './visitor-counter';
+import NsAudio from './ns-audio';
 
 export const metadata: Metadata = {
   title: 'NS群群号发布页',
@@ -48,7 +49,7 @@ export default function NsGroupPage() {
             <span className="ns-track-art" aria-hidden="true">♪</span>
             <div><strong>常回家看看</strong><span>陈红</span></div>
           </div>
-          <audio controls autoPlay preload="auto" src="/ns/audio/changhuijiakankan.mp3">你的浏览器不支持音频播放。</audio>
+          <NsAudio />
           <p className="ns-card-hint">如果没有自动播放，请点上方的播放键。</p>
         </article>
 

@@ -1,9 +1,9 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
-test('NS asks the browser to autoplay the existing MP3 and retains player controls',()=>{
+test('NS uses the lifecycle-scoped player and retains the existing MP3',()=>{
  const page=fs.readFileSync('app/ns/page.tsx','utf8');
- assert.match(page,/<audio controls autoPlay[^>]+src="\/ns\/audio\/changhuijiakankan\.mp3"/);
+ assert.match(page,/<NsAudio\s*\/>/);
  assert.ok(fs.statSync('public/ns/audio/changhuijiakankan.mp3').size>0);
 });
 test('dossier keeps URL and SteamGridDB but not direct cover upload',()=>{

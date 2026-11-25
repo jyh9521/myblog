@@ -12,11 +12,10 @@ const out=path.resolve(process.env.MOTION_OUTPUT||'reports/return-motion-2026112
   if(scenario==='no-api')await page.addInitScript(()=>{document.startViewTransition=undefined;});
   const listPath=scenario==='home'?'/':'/posts/';
   await page.goto(origin+listPath,{waitUntil:'networkidle'});await page.waitForTimeout(750);
-  const featured=scenario==='home'?await page.locator('.m3-feature [data-motion-cover]').getAttribute('data-motion-cover'):null;
-  const card=scenario==='home'?page.locator('.post-card').filter({has:page.locator(`[data-motion-cover="${featured}"]`)}):page.locator('.post-card').filter({has:page.locator('[data-motion-cover]')}).nth(2),image=card.locator('[data-motion-cover]');
+  const card=scenario==='home'?page.locator('.m3-feature'):page.locator('.post-card').filter({has:page.locator('[data-motion-cover]')}).nth(2),image=card.locator('[data-motion-cover]');
   await image.scrollIntoViewIfNeeded();await page.waitForTimeout(650);
   const before=await image.evaluate(e=>({top:e.getBoundingClientRect().top,y:scrollY,slug:e.dataset.motionCover}));
-  await card.locator('a').first().click();await page.waitForURL('**/posts/'+before.slug+'/');await page.waitForTimeout(800);
+  await (scenario==='home'?card:card.locator('a').first()).click();await page.waitForURL('**/posts/'+before.slug+'/');await page.waitForTimeout(800);
   const hero=page.locator('[data-motion-cover]').first();await hero.scrollIntoViewIfNeeded();await page.waitForTimeout(450);
   const source=await hero.locator('img').boundingBox();
   const articleY=await page.evaluate(()=>scrollY);

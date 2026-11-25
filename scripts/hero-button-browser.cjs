@@ -1,4 +1,4 @@
-// Focused real-browser regression for CTA hover, press, reversal and accessibility.
+// Focused regression for the useful homepage search control: hover, press, reversal and accessibility.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -11,9 +11,10 @@ async function run(engine) {
   const observations = [];
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.addInitScript(() => { document.addEventListener('submit', e => { if (e.target.matches('.home-search')) e.preventDefault(); }, true); });
     await page.goto(origin, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.body.dataset.motion === 'ready');
-    const button = page.locator('.m3-home .hero-button');
+    const button = page.locator('.home-search button');
     await button.scrollIntoViewIfNeeded();
     const state = async label => {
       const value = await button.evaluate(e => {
@@ -63,17 +64,19 @@ async function run(engine) {
     const reduced = await state('reduced'); assert.equal(reduced.scale, 'none'); assert.equal(reduced.shadow, 'none');
     await page.mouse.up(); await page.mouse.move(1, 1);
     const touch = await browser.newContext({ hasTouch: true, viewport: { width: 390, height: 844 } });
-    const mobile = await touch.newPage(); await mobile.goto(origin, { waitUntil: 'networkidle' });
-    const mobileButton = mobile.locator('.m3-home .hero-button'); await mobileButton.tap();
-    await mobile.waitForFunction(() => Number(getComputedStyle(document.querySelector('.m3-home .hero-button'), '::before').opacity) === 0, {}, { timeout: 1500 });
+    const mobile = await touch.newPage();
+    await mobile.addInitScript(() => { document.addEventListener('submit', e => { if (e.target.matches('.home-search')) e.preventDefault(); }, true); });
+    await mobile.goto(origin, { waitUntil: 'networkidle' });
+    const mobileButton = mobile.locator('.home-search button'); await mobileButton.tap();
+    await mobile.waitForFunction(() => Number(getComputedStyle(document.querySelector('.home-search button'), '::before').opacity) === 0, {}, { timeout: 1500 });
     assert.equal(await mobileButton.evaluate(e => getComputedStyle(e).boxShadow), 'none');
     assert.equal(await mobileButton.evaluate(e => Number(getComputedStyle(e, '::before').opacity)), 0, 'touch does not latch desktop hover');
     const nojs = await browser.newContext({ javaScriptEnabled: false });
     const fallback = await nojs.newPage(); await fallback.goto(origin);
-    const fallbackButton = fallback.locator('.m3-home .hero-button'); await fallbackButton.hover();
+    const fallbackButton = fallback.locator('.home-search button'); await fallbackButton.hover();
     assert.equal(await fallbackButton.evaluate(e => getComputedStyle(e).boxShadow), 'none', 'flat fallback before hydration');
     assert.match(await fallbackButton.evaluate(e => getComputedStyle(e, '::before').transitionProperty), /opacity/, 'no-JS fallback retains a CSS transition');
-    console.log(engine + ': HERO_BUTTON PASS');
+    console.log(engine + ': HOME_SEARCH_CONTROL PASS');
   } finally {
     fs.writeFileSync(path.join(output, engine + '.json'), JSON.stringify(observations, null, 2));
     await browser.close();

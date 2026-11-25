@@ -16,24 +16,24 @@ html { scrollbar-gutter:stable; }
   :root { --motion-control-ease: var(--motion-spatial-fast);--motion-route-ease:var(--motion-spatial-default); }
 }
 .m3-site :is(button,a,input,select) { -webkit-tap-highlight-color: transparent; }
-.m3-site :is(.site-header nav a,.tag-filters button,.card-tag,.tag-link,.share-button,.theme-toggle,.game-pagination button,.game-platform-link,.hero-button,.m3-quick a,.random-post-button,.game-section-nav a) {
+.m3-site :is(.site-header nav a,.tag-filters button,.card-tag,.tag-link,.share-button,.theme-toggle,.game-pagination button,.game-platform-link,.hero-button,.m3-quick a,.home-search button,.home-categories a,.random-post-button,.game-section-nav a) {
   transition: background-color var(--motion-duration-short) var(--motion-ease-standard),color var(--motion-duration-short) var(--motion-ease-standard),border-color var(--motion-duration-short) var(--motion-ease-standard),border-radius var(--motion-duration-medium) var(--motion-ease-standard);
 }
 /* One spatial/effects owner. Fallback CSS works before hydration; once ready,
    the physics channels drive opacity directly without a second CSS tween. */
-.m3-site :is(button,.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.card-tag,.game-platform-link,.game-section-nav a,.m3-directory-intro>a,.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card) { --motion-shade:0;--motion-elevation:0; }
-:is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a) { position:relative;isolation:isolate; }
-:is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a)::before { content:'';position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;transition:opacity var(--motion-duration-medium) var(--motion-ease-standard); }
+.m3-site :is(button,.hero-button,.m3-quick a,.home-search button,.home-categories a,.site-header nav a,.share-button,.random-post-button,.card-tag,.game-platform-link,.game-section-nav a,.m3-directory-intro>a,.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card) { --motion-shade:0;--motion-elevation:0; }
+:is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a) { position:relative;isolation:isolate; }
+:is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a)::before { content:'';position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;transition:opacity var(--motion-duration-medium) var(--motion-ease-standard); }
 /* Soft, neutral elevation is an opacity layer, not an expanding solid edge.
    Its geometry is constant; no box-shadow interpolation is needed for controls. */
-:is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link)::after { content:'';position:absolute;inset:1px 2px;border-radius:inherit;z-index:-1;pointer-events:none;box-shadow:0 6px 16px #00000022,0 1px 3px #00000016;opacity:0;transition:opacity var(--motion-duration-medium) var(--motion-ease-standard); }
+:is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.share-button,.random-post-button,.game-platform-link)::after { content:'';position:absolute;inset:1px 2px;border-radius:inherit;z-index:-1;pointer-events:none;box-shadow:0 6px 16px #00000022,0 1px 3px #00000016;opacity:0;transition:opacity var(--motion-duration-medium) var(--motion-ease-standard); }
 @media(hover:hover) and (pointer:fine) {
-  .m3-site:not([data-motion=ready]) :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):not(:disabled):not([aria-disabled=true]):hover::before { opacity:.1; }
-  .m3-site:not([data-motion=ready]) :is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link):not(:disabled):not([aria-disabled=true]):hover::after { opacity:1; }
+  .m3-site:not([data-motion=ready]) :is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):not(:disabled):not([aria-disabled=true]):hover::before { opacity:.1; }
+  .m3-site:not([data-motion=ready]) :is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.share-button,.random-post-button,.game-platform-link):not(:disabled):not([aria-disabled=true]):hover::after { opacity:1; }
 }
-.m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a)::before { opacity:var(--motion-shade,0);transition:none; }
-.m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link)::after { opacity:var(--motion-elevation,0);transition:none; }
-.m3-site :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):focus-visible::before { opacity:max(var(--motion-shade,0),.12); }
+.m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a)::before { opacity:var(--motion-shade,0);transition:none; }
+.m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.share-button,.random-post-button,.game-platform-link)::after { opacity:var(--motion-elevation,0);transition:none; }
+.m3-site :is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):focus-visible::before { opacity:max(var(--motion-shade,0),.12); }
 .m3-site .site-header nav a:not([aria-current=page]):hover { background:transparent; }
 /* Physics owns displacement. Never run a CSS transform tween over its writes. */
 .m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card,.hero-button,.share-button,.theme-toggle,.random-post-button,.tag-filters button,.game-pagination button,.site-header nav a,.m3-quick a,.game-platform-link,.game-section-nav a,.m3-directory-intro>a,.tag-cloud a):is(:hover,:active) { transform:none; }
@@ -85,8 +85,8 @@ html { scrollbar-gutter:stable; }
   ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*) { animation:none!important; }
   .m3-site :is(.post-visual img,.visual-arrow,.theme-toggle,.toc-toggle svg) { transform:none!important;rotate:none!important; }
   .back-to-top { translate:none; }
-  .m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.share-button,.random-post-button,.game-platform-link)::after { opacity:0; }
+  .m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.share-button,.random-post-button,.game-platform-link)::after { opacity:0; }
 }
 @media(prefers-reduced-motion:reduce) and (hover:hover) and (pointer:fine) {
-  .m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):not(:disabled):not([aria-disabled=true]):hover::before { opacity:.1; }
+  .m3-site[data-motion=ready] :is(.hero-button,.m3-quick a,.home-search button,.home-categories a,.site-header nav a,.share-button,.random-post-button,.tag-filters button,.card-tag,.game-platform-link,.game-pagination button,.theme-toggle,.toc-toggle,.game-section-nav a,.m3-directory-intro>a):not(:disabled):not([aria-disabled=true]):hover::before { opacity:.1; }
 }

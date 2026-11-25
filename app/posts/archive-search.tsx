@@ -15,8 +15,10 @@ export default function ArchiveSearch({ posts }: { posts: Post[] }) {
   const tags = useMemo(() => [...new Set(posts.flatMap(post => post.tags))].sort((a, b) => a.localeCompare(b, 'zh-CN')), [posts]);
 
   useLayoutEffect(() => {
-    const initial = new URLSearchParams(window.location.search).get('tag') || '';
+    const params = new URLSearchParams(window.location.search);
+    const initial = params.get('tag') || '';
     if (tags.includes(initial)) setTag(initial);
+    setQuery(params.get('q') || '');
   }, [tags]);
 
   const filtered = useMemo(() => {
@@ -31,15 +33,22 @@ export default function ArchiveSearch({ posts }: { posts: Post[] }) {
     setTag(next);
     const url = new URL(window.location.href);
     if (next) url.searchParams.set('tag', next); else url.searchParams.delete('tag');
-    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
+  }
+
+  function selectQuery(next: string) {
+    setQuery(next);
+    const url = new URL(window.location.href);
+    if (next) url.searchParams.set('q', next); else url.searchParams.delete('q');
+    window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
   }
 
   return <>
     <div className="archive-controls">
       <label className="archive-search"><span className="sr-only">搜索文章标题和正文</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
-        <input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="搜索标题和正文" />
-        {query && <button type="button" className="search-clear" aria-label="清空搜索" onClick={() => setQuery('')}>×</button>}
+        <input type="search" value={query} onChange={event => selectQuery(event.target.value)} placeholder="搜索标题和正文" />
+        {query && <button type="button" className="search-clear" aria-label="清空搜索" onClick={() => selectQuery('')}>×</button>}
       </label>
       <div className="tag-filters" aria-label="按标签筛选文章">
         <button type="button" className={!tag ? 'active' : ''} aria-pressed={!tag} onClick={() => selectTag('')}>全部</button>
@@ -58,7 +67,7 @@ export default function ArchiveSearch({ posts }: { posts: Post[] }) {
         {query.trim() ? <p className="search-excerpt"><MatchedText text={matchExcerpt(post.body, post.description, query)} query={query} /></p> : post.description && <p>{post.description}</p>}
         <Link className="read-more" href={`/posts/${post.slug}/`}>阅读全文 <span aria-hidden="true">→</span></Link>
       </article>
-    )}</div> : <div className="archive-empty"><span aria-hidden="true">⌕</span><strong>没有找到匹配的文章</strong><p>试试其他关键词或清除标签筛选。</p><button type="button" onClick={() => { setQuery(''); selectTag(''); }}>清除筛选</button></div>}
+    )}</div> : <div className="archive-empty"><span aria-hidden="true">⌕</span><strong>没有找到匹配的文章</strong><p>试试其他关键词或清除标签筛选。</p><button type="button" onClick={() => { selectQuery(''); selectTag(''); }}>清除筛选</button></div>}
   </>;
 }
 

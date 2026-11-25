@@ -1,4 +1,4 @@
-// Real CSS/media/input regression for all three homepage quick-entry links.
+// Real CSS/media/input regression for homepage article-category links.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -6,11 +6,10 @@ const engines = require('playwright');
 const origin = process.env.HERO_ORIGIN || 'http://127.0.0.1:4173';
 const output = process.env.HERO_OUTPUT || 'reports/quick-button';
 fs.mkdirSync(output, { recursive: true });
-const destinations = ['/posts/', '/games/', '/games/timelines/'];
 // Suppress navigation only while exercising press/release. Actual links are tested below.
 function holdNavigation() {
   window.__holdQuickNavigation = true;
-  window.addEventListener('click', e => { if (window.__holdQuickNavigation && e.target.closest?.('.m3-quick a')) e.preventDefault(); }, true);
+  window.addEventListener('click', e => { if (window.__holdQuickNavigation && e.target.closest?.('.home-categories a')) e.preventDefault(); }, true);
 }
 async function run(engine) {
   const browser = await engines[engine].launch({ headless: true, ...(engine === 'chromium' && process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}) });
@@ -20,9 +19,12 @@ async function run(engine) {
     await page.addInitScript(holdNavigation);
     await page.goto(origin, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.body.dataset.motion === 'ready');
-    assert.equal(await page.locator('.m3-quick a').count(), 3);
-    for (let i = 0; i < 3; i++) {
-      const button = page.locator('.m3-quick a').nth(i);
+    const destinations = await page.locator('.home-categories a').evaluateAll(links => links.map(link => link.getAttribute('href')));
+    assert.ok(destinations.length > 0, 'article categories exist');
+    assert.ok(destinations.every(href => /^\/posts\/\?tag=.+/.test(href)), 'each category opens a real article filter');
+    const testedCount = Math.min(3, destinations.length);
+    for (let i = 0; i < testedCount; i++) {
+      const button = page.locator('.home-categories a').nth(i);
       assert.equal(await button.getAttribute('href'), destinations[i]);
       const state = async label => {
         const result = await button.evaluate(e => {
@@ -43,7 +45,7 @@ async function run(engine) {
       });
       await button.hover(); await page.waitForTimeout(250);
       const hover = await state('hover');
-      await page.locator('.m3-quick').screenshot({ path: path.join(output, engine + '-quick-' + i + '.png') });
+      await page.locator('.home-categories').screenshot({ path: path.join(output, engine + '-quick-' + i + '.png') });
       assert.equal(hover.shadow, 'none', 'quick-entry hover must not introduce an inset shadow');
       assert.equal(hover.radius, idle.radius);
       assert.ok(hover.opacity > .09 && hover.opacity <= .1);
@@ -75,26 +77,29 @@ async function run(engine) {
     const touch = await browser.newContext({ hasTouch: true, viewport: { width: 390, height: 844 } });
     const mobile = await touch.newPage(); await mobile.addInitScript(holdNavigation);
     await mobile.goto(origin, { waitUntil: 'networkidle' });
-    for (let i = 0; i < 3; i++) {
-      const button = mobile.locator('.m3-quick a').nth(i); await button.tap();
-      await mobile.waitForFunction(index => Number(getComputedStyle(document.querySelectorAll('.m3-quick a')[index], '::before').opacity) === 0, i, { timeout: 1500 });
+    for (let i = 0; i < testedCount; i++) {
+      const button = mobile.locator('.home-categories a').nth(i); await button.tap();
+      await mobile.waitForFunction(index => Number(getComputedStyle(document.querySelectorAll('.home-categories a')[index], '::before').opacity) === 0, i, { timeout: 1500 });
       assert.equal(await button.evaluate(e => getComputedStyle(e).boxShadow), 'none');
     }
     const nojs = await browser.newContext({ javaScriptEnabled: false });
     const fallback = await nojs.newPage(); await fallback.goto(origin);
-    for (let i = 0; i < 3; i++) {
-      const button = fallback.locator('.m3-quick a').nth(i); await button.hover();
+    for (let i = 0; i < testedCount; i++) {
+      const button = fallback.locator('.home-categories a').nth(i); await button.hover();
       assert.equal(await button.evaluate(e => getComputedStyle(e).boxShadow), 'none');
     }
     // Release the test-only input gate and verify the real router destinations.
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < testedCount; i++) {
       await page.goto(origin, { waitUntil: 'networkidle' });
       await page.evaluate(() => { window.__holdQuickNavigation = false; });
-      await page.locator('.m3-quick a').nth(i).click();
-      await page.waitForURL('**' + destinations[i]);
+      await page.locator('.home-categories a').nth(i).click();
+      const expected = new URL(destinations[i], origin);
+      await page.waitForURL(url => url.pathname === expected.pathname && url.searchParams.get('tag') === expected.searchParams.get('tag'));
+      assert.equal(await page.locator('.tag-filters button[aria-pressed="true"]').textContent(), expected.searchParams.get('tag'));
+      assert.ok(await page.locator('.post-card').count() > 0, 'category yields its articles');
       assert.ok(await page.locator('main').isVisible());
     }
-    console.log(engine + ': QUICK_BUTTONS PASS (3 links)');
+    console.log(engine + ': HOME_CATEGORIES PASS (' + testedCount + ' links)');
   } finally {
     fs.writeFileSync(path.join(output, engine + '-quick.json'), JSON.stringify(observations, null, 2));
     await browser.close();

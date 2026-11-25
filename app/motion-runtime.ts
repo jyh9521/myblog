@@ -1,6 +1,6 @@
 import { motion, springFrames, staggerDelay, createInteraction, stepInteraction, interactionSettled, interactionVisuals, type InteractionState, type InteractionTargets } from '../lib/motion';
 
-const controls = '.site-header nav a,button:not([disabled]),.hero-button,.m3-quick a,.card-tag,.game-platform-link,.tag-cloud a,.game-section-nav a,.m3-directory-intro>a';
+const controls = '.site-header nav a,button:not([disabled]),.hero-button,.m3-quick a,.home-search button,.home-categories a,.card-tag,.game-platform-link,.tag-cloud a,.game-section-nav a,.m3-directory-intro>a';
 const cards = '.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.gaming-game-card,.social-link-card';
 const revealTargets = '.post-card,.game-shelf-item,.timeline-directory-card,.related-card,.gaming-profile-card';
 export const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;

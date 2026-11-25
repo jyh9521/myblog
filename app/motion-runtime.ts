@@ -66,7 +66,7 @@ export function installMotion(root: HTMLElement) {
   const observe = new IntersectionObserver(entries=>{
     let index=0;
     for(const entry of entries){if(!entry.isIntersecting)continue;observe.unobserve(entry.target);
-      if(preference.matches||entry.boundingClientRect.top<innerHeight*.6)continue;
+      if(preference.matches||entry.target.hasAttribute('data-motion-return-target')||entry.boundingClientRect.top<innerHeight*.6)continue;
       const values=springFrames(motion.spatial.default);
       const animation=entry.target.animate(values.map((value,i)=>({transform:`translateY(${12*(1-value)}px)`,opacity:Math.min(1,i/12)})),{duration:600,delay:staggerDelay(index++),easing:'linear',fill:'backwards'});
       animations.add(animation);animation.finished.then(()=>animations.delete(animation),()=>animations.delete(animation));

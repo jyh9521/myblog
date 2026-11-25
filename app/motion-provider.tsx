@@ -4,6 +4,7 @@ import { startTransition, useEffect, useLayoutEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { installMotion, reducedMotion, skipTransition, transition } from './motion-runtime';
 import { motion, springFrames } from '../lib/motion';
+import { captureArticleReturn, type ArticleReturn } from './article-return-motion';
 
 type Pending = { path: string; finish: () => void; cover?: string; origin: HTMLElement | null };
 const postSlug=(path:string)=>path.match(/^\/posts\/([^/]+)\/?$/)?.[1];
@@ -20,12 +21,14 @@ export default function MotionProvider(){
   const previousPath=useRef(pathname);
   const entrance=useRef<Animation|null>(null);
   const restoringHistory=useRef(false);
+  const returning=useRef<ArticleReturn|null>(null);
+  const nativeHistoryVisual=useRef(false);
   useEffect(()=>installMotion(document.body),[]);
   useLayoutEffect(()=>{
     document.querySelectorAll<HTMLAnchorElement>('.site-header nav a').forEach(a=>{const selected=a.pathname==='/'?pathname==='/':pathname.startsWith(a.pathname);if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
     const job=pending.current;
     if(previousPath.current!==pathname)document.getElementById('site-content')?.focus({preventScroll:true});
-    if(previousPath.current!==pathname&&!reducedMotion()){
+    if(previousPath.current!==pathname&&!reducedMotion()&&!returning.current&&!nativeHistoryVisual.current){
       entrance.current?.cancel();
       // Keep the shared cover's destination geometry fixed. Its own snapshot
       // provides spatial continuity while the surrounding live content fades in.
@@ -36,6 +39,8 @@ export default function MotionProvider(){
     }
     previousPath.current=pathname;
     restoringHistory.current=false;
+    nativeHistoryVisual.current=false;
+    returning.current?.arrive();
     if(job&&pathname.replace(/\/$/,'')===job.path.replace(/\/$/,'')){
       clearNames();if(job.cover)nameCover(coverFor(job.cover));
       const content=document.getElementById('site-content');content?.focus({preventScroll:true});
@@ -49,6 +54,7 @@ export default function MotionProvider(){
       const url=new URL(link.href,location.href);
       if(url.origin!==location.origin||url.pathname===location.pathname||url.hash||url.search||!/^\/(?:$|posts\/|games\/|about\/|ns\/|chronicles\/)/.test(url.pathname))return;
       const id=++generation.current;
+      returning.current?.cancel();returning.current=null;
       restoringHistory.current=false;
       event.preventDefault();pending.current?.finish();pending.current=null;skipTransition();clearNames();
       const cover=postSlug(url.pathname)||(/^\/(?:$|posts\/?)$/.test(url.pathname)?postSlug(location.pathname):undefined);
@@ -69,8 +75,15 @@ export default function MotionProvider(){
       view?.finished.catch(()=>{}).finally(()=>{if(generation.current===id&&!pending.current)clearNames();});
     }
     const preference=matchMedia('(prefers-reduced-motion: reduce)');
-    const cancel=()=>{generation.current++;entrance.current?.cancel();pending.current?.finish();pending.current=null;skipTransition();clearNames();};
-    const history=()=>{restoringHistory.current=true;cancel();};
+    const cancel=()=>{generation.current++;entrance.current?.cancel();pending.current?.finish();pending.current=null;returning.current?.cancel();returning.current=null;skipTransition();clearNames();};
+    const history=(event:PopStateEvent)=>{
+      restoringHistory.current=true;cancel();
+      nativeHistoryVisual.current=Boolean((event as PopStateEvent & {hasUAVisualTransition?:boolean}).hasUAVisualTransition);
+      const slug=postSlug(previousPath.current);
+      if(slug&&/^\/(?:$|posts\/?)$/.test(location.pathname)&&!reducedMotion()&&!nativeHistoryVisual.current){
+        returning.current=captureArticleReturn(slug);
+      }
+    };
     document.addEventListener('click',click,true);window.addEventListener('popstate',history);preference.addEventListener('change',cancel);
     return()=>{cancel();document.removeEventListener('click',click,true);window.removeEventListener('popstate',history);preference.removeEventListener('change',cancel);};
   },[router]);

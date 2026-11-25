@@ -11,9 +11,9 @@ const source = path.resolve(__dirname, '../app/motion-provider.tsx');
 const compiled = ts.transpile(fs.readFileSync(source, 'utf8'), { module: ts.ModuleKind.CommonJS });
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-function harness(callbackDelayMs) {
+function harness(callbackDelayMs, reduced = false) {
   const effects = [], cleanup = [], pushes = [], callbacks = [];
-  let click;
+  let click, popstate;const captures=[];
   const noop = () => {};
   class Element { closest() { return this.link; } }
   const document = {
@@ -27,7 +27,7 @@ function harness(callbackDelayMs) {
     useLayoutEffect: noop, useRef: value => ({ current: value }),
   };
   const runtime = {
-    installMotion: noop, reducedMotion: () => false, skipTransition: noop,
+    installMotion: noop, reducedMotion: () => reduced, skipTransition: noop,
     transition: update => {
       // Delaying the callback models old-state capture not reaching the update
       // callback before the app's 180ms capture deadline. skipTransition does not
@@ -40,9 +40,10 @@ function harness(callbackDelayMs) {
   };
   const sandbox = {
     exports: {}, require: name => name === 'react' ? react
-      : name === 'next/navigation' ? { usePathname: () => '/', useRouter: () => ({ push: p => pushes.push(p) }) }
+      : name === 'next/navigation' ? { usePathname: () => '/posts/demo/', useRouter: () => ({ push: p => pushes.push(p) }) }
+      : name === './article-return-motion' ? {captureArticleReturn: slug => {captures.push(slug);return {cancel:noop,arrive:noop};}}
       : name === './motion-runtime' ? runtime : {},
-    document, window: { addEventListener: noop, removeEventListener: noop },
+    document, window: { addEventListener: (name,fn)=>{if(name==='popstate')popstate=fn;}, removeEventListener: noop },
     Element, URL, location: { origin: 'https://blog.test', pathname: '/', href: 'https://blog.test/' },
     setTimeout, clearTimeout,
     matchMedia: () => ({ addEventListener: noop, removeEventListener: noop }),
@@ -51,7 +52,7 @@ function harness(callbackDelayMs) {
   sandbox.exports.default();
   effects.forEach(fn => { const dispose = fn(); if (dispose) cleanup.push(dispose); });
   return {
-    pushes, callbacks,
+    pushes, callbacks,captures,pop:ua=>popstate({hasUAVisualTransition:ua}),
     click: pathname => {
       const target = new Element();
       target.link = { href: 'https://blog.test' + pathname, target: '', hasAttribute: () => false,
@@ -72,6 +73,12 @@ test('capture deadline still navigates once when update callback arrives after 1
     assert.equal(h.callbacks.length, 1);
     assert.deepEqual(h.pushes, ['/posts/demo/'], 'late capture must neither swallow nor duplicate navigation');
   } finally { h.close(); }
+});
+
+test('browser-owned swipe transition and reduced motion do not receive a second cover animation',()=>{
+  const native=harness(0),reduced=harness(0,true),ordinary=harness(0);
+  try{native.pop(true);reduced.pop(false);ordinary.pop(false);assert.deepEqual(native.captures,[]);assert.deepEqual(reduced.captures,[]);assert.deepEqual(ordinary.captures,['demo']);}
+  finally{native.close();reduced.close();ordinary.close();}
 });
 
 test('fast update and later capture deadline navigate exactly once', async () => {

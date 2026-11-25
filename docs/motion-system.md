@@ -214,3 +214,52 @@ The 390px disclosure CDP sample reports 8.5ms P95 both before and after; active
 layouts increase from 6 instantaneous toggles to 181 animated layouts, with zero
 idle layouts or style recalculations after settlement. This measures the headless
 host, not physical mobile hardware.
+
+## Article history return continuity (2026-11-25)
+
+The reported defect is the **reverse animation**, not the restored list position.
+Forward native `article-cover` transitions, link destinations, archive filters and
+browser/Next history ownership are retained. `popstate` previously cancelled the
+forward transition but never created its reverse counterpart.
+
+`article-return-motion.ts` captures only a decoded, visible article image before
+Next commits history traversal. A pointer-transparent, aria-hidden fixed cover
+bridges to the visible matching list occurrence with the existing 380/.8 spring.
+The source uses the actual image box (not its taller aspect-ratio placeholder);
+the destination uses the card's clipping box and corners. The inner inverse scale
+preserves the artwork's aspect ratio while changing its crop. Home's featured and
+latest cards can share a slug; the visible destination wins after restoration.
+The selected card does not simultaneously run a separate reveal animation.
+
+There are no scroll-position or history-state writes. While the bridge is alive,
+the existing global smooth-scroll rule is temporarily overridden with `auto` so
+the browser's **same saved position** is restored before the cover lands. The
+previous inline value is restored on every cleanup path. This avoids two competing
+animations on mobile Chromium/Firefox without changing where Back returns.
+Hover zoom is neutralized only on the hidden destination image, then its existing
+CSS transition resumes at handoff instead of jumping to a magnified crop.
+
+New navigation, wheel/touch/key input, resize, reduced-motion changes, missing
+destinations, timeouts and unmount release the overlay and original visibility.
+An offscreen/undecoded source retains the existing non-shared fallback rather than
+inventing a flying cover or scrolling an article to its heading. Native visual
+history gestures are not animated twice: see
+[PopStateEvent.hasUAVisualTransition](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent/hasUAVisualTransition).
+
+Regression commands:
+- `node --test scripts/article-return.test.cjs scripts/motion-navigation.test.cjs`
+- `node scripts/article-return-browser.cjs` (three engines, desktop/hover/touch,
+  duplicate home cover, no View Transition API, reduced motion, interrupted return,
+  rapid Back/Forward and deep-reading fallback).
+- `node scripts/motion-browser.cjs` and `node scripts/motion-history-browser.cjs`
+  retain the original forward-capture and unrelated history-position contracts.
+- `node scripts/article-return-profile.cjs` records CDP Performance metrics and a
+  DevTools timeline trace without per-frame DOM instrumentation.
+
+Initial CDP samples (390×844 headless Chromium): P95 8.5ms baseline / 8.6ms modified;
+active layouts 11 / 6, paints 41 / 148, idle layouts and style recalculations 0 / 0.
+The animated crop/corners add bounded paint work; this is not a claim that animation
+reduces all rendering cost. Baseline used the pre-release live site and modified
+used the local export. These are host samples, not physical Pixel/iPhone or
+120Hz-device acceptance. Reproducible logs, traces, hashes and rollback evidence
+are retained in the task's ignored `reports/return-motion-20261125/` directory.

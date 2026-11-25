@@ -10,6 +10,19 @@ const coversFor = (slug: string) => Array.from(document.querySelectorAll<HTMLEle
 const findCover = (slug: string) => {const covers=coversFor(slug);return covers.find(e=>visible(e.getBoundingClientRect()))||covers[0];};
 const sameRect = (a: Rect, b: Rect) => ['x','y','width','height'].every(k => Math.abs(a[k as keyof Rect]-b[k as keyof Rect]) < .5);
 
+/** Browser-owned history restoration must not queue CSS smooth scrolling across
+ * successive Back/Forward events, including a forward/offscreen traversal where
+ * there is no visible cover bridge. Positions and history state stay untouched. */
+export function holdHistoryScroll(): () => void {
+  const root=document.documentElement,previous=root.style.scrollBehavior;
+  root.style.scrollBehavior='auto';
+  let stopped=false;
+  const finish=()=>{if(stopped)return;stopped=true;clearTimeout(timer);if(root.style.scrollBehavior==='auto')root.style.scrollBehavior=previous;window.removeEventListener('pointerdown',finish);window.removeEventListener('wheel',finish);window.removeEventListener('keydown',finish);};
+  const timer=setTimeout(finish,750);
+  window.addEventListener('pointerdown',finish,{passive:true});window.addEventListener('wheel',finish,{passive:true});window.addEventListener('keydown',finish);
+  return finish;
+}
+
 export function captureArticleReturn(slug: string): ArticleReturn | null {
   const source = findCover(slug);
   const image = source instanceof HTMLImageElement ? source : source?.querySelector('img');
@@ -26,11 +39,6 @@ export function captureArticleReturn(slug: string): ArticleReturn | null {
   const startScale = fit(from, imageStyle.objectFit === 'contain');
   const startRadius = parseFloat(sourceStyle.borderTopLeftRadius) || 0;
   const layer = document.createElement('div'), copy = image.cloneNode(false) as HTMLImageElement;
-  // The existing global smooth-scroll rule also animates browser restoration in
-  // Chromium/Firefox. Keep the SAME browser-owned position, but restore it before
-  // the shared cover lands, not concurrently with a second scrolling animation.
-  const root=document.documentElement,scrollBehavior=root.style.scrollBehavior;
-  root.style.scrollBehavior='auto';
   layer.dataset.motionReturn = 'captured';layer.setAttribute('aria-hidden','true');
   layer.style.cssText = 'position:fixed;left:0;top:0;overflow:hidden;pointer-events:none;z-index:2;transform-origin:0 0;contain:layout paint;';
   copy.removeAttribute('data-motion-cover');copy.removeAttribute('id');copy.removeAttribute('class');copy.alt='';
@@ -49,7 +57,6 @@ export function captureArticleReturn(slug: string): ArticleReturn | null {
     // identity, instead of jumping 2.5% at the shared-cover handoff.
     neutralImages.forEach((value,e)=>{e.style.transform=value;});
     revealOwners.forEach(e=>e.removeAttribute('data-motion-return-target'));
-    if(root.style.scrollBehavior==='auto')root.style.scrollBehavior=scrollBehavior;
     window.removeEventListener('resize',cancel);window.removeEventListener('wheel',cancel);window.removeEventListener('touchstart',cancel);window.removeEventListener('keydown',cancel);
   };
   const paint = (r:Rect,scale:number) => {

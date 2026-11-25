@@ -4,7 +4,7 @@ import { startTransition, useEffect, useLayoutEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { installMotion, reducedMotion, skipTransition, transition } from './motion-runtime';
 import { motion, springFrames } from '../lib/motion';
-import { captureArticleReturn, type ArticleReturn } from './article-return-motion';
+import { captureArticleReturn, holdHistoryScroll, type ArticleReturn } from './article-return-motion';
 
 type Pending = { path: string; finish: () => void; cover?: string; origin: HTMLElement | null };
 const postSlug=(path:string)=>path.match(/^\/posts\/([^/]+)\/?$/)?.[1];
@@ -23,6 +23,7 @@ export default function MotionProvider(){
   const restoringHistory=useRef(false);
   const returning=useRef<ArticleReturn|null>(null);
   const nativeHistoryVisual=useRef(false);
+  const historyScroll=useRef<(()=>void)|null>(null);
   useEffect(()=>installMotion(document.body),[]);
   useLayoutEffect(()=>{
     document.querySelectorAll<HTMLAnchorElement>('.site-header nav a').forEach(a=>{const selected=a.pathname==='/'?pathname==='/':pathname.startsWith(a.pathname);if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
@@ -55,6 +56,7 @@ export default function MotionProvider(){
       if(url.origin!==location.origin||url.pathname===location.pathname||url.hash||url.search||!/^\/(?:$|posts\/|games\/|about\/|ns\/|chronicles\/)/.test(url.pathname))return;
       const id=++generation.current;
       returning.current?.cancel();returning.current=null;
+      historyScroll.current?.();historyScroll.current=null;
       restoringHistory.current=false;
       event.preventDefault();pending.current?.finish();pending.current=null;skipTransition();clearNames();
       const cover=postSlug(url.pathname)||(/^\/(?:$|posts\/?)$/.test(url.pathname)?postSlug(location.pathname):undefined);
@@ -75,9 +77,10 @@ export default function MotionProvider(){
       view?.finished.catch(()=>{}).finally(()=>{if(generation.current===id&&!pending.current)clearNames();});
     }
     const preference=matchMedia('(prefers-reduced-motion: reduce)');
-    const cancel=()=>{generation.current++;entrance.current?.cancel();pending.current?.finish();pending.current=null;returning.current?.cancel();returning.current=null;skipTransition();clearNames();};
+    const cancel=()=>{generation.current++;entrance.current?.cancel();pending.current?.finish();pending.current=null;returning.current?.cancel();returning.current=null;historyScroll.current?.();historyScroll.current=null;skipTransition();clearNames();};
     const history=(event:PopStateEvent)=>{
       restoringHistory.current=true;cancel();
+      historyScroll.current=holdHistoryScroll();
       nativeHistoryVisual.current=Boolean((event as PopStateEvent & {hasUAVisualTransition?:boolean}).hasUAVisualTransition);
       const slug=postSlug(previousPath.current);
       if(slug&&/^\/(?:$|posts\/?)$/.test(location.pathname)&&!reducedMotion()&&!nativeHistoryVisual.current){

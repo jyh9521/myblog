@@ -19,12 +19,13 @@ const out=path.resolve(process.env.MOTION_OUTPUT||'reports/return-motion-2026112
   await card.locator('a').first().click();await page.waitForURL('**/posts/'+before.slug+'/');await page.waitForTimeout(800);
   const hero=page.locator('[data-motion-cover]').first();await hero.scrollIntoViewIfNeeded();await page.waitForTimeout(450);
   const source=await hero.locator('img').boundingBox();
+  const articleY=await page.evaluate(()=>scrollY);
   if(scenario==='offscreen'){await page.evaluate(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));await page.waitForTimeout(150);}
   await page.evaluate(()=>{window.addEventListener('popstate',e=>{const el=document.querySelector('[data-motion-cover]'),img=el?.matches('img')?el:el?.querySelector('img');window.__pop={ua:e.hasUAVisualTransition,rect:el?.getBoundingClientRect().toJSON(),loaded:img?.complete,layer:document.querySelector('[data-motion-return]')?.outerHTML};},{once:true});});
   await page.evaluate(()=>{window.__returnFrames=[];let count=0;function sample(){const e=document.querySelector('[data-motion-return]');window.__returnFrames.push({t:performance.now(),phase:e?.getAttribute('data-motion-return'),rect:e?JSON.parse(JSON.stringify(e.getBoundingClientRect())):null,hidden:[...document.querySelectorAll('[data-motion-cover]')].filter(e=>e.style.visibility==='hidden').length,mainOpacity:getComputedStyle(document.getElementById('site-content')).opacity});if(++count<110)requestAnimationFrame(sample);}requestAnimationFrame(sample);});
   await page.goBack();await page.waitForURL(origin+listPath);if(scenario!=='hover')await page.mouse.move(0,0);
   if(scenario==='interrupt'){await page.waitForTimeout(100);await page.touchscreen.tap(5,400);}
-  if(scenario==='rapid'){await page.waitForTimeout(100);await page.goForward();await page.waitForURL('**/posts/'+before.slug+'/');await page.waitForTimeout(100);await page.goBack();await page.waitForURL(origin+listPath);}
+  if(scenario==='rapid'){await page.waitForTimeout(100);await page.goForward();await page.waitForURL('**/posts/'+before.slug+'/');await page.waitForTimeout(100);assert.ok(Math.abs(await page.evaluate(()=>scrollY)-articleY)<3,'forward restoration must settle before another Back, not queue a smooth scroll');await page.goBack();await page.waitForURL(origin+listPath);}
   await page.waitForTimeout(1800);
   const after=await image.evaluate(e=>({top:e.getBoundingClientRect().top,y:scrollY,slug:e.dataset.motionCover}));
   const frames=await page.evaluate(()=>window.__returnFrames),active=frames.filter(f=>f.phase==='moving');

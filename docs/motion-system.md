@@ -231,11 +231,15 @@ preserves the artwork's aspect ratio while changing its crop. Home's featured an
 latest cards can share a slug; the visible destination wins after restoration.
 The selected card does not simultaneously run a separate reveal animation.
 
-There are no scroll-position or history-state writes. While the bridge is alive,
+There are no scroll-position or history-state writes. During history settlement,
 the existing global smooth-scroll rule is temporarily overridden with `auto` so
 the browser's **same saved position** is restored before the cover lands. The
 previous inline value is restored on every cleanup path. This avoids two competing
 animations on mobile Chromium/Firefox without changing where Back returns.
+The 750ms bounded hold covers forward and offscreen traversals too: otherwise
+cancelling the cover on Forward can restart a smooth scroll which outlives the
+next Back event. New navigation or user input releases the hold; it is independent
+of whether a cover exists. A live rapid-traversal regression exposed this boundary.
 Hover zoom is neutralized only on the hidden destination image, then its existing
 CSS transition resumes at handoff instead of jumping to a magnified crop.
 

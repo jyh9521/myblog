@@ -8,6 +8,18 @@
   transition: background-color var(--motion-duration-short) var(--motion-ease-standard),color var(--motion-duration-short) var(--motion-ease-standard),border-color var(--motion-duration-short) var(--motion-ease-standard),border-radius var(--motion-duration-medium) var(--motion-ease-standard);
 }
 /* Physics owns displacement. Never run a CSS transform tween over its writes. */
+/* Flat CTA state layer: fade opacity instead of bringing back the legacy solid
+   red extrusion. Keep hit bounds and silhouette stable; physics owns press. */
+:is(.hero-button,.m3-quick a)::before { content:'';position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;transition:opacity var(--motion-duration-short) var(--motion-ease-standard); }
+@media(hover:hover) and (pointer:fine) {
+  :is(.hero-button,.m3-quick a):not(:disabled):hover::before { opacity:.08; }
+}
+:is(.hero-button,.m3-quick a):not(:disabled):focus-visible::before { opacity:.1; }
+/* Touch browsers may retain :active after a tap. Their press feedback comes
+   from the pointerup/pointercancel-aware spring, not a sticky CSS state. */
+@media(hover:hover) and (pointer:fine) {
+  :is(.hero-button,.m3-quick a):not(:disabled):active::before { opacity:.12; }
+}
 .m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.hero-button,.share-button,.theme-toggle,.m3-quick a,.game-platform-link):is(:hover,:active) { transform:none; }
 .m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card) { transition:border-color var(--motion-duration-short) var(--motion-ease-standard); }
 .m3-site .post-visual img { transition:transform var(--motion-spring-duration) var(--motion-control-ease); }

@@ -18,7 +18,7 @@
 .m3-feature{display:grid;grid-template-rows:auto auto;overflow:hidden;min-width:0;background:var(--m3-container);border-radius:28px 28px 72px 28px;transition:transform var(--motion-duration-medium) var(--m3-spring)}
 .m3-feature img{display:block;aspect-ratio:16/8.6;width:100%;object-fit:cover}
 .m3-feature span{display:grid;padding:16px clamp(15px,3vw,32px) 23px;gap:4px}.m3-feature small,.m3-site .section-kicker{color:var(--m3-primary);font-weight:850;letter-spacing:.14em}.m3-feature strong{font-size:clamp(17px,2vw,27px);line-height:1.35}
-.m3-quick{background:var(--m3-base);border-bottom:1px solid var(--line)}.m3-quick .container{display:flex;flex-wrap:wrap;gap:10px;padding-block:12px}.m3-quick a{display:inline-flex;align-items:center;gap:8px;min-height:48px;border-radius:100px;padding:0 17px;font-size:.88rem;background:var(--m3-selected);color:var(--m3-on-selected);font-weight:750}.m3-quick a:hover{box-shadow:inset 0 0 0 48px #7772}
+.m3-quick{background:var(--m3-base);border-bottom:1px solid var(--line)}.m3-quick .container{display:flex;flex-wrap:wrap;gap:10px;padding-block:12px}.m3-quick a{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:48px;border-radius:100px;padding:0 17px;font-size:.88rem;background:var(--m3-selected);color:var(--m3-on-selected);font-weight:750}
 .m3-site .section-title h2,.m3-library-heading h2{letter-spacing:-.045em;font-size:clamp(26px,4vw,48px)}
 .m3-site :is(.post-card,.game-shelf-item,.gaming-profile-card,.timeline-directory-card,.article-header,.game-platform-card){border-color:var(--line);background:var(--m3-base);box-shadow:none;border-radius:24px}
 .m3-site .post-card .post-visual{border-radius:16px;background:var(--m3-container)}
@@ -38,7 +38,8 @@
 .m3-site .game-shelf-item .game-platform-link:hover{background:var(--shelf-hover)}
 .m3-site .game-shelf-item .game-platform-link:active{border-radius:10px}
 .m3-site :is(.hero-button,.m3-directory-intro>a,.game-platform-link,.game-pagination button,.m3-quick a){transition:transform var(--motion-duration-medium) var(--m3-spring),border-radius var(--motion-duration-medium) var(--m3-spring),background-color var(--motion-duration-medium)}
-.m3-site :is(.hero-button,.m3-directory-intro>a,.game-platform-link,.m3-quick a):active{transform:scale(.97);border-radius:14px}
+.m3-site :is(.hero-button,.m3-directory-intro>a,.game-platform-link,.m3-quick a):active{transform:scale(.97)}
+.m3-site :is(.m3-directory-intro>a,.game-platform-link):active{border-radius:14px}
 .m3-shelf-badges{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px;flex:none;max-width:min(48%,240px)}
 .m3-shelf-badge{--badge-bg:#e7e1ff;--badge-ink:#442683;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;padding:5px 9px;border-radius:100px 100px 7px 100px;background:var(--badge-bg);color:var(--badge-ink);font-size:12px;font-weight:850;line-height:1.45}
 .m3-shelf-badge[data-tone=playing]{--badge-bg:#d9eaff;--badge-ink:#004784}

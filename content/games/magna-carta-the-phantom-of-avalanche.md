@@ -78,6 +78,8 @@ hltb:
 events:
   - date: 2026-10-12
     title: 开始汉化工作
+  - date: 2026-10-26
+    title: 已发布汉化补丁
 projects:
   - url: https://github.com/jyh9521/Magna-Carta-The-Phantom-of-Avalanche-CN
     name: '《真名法典：冰之魅影》（마그나카르타: 눈사태의 망령）简体中文汉化项目'

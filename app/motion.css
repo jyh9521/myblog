@@ -1,4 +1,16 @@
 /* Motion layer only: palette, typography and layout remain owned by the site. */
+html { scrollbar-gutter:stable; }
+.motion-details-clip { overflow:clip; }
+.motion-details-content { display:flow-root; }
+.chronology-spoilers>.motion-details-clip>.motion-details-content>p { font-size:13px;color:#685a43;line-height:1.8; }
+:root[data-theme=dark] .chronology-spoilers>.motion-details-clip>.motion-details-content>p { color:#d9c9a7; }
+.chronology-spoilers .motion-details-content>.chronology-choices+.chronology-choices { margin-top:12px; }
+.chronology-image-dialog::backdrop { opacity:var(--dialog-shade,0); }
+.chronology-image-dialog { max-height:calc(100dvh - 24px);overscroll-behavior:contain; }
+@media(pointer:coarse) {
+  html { scrollbar-gutter:auto; }
+  .lore-chronology summary { min-height:44px;box-sizing:border-box;padding-block:10px;line-height:24px; }
+}
 :root { --motion-control-ease: var(--motion-ease-standard);--motion-route-ease:var(--motion-ease-standard); }
 @supports (animation-timing-function:linear(0,1)) {
   :root { --motion-control-ease: var(--motion-spatial-fast);--motion-route-ease:var(--motion-spatial-default); }

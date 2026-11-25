@@ -44,6 +44,7 @@ test('TOC and lightbox updates preserve Markdown image nodes, reserved geometry 
     '../games/game-frame-card': { default: () => null, __esModule: true },
     './retryable-image': { default: load('app/posts/retryable-image.tsx').default, __esModule: true },
     '../../lib/external-links': load('lib/external-links.ts', {}, { URL }),
+    '../../lib/gallery-gesture': load('lib/gallery-gesture.ts'),
   }, {
     document: { getElementById: () => ({ id: 'end' }), body: { style: { overflow: '' } } },
     window: { addEventListener() {}, removeEventListener() {} },

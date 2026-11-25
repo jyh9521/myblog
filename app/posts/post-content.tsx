@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import MotionPresence from '../motion-presence';
+import { gallerySwipe } from '../../lib/gallery-gesture';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -22,7 +23,7 @@ export default function PostContent({ body, title, headings, images, games, cove
   const [tocOpen, setTocOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
   const [activeHeading, setActiveHeading] = useState('');
-  const touchStart = useRef<number | null>(null);
+  const touchStart = useRef<{x: number; y: number} | null>(null);
   const coverRef = useRef<HTMLImageElement>(null);
   const imageOpener = useRef<HTMLButtonElement>(null);
   function openImage(index: number, event?: React.MouseEvent<HTMLButtonElement>) {
@@ -102,10 +103,13 @@ export default function PostContent({ body, title, headings, images, games, cove
       {video && <section className="media"><h2>视频</h2><video controls src={video} /></section>}
       {attachment && <p className="media"><a href={attachment} download {...externalLinkProps(attachment)}>下载附件 ↗</a></p>}
     </div>
-    <MotionPresence returnFocus={imageOpener}>{currentImage ? <div className="image-lightbox" role="dialog" aria-modal="true" aria-label="文章图片浏览器" onClick={() => setActiveImage(null)} onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => {
-      if (touchStart.current === null) return;
-      const delta = event.changedTouches[0].clientX - touchStart.current;
-      if (Math.abs(delta) > 48) setActiveImage(index => index === null ? null : (index + (delta < 0 ? 1 : -1) + galleryImages.length) % galleryImages.length);
+    <MotionPresence returnFocus={imageOpener}>{currentImage ? <div className="image-lightbox" role="dialog" aria-modal="true" aria-label="文章图片浏览器" onClick={() => setActiveImage(null)} onTouchStart={event => {
+      const touch = event.touches[0];
+      touchStart.current = touch && event.touches.length === 1 && !(event.target as Element).closest('button,a,input,select,textarea') ? {x:touch.clientX,y:touch.clientY} : null;
+    }} onTouchMove={event => { if (event.touches.length !== 1) touchStart.current = null; }} onTouchCancel={() => { touchStart.current = null; }} onTouchEnd={event => {
+      const touch = event.changedTouches[0];
+      const direction = touch ? gallerySwipe(touchStart.current, {x:touch.clientX,y:touch.clientY}) : 0;
+      if (direction) setActiveImage(index => index === null ? null : (index + direction + galleryImages.length) % galleryImages.length);
       touchStart.current = null;
     }}>
       <button className="lightbox-close" type="button" aria-label="关闭图片浏览器" onClick={() => setActiveImage(null)}><span aria-hidden="true">×</span></button>

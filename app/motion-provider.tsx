@@ -19,6 +19,7 @@ export default function MotionProvider(){
   const generation=useRef(0);
   const previousPath=useRef(pathname);
   const entrance=useRef<Animation|null>(null);
+  const restoringHistory=useRef(false);
   useEffect(()=>installMotion(document.body),[]);
   useLayoutEffect(()=>{
     document.querySelectorAll<HTMLAnchorElement>('.site-header nav a').forEach(a=>{const selected=a.pathname==='/'?pathname==='/':pathname.startsWith(a.pathname);if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
@@ -28,9 +29,13 @@ export default function MotionProvider(){
       entrance.current?.cancel();
       // Keep the shared cover's destination geometry fixed. Its own snapshot
       // provides spatial continuity while the surrounding live content fades in.
-      entrance.current=document.getElementById('site-content')?.animate(springFrames(motion.spatial.default).map(value=>({opacity:Math.min(1,.35+.65*value),transform:job?.cover?'none':`translateY(${12*(1-value)}px)`})),{duration:600,easing:'linear'})||null;
+      // History restores an existing viewport position. A parent translation
+      // would be mistaken for layout by the shelf's scroll restoration observer.
+      const stationary=job?.cover||restoringHistory.current;
+      entrance.current=document.getElementById('site-content')?.animate(springFrames(motion.spatial.default).map(value=>({opacity:Math.min(1,.35+.65*value),transform:stationary?'none':`translateY(${12*(1-value)}px)`})),{duration:600,easing:'linear'})||null;
     }
     previousPath.current=pathname;
+    restoringHistory.current=false;
     if(job&&pathname.replace(/\/$/,'')===job.path.replace(/\/$/,'')){
       clearNames();if(job.cover)nameCover(coverFor(job.cover));
       const content=document.getElementById('site-content');content?.focus({preventScroll:true});
@@ -44,6 +49,7 @@ export default function MotionProvider(){
       const url=new URL(link.href,location.href);
       if(url.origin!==location.origin||url.pathname===location.pathname||url.hash||url.search||!/^\/(?:$|posts\/|games\/|about\/|ns\/|chronicles\/)/.test(url.pathname))return;
       const id=++generation.current;
+      restoringHistory.current=false;
       event.preventDefault();pending.current?.finish();pending.current=null;skipTransition();clearNames();
       const cover=postSlug(url.pathname)||(/^\/(?:$|posts\/?)$/.test(url.pathname)?postSlug(location.pathname):undefined);
       // Ordinary routes never need a snapshot or a rendering-suppressed update.
@@ -64,8 +70,9 @@ export default function MotionProvider(){
     }
     const preference=matchMedia('(prefers-reduced-motion: reduce)');
     const cancel=()=>{generation.current++;entrance.current?.cancel();pending.current?.finish();pending.current=null;skipTransition();clearNames();};
-    document.addEventListener('click',click,true);window.addEventListener('popstate',cancel);preference.addEventListener('change',cancel);
-    return()=>{cancel();document.removeEventListener('click',click,true);window.removeEventListener('popstate',cancel);preference.removeEventListener('change',cancel);};
+    const history=()=>{restoringHistory.current=true;cancel();};
+    document.addEventListener('click',click,true);window.addEventListener('popstate',history);preference.addEventListener('change',cancel);
+    return()=>{cancel();document.removeEventListener('click',click,true);window.removeEventListener('popstate',history);preference.removeEventListener('change',cancel);};
   },[router]);
   return null;
 }

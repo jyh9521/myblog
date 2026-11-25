@@ -159,3 +159,58 @@ Sources: [Material motion](https://m3.material.io/styles/motion),
   clicks; the revision delivers all 6. Total scenario CPU time is not an equal-work
   comparison when the old version discards four interactions. Scroll frame
   intervals are host samples, not an iPhone/Pixel or high-refresh-device guarantee.
+
+## Public-route and touch follow-up
+
+The route matrix covers all nine public templates: home, post directory, article,
+game directory, game dossier, timeline directory, chronology, about and NS. Browser
+checks visit a real representative of each template rather than claiming all 358
+generated URLs have individually received visual acceptance. Content validation and
+the production export still cover the complete static corpus.
+
+The audit found instant native chronology disclosures/dialogs and unintended image
+changes from diagonal/cancelled touch gestures. Existing card springs, SPA routes,
+shared covers, mobile TOC, game selectors and NS media behavior are retained, not
+replaced with another engine. Native select/audio UI remains browser-owned.
+
+- `MotionDetails` preserves real `details`/`summary`, SSR content and no-JS behavior.
+  One height/effects spring preserves momentum on reversal. Natural content is
+  observed only while expanded; size reads happen on changes, not every frame.
+  Height changes intentionally reflow that disclosure and following content. The
+  clip returns to automatic height when settled. Closed native content is not inert:
+  browser find-in-page must still find and open it. Only the closing interval is inert.
+  Dynamic resizing also snaps under reduced motion. Pre-hydration native opening
+  is respected rather than overwritten by a default prop.
+- `MotionDialog` retains native top-layer modality, focus containment and scrolling
+  lock through entry/exit. A node-identity close token handles Chromium's queued
+  close event after unmount; counters can swallow a later real native close. Escape,
+  explicit close, native close, interruption and removal restore scrolling/focus.
+  The backdrop follows the same effects channel. Touch dialogs use the full viewport
+  without a reserved desktop scrollbar strip; desktop gutter stays stable.
+- Coarse-pointer summaries have 44px minimum hit height (the audited original was
+  19px). Article gallery swipes require more than 48px movement and a horizontal
+  component greater than 1.25 times the vertical component. Cancellation, multitouch
+  and gestures originating on controls do not advance the image.
+- History arrivals retain the fade but omit the 12px spatial arrival. In the
+  audited touch game-shelf flow that parent transform was included in saved-scroll
+  correction, leaving the card 12px above its original position after settling.
+  `scripts/motion-history-browser.cjs` measures the actual before/after card position.
+
+Verification commands: `node scripts/sitewide-motion-browser.cjs`,
+`node scripts/sitewide-motion-profile.cjs`, `node scripts/sitewide-motion-demo.cjs`.
+The browser matrix additionally checks 360px layouts, real cross-page SPA links,
+disclosure reversal/dynamic height/search eligibility, native dialog entry/exit/
+close/focus, touch-scroll press cancellation and no-JS disclosure. The existing
+three-engine motion regression and NS audio checks remain required. The CDP trace
+explicitly reports active layout cost separately from idle work; adding a visible
+height animation is not advertised as reducing layout count.
+
+Follow-up verification: 481 automated tests pass; 358 static pages export and the
+shared first-load bundle remains 102 kB. All nine templates pass desktop/touch
+checks in Chromium, Firefox and WebKit, including narrow 360px layouts. Separate
+real-input checks pass for post/game/timeline/social cards. The saved game-card
+position changes from a measured -12px drift to 0px in all three engines.
+The 390px disclosure CDP sample reports 8.5ms P95 both before and after; active
+layouts increase from 6 instantaneous toggles to 181 animated layouts, with zero
+idle layouts or style recalculations after settlement. This measures the headless
+host, not physical mobile hardware.

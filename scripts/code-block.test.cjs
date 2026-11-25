@@ -124,6 +124,7 @@ test('the actual article component renders one copy panel and copies all code li
   for (const name of ['./pdf-embed', './image-compare', '../games/game-frame-card', './retryable-image']) imports[name] = { __esModule: true, default: () => null };
   imports['../site-enhancements'] = { ReadingProgress: () => null, ShareButton: () => null };
   imports['../../lib/external-links'] = load('lib/external-links.ts');
+  imports['../../lib/gallery-gesture'] = load('lib/gallery-gesture.ts');
   let copied;
   const { default: PostContent } = load('app/posts/post-content.tsx', imports, {
     document: {}, IntersectionObserver: class { observe() {} disconnect() {} },

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import MotionPresence from '../motion-presence';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -15,14 +16,19 @@ import PdfEmbed from './pdf-embed';
 import { externalLinkProps } from '../../lib/external-links';
 import type { GameRecord } from '../../lib/game-types';
 
-type Props = { compact?: boolean; body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
+type Props = { compact?: boolean; coverMotionId?: string; body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
 
-export default function PostContent({ body, title, headings, images, games, cover, audio, video, attachment, compact = false }: Props) {
+export default function PostContent({ body, title, headings, images, games, cover, coverMotionId, audio, video, attachment, compact = false }: Props) {
   const [tocOpen, setTocOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
   const [activeHeading, setActiveHeading] = useState('');
   const touchStart = useRef<number | null>(null);
   const coverRef = useRef<HTMLImageElement>(null);
+  const imageOpener = useRef<HTMLButtonElement>(null);
+  function openImage(index: number, event?: React.MouseEvent<HTMLButtonElement>) {
+    if(event) (imageOpener as React.MutableRefObject<HTMLButtonElement | null>).current = event.currentTarget;
+    setActiveImage(index);
+  }
   const galleryImages = cover ? [cover, ...images] : images;
   const galleryOffset = cover ? 1 : 0;
   const imageGroups = [...new Set(galleryImages.map(image => image.group || '未分类'))].map(group => ({ group, firstIndex: galleryImages.findIndex(image => (image.group || '未分类') === group) }));
@@ -50,14 +56,6 @@ export default function PostContent({ body, title, headings, images, games, cove
     return () => observer.disconnect();
   }, [headings]);
 
-  useEffect(() => {
-    const image = coverRef.current;
-    if (!image || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let frame = 0;
-    const update = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => { if (image.isConnected) image.style.transform = `translateY(${Math.min(18, scrollY * 0.025)}px) scale(1.035)`; }); };
-    update(); addEventListener('scroll', update, { passive: true });
-    return () => { removeEventListener('scroll', update); cancelAnimationFrame(frame); image.style.transform = ''; };
-  }, [cover?.src]);
 
   const currentImage = activeImage === null ? null : galleryImages[activeImage];
   // Keep component identities stable when TOC highlighting or the lightbox changes.
@@ -70,7 +68,7 @@ export default function PostContent({ body, title, headings, images, games, cove
       const imageSrc = src || image?.src || '';
       const caption = title || image?.caption || alt || image?.alt || '';
       return <span className="article-figure"><span className="article-image-button">
-        <RetryableImage key={imageSrc} src={imageSrc} alt={alt || image?.alt || ''} width={image?.width} height={image?.height} onOpen={() => setActiveImage(index)} label={`放大图片：${caption || `第 ${index + 1} 张`}`} />
+        <RetryableImage key={imageSrc} src={imageSrc} alt={alt || image?.alt || ''} width={image?.width} height={image?.height} onOpen={event => openImage(index, event)} label={`放大图片：${caption || `第 ${index + 1} 张`}`} />
       </span>{caption && <span className="article-image-caption">{caption}</span>}</span>;
     },
     h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...props}>{children}</h1>,
@@ -87,7 +85,7 @@ export default function PostContent({ body, title, headings, images, games, cove
   return <>
     {!compact && <ReadingProgress />}
     {cover && <span className="article-cover-button">
-      <span className="article-cover-viewport"><RetryableImage key={cover.src} src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} imageRef={coverRef} imageClass="cover cover-parallax" lazy={false} onOpen={() => setActiveImage(0)} label={`放大封面图片：${cover.caption}`} /></span><span className="article-image-caption">{cover.caption}</span>
+      <span data-motion-cover={coverMotionId} className="article-cover-viewport"><RetryableImage key={cover.src} src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} imageRef={coverRef} imageClass="cover cover-parallax" lazy={false} onOpen={event => openImage(0, event)} label={`放大封面图片：${cover.caption}`} /></span><span className="article-image-caption">{cover.caption}</span>
     </span>}
     <div className={compact ? "article-content article-content-compact" : "article-content"}>
       {!compact && <div className="article-actions"><span>阅读文章</span><ShareButton title={title} /></div>}
@@ -95,16 +93,16 @@ export default function PostContent({ body, title, headings, images, games, cove
         <button className="toc-toggle" type="button" aria-expanded={tocOpen} onClick={() => setTocOpen(open => !open)}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg><span>文章目录</span>
         </button>
-        <ol className="post-toc-list">{headings.map(heading => <li key={heading.id} className={`toc-level-${heading.level}${activeHeading === heading.id ? ' is-active' : ''}`}>
+        <div className="toc-disclosure"><div className="toc-clip"><ol className="post-toc-list">{headings.map(heading => <li key={heading.id} className={`toc-level-${heading.level}${activeHeading === heading.id ? ' is-active' : ''}`}>
           <a href={`#${encodeURIComponent(heading.id)}`} onClick={() => setTocOpen(false)}>{heading.text}</a>
-        </li>)}</ol>
+        </li>)}</ol></div></div>
       </nav>}
       <div className="body"><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, remarkTextStyles, ...(compact ? [] : [remarkHeadingIds]), remarkGameFrames, remarkImageCompare]} components={markdownComponents}>{body}</ReactMarkdown></div>
       {audio && <section className="media"><h2>音频</h2><audio controls src={audio} /></section>}
       {video && <section className="media"><h2>视频</h2><video controls src={video} /></section>}
       {attachment && <p className="media"><a href={attachment} download {...externalLinkProps(attachment)}>下载附件 ↗</a></p>}
     </div>
-    {currentImage && <div className="image-lightbox" role="dialog" aria-modal="true" aria-label="文章图片浏览器" onClick={() => setActiveImage(null)} onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => {
+    <MotionPresence returnFocus={imageOpener}>{currentImage ? <div className="image-lightbox" role="dialog" aria-modal="true" aria-label="文章图片浏览器" onClick={() => setActiveImage(null)} onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => {
       if (touchStart.current === null) return;
       const delta = event.changedTouches[0].clientX - touchStart.current;
       if (Math.abs(delta) > 48) setActiveImage(index => index === null ? null : (index + (delta < 0 ? 1 : -1) + galleryImages.length) % galleryImages.length);
@@ -119,7 +117,7 @@ export default function PostContent({ body, title, headings, images, games, cove
         <span className="lightbox-count">{activeImage! + 1} / {galleryImages.length}</span>
       </div>
       {galleryImages.length > 1 && <button className="lightbox-arrow lightbox-next" type="button" aria-label="下一张图片" onClick={event => { event.stopPropagation(); setActiveImage(index => index === null ? null : (index + 1) % galleryImages.length); }}>›</button>}
-    </div>}
+    </div> : null}</MotionPresence>
   </>;
 }
 

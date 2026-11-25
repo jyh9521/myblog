@@ -7,7 +7,7 @@ const React = require('react');
 const renderer = require('react-test-renderer');
 
 function load(file, imports = {}, globals = {}) {
-  const context = { exports: {}, process, ...globals, require: name => name in imports ? imports[name] : require(name) };
+  const context = { exports: {}, process, ...globals, require: name => name === '../motion-presence' ? { __esModule: true, default: ({ children }) => children } : name in imports ? imports[name] : require(name) };
   vm.runInNewContext(ts.transpileModule(fs.readFileSync(file, 'utf8'), {
     compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
   }).outputText, context);

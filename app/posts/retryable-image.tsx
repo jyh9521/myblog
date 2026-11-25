@@ -3,7 +3,7 @@ import { useEffect, useImperativeHandle, useRef, useState, type RefObject } from
 
 export default function RetryableImage({ src, alt, width = 1600, height = 900, imageClass, imageRef, onOpen, label, lazy = true }: {
   src: string; alt: string; width?: number; height?: number; imageClass?: string; imageRef?: RefObject<HTMLImageElement>;
-  onOpen: () => void; label: string; lazy?: boolean;
+  onOpen: (event?: React.MouseEvent<HTMLButtonElement>) => void; label: string; lazy?: boolean;
 }) {
   const [failed, setFailed] = useState(false), [attempt, setAttempt] = useState(0);
   const localRef = useRef<HTMLImageElement>(null);

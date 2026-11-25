@@ -1,26 +1,44 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
+import { transition } from './motion-runtime';
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
   useEffect(() => {
-    const saved = localStorage.getItem('blog-theme');
+    let saved: string | null = null;
+    try { saved = localStorage.getItem('blog-theme'); } catch { /* private storage */ }
     const value = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     setDark(value); document.documentElement.dataset.theme = value ? 'dark' : 'light';
   }, []);
-  function toggle() { const value = !dark; setDark(value); document.documentElement.dataset.theme = value ? 'dark' : 'light'; localStorage.setItem('blog-theme', value ? 'dark' : 'light'); }
+  const requested = useRef<boolean | null>(null);
+  const revision = useRef(0);
+  function toggle() {
+    const value = !(requested.current ?? dark); requested.current = value;
+    const id = ++revision.current;
+    transition(() => {
+      if (id !== revision.current) return;
+      flushSync(() => setDark(value));
+      document.documentElement.dataset.theme = value ? 'dark' : 'light';
+      try { localStorage.setItem('blog-theme', value ? 'dark' : 'light'); } catch { /* optional persistence */ }
+    });
+  }
   return <button className="theme-toggle" type="button" aria-label={dark ? '切换到浅色模式' : '切换到深色模式'} onClick={toggle}>{dark ? '☀' : '☾'}</button>;
 }
 
 export function ReadingProgress() {
-  const [progress, setProgress] = useState(0);
+  const bar = useRef<HTMLSpanElement>(null);
   useEffect(() => {
-    const update = () => { const max = document.documentElement.scrollHeight - innerHeight; setProgress(max > 0 ? Math.min(100, Math.max(0, scrollY / max * 100)) : 0); };
-    update(); addEventListener('scroll', update, { passive: true }); addEventListener('resize', update);
-    return () => { removeEventListener('scroll', update); removeEventListener('resize', update); };
+    let frame = 0, max = 0;
+    const paint = () => { frame = 0; if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0})`; };
+    const update = () => { if (!frame) frame = requestAnimationFrame(paint); };
+    const measure = () => { max = document.documentElement.scrollHeight - innerHeight; update(); };
+    const observer = new ResizeObserver(measure); observer.observe(document.body);
+    measure(); addEventListener('scroll', update, { passive: true }); addEventListener('resize', measure);
+    return () => { observer.disconnect(); removeEventListener('scroll', update); removeEventListener('resize', measure); cancelAnimationFrame(frame); };
   }, []);
-  return <div className="reading-progress" aria-hidden="true"><span style={{ width: `${progress}%` }} /></div>;
+  return <div className="reading-progress" aria-hidden="true"><span ref={bar} /></div>;
 }
 
 export function ShareButton({ title }: { title: string }) {

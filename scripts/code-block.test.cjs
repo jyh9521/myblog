@@ -112,7 +112,7 @@ test('the reported article configuration is one TOML block rather than separate 
 test('the actual article component renders one copy panel and copies all code lines', async () => {
   const ts = require('typescript'), renderer = require('react-test-renderer');
   const load = (file, imports = {}, globals = {}) => {
-    const context = { exports: {}, URL, URLSearchParams, ...globals, require: name => name in imports ? imports[name] : require(name) };
+    const context = { exports: {}, URL, URLSearchParams, ...globals, require: name => name === '../motion-presence' ? { __esModule: true, default: ({ children }) => children } : name in imports ? imports[name] : require(name) };
     vm.runInNewContext(ts.transpileModule(fs.readFileSync(file, 'utf8'), {
       compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
     }).outputText, context);

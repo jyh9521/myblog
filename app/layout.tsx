@@ -3,8 +3,11 @@ import BackToTop from './back-to-top';
 import ExternalLinks from './external-links';
 import { FooterEasterEgg, ThemeToggle } from './site-enhancements';
 import VisitorCounter from './visitor-counter';
+import MotionProvider from './motion-provider';
 import './style.css';
 import './nintendo-m3.css';
+import './motion-tokens.css';
+import './motion.css';
 
 export const metadata: Metadata = {
   title: { default: "伯翎飞云的博客", template: "%s | 伯翎飞云的博客" },
@@ -13,8 +16,9 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="zh-CN"><body className="m3-site"><a className="m3-skip" href="#site-content">跳到正文</a>
+  return <html lang="zh-CN" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: "try{var t=localStorage.getItem('blog-theme');document.documentElement.dataset.theme=(t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch(e){}" }} /></head><body className="m3-site"><a className="m3-skip" href="#site-content">跳到正文</a>
     <ExternalLinks />
+    <MotionProvider />
     <header className="site-header"><div className="header-inner">
       <a className="brand" href="/" aria-label="伯翎飞云的博客首页"><img className="brand-icon" src="/avatar.jpg" alt="" /><span>伯翎飞云<span className="brand-dot">.</span></span></a>
       <nav aria-label="主导航"><a href="/">首页</a><a href="/posts/">文章</a><a href="/games/">游戏档案</a><a href="/about/">关于我</a><a href="/ns/" aria-label="NS群群号发布页"><span className="nav-label-full">NS群群号发布页</span><span className="nav-label-short" aria-hidden="true">NS群号</span></a><ThemeToggle /></nav>

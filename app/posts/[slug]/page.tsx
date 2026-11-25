@@ -42,7 +42,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         {post.updateNote && <p className="update-note">更新说明：{post.updateNote}</p>}
         {post.gameSlug && <Link className="game-reference" href={`/games/${post.gameSlug}/`}>🎮 查看游戏档案与时间线 ↗</Link>}
       </header>
-      {post.visibility === 'password' ? <ProtectedPost privateId={post.privateId} title={post.title} games={games} /> : <PostContent body={post.body} title={post.title} headings={headings} images={images} games={games} cover={hasLocalAsset(post.cover) ? withImageSize({ src: post.cover, alt: post.title, caption: post.title, group: '封面' }) : undefined} audio={post.audio} video={post.video} attachment={post.attachment} />}
+      {post.visibility === 'password' ? <ProtectedPost privateId={post.privateId} title={post.title} games={games} /> : <PostContent coverMotionId={slug} body={post.body} title={post.title} headings={headings} images={images} games={games} cover={hasLocalAsset(post.cover) ? withImageSize({ src: post.cover, alt: post.title, caption: post.title, group: '封面' }) : undefined} audio={post.audio} video={post.video} attachment={post.attachment} />}
       {(previous || next) && <nav className="post-neighbor-nav" aria-label="上一篇和下一篇">
         {previous ? <Link href={`/posts/${previous.slug}/`} className="neighbor-card neighbor-previous"><span>← 上一篇 · 更早</span><strong>{previous.title}</strong></Link> : <span />}
         {next ? <Link href={`/posts/${next.slug}/`} className="neighbor-card neighbor-next"><span>下一篇 · 更新 →</span><strong>{next.title}</strong></Link> : <span />}

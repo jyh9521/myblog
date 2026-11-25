@@ -16,7 +16,7 @@ export default function Home() {
           <Link className="hero-button" href="#latest">浏览文章 <span aria-hidden="true">↗</span></Link>
         </div>
         {featured ? <Link className="m3-feature" href={`/posts/${featured.slug}/`}>
-          <img src={featured.cover} alt="" /><span><small>PICK UP</small><strong>{featured.title}</strong></span>
+          <img data-motion-cover={featured.slug} src={featured.cover} alt="" /><span><small>PICK UP</small><strong>{featured.title}</strong></span>
         </Link> : <div className="hero-art" aria-hidden="true">
           <div className="hero-orbit orbit-one" />
           <div className="hero-orbit orbit-two" />
@@ -37,7 +37,7 @@ export default function Home() {
       {posts.length ? <div className="post-grid">{posts.map((post, index) =>
         <article key={post.slug} className="post-card">
           <Link className={`post-visual visual-${index % 3}`} href={`/posts/${post.slug}/`} aria-label={`阅读：${post.title}`}>
-            {(hasLocalAsset(post.cover) || (post.visibility !== 'password' && post.cover)) ? <img src={post.cover} alt="" /> : <span className="visual-mark" aria-hidden="true">{index % 2 ? '✦' : '●'}</span>}
+            {(hasLocalAsset(post.cover) || (post.visibility !== 'password' && post.cover)) ? <img data-motion-cover={post.slug} src={post.cover} alt="" /> : <span className="visual-mark" aria-hidden="true">{index % 2 ? '✦' : '●'}</span>}
             <span className="visual-arrow" aria-hidden="true">↗</span>
           </Link>
           <div className="post-meta">{post.pinned && <span className="pinned-badge">置顶</span>}{post.visibility === 'password' && <span className="locked-post-badge">🔒 密码访问</span>}<time>{post.date.slice(0, 10)}</time><span className="meta-line" />{post.tags?.[0] ? <Link className="tag-link" href={`/posts/?tag=${encodeURIComponent(post.tags[0])}`}>{post.tags[0]}</Link> : '博客'}</div>

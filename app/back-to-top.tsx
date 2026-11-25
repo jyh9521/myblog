@@ -10,8 +10,7 @@ export default function BackToTop() {
     window.addEventListener('scroll', update, { passive: true });
     return () => window.removeEventListener('scroll', update);
   }, []);
-  if (!visible) return null;
-  return <button className="back-to-top" type="button" aria-label="回到顶部" title="回到顶部" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+  return <button className="back-to-top" data-visible={visible} tabIndex={visible ? 0 : -1} aria-hidden={!visible} type="button" aria-label="回到顶部" title="回到顶部" onClick={() => window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7M12 5v14" /></svg>
   </button>;
 }

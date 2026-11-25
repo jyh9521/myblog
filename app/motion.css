@@ -1,0 +1,62 @@
+/* Motion layer only: palette, typography and layout remain owned by the site. */
+:root { --motion-control-ease: var(--motion-ease-standard); }
+@supports (animation-timing-function:linear(0,1)) {
+  :root { --motion-control-ease: var(--motion-spatial-fast); }
+}
+.m3-site :is(button,a,input,select) { -webkit-tap-highlight-color: transparent; }
+.m3-site :is(.site-header nav a,.tag-filters button,.card-tag,.tag-link,.share-button,.theme-toggle,.game-pagination button,.game-platform-link,.hero-button,.m3-quick a,.random-post-button,.game-section-nav a) {
+  transition: background-color var(--motion-duration-short) var(--motion-ease-standard),color var(--motion-duration-short) var(--motion-ease-standard),border-color var(--motion-duration-short) var(--motion-ease-standard),border-radius var(--motion-duration-medium) var(--motion-ease-standard);
+}
+/* Physics owns displacement. Never run a CSS transform tween over its writes. */
+.m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card,.hero-button,.share-button,.theme-toggle,.m3-quick a,.game-platform-link):is(:hover,:active) { transform:none; }
+.m3-site[data-motion=ready] :is(.post-card,.m3-feature,.related-card,.neighbor-card,.game-shelf-item,.timeline-directory-card,.game-platform-card) { transition:border-color var(--motion-duration-short) var(--motion-ease-standard); }
+.m3-site .post-visual img { transition:transform var(--motion-spring-duration) var(--motion-control-ease); }
+.m3-site .post-card:hover img { transform:scale(1.025); }
+.m3-site .visual-arrow { transition:rotate var(--motion-spring-duration) var(--motion-control-ease); }
+@media(hover:hover) and (pointer:fine) { .post-card:hover .visual-arrow { rotate:8deg; } }
+.m3-site .site-header nav a[aria-current=page] { background:#3b000023; }
+.archive-search { transition:border-color var(--motion-duration-short) var(--motion-ease-standard),box-shadow var(--motion-duration-short) var(--motion-ease-standard); }
+.archive-search:focus-within { border-color:var(--m3-primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--m3-primary) 12%,transparent); }
+.m3-site .tag-filters button:active,.m3-site .site-header nav a:active { border-radius:12px; }
+.theme-toggle { transition:rotate var(--motion-spring-duration) var(--motion-control-ease) !important; }
+:root[data-theme=dark] .theme-toggle { rotate:18deg; }
+.reading-progress span { width:100%;transform:scaleX(0);transform-origin:left;transition:none; }
+.article-cover-button .cover-parallax { will-change:auto;transition:none; }
+.article-cover-button:hover .cover-parallax { transform:none; }
+.back-to-top { opacity:0;visibility:hidden;pointer-events:none;translate:0 12px;transition:opacity var(--motion-duration-short) var(--motion-ease-standard),translate var(--motion-spring-duration) var(--motion-control-ease),visibility 0s var(--motion-duration-medium); }
+.back-to-top[data-visible=true] { opacity:1;visibility:visible;pointer-events:auto;translate:0 0;transition-delay:0s; }
+.toc-disclosure,.toc-clip { display:contents; }
+.toc-toggle svg { transition:rotate var(--motion-spring-duration) var(--motion-control-ease); }
+.post-toc.is-open .toc-toggle svg { rotate:90deg; }
+@media(max-width:760px) {
+  /* A single bounded layout transition is intentional: the disclosure reflows text,
+     unlike a fixed drawer. No JS height measurement or per-frame read/write cycle. */
+  .toc-disclosure { display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows var(--motion-duration-medium) var(--motion-ease-standard),visibility 0s var(--motion-duration-medium); }
+  .toc-clip { display:block;min-height:0;overflow:hidden; }
+  .post-toc .post-toc-list { display:grid;opacity:0;translate:0 -6px;transition:opacity var(--motion-duration-short) var(--motion-ease-standard),translate var(--motion-duration-medium) var(--motion-ease-standard); }
+  .post-toc.is-open .toc-disclosure { grid-template-rows:1fr;visibility:visible;transition-delay:0s; }
+  .post-toc.is-open .post-toc-list { opacity:1;translate:0 0; }
+}
+/* Persistent chrome stays steady. A single selected image is named at runtime,
+   so duplicate featured/list cards cannot invalidate the transition. */
+.site-header { view-transition-name:site-header; }
+::view-transition-group(*) { animation-duration:var(--motion-spring-duration);animation-timing-function:var(--motion-control-ease); }
+::view-transition-group(root),::view-transition-group(site-header) { animation:none; }
+::view-transition-old(site-header),::view-transition-new(site-header) { animation:none; }
+::view-transition-old(root) { animation:motion-out var(--motion-duration-short) var(--motion-ease-exit) both; }
+::view-transition-new(root) { animation:motion-in var(--motion-duration-medium) var(--motion-ease-standard) both; }
+::view-transition-old(article-cover),::view-transition-new(article-cover) { height:100%;object-fit:cover;mix-blend-mode:normal; }
+::view-transition-old(article-cover) { animation:motion-out var(--motion-duration-short) both; }
+::view-transition-new(article-cover) { animation:motion-in var(--motion-duration-short) both; }
+::view-transition { pointer-events:none; }
+@keyframes motion-in { from { opacity:0; } to { opacity:1; } }
+@keyframes motion-out { from { opacity:1; } to { opacity:0; } }
+@media(hover:none),(pointer:coarse) {
+  .m3-site .post-card:hover img { transform:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html:focus-within,html { scroll-behavior:auto; }
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*) { animation:none!important; }
+  .m3-site :is(.post-visual img,.visual-arrow,.theme-toggle,.toc-toggle svg) { transform:none!important;rotate:none!important; }
+  .back-to-top { translate:none; }
+}

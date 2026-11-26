@@ -1,7 +1,7 @@
 ---
 title: 真名法典：冰之魅影
 status:
-  - 考虑制作补丁
+  - 已制作补丁
 gameMetadata:
   platforms:
     - PC

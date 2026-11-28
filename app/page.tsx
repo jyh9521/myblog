@@ -4,6 +4,7 @@ import { buildHomeContent, homePostDate, updateSummary } from '../lib/home-conte
 import { getGames } from '../lib/games';
 import { getChronologies } from '../lib/chronologies';
 import './home.css';
+import PostRevision from './posts/post-revision';
 
 export default function Home() {
   const posts = getAllPosts();
@@ -17,11 +18,6 @@ export default function Home() {
   return <main className="m3-home home-content container">
     <header className="home-intro">
       <div><h1>游戏、汉化与开发记录<span aria-hidden="true">.</span></h1><p>好奇心，一直在线。记录做过的项目，也分享沿途的发现。</p></div>
-      <form className="home-search" action="/posts/" method="get" role="search">
-        <label className="sr-only" htmlFor="home-query">搜索文章标题和正文</label>
-        <input id="home-query" name="q" type="search" placeholder="搜索文章…" />
-        <button type="submit">搜索 <span aria-hidden="true">↗</span></button>
-      </form>
     </header>
     <section className={`home-lead-grid${featured ? '' : ' home-lead-empty'}`} aria-label="最新文章与近期更新">
       {featured && <Link className="m3-feature" href={`/posts/${featured.slug}/`}>
@@ -48,7 +44,7 @@ export default function Home() {
           {hasLocalAsset(post.cover) ? <img data-motion-cover={post.slug} src={post.cover} alt="" width={600} height={340} loading="lazy" /> : <span className="visual-mark" aria-hidden="true">✦</span>}
           <span className="visual-arrow" aria-hidden="true">↗</span>
         </Link>
-        <div className="home-card-copy"><div className="post-meta"><time dateTime={homePostDate(post)}>{homePostDate(post)}</time>{post.visibility === 'password' ? <span>密码访问</span> : post.tags[0] && <span>{post.tags[0]}</span>}</div>
+        <div className="home-card-copy"><div className="post-meta"><PostRevision date={post.date} updatedAt={post.updatedAt} />{post.visibility === 'password' ? <span>密码访问</span> : post.tags[0] && <span>{post.tags[0]}</span>}</div>
           <h3><Link href={`/posts/${post.slug}/`}>{post.title}</Link></h3><p>{updateSummary(post)}</p><Link className="read-more" href={`/posts/${post.slug}/`}>阅读全文 <span aria-hidden="true">→</span></Link>
         </div>
       </article>)}</div> : <p className="home-empty">{listed.length ? '更多文章整理中，先看看上面的内容吧。' : '文章即将发布。'}</p>}

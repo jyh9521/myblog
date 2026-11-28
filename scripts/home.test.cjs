@@ -79,14 +79,12 @@ test('homepage renders one latest covered article, three updates and a separate 
   assert.ok(html.indexOf('较早的文章') < html.indexOf('早期置顶文章'));
 });
 
-test('homepage exposes real tag links and a GET article search', () => {
+test('homepage keeps topic links without duplicating the global search', () => {
   const html = renderHome([
     post('translation', { tags: ['汉化', '工具'] }),
     post('tool', { tags: ['工具', '独有标签'] }),
   ]);
-  assert.match(html, /<form\b[^>]*action="\/posts\/"/);
-  assert.match(html, /<form\b[^>]*method="[gG][eE][tT]"/);
-  assert.match(html, /<input\b[^>]*name="q"/);
+  assert.doesNotMatch(html, /class="home-search"|role="search"/);
   for (const tag of ['汉化', '工具', '独有标签']) {
     assert.ok(html.includes(`href="/posts/?tag=${encodeURIComponent(tag)}"`));
   }

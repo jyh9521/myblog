@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import MotionPresence from '../motion-presence';
+import useOverlayHistory from '../use-overlay-history';
 import { gallerySwipe } from '../../lib/gallery-gesture';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -14,18 +15,23 @@ import ImageCompare from './image-compare';
 import GameFrameCard from '../games/game-frame-card';
 import RetryableImage from './retryable-image';
 import PdfEmbed from './pdf-embed';
+import ReadingTools from './reading-tools';
+import CopyButton from './copy-button';
+import DownloadLink from './download-link';
 import { externalLinkProps } from '../../lib/external-links';
 import type { GameRecord } from '../../lib/game-types';
 
-type Props = { compact?: boolean; coverMotionId?: string; body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
+type Props = { compact?: boolean; readingKey?: string; coverMotionId?: string; body: string; title: string; headings: HeadingItem[]; images: ArticleImage[]; games: GameRecord[]; cover?: ArticleImage; audio?: string; video?: string; attachment?: string };
 
-export default function PostContent({ body, title, headings, images, games, cover, coverMotionId, audio, video, attachment, compact = false }: Props) {
+export default function PostContent({ body, title, headings, images, games, cover, coverMotionId, audio, video, attachment, compact = false, readingKey }: Props) {
   const [tocOpen, setTocOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
   const [activeHeading, setActiveHeading] = useState('');
   const touchStart = useRef<{x: number; y: number} | null>(null);
   const coverRef = useRef<HTMLImageElement>(null);
   const imageOpener = useRef<HTMLButtonElement>(null);
+  const readingBody = useRef<HTMLDivElement>(null);
+  useOverlayHistory(activeImage !== null, () => setActiveImage(null));
   function openImage(index: number, event?: React.MouseEvent<HTMLButtonElement>) {
     if(event) (imageOpener as React.MutableRefObject<HTMLButtonElement | null>).current = event.currentTarget;
     setActiveImage(index);
@@ -90,6 +96,7 @@ export default function PostContent({ body, title, headings, images, games, cove
     </span>}
     <div className={compact ? "article-content article-content-compact" : "article-content"}>
       {!compact && <div className="article-actions"><span>阅读文章</span><ShareButton title={title} /></div>}
+      {!compact && <ReadingTools bodyRef={readingBody} readingKey={readingKey} textLength={body.length} headings={headings} activeHeading={activeHeading} />}
       {!compact && headings.length > 0 && <nav className={`post-toc${tocOpen ? ' is-open' : ''}`} aria-label="文章目录">
         <button className="toc-toggle" type="button" aria-expanded={tocOpen} onClick={() => setTocOpen(open => !open)}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg><span>文章目录</span>
@@ -98,10 +105,10 @@ export default function PostContent({ body, title, headings, images, games, cove
           <a href={`#${encodeURIComponent(heading.id)}`} onClick={() => setTocOpen(false)}>{heading.text}</a>
         </li>)}</ol></div></div>
       </nav>}
-      <div className="body"><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, remarkTextStyles, ...(compact ? [] : [remarkHeadingIds]), remarkGameFrames, remarkImageCompare]} components={markdownComponents}>{body}</ReactMarkdown></div>
+      <div className="body" ref={readingBody} style={compact ? undefined : { fontSize: 'var(--reading-font-size, 17px)', lineHeight: 'var(--reading-line-spacing, 1.95)' }}><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, remarkTextStyles, ...(compact ? [] : [remarkHeadingIds]), remarkGameFrames, remarkImageCompare]} components={markdownComponents}>{body}</ReactMarkdown></div>
       {audio && <section className="media"><h2>音频</h2><audio controls src={audio} /></section>}
       {video && <section className="media"><h2>视频</h2><video controls src={video} /></section>}
-      {attachment && <p className="media"><a href={attachment} download {...externalLinkProps(attachment)}>下载附件 ↗</a></p>}
+      {attachment && <p className="media"><DownloadLink href={attachment} /></p>}
     </div>
     <MotionPresence returnFocus={imageOpener}>{currentImage ? <div className="image-lightbox" role="dialog" aria-modal="true" aria-label="文章图片浏览器" onClick={() => setActiveImage(null)} onTouchStart={event => {
       const touch = event.touches[0];
@@ -126,8 +133,6 @@ export default function PostContent({ body, title, headings, images, games, cove
 }
 
 function CodeBlock({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) {
-  const [copied, setCopied] = useState(false);
   const value = String((children as React.ReactElement<{ children?: React.ReactNode }>)?.props?.children ?? '');
-  async function copy() { await navigator.clipboard.writeText(value); setCopied(true); setTimeout(() => setCopied(false), 1500); }
-  return <div className="code-block"><button type="button" className="code-copy" onClick={copy}>{copied ? '已复制 ✓' : '复制代码'}</button><pre {...props}>{children}</pre></div>;
+  return <div className="code-block"><CopyButton text={value} className="code-copy" label="复制代码" /><pre {...props}>{children}</pre></div>;
 }

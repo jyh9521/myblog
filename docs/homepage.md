@@ -23,7 +23,7 @@ existing records; they are not decorative placeholder widgets.
 
 ## Interaction and accessibility
 
-The visible GET search submits `q` to the existing article archive. Query and tag
+The single header search opens the site-wide search; `/search/?q=` supports direct links. The homepage no longer repeats a second search form. Archive query and tag
 edits preserve Next's history state; clearing filters also clears the URL. The
 archive search requires JavaScript, while article and category links, the initial
 home content, and no-JS article navigation remain available.

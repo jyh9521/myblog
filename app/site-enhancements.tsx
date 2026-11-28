@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { transition } from './motion-runtime';
+import { shareLink } from '../lib/interaction-feedback';
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
@@ -48,13 +49,15 @@ export function ReadingProgress() {
 }
 
 export function ShareButton({ title }: { title: string }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState(''), [busy, setBusy] = useState(false), [manual, setManual] = useState('');
   async function share() {
-    const url = location.href;
-    if (navigator.share) { try { await navigator.share({ title, url }); } catch { /* dismissed */ } return; }
-    await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 1800);
+    setBusy(true); setManual('');
+    const result = await shareLink(title, location.href, navigator);
+    setStatus(result === 'copied' ? '链接已复制 ✓' : result === 'shared' ? '已打开分享' : result === 'failed' ? '请复制下方链接分享' : '');
+    if(result === 'failed')setManual(location.href);
+    setBusy(false);
   }
-  return <button className="share-button" onClick={share}>{copied ? '链接已复制 ✓' : '分享文章 ↗'}</button>;
+  return <span className="share-control"><button type="button" className="share-button" disabled={busy} onClick={share}>{busy ? '正在分享…' : '分享文章 ↗'}</button><span role="status">{status}</span>{manual && <input aria-label="手动复制文章链接" readOnly value={manual} onFocus={event=>event.currentTarget.select()} />}</span>;
 }
 
 export function DailyPick({ items }: { items: { href: string; title: string }[] }) {

@@ -2,17 +2,20 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { motion, stepSpring } from '../lib/motion';
+import useOverlayHistory from './use-overlay-history';
 const useClientLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 /** Keep native top-layer modality/focus containment while entry and exit settle. */
 export default function MotionDialog({ open, onClose, returnFocus, label, className, children }: {
   open: boolean; onClose: () => void; returnFocus: RefObject<HTMLElement>; label: string; className: string; children: ReactNode;
 }) {
+  useOverlayHistory(open, onClose);
   const dialog = useRef<HTMLDialogElement>(null), desired = useRef(open);
   const [retained, setRetained] = useState(open);
   const internalClose = useRef<HTMLDialogElement | null>(null);
   const spatial = useRef({ value: 0, velocity: 0 }), effect = useRef({ value: 0, velocity: 0 });
   const overflow = useRef<string | null>(null), restore = useRef<HTMLElement | null>(null);
+  const openedAt = useRef('');
   desired.current = open;
   useClientLayoutEffect(() => {
     const node = dialog.current;
@@ -20,11 +23,12 @@ export default function MotionDialog({ open, onClose, returnFocus, label, classN
     if (open) setRetained(true);
     const release = () => {
       if (overflow.current !== null) { document.body.style.overflow = overflow.current; overflow.current = null; }
-      if (restore.current?.isConnected) restore.current.focus({ preventScroll: true });
+      if (restore.current?.isConnected && (typeof location === 'undefined' || location.href === openedAt.current)) restore.current.focus({ preventScroll: true });
       setRetained(false);
     };
     if (!open && !node.open) { release(); return; }
     if (open && !node.open) {
+      openedAt.current = typeof location === 'undefined' ? '' : location.href;
       restore.current = returnFocus.current || document.activeElement as HTMLElement | null;
       overflow.current = document.body.style.overflow; document.body.style.overflow = 'hidden';
       node.showModal();

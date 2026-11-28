@@ -39,6 +39,10 @@ test('TOC and lightbox updates preserve Markdown image nodes, reserved geometry 
     './compare-markdown': { remarkImageCompare: noopPlugin },
     './markdown-utils': { remarkHeadingIds: noopPlugin, remarkTextStyles: noopPlugin },
     '../site-enhancements': { ReadingProgress: () => null, ShareButton: () => null },
+    '../use-overlay-history': { __esModule: true, default: () => {} },
+    './reading-tools': { __esModule: true, default: () => null },
+    './copy-button': { __esModule: true, default: () => null },
+    './download-link': { __esModule: true, default: () => null },
     './pdf-embed': { default: () => null, __esModule: true },
     './image-compare': { default: () => null, __esModule: true },
     '../games/game-frame-card': { default: () => null, __esModule: true },
@@ -56,6 +60,7 @@ test('TOC and lightbox updates preserve Markdown image nodes, reserved geometry 
     images: [{ src: '/one.avif', alt: 'first', caption: 'First caption', width: 1920, height: 1080 }, { src: 'https://example.test/two.png', alt: 'second', caption: 'Second caption' }],
     cover: { src: '/cover.png', alt: 'cover', caption: 'Cover', width: 800, height: 600 } };
   renderer.act(() => { tree = renderer.create(React.createElement(PostContent, props)); });
+  assert.equal(tree.root.findByProps({ className: 'body' }).props.style?.fontSize, 'var(--reading-font-size, 17px)', 'non-compact article geometry uses persisted preferences before hydration');
   const external = tree.root.findAllByType('a').find(link => link.props.href === 'https://example.com');
   assert.equal(external.props.target, '_blank'); assert.equal(external.props.rel, 'noopener noreferrer');
   assert.equal(tree.root.findAllByType('a').find(link => link.props.href === '/about/').props.target, undefined);

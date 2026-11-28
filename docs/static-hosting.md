@@ -33,7 +33,7 @@ BLOG_RELEASE=$(git rev-parse HEAD) node scripts/verify-static-host.cjs https://b
 ```
 
 线上 `/hosting.json` 展示发布 SHA 和静态文件哈希清单，响应头 `X-Blog-Hosting: workers-static-assets` 证明由 Worker 提供；仅看到清单不足以区分 Pages 副本。
-后台发布状态保持使用同一个 workflow ID，成功表示主发布验证及回退副本更新全部完成。
+后台“发布状态”分别展示仓库 main、主站实时版本与 Pages 回退任务。主站成功要求同源 `hosting.json` 的 release 等于本次查询 main，且 `X-Blog-Hosting` 为 `workers-static-assets`；同提交的主发布核验步骤仅作流水线证据，回退单独读取同一运行尝试的 `deploy` job，不再用整个 workflow 的失败推断主站失败。详见 [发布与草稿备份](publishing-experience.md)。
 
 ## 运维回退
 

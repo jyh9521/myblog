@@ -12,14 +12,14 @@ fs.mkdirSync(out,{recursive:true});
   await page.goto(origin,{waitUntil:'networkidle'});await page.waitForFunction(()=>document.body.dataset.motion==='ready');
   // Pointer marker exists only in the evidence video, never in production code.
   await page.evaluate(()=>{const dot=document.createElement('div');dot.id='evidence-pointer';dot.style.cssText='position:fixed;width:12px;height:12px;border:2px solid #2962ff;border-radius:50%;pointer-events:none;z-index:2147483647;left:-30px;top:-30px';document.body.append(dot);addEventListener('pointermove',e=>{dot.style.left=e.clientX-6+'px';dot.style.top=e.clientY-6+'px';});});
-  for(const selector of ['.home-search button','.home-categories a','.m3-feature','.site-header nav a[href="/posts/"]']){
+  for(const selector of ['.site-search-trigger','.home-categories a','.m3-feature','.site-header nav a[href="/posts/"]']){
    const target=page.locator(selector).first();await target.scrollIntoViewIfNeeded();await page.mouse.move(5,5);await page.waitForTimeout(450);
    await target.evaluate(e=>{window.__nativeFrames=[];const start=performance.now();const sample=t=>{const s=getComputedStyle(e),before=getComputedStyle(e,'::before'),after=getComputedStyle(e,'::after');window.__nativeFrames.push({time:t-start,scale:s.scale,lift:s.translate,shade:before.opacity,elevation:after.opacity});if(t-start<850)requestAnimationFrame(sample);};requestAnimationFrame(sample);});
    await target.hover();await page.waitForTimeout(900);
    results.push({selector,frames:await page.evaluate(()=>window.__nativeFrames)});
    await target.screenshot({path:path.join(out,'hover-'+results.length+'.png')});
    // Prevent activation for press evidence only; leave native input semantics intact.
-   await page.evaluate(()=>{window.__holdEvidenceClick=e=>e.preventDefault();window.addEventListener('click',window.__holdEvidenceClick,true);});
+   await page.evaluate(()=>{window.__holdEvidenceClick=e=>{e.preventDefault();e.stopImmediatePropagation();};window.addEventListener('click',window.__holdEvidenceClick,true);});
    await target.hover();await page.mouse.down();await page.waitForTimeout(180);await page.mouse.up();await page.waitForTimeout(650);
    for(let i=0;i<4;i++){await page.mouse.move(5,5);await page.waitForTimeout(65);await target.hover();await page.waitForTimeout(65);}
    await page.mouse.move(5,5);await page.waitForTimeout(850);

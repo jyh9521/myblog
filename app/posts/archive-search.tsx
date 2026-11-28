@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useLayoutEffect, useMemo, useState } from 'react';
 import type { Post } from '../../lib/posts';
 import { articleText, searchTerms, matchExcerpt, highlightMatches } from '../../lib/article-search';
+import PostRevision from './post-revision';
 
 function searchable(value: string) {
   return articleText(value).toLocaleLowerCase();
@@ -54,15 +55,15 @@ export default function ArchiveSearch({ posts }: { posts: Post[] }) {
         <button type="button" className={!tag ? 'active' : ''} aria-pressed={!tag} onClick={() => selectTag('')}>全部</button>
         {tags.map(item => <button type="button" key={item} className={tag === item ? 'active' : ''} aria-pressed={tag === item} onClick={() => selectTag(tag === item ? '' : item)}>{item}</button>)}
       </div>
-      <p className="archive-result-count">{filtered.length === posts.length ? `共 ${posts.length} 篇文章` : `找到 ${filtered.length} 篇文章`}</p>
+      <p className="archive-result-count" role="status">{filtered.length === posts.length ? `共 ${posts.length} 篇文章` : `找到 ${filtered.length} 篇文章`}</p>
     </div>
     {filtered.length ? <div className="post-grid">{filtered.map((post, index) =>
       <article key={post.slug} className="post-card">
         <Link className={`post-visual visual-${index % 3}`} href={`/posts/${post.slug}/`} aria-label={`阅读：${post.title}`}>
-          {post.cover ? <img data-motion-cover={post.slug} src={post.cover} alt="" /> : <span className="visual-mark" aria-hidden="true">{index % 2 ? '✦' : '●'}</span>}
+          {post.cover ? <img data-motion-cover={post.slug} src={post.cover} alt="" width={600} height={340} loading="lazy" decoding="async" /> : <span className="visual-mark" aria-hidden="true">{index % 2 ? '✦' : '●'}</span>}
           <span className="visual-arrow" aria-hidden="true">↗</span>
         </Link>
-        <div className="post-meta archive-card-meta">{post.pinned && <span className="pinned-badge">置顶</span>}{post.visibility === 'password' && <span className="locked-post-badge">🔒 密码访问</span>}<time>{post.date.slice(0, 10)}</time><span className="meta-line" />{post.tags.length ? post.tags.map(item => <button type="button" className="card-tag" key={item} onClick={() => selectTag(item)}>{item}</button>) : '博客'}</div>
+        <div className="post-meta archive-card-meta">{post.pinned && <span className="pinned-badge">置顶</span>}{post.visibility === 'password' && <span className="locked-post-badge">🔒 密码访问</span>}<PostRevision date={post.date} updatedAt={post.updatedAt} updateNote={post.updateNote} note /><span className="meta-line" />{post.tags.length ? post.tags.map(item => <button type="button" className="card-tag" key={item} onClick={() => selectTag(item)}>{item}</button>) : '博客'}</div>
         <h3><Link href={`/posts/${post.slug}/`}><MatchedText text={post.title} query={query} /></Link></h3>
         {query.trim() ? <p className="search-excerpt"><MatchedText text={matchExcerpt(post.body, post.description, query)} query={query} /></p> : post.description && <p>{post.description}</p>}
         <Link className="read-more" href={`/posts/${post.slug}/`}>阅读全文 <span aria-hidden="true">→</span></Link>

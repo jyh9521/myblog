@@ -126,6 +126,12 @@ test('the actual article component renders one copy panel and copies all code li
   imports['../../lib/external-links'] = load('lib/external-links.ts');
   imports['../../lib/gallery-gesture'] = load('lib/gallery-gesture.ts');
   let copied;
+  imports['../use-overlay-history'] = { __esModule: true, default: () => {} };
+  imports['./reading-tools'] = { __esModule: true, default: () => null };
+  imports['./download-link'] = { __esModule: true, default: () => null };
+  imports['./copy-button'] = { __esModule: true, default: load('app/posts/copy-button.tsx', {
+    '../../lib/interaction-feedback': load('lib/interaction-feedback.ts'),
+  }, { navigator: { clipboard: { writeText: async text => { copied = text; } } } }).default };
   const { default: PostContent } = load('app/posts/post-content.tsx', imports, {
     document: {}, IntersectionObserver: class { observe() {} disconnect() {} },
     navigator: { clipboard: { writeText: async text => { copied = text; } } }, setTimeout() {},
@@ -133,6 +139,7 @@ test('the actual article component renders one copy panel and copies all code li
   const props = { compact: true, body: component().toBlock({ code: sample, language: 'toml' }), title: '', headings: [], images: [], games: [] };
   let tree;
   renderer.act(() => { tree = renderer.create(React.createElement(PostContent, props)); });
+  assert.equal(tree.root.findByProps({ className: 'body' }).props.style, undefined, 'compact game notes keep their original typography');
   assert.equal(tree.root.findAllByType('pre').length, 1);
   assert.equal(tree.root.findAllByType('code').length, 1);
   const buttons = tree.root.findAllByType('button').filter(button => button.props.className === 'code-copy');

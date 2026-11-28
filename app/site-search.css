@@ -1,0 +1,39 @@
+.m3-site .site-header nav .site-search-trigger{gap:8px;border:1px solid #fff8;border-radius:999px;flex:none;min-width:48px;justify-content:center}
+.site-search-trigger svg,.site-search-field svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;flex:none}
+.site-search-trigger kbd{font:inherit;font-size:10px;opacity:.8}
+.site-search-dialog{position:fixed;inset:8vh 0 auto;box-sizing:border-box;width:min(760px,calc(100vw - 40px));max-width:none;max-height:84dvh;padding:0;margin:0 auto;border:1px solid var(--line);border-radius:28px;color:var(--ink);background:var(--m3-base);box-shadow:0 24px 80px #0005;overflow:auto;overscroll-behavior:contain}
+.site-search-dialog::backdrop{background:rgb(0 0 0 / calc(.5 * var(--dialog-shade,1)))}
+.site-search-dialog-content{padding:24px}
+.site-search-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.site-search-heading h2{font-size:24px;letter-spacing:-.04em;margin:0}
+.site-search-close,.site-search-field button{display:grid;place-items:center;width:44px;min-width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--surface);color:var(--ink);font-size:26px;cursor:pointer}
+.site-search-form label{display:block;margin-bottom:10px;color:var(--muted);font-size:14px;font-weight:700}
+.site-search-field{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 18px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+.site-search-field:focus-within{outline:2px solid var(--m3-focus);outline-offset:2px}
+.site-search-field input{width:100%;min-width:0;padding:10px 0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:16px;line-height:1.5}
+.m3-site .site-search-field input:focus-visible{outline:none}
+.site-search-field input::-webkit-search-cancel-button{display:none}
+.site-search-status,.site-search-more{color:var(--muted);font-size:13px;line-height:1.7;margin:16px 0}
+.site-search-results{min-width:0}
+.site-search-group{border-top:1px solid var(--line);padding-block:16px}
+.site-search-group h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:14px;font-weight:800;color:var(--m3-primary)}
+.site-search-group h2 span{padding:2px 8px;border-radius:999px;background:var(--m3-selected);color:var(--m3-on-selected);font-size:12px}
+.site-search-group ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.site-search-group a{display:grid;gap:5px;min-height:48px;padding:14px;border-radius:14px;text-decoration:none;color:var(--ink);overflow-wrap:anywhere}
+.site-search-group a:hover,.site-search-group a:focus-visible{background:var(--surface)}
+.site-search-group a strong{font-size:16px;line-height:1.5;font-weight:750}
+.site-search-group a>span{font-size:13px;line-height:1.7;color:var(--muted)}
+.site-search-panel mark{background:var(--m3-selected);color:var(--m3-on-selected);border-radius:3px;padding-inline:1px}
+.site-search-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);padding-top:12px}
+.site-search-footer span{font-size:12px;color:var(--muted)}
+.site-search-footer a,.site-search-error a{display:inline-flex;align-items:center;min-height:44px;color:var(--m3-primary);font-size:14px;font-weight:700}
+.site-search-error{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;padding-block:8px 20px}
+.site-search-error p{flex-basis:100%;margin:0;color:var(--muted);font-size:14px}
+.site-search-error button{min-height:44px;padding:8px 18px;border:0;border-radius:999px;background:var(--m3-primary);color:var(--m3-on-primary);font:inherit;cursor:pointer}
+.site-search-page{max-width:900px;padding-block:50px 80px;min-height:65vh}
+.site-search-page>header{margin-bottom:32px}
+.site-search-page h1{font-size:clamp(32px,6vw,56px);letter-spacing:-.05em;line-height:1.2;margin:12px 0}
+.site-search-page>header p{color:var(--muted);line-height:1.7}
+.site-search-nojs{margin-block:32px}.site-search-nojs a{display:inline-block;padding:10px 0;color:var(--m3-primary)}
+@media(max-width:1100px){.site-search-trigger kbd{display:none}}
+@media(max-width:760px){.site-search-trigger-text{display:none}.m3-site .site-header nav .site-search-trigger{padding-inline:12px}.site-search-dialog{inset:0;width:100%;height:100dvh;max-height:100dvh;border:0;border-radius:0;margin:0}.site-search-dialog-content{min-height:100%;box-sizing:border-box;padding:calc(18px + env(safe-area-inset-top)) 18px calc(20px + env(safe-area-inset-bottom))}.site-search-page{padding-block:32px 56px}.site-search-footer span{display:none}}

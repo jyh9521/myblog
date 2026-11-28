@@ -26,7 +26,9 @@ async function inspectLayout(page) {
     return {
       viewport: { width: innerWidth, height: innerHeight }, overflow: document.documentElement.scrollWidth - innerWidth,
       title: document.querySelector('h1')?.textContent.trim(), intro: rect(document.querySelector('.home-intro')),
-      searchInput: rect(document.querySelector('.home-search input')),
+      searchInput: rect(document.querySelector('.site-search-trigger')),
+      searchCount: document.querySelectorAll('.site-search-trigger').length, duplicateSearch: document.querySelectorAll('main [role=search]').length,
+      headerActions: [...document.querySelectorAll('.header-actions>a,.header-actions>button')].map(rect),
       feature: rect(feature), featureHref: feature?.getAttribute('href'),
       featureTitle: rect(feature?.querySelector('h2,h3,strong')), featureDescription: rect(feature?.querySelector('p')),
       updates: rect(updates), updateLinks: updateLinks.map(el => ({ href: el.getAttribute('href'), text: el.textContent.trim(), ...rect(el) })),
@@ -98,7 +100,9 @@ async function run(browser, name, options) {
     });
     check('focused layout and narrow viewport', () => {
       assert.ok(layout.title); assert.equal(layout.obsolete, 0); assert.ok(layout.overflow <= 1, `horizontal overflow ${layout.overflow}px`);
-      assert.ok(layout.searchInput && layout.searchInput.height >= 44, `search input touch target is ${layout.searchInput?.height}px tall; expected at least 44px`);
+      assert.ok(layout.searchInput && layout.searchInput.height >= 44, 'global search target is at least 44px');
+      assert.equal(layout.searchCount, 1, 'one global search entry'); assert.equal(layout.duplicateSearch, 0, 'no duplicate homepage search');
+      assert.equal(layout.headerActions.length, 2); assert.ok(Math.abs((layout.headerActions[0].top + layout.headerActions[0].bottom) / 2 - (layout.headerActions[1].top + layout.headerActions[1].bottom) / 2) <= 2, 'search and theme controls stay on one row');
     });
     check('categories and real game previews', () => {
       assert.ok(layout.categories.length > 0 && layout.categories.every(link => link.text && /^\/posts\/\?tag=.+/.test(link.href)), 'categories filter real articles');
@@ -113,10 +117,13 @@ async function run(browser, name, options) {
       result.links = [];
       for (const href of links) { const response = await context.request.get(origin + href); result.links.push({ href, status: response.status() }); assert.ok(response.ok(), `${href} returns ${response.status()}`); }
       const query = 'zzzz-no-matching-home-article';
-      await page.locator('.home-search input[type="search"]').fill(query);
-      await page.locator('.home-search button').click();
-      await page.waitForURL(url => url.pathname === '/posts/' && url.searchParams.get('q') === query);
+      await page.goto(origin + '/search/?q=' + query, { waitUntil: 'networkidle' });
+      await page.waitForURL(url => url.pathname === '/search/' && url.searchParams.get('q') === query);
       if (options.javaScriptEnabled !== false) {
+        await page.locator('.site-search-panel input').waitFor();
+        assert.equal(await page.locator('.site-search-panel input').inputValue(), query);
+        await page.getByText('没有找到匹配的结果，试试其他关键词。').waitFor();
+        await page.goto(origin + '/posts/?q=' + query, { waitUntil: 'networkidle' });
         await page.locator('.archive-search input').waitFor(); assert.equal(await page.locator('.archive-search input').inputValue(), query); await page.getByText('没有找到匹配的文章').waitFor();
         await page.locator('.tag-filters button').nth(1).click();
         assert.equal(new URL(page.url()).searchParams.get('q'), query, 'category selection retains the search');
@@ -130,7 +137,7 @@ async function run(browser, name, options) {
         assert.equal(await page.locator('.archive-search input').inputValue(), '');
         assert.equal(await page.locator('.post-card').count(), restoredCount, 'refresh keeps the cleared full archive');
       }
-      else assert.ok(await page.locator('h1').isVisible(), 'search GET reaches a usable archive without JS');
+      else assert.ok(await page.locator('h1').isVisible(), 'search GET reaches a usable search directory without JS');
       result.checks.push({ label: 'real link targets and GET search', pass: true });
       await page.goto(origin + '/', { waitUntil: 'networkidle' }); await page.waitForTimeout(700);
     }

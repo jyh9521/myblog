@@ -4,6 +4,7 @@ import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 
 import { cleanSiteQuery, searchSiteIndex, siteSearchHref, type SiteSearchIndex } from '../lib/site-search';
 import { loadSiteSearchIndex } from '../lib/site-search-client';
 import { highlightMatches } from '../lib/article-search';
+import EventSearch from './event-search';
 
 export default function SiteSearchPanel({ active, fullPage = false, onClose }: { active: boolean; fullPage?: boolean; onClose?: () => void }) {
   const [query, setQuery] = useState(''), [index, setIndex] = useState<SiteSearchIndex | null>(null);
@@ -75,6 +76,7 @@ export default function SiteSearchPanel({ active, fullPage = false, onClose }: {
         </a></li>)}</ul>
         {group.total > group.results.length && <p className="site-search-more">还有 {group.total - group.results.length} 项{fullPage ? '，请增加关键词缩小范围。' : '，可在完整搜索页查看更多。'}</p>}
       </section>)}
+      {active && <EventSearch query={query} />}
     </div>
     {!fullPage && <div className="site-search-footer"><span>↑ ↓ 选择 · Enter 打开 · Esc 关闭</span><a href={siteSearchHref(query)} data-overlay-navigate="true">打开完整搜索页 ↗</a></div>}
   </div>;

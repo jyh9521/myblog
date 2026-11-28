@@ -31,7 +31,7 @@ test('shared article renderer supports compact timeline formats, line breaks and
       if (imports[name]) return imports[name];
       if (name.startsWith('.')) {
         const full = path.resolve(path.dirname(file), name);
-        if (['game-frames', 'compare-markdown', 'markdown-utils', 'external-links'].includes(path.basename(full))) return load(full + '.ts');
+        if (['game-frames', 'compare-markdown', 'markdown-utils', 'external-links', 'paragraph-links'].includes(path.basename(full))) return load(full + '.ts');
         if (name === './retryable-image') return { __esModule: true, default: ({ src, alt }) => React.createElement('img', { src, alt }) };
         return { __esModule: true, default: () => null, ReadingProgress: () => React.createElement('progress'), ShareButton: () => null };
       }

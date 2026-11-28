@@ -36,6 +36,22 @@ jobs:
           path: reports/*.json
           if-no-files-found: ignore
       - run: npm run build
+      - name: Install browser regression runtime
+        run: npx playwright install --with-deps chromium
+      - name: Verify real editor and reading workflows
+        run: npm run test:browser
+      - name: Rehearse isolated backup recovery
+        run: npm run backup:drill
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-and-recovery-evidence
+          path: |
+            reports/editor-browser/
+            reports/content-experience/
+            reports/experience-20261128/
+            reports/recovery-drill.json
+          if-no-files-found: ignore
       - run: cp CNAME out/CNAME
       - run: node scripts/prepare-static-host.cjs
         env:

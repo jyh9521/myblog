@@ -1,0 +1,28 @@
+{
+  "topics": [
+    {
+      "slug": "magna-carta",
+      "title": "真名法典 · 汉化与游玩资料",
+      "description": "从初代到续作，按作品顺序查阅汉化说明、安装方式和游戏档案。具体版本及下载以各篇文章为准。",
+      "readingOrder": ["magna-carta-the-phantom-of-avalanche-cn", "magna-carta-tears-of-blood-cn", "magna-carta-2-cn"],
+      "games": ["magna-carta-the-phantom-of-avalanche", "magna-carta-tears-of-blood", "magna-carta-2"],
+      "chronologies": []
+    },
+    {
+      "slug": "bloodrayne",
+      "title": "吸血莱恩 · 终极剪辑版汉化",
+      "description": "先读对应作品的汉化说明，再核对游戏版本与下载入口；两作资料集中在这里。",
+      "readingOrder": ["bloodrayne-terminal-cut-cn", "bloodrayne-2-terminal-cut-cn"],
+      "games": ["bloodrayne-terminal-cut", "bloodrayne2-terminal-cut"],
+      "chronologies": []
+    },
+    {
+      "slug": "world-chronologies",
+      "title": "游戏世界 · 系列年表",
+      "description": "按故事年代阅读创世纪战与银河战士。年表包含剧情和结局，进入后可按作品调整剧透设置。",
+      "readingOrder": [],
+      "games": ["metroid-prime-remastered", "metroid-samus-returns"],
+      "chronologies": ["genesis", "metroid"]
+    }
+  ]
+}

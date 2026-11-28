@@ -15,6 +15,8 @@ async function validateRepository(root = process.cwd()) {
   const posts = filesIn(postsDir), games = new Set(filesIn(gamesDir).map(file => file.slice(0, -3)));
   const routes = new Set(['/', '/posts/', '/games/', '/games/timelines/', '/about/', '/ns/', '/sveltia/', '/feed.xml', '/game-dossiers.json',
     ...posts.map(file => `/posts/${file.slice(0, -3)}/`), ...[...games].map(slug => `/games/${slug}/`)]);
+  for (const topic of JSON.parse(fs.existsSync(path.join(root, 'content/topics.json')) ? fs.readFileSync(path.join(root, 'content/topics.json'), 'utf8') : '{"topics":[]}').topics) routes.add('/topics/' + topic.slug + '/');
+  routes.add('/topics/'); routes.add('/search/');
   const error = (file, text) => errors.push(`${file}: ${text}`);
   const chronologies = new Map();
   for (const name of filesIn(path.join(root, 'content/chronologies'), '.json')) {

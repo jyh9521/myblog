@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { copyText } from '../../lib/interaction-feedback';
-export default function CopyButton({ text, className, label }: { text: string; className?: string; label: string }) {
+export default function CopyButton({ text, className, label }: { text: string | (() => string); className?: string; label: string }) {
   const [status, setStatus] = useState(''), [busy, setBusy] = useState(false);
   async function copy() {
     setBusy(true);
-    const result = await copyText(text, navigator);
+    const result = await copyText(typeof text === 'function' ? text() : text, navigator);
     setStatus(result === 'copied' ? '已复制 ✓' : '复制失败，请选择内容手动复制');
     setBusy(false);
   }

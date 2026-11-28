@@ -30,7 +30,8 @@ export function buildSiteSearchIndex({ posts, games, chronologies }: {
   }
   for (const post of posts) {
     if (post.visibility !== 'public') continue;
-    add('post', post.slug, { title: text(post.title), description: text(post.description), aliases: [], keywords: names(post.tags), body: text(post.body) });
+    const game = games.find(game => game.slug === post.gameSlug), metadata = game?.metadata;
+    add('post', post.slug, { title: text(post.title), description: text(post.description), aliases: names([game?.title, metadata?.title, metadata?.localizedName, metadata?.originalName, ...(metadata?.alternativeNames || [])]), keywords: names(post.tags), body: text(post.body) });
   }
   for (const game of games) {
     const metadata = game.metadata;

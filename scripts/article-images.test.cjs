@@ -37,6 +37,7 @@ test('TOC and lightbox updates preserve Markdown image nodes, reserved geometry 
     'remark-breaks': { __esModule: true, default: (await import('remark-breaks')).default },
     './game-frames': { remarkGameFrames: noopPlugin },
     './compare-markdown': { remarkImageCompare: noopPlugin },
+    '../../lib/paragraph-links': require('./helpers/load-ts.cjs')('lib/paragraph-links.ts'),
     './markdown-utils': { remarkHeadingIds: noopPlugin, remarkTextStyles: noopPlugin },
     '../site-enhancements': { ReadingProgress: () => null, ShareButton: () => null },
     '../use-overlay-history': { __esModule: true, default: () => {} },

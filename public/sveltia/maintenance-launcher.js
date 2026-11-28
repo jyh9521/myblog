@@ -2,6 +2,7 @@
   const resources=document.createElement('a'); resources.textContent='资源库'; resources.className='blog-admin-launcher'; resources.href='/sveltia/resources.html'; resources.target='_blank'; resources.rel='noopener noreferrer';
   resources.style.cssText='position:fixed;right:18px;bottom:122px;z-index:99999;padding:10px 16px;border-radius:10px;border:1px solid #777;background:#24282e;color:#fff;font:14px system-ui;text-decoration:none';
   if(window.BlogResources)document.body.append(resources);
+  const health=document.createElement("a"); health.textContent="维护待办";health.href="/sveltia/maintenance.html";health.target="_blank";health.rel="noopener noreferrer";health.style.cssText=resources.style.cssText.replace("bottom:122px","bottom:174px");document.body.append(health);
   const accounts = document.createElement('a'); accounts.textContent = '游戏平台账号'; accounts.className = 'blog-admin-launcher'; accounts.href = '/sveltia/accounts.html'; accounts.target = '_blank'; accounts.rel = 'noopener noreferrer';
   accounts.style.cssText = 'position:fixed;right:18px;bottom:70px;z-index:99999;padding:10px 16px;border-radius:10px;border:1px solid #777;background:#24282e;color:#fff;font:14px system-ui;text-decoration:none;box-shadow:0 3px 15px #0004';
   document.body.append(accounts);

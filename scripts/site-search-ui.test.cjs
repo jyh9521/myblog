@@ -53,12 +53,12 @@ test('Escape in a nonempty native search input closes its dialog instead of only
   let view, closed = 0, prevented = 0;
   await act(async () => { view = create(React.createElement(Search, { active: true, onClose: () => closed++ })); });
   t.after(() => act(() => view.unmount()));
-  act(() => view.root.findByType('input').props.onChange({ target: { value: 'Metroid' } }));
+  act(() => view.root.findByProps({ type: 'search' }).props.onChange({ target: { value: 'Metroid' } }));
   const event = { key: 'Escape', isDefaultPrevented: () => false, nativeEvent: { isComposing: false }, preventDefault: () => prevented++, stopPropagation() {} };
-  act(() => view.root.findByType('input').props.onKeyDown(event));
+  act(() => view.root.findByProps({ type: 'search' }).props.onKeyDown(event));
   assert.equal(closed, 1);
   assert.equal(prevented, 1);
-  assert.equal(view.root.findByType('input').props.value, 'Metroid');
+  assert.equal(view.root.findByProps({ type: 'search' }).props.value, 'Metroid');
 });
 
 test('closed panels do not download; the active panel loads once and renders normal grouped links', async t => {
@@ -70,7 +70,7 @@ test('closed panels do not download; the active panel loads once and renders nor
   assert.equal(calls, 0);
   await act(async () => { view.update(React.createElement(Search, { active: true })); });
   assert.equal(calls, 1);
-  act(() => view.root.findByType('input').props.onChange({ target: { value: 'Metroid' } }));
+  act(() => view.root.findByProps({ type: 'search' }).props.onChange({ target: { value: 'Metroid' } }));
   const link = view.root.findAllByType('a').find(item => item.props.href === '/posts/metroid/');
   assert.ok(link, 'results are real links');
   assert.ok(link.props['data-overlay-navigate'], 'overlay navigation can retire its history entry first');
@@ -82,15 +82,15 @@ test('full page reads, updates and restores URL q without overwriting Next histo
   let view;
   await act(async () => { view = create(React.createElement(Search, { active: true, fullPage: true })); });
   t.after(() => act(() => view.unmount()));
-  assert.equal(view.root.findByType('input').props.value, 'Metroid');
-  act(() => view.root.findByType('input').props.onChange({ target: { value: '探索' } }));
+  assert.equal(view.root.findByProps({ type: 'search' }).props.value, 'Metroid');
+  act(() => view.root.findByProps({ type: 'search' }).props.onChange({ target: { value: '探索' } }));
   assert.equal(browser.location.searchParams.get('q'), '探索');
   assert.equal(browser.location.searchParams.get('source'), 'home');
   assert.equal(browser.location.hash, '#results');
   assert.equal(browser.history.state, historyState);
   browser.location = new URL('https://example.test/search/?q=back');
   act(() => listeners.popstate());
-  assert.equal(view.root.findByType('input').props.value, 'back');
+  assert.equal(view.root.findByProps({ type: 'search' }).props.value, 'back');
 });
 
 test('pending download completion does not reopen a closed view and a remount consumes the shared response', async t => {
@@ -115,7 +115,7 @@ test('network failure exposes retry and the unchanged query produces results aft
   const retry = view.root.findAllByType('button').find(button => button.children.join('') === '重新加载');
   assert.ok(retry);
   await act(async () => retry.props.onClick());
-  assert.equal(view.root.findByType('input').props.value, 'Metroid');
+  assert.equal(view.root.findByProps({ type: 'search' }).props.value, 'Metroid');
   assert.ok(view.root.findAllByType('a').some(link => link.props.href === '/posts/metroid/'));
   assert.equal(calls, 2);
 });

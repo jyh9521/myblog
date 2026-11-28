@@ -18,3 +18,5 @@ workers/*/.wrangler/
 workers/*/.dev.vars*
 !workers/*/.dev.vars.example
 workers/gaming-accounts/worker-configuration.d.ts
+
+public/sveltia/health.json

@@ -16,6 +16,7 @@ import GameFrameCard from '../games/game-frame-card';
 import RetryableImage from './retryable-image';
 import PdfEmbed from './pdf-embed';
 import ReadingTools from './reading-tools';
+import { remarkParagraphLinks } from '../../lib/paragraph-links';
 import CopyButton from './copy-button';
 import DownloadLink from './download-link';
 import { externalLinkProps } from '../../lib/external-links';
@@ -67,6 +68,7 @@ export default function PostContent({ body, title, headings, images, games, cove
   const currentImage = activeImage === null ? null : galleryImages[activeImage];
   // Keep component identities stable when TOC highlighting or the lightbox changes.
   const markdownComponents = useMemo(() => ({
+    p: ({ children, id }: React.HTMLAttributes<HTMLParagraphElement>) => <p id={id} className={id?.startsWith('paragraph-') ? 'shareable-paragraph' : undefined}>{children}{id?.startsWith('paragraph-') && <CopyButton className="copy-button" label="复制段落链接" text={() => `${location.origin}${location.pathname}#${id}`} />}</p>,
     pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => <CodeBlock {...props}>{children}</CodeBlock>,
     img: ({ src, alt, title }: { src?: string; alt?: string; title?: string }) => {
       const imageIndex = images.findIndex(image => image.src === src);
@@ -105,7 +107,7 @@ export default function PostContent({ body, title, headings, images, games, cove
           <a href={`#${encodeURIComponent(heading.id)}`} onClick={() => setTocOpen(false)}>{heading.text}</a>
         </li>)}</ol></div></div>
       </nav>}
-      <div className="body" ref={readingBody} style={compact ? undefined : { fontSize: 'var(--reading-font-size, 17px)', lineHeight: 'var(--reading-line-spacing, 1.95)' }}><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, remarkTextStyles, ...(compact ? [] : [remarkHeadingIds]), remarkGameFrames, remarkImageCompare]} components={markdownComponents}>{body}</ReactMarkdown></div>
+      <div className="body" ref={readingBody} style={compact ? undefined : { fontSize: 'var(--reading-font-size, 17px)', lineHeight: 'var(--reading-line-spacing, 1.95)' }}><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks, remarkTextStyles, ...(compact ? [] : [remarkHeadingIds]), remarkGameFrames, remarkImageCompare, ...(compact ? [] : [remarkParagraphLinks])]} components={markdownComponents}>{body}</ReactMarkdown></div>
       {audio && <section className="media"><h2>音频</h2><audio controls src={audio} /></section>}
       {video && <section className="media"><h2>视频</h2><video controls src={video} /></section>}
       {attachment && <p className="media"><DownloadLink href={attachment} /></p>}

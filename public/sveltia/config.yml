@@ -291,3 +291,21 @@ collections:
               - { name: url, label: 主页链接, widget: string, pattern: ['^https?://[^\s]+$', '请填写以 https:// 或 http:// 开头的完整主页链接'] }
               - { name: icon, label: 平台图标, widget: social-icon, required: false, default: globe, hint: '搜索并点选图标；没有对应品牌时使用通用网站图标。平台名称独立填写，不受图标库限制。' }
           - { name: body, label: 正文, widget: richtext }
+
+  - name: topics
+    label: 专题导读
+    files:
+      - name: topics
+        label: 专题与阅读顺序
+        file: content/topics.json
+        fields:
+          - name: topics
+            label: 专题
+            widget: list
+            fields:
+              - {name: slug, label: 网址名, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', '小写字母、数字与连字符']}
+              - {name: title, label: 标题, widget: string}
+              - {name: description, label: 导读说明, widget: text}
+              - {name: readingOrder, label: 推荐阅读顺序（文章 Slug）, widget: list, required: false, default: []}
+              - {name: games, label: 游戏档案 Slug, widget: list, required: false, default: []}
+              - {name: chronologies, label: 年表 ID, widget: list, required: false, default: []}

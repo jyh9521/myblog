@@ -11,6 +11,7 @@ import './nintendo-m3.css';
 import './motion-tokens.css';
 import './motion.css';
 import './experience.css';
+import './content-experience.css';
 
 export const metadata: Metadata = {
   title: { default: "伯翎飞云的博客", template: "%s | 伯翎飞云的博客" },
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <MotionProvider />
     <header className="site-header"><div className="header-inner">
       <a className="brand" href="/" aria-label="伯翎飞云的博客首页"><img className="brand-icon" src="/avatar.jpg" alt="" /><span>伯翎飞云<span className="brand-dot">.</span></span></a>
-      <nav aria-label="主导航"><a href="/">首页</a><a href="/posts/">文章</a><a href="/games/">游戏档案</a><a href="/about/">关于我</a><a href="/ns/" aria-label="NS群群号发布页"><span className="nav-label-full">NS群群号发布页</span><span className="nav-label-short" aria-hidden="true">NS群号</span></a><span className="header-actions"><SiteSearch /><ThemeToggle /></span></nav>
+      <nav aria-label="主导航"><a href="/">首页</a><a href="/posts/">文章</a><a href="/topics/">专题</a><a href="/games/">游戏档案</a><a href="/about/">关于我</a><a href="/ns/" aria-label="NS群群号发布页"><span className="nav-label-full">NS群群号发布页</span><span className="nav-label-short" aria-hidden="true">NS群号</span></a><span className="header-actions"><SiteSearch /><ThemeToggle /></span></nav>
     </div></header>
     <div id="site-content" tabIndex={-1}>{children}</div>
     <BackToTop />
